@@ -1,0 +1,7 @@
+*~
+*.dproj.local
+__history/
+Win32/
+*.identcache
+*.dpk.cbk
+*.dcu

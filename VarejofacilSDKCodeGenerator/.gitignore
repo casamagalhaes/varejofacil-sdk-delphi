@@ -1,0 +1,4 @@
+*.identcache
+*.dcu
+Win32/
+*.dpr.cbk

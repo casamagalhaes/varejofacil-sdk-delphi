@@ -1,0 +1,622 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{3DEB7D96-C7B4-4C86-9C80-E968B294EAF9}</ProjectGuid>
+        <MainSource>VarejofacilSDK.dpk</MainSource>
+        <Base>True</Base>
+        <Config Condition="'$(Config)'==''">Release</Config>
+        <TargetedPlatforms>1</TargetedPlatforms>
+        <AppType>Package</AppType>
+        <FrameworkType>None</FrameworkType>
+        <ProjectVersion>16.1</ProjectVersion>
+        <Platform Condition="'$(Platform)'==''">Win32</Platform>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_1)'!=''">
+        <Cfg_1>true</Cfg_1>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_2)'!=''">
+        <Cfg_2>true</Cfg_2>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base)'!=''">
+        <DCC_DcuOutput>.\$(Platform)\$(Config)</DCC_DcuOutput>
+        <GenDll>true</GenDll>
+        <VerInfo_Locale>1046</VerInfo_Locale>
+        <DCC_F>false</DCC_F>
+        <DCC_E>false</DCC_E>
+        <DCC_S>false</DCC_S>
+        <GenPackage>true</GenPackage>
+        <DCC_K>false</DCC_K>
+        <DCC_ImageBase>00400000</DCC_ImageBase>
+        <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;$(DCC_Namespace)</DCC_Namespace>
+        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=;CFBundleName=</VerInfo_Keys>
+        <DCC_N>false</DCC_N>
+        <SanitizedProjectName>VarejofacilSDK</SanitizedProjectName>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_1)'!=''">
+        <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
+        <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+        <DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
+        <DCC_DebugInformation>0</DCC_DebugInformation>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_2)'!=''">
+        <DCC_GenerateStackFrames>true</DCC_GenerateStackFrames>
+        <DCC_Optimize>false</DCC_Optimize>
+        <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
+    </PropertyGroup>
+    <ItemGroup>
+        <DelphiCompile Include="$(MainSource)">
+            <MainSource>MainSource</MainSource>
+        </DelphiCompile>
+        <DCCReference Include="rtl.dcp"/>
+        <DCCReference Include="IndySystem.dcp"/>
+        <DCCReference Include="IndyProtocols.dcp"/>
+        <DCCReference Include="IndyCore.dcp"/>
+        <DCCReference Include="xmlrtl.dcp"/>
+        <DCCReference Include="dbrtl.dcp"/>
+        <DCCReference Include="inet.dcp"/>
+        <DCCReference Include="soaprtl.dcp"/>
+        <DCCReference Include="SDK.Client.pas"/>
+        <DCCReference Include="SDK.Types.pas"/>
+        <DCCReference Include="SDK.Request.pas"/>
+        <DCCReference Include="SDK.Response.pas"/>
+        <DCCReference Include="SDK.XML.pas"/>
+        <DCCReference Include="SDK.Service.pas"/>
+        <DCCReference Include="SDK.ConfigProvider.pas"/>
+        <DCCReference Include="Models\SDK.Model.Abastecimento.pas"/>
+        <DCCReference Include="Models\SDK.Model.Administradora.pas"/>
+        <DCCReference Include="Models\SDK.Model.Agente.pas"/>
+        <DCCReference Include="Models\SDK.Model.Bairro.pas"/>
+        <DCCReference Include="Models\SDK.Model.Bandeira.pas"/>
+        <DCCReference Include="Models\SDK.Model.Bico.pas"/>
+        <DCCReference Include="Models\SDK.Model.Caixa.pas"/>
+        <DCCReference Include="Models\SDK.Model.Campo.pas"/>
+        <DCCReference Include="Models\SDK.Model.CartaoReceber.pas"/>
+        <DCCReference Include="Models\SDK.Model.CartaoReceberItem.pas"/>
+        <DCCReference Include="Models\SDK.Model.Cfop.pas"/>
+        <DCCReference Include="Models\SDK.Model.Cliente.pas"/>
+        <DCCReference Include="Models\SDK.Model.Combustivel.pas"/>
+        <DCCReference Include="Models\SDK.Model.Componente.pas"/>
+        <DCCReference Include="Models\SDK.Model.ComposicaoAlimento.pas"/>
+        <DCCReference Include="Models\SDK.Model.Composto.pas"/>
+        <DCCReference Include="Models\SDK.Model.ConfiguracaoPdv.pas"/>
+        <DCCReference Include="Models\SDK.Model.Consumo.pas"/>
+        <DCCReference Include="Models\SDK.Model.ContaAPagar.pas"/>
+        <DCCReference Include="Models\SDK.Model.ContaAPagarLiquidacao.pas"/>
+        <DCCReference Include="Models\SDK.Model.ContaAReceber.pas"/>
+        <DCCReference Include="Models\SDK.Model.ContaAReceberLiquidacao.pas"/>
+        <DCCReference Include="Models\SDK.Model.ContaCorrente.pas"/>
+        <DCCReference Include="Models\SDK.Model.Controle.pas"/>
+        <DCCReference Include="Models\SDK.Model.ControleCargaPdv.pas"/>
+        <DCCReference Include="Models\SDK.Model.Corretor.pas"/>
+        <DCCReference Include="Models\SDK.Model.Csosn.pas"/>
+        <DCCReference Include="Models\SDK.Model.Cst.pas"/>
+        <DCCReference Include="Models\SDK.Model.Devolucao.pas"/>
+        <DCCReference Include="Models\SDK.Model.DocumentoNaoFiscalEmitido.pas"/>
+        <DCCReference Include="Models\SDK.Model.Ecf.pas"/>
+        <DCCReference Include="Models\SDK.Model.EmailGrupo.pas"/>
+        <DCCReference Include="Models\SDK.Model.EmailGrupoOcorrencia.pas"/>
+        <DCCReference Include="Models\SDK.Model.Entrega.pas"/>
+        <DCCReference Include="Models\SDK.Model.ErroPDV.pas"/>
+        <DCCReference Include="Models\SDK.Model.Estoque.pas"/>
+        <DCCReference Include="Models\SDK.Model.EstoqueMovimentacao.pas"/>
+        <DCCReference Include="Models\SDK.Model.FatoGerador.pas"/>
+        <DCCReference Include="Models\SDK.Model.Ficha.pas"/>
+        <DCCReference Include="Models\SDK.Model.FilaImpressao.pas"/>
+        <DCCReference Include="Models\SDK.Model.Finalizacao.pas"/>
+        <DCCReference Include="Models\SDK.Model.Finalizadora.pas"/>
+        <DCCReference Include="Models\SDK.Model.FiscoEcf.pas"/>
+        <DCCReference Include="Models\SDK.Model.Fornecedor.pas"/>
+        <DCCReference Include="Models\SDK.Model.Funcao.pas"/>
+        <DCCReference Include="Models\SDK.Model.Funcionario.pas"/>
+        <DCCReference Include="Models\SDK.Model.GarantiaEstendida.pas"/>
+        <DCCReference Include="Models\SDK.Model.Genero.pas"/>
+        <DCCReference Include="Models\SDK.Model.Grupo.pas"/>
+        <DCCReference Include="Models\SDK.Model.ItemNotaFiscal.pas"/>
+        <DCCReference Include="Models\SDK.Model.ItemPagamento.pas"/>
+        <DCCReference Include="Models\SDK.Model.ItemPlanoPagamento.pas"/>
+        <DCCReference Include="Models\SDK.Model.ItemRecebimento.pas"/>
+        <DCCReference Include="Models\SDK.Model.ItemSangria.pas"/>
+        <DCCReference Include="Models\SDK.Model.ItemVenda.pas"/>
+        <DCCReference Include="Models\SDK.Model.Local.pas"/>
+        <DCCReference Include="Models\SDK.Model.LocalImpressao.pas"/>
+        <DCCReference Include="Models\SDK.Model.MapaResumo.pas"/>
+        <DCCReference Include="Models\SDK.Model.Marca.pas"/>
+        <DCCReference Include="Models\SDK.Model.Moeda.pas"/>
+        <DCCReference Include="Models\SDK.Model.MoedaCotacao.pas"/>
+        <DCCReference Include="Models\SDK.Model.NaturezaImpostosFederais.pas"/>
+        <DCCReference Include="Models\SDK.Model.Nbs.pas"/>
+        <DCCReference Include="Models\SDK.Model.Ncm.pas"/>
+        <DCCReference Include="Models\SDK.Model.NotaFiscal.pas"/>
+        <DCCReference Include="Models\SDK.Model.OcorrenciaVenda.pas"/>
+        <DCCReference Include="Models\SDK.Model.Operacao.pas"/>
+        <DCCReference Include="Models\SDK.Model.OperacaoCfop.pas"/>
+        <DCCReference Include="Models\SDK.Model.Pagamento.pas"/>
+        <DCCReference Include="Models\SDK.Model.PagueContas.pas"/>
+        <DCCReference Include="Models\SDK.Model.PedidoVenda.pas"/>
+        <DCCReference Include="Models\SDK.Model.PlanoConta.pas"/>
+        <DCCReference Include="Models\SDK.Model.PlanoContasLancamento.pas"/>
+        <DCCReference Include="Models\SDK.Model.PlanoPagamento.pas"/>
+        <DCCReference Include="Models\SDK.Model.PreFinalizacao.pas"/>
+        <DCCReference Include="Models\SDK.Model.PreVenda.pas"/>
+        <DCCReference Include="Models\SDK.Model.Produto.pas"/>
+        <DCCReference Include="Models\SDK.Model.ProdutoAux.pas"/>
+        <DCCReference Include="Models\SDK.Model.PromocaoAssistida.pas"/>
+        <DCCReference Include="Models\SDK.Model.PromocaoMovimentacao.pas"/>
+        <DCCReference Include="Models\SDK.Model.Proprio.pas"/>
+        <DCCReference Include="Models\SDK.Model.Ramo.pas"/>
+        <DCCReference Include="Models\SDK.Model.Recebimento.pas"/>
+        <DCCReference Include="Models\SDK.Model.RecebimentoConvenio.pas"/>
+        <DCCReference Include="Models\SDK.Model.RecebimentoVendaAssistida.pas"/>
+        <DCCReference Include="Models\SDK.Model.Reducao.pas"/>
+        <DCCReference Include="Models\SDK.Model.ResumoOperador.pas"/>
+        <DCCReference Include="Models\SDK.Model.SaidaOperador.pas"/>
+        <DCCReference Include="Models\SDK.Model.Sangria.pas"/>
+        <DCCReference Include="Models\SDK.Model.Secao.pas"/>
+        <DCCReference Include="Models\SDK.Model.SerieProduto.pas"/>
+        <DCCReference Include="Models\SDK.Model.Servico.pas"/>
+        <DCCReference Include="Models\SDK.Model.SpedDoc.pas"/>
+        <DCCReference Include="Models\SDK.Model.StatusCliente.pas"/>
+        <DCCReference Include="Models\SDK.Model.SubGrupo.pas"/>
+        <DCCReference Include="Models\SDK.Model.Tanque.pas"/>
+        <DCCReference Include="Models\SDK.Model.Taxa.pas"/>
+        <DCCReference Include="Models\SDK.Model.TipoDesconto.pas"/>
+        <DCCReference Include="Models\SDK.Model.TipoDocumento.pas"/>
+        <DCCReference Include="Models\SDK.Model.TipoRecebimento.pas"/>
+        <DCCReference Include="Models\SDK.Model.TransacaoXMLNota.pas"/>
+        <DCCReference Include="Models\SDK.Model.Troca.pas"/>
+        <DCCReference Include="Models\SDK.Model.TrocaFormaPagamento.pas"/>
+        <DCCReference Include="Models\SDK.Model.Unidade.pas"/>
+        <DCCReference Include="Models\SDK.Model.Venda.pas"/>
+        <DCCReference Include="Models\SDK.Model.VendaCasada.pas"/>
+        <DCCReference Include="Models\SDK.Model.Zona.pas"/>
+        <DCCReference Include="SDK.PropertyDeserializers.pas"/>
+        <DCCReference Include="SDK.Enums.pas"/>
+        <DCCReference Include="Models\SDK.Model.TransacaoTef.pas"/>
+        <DCCReference Include="Services\SDK.Service.Abastecimento.pas"/>
+        <DCCReference Include="Services\SDK.Service.Agente.pas"/>
+        <DCCReference Include="Services\SDK.Service.Bairro.pas"/>
+        <DCCReference Include="Services\SDK.Service.Bandeira.pas"/>
+        <DCCReference Include="Services\SDK.Service.Bico.pas"/>
+        <DCCReference Include="Services\SDK.Service.Caixa.pas"/>
+        <DCCReference Include="Services\SDK.Service.Campo.pas"/>
+        <DCCReference Include="Services\SDK.Service.Cfop.pas"/>
+        <DCCReference Include="Services\SDK.Service.Cliente.pas"/>
+        <DCCReference Include="Services\SDK.Service.Combustivel.pas"/>
+        <DCCReference Include="Services\SDK.Service.Componente.pas"/>
+        <DCCReference Include="Services\SDK.Service.ComposicaoAlimento.pas"/>
+        <DCCReference Include="Services\SDK.Service.Composto.pas"/>
+        <DCCReference Include="Services\SDK.Service.ConfiguracaoPdv.pas"/>
+        <DCCReference Include="Services\SDK.Service.ContaAPagar.pas"/>
+        <DCCReference Include="Services\SDK.Service.ContaAPagarLiquidacao.pas"/>
+        <DCCReference Include="Services\SDK.Service.ContaAReceber.pas"/>
+        <DCCReference Include="Services\SDK.Service.ContaCorrente.pas"/>
+        <DCCReference Include="Services\SDK.Service.Controle.pas"/>
+        <DCCReference Include="Services\SDK.Service.ControleCargaPdv.pas"/>
+        <DCCReference Include="Services\SDK.Service.Corretor.pas"/>
+        <DCCReference Include="Services\SDK.Service.Csosn.pas"/>
+        <DCCReference Include="Services\SDK.Service.Cst.pas"/>
+        <DCCReference Include="Services\SDK.Service.Devolucao.pas"/>
+        <DCCReference Include="Services\SDK.Service.DocumentoNaoFiscalEmitido.pas"/>
+        <DCCReference Include="Services\SDK.Service.Ecf.pas"/>
+        <DCCReference Include="Services\SDK.Service.EmailGrupo.pas"/>
+        <DCCReference Include="Services\SDK.Service.EmailGrupoOcorrencia.pas"/>
+        <DCCReference Include="Services\SDK.Service.Entrega.pas"/>
+        <DCCReference Include="Services\SDK.Service.ErroPDV.pas"/>
+        <DCCReference Include="Services\SDK.Service.Estoque.pas"/>
+        <DCCReference Include="Services\SDK.Service.EstoqueMovimentacao.pas"/>
+        <DCCReference Include="Services\SDK.Service.FatoGerador.pas"/>
+        <DCCReference Include="Services\SDK.Service.Ficha.pas"/>
+        <DCCReference Include="Services\SDK.Service.FilaImpressao.pas"/>
+        <DCCReference Include="Services\SDK.Service.Finalizadora.pas"/>
+        <DCCReference Include="Services\SDK.Service.FiscoEcf.pas"/>
+        <DCCReference Include="Services\SDK.Service.Fornecedor.pas"/>
+        <DCCReference Include="Services\SDK.Service.Funcao.pas"/>
+        <DCCReference Include="Services\SDK.Service.Funcionario.pas"/>
+        <DCCReference Include="Services\SDK.Service.GarantiaEstendida.pas"/>
+        <DCCReference Include="Services\SDK.Service.Genero.pas"/>
+        <DCCReference Include="Services\SDK.Service.Grupo.pas"/>
+        <DCCReference Include="Services\SDK.Service.Local.pas"/>
+        <DCCReference Include="Services\SDK.Service.LocalImpressao.pas"/>
+        <DCCReference Include="Services\SDK.Service.MapaResumo.pas"/>
+        <DCCReference Include="Services\SDK.Service.Marca.pas"/>
+        <DCCReference Include="Services\SDK.Service.Moeda.pas"/>
+        <DCCReference Include="Services\SDK.Service.MoedaCotacao.pas"/>
+        <DCCReference Include="Services\SDK.Service.NaturezaImpostosFederais.pas"/>
+        <DCCReference Include="Services\SDK.Service.Nbs.pas"/>
+        <DCCReference Include="Services\SDK.Service.Ncm.pas"/>
+        <DCCReference Include="Services\SDK.Service.NotaFiscal.pas"/>
+        <DCCReference Include="Services\SDK.Service.Operacao.pas"/>
+        <DCCReference Include="Services\SDK.Service.OperacaoCfop.pas"/>
+        <DCCReference Include="Services\SDK.Service.Pagamento.pas"/>
+        <DCCReference Include="Services\SDK.Service.PagueContas.pas"/>
+        <DCCReference Include="Services\SDK.Service.PedidoVenda.pas"/>
+        <DCCReference Include="Services\SDK.Service.PlanoConta.pas"/>
+        <DCCReference Include="Services\SDK.Service.PlanoPagamento.pas"/>
+        <DCCReference Include="Services\SDK.Service.PreVenda.pas"/>
+        <DCCReference Include="Services\SDK.Service.Produto.pas"/>
+        <DCCReference Include="Services\SDK.Service.ProdutoAux.pas"/>
+        <DCCReference Include="Services\SDK.Service.PromocaoAssistida.pas"/>
+        <DCCReference Include="Services\SDK.Service.PromocaoMovimentacao.pas"/>
+        <DCCReference Include="Services\SDK.Service.Proprio.pas"/>
+        <DCCReference Include="Services\SDK.Service.Ramo.pas"/>
+        <DCCReference Include="Services\SDK.Service.Recebimento.pas"/>
+        <DCCReference Include="Services\SDK.Service.RecebimentoConvenio.pas"/>
+        <DCCReference Include="Services\SDK.Service.RecebimentoVendaAssistida.pas"/>
+        <DCCReference Include="Services\SDK.Service.Reducao.pas"/>
+        <DCCReference Include="Services\SDK.Service.SaidaOperador.pas"/>
+        <DCCReference Include="Services\SDK.Service.Sangria.pas"/>
+        <DCCReference Include="Services\SDK.Service.Secao.pas"/>
+        <DCCReference Include="Services\SDK.Service.SerieProduto.pas"/>
+        <DCCReference Include="Services\SDK.Service.Servico.pas"/>
+        <DCCReference Include="Services\SDK.Service.SpedDoc.pas"/>
+        <DCCReference Include="Services\SDK.Service.StatusCliente.pas"/>
+        <DCCReference Include="Services\SDK.Service.SubGrupo.pas"/>
+        <DCCReference Include="Services\SDK.Service.Tanque.pas"/>
+        <DCCReference Include="Services\SDK.Service.TipoDesconto.pas"/>
+        <DCCReference Include="Services\SDK.Service.TipoDocumento.pas"/>
+        <DCCReference Include="Services\SDK.Service.TipoRecebimento.pas"/>
+        <DCCReference Include="Services\SDK.Service.Troca.pas"/>
+        <DCCReference Include="Services\SDK.Service.TrocaFormaPagamento.pas"/>
+        <DCCReference Include="Services\SDK.Service.Unidade.pas"/>
+        <DCCReference Include="Services\SDK.Service.Venda.pas"/>
+        <DCCReference Include="Services\SDK.Service.VendaCasada.pas"/>
+        <DCCReference Include="Services\SDK.Service.Zona.pas"/>
+        <DCCReference Include="SDK.Exceptions.pas"/>
+        <DCCReference Include="SDK.SortParams.pas"/>
+        <BuildConfiguration Include="Debug">
+            <Key>Cfg_2</Key>
+            <CfgParent>Base</CfgParent>
+        </BuildConfiguration>
+        <BuildConfiguration Include="Base">
+            <Key>Base</Key>
+        </BuildConfiguration>
+        <BuildConfiguration Include="Release">
+            <Key>Cfg_1</Key>
+            <CfgParent>Base</CfgParent>
+        </BuildConfiguration>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Delphi.Personality.12</Borland.Personality>
+        <Borland.ProjectType>Package</Borland.ProjectType>
+        <BorlandProject>
+            <Delphi.Personality>
+                <Source>
+                    <Source Name="MainSource">VarejofacilSDK.dpk</Source>
+                </Source>
+                <Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k210.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\bcbofficexp210.bpl">Embarcadero C++Builder Office XP Servers Package</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp210.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+                </Excluded_Packages>
+            </Delphi.Personality>
+            <Platforms>
+                <Platform value="Android">False</Platform>
+                <Platform value="iOSDevice">False</Platform>
+                <Platform value="iOSSimulator">False</Platform>
+                <Platform value="OSX32">False</Platform>
+                <Platform value="Win32">True</Platform>
+            </Platforms>
+            <Deployment>
+                <DeployFile LocalName="..\..\..\..\..\..\..\Public\Documents\Embarcadero\Studio\15.0\Bpl\VarejofacilSDK.bpl" Configuration="Release" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>VarejofacilSDK.bpl</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="$(BDS)\Redist\osx32\libcgunwind.1.0.dylib" Class="DependencyModule">
+                    <Platform Name="OSX32">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="..\..\..\..\..\..\..\Public\Documents\Embarcadero\Studio\15.0\Bpl\VarejofacilSDK.bpl" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>VarejofacilSDK.bpl</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployClass Required="true" Name="DependencyPackage">
+                    <Platform Name="iOSDevice">
+                        <Operation>1</Operation>
+                        <Extensions>.dylib</Extensions>
+                    </Platform>
+                    <Platform Name="Win32">
+                        <Operation>0</Operation>
+                        <Extensions>.bpl</Extensions>
+                    </Platform>
+                    <Platform Name="OSX32">
+                        <Operation>1</Operation>
+                        <Extensions>.dylib</Extensions>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>1</Operation>
+                        <Extensions>.dylib</Extensions>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="DependencyModule">
+                    <Platform Name="OSX32">
+                        <Operation>1</Operation>
+                        <Extensions>.dylib</Extensions>
+                    </Platform>
+                    <Platform Name="Win32">
+                        <Operation>0</Operation>
+                        <Extensions>.dll;.bpl</Extensions>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="iPad_Launch2048">
+                    <Platform Name="iOSDevice">
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="ProjectOSXInfoPList"/>
+                <DeployClass Name="ProjectiOSDeviceDebug">
+                    <Platform Name="iOSDevice">
+                        <RemoteDir>..\$(PROJECTNAME).app.dSYM\Contents\Resources\DWARF</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="Android_SplashImage470">
+                    <Platform Name="Android">
+                        <RemoteDir>res\drawable-normal</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="AndroidLibnativeX86File">
+                    <Platform Name="Android">
+                        <RemoteDir>library\lib\x86</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="ProjectiOSResource">
+                    <Platform Name="iOSDevice">
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="ProjectOSXEntitlements"/>
+                <DeployClass Name="AndroidGDBServer">
+                    <Platform Name="Android">
+                        <RemoteDir>library\lib\armeabi-v7a</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="iPhone_Launch640">
+                    <Platform Name="iOSDevice">
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="Android_SplashImage960">
+                    <Platform Name="Android">
+                        <RemoteDir>res\drawable-xlarge</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="Android_LauncherIcon96">
+                    <Platform Name="Android">
+                        <RemoteDir>res\drawable-xhdpi</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="iPhone_Launch320">
+                    <Platform Name="iOSDevice">
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="Android_LauncherIcon144">
+                    <Platform Name="Android">
+                        <RemoteDir>res\drawable-xxhdpi</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="AndroidLibnativeMipsFile">
+                    <Platform Name="Android">
+                        <RemoteDir>library\lib\mips</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="AndroidSplashImageDef">
+                    <Platform Name="Android">
+                        <RemoteDir>res\drawable</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="DebugSymbols">
+                    <Platform Name="OSX32">
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="Win32">
+                        <Operation>0</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="DependencyFramework">
+                    <Platform Name="OSX32">
+                        <Operation>1</Operation>
+                        <Extensions>.framework</Extensions>
+                    </Platform>
+                    <Platform Name="Win32">
+                        <Operation>0</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="Android_SplashImage426">
+                    <Platform Name="Android">
+                        <RemoteDir>res\drawable-small</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="ProjectiOSEntitlements"/>
+                <DeployClass Name="AdditionalDebugSymbols">
+                    <Platform Name="OSX32">
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="Win32">
+                        <RemoteDir>Contents\MacOS</RemoteDir>
+                        <Operation>0</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="AndroidClassesDexFile">
+                    <Platform Name="Android">
+                        <RemoteDir>classes</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="ProjectiOSInfoPList"/>
+                <DeployClass Name="iPad_Launch1024">
+                    <Platform Name="iOSDevice">
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="Android_DefaultAppIcon">
+                    <Platform Name="Android">
+                        <RemoteDir>res\drawable</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="ProjectOSXResource">
+                    <Platform Name="OSX32">
+                        <RemoteDir>Contents\Resources</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="ProjectiOSDeviceResourceRules"/>
+                <DeployClass Name="iPad_Launch768">
+                    <Platform Name="iOSDevice">
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Required="true" Name="ProjectOutput">
+                    <Platform Name="iOSDevice">
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="Android">
+                        <RemoteDir>library\lib\armeabi-v7a</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="Win32">
+                        <Operation>0</Operation>
+                    </Platform>
+                    <Platform Name="OSX32">
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="AndroidLibnativeArmeabiFile">
+                    <Platform Name="Android">
+                        <RemoteDir>library\lib\armeabi</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="Android_SplashImage640">
+                    <Platform Name="Android">
+                        <RemoteDir>res\drawable-large</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="File">
+                    <Platform Name="iOSDevice">
+                        <Operation>0</Operation>
+                    </Platform>
+                    <Platform Name="Android">
+                        <Operation>0</Operation>
+                    </Platform>
+                    <Platform Name="Win32">
+                        <Operation>0</Operation>
+                    </Platform>
+                    <Platform Name="OSX32">
+                        <Operation>0</Operation>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>0</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="iPhone_Launch640x1136">
+                    <Platform Name="iOSDevice">
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="Android_LauncherIcon36">
+                    <Platform Name="Android">
+                        <RemoteDir>res\drawable-ldpi</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="AndroidSplashStyles">
+                    <Platform Name="Android">
+                        <RemoteDir>res\values</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="iPad_Launch1536">
+                    <Platform Name="iOSDevice">
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="Android_LauncherIcon48">
+                    <Platform Name="Android">
+                        <RemoteDir>res\drawable-mdpi</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="Android_LauncherIcon72">
+                    <Platform Name="Android">
+                        <RemoteDir>res\drawable-hdpi</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="ProjectAndroidManifest">
+                    <Platform Name="Android">
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <ProjectRoot Platform="Android" Name="$(PROJECTNAME)"/>
+                <ProjectRoot Platform="iOSDevice" Name="$(PROJECTNAME).app"/>
+                <ProjectRoot Platform="Win32" Name="$(PROJECTNAME)"/>
+                <ProjectRoot Platform="OSX32" Name="$(PROJECTNAME)"/>
+                <ProjectRoot Platform="iOSSimulator" Name="$(PROJECTNAME).app"/>
+                <ProjectRoot Platform="Win64" Name="$(PROJECTNAME)"/>
+            </Deployment>
+            <UnitTesting>
+                <TestProjectName>C:\Users\developer\Documents\Embarcadero\Studio\Projects\VarejofacilSDK\VarejofacilSDKTests\VarejofacilSDKTests.dproj</TestProjectName>
+            </UnitTesting>
+        </BorlandProject>
+        <ProjectFileVersion>12</ProjectFileVersion>
+    </ProjectExtensions>
+    <Import Project="$(BDS)\Bin\CodeGear.Delphi.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')"/>
+    <Import Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj" Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj')"/>
+    <Import Project="$(MSBuildProjectName).deployproj" Condition="Exists('$(MSBuildProjectName).deployproj')"/>
+</Project>
