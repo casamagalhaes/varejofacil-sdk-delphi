@@ -5,7 +5,7 @@ unit SDK.Types;
 interface
 
 uses
-  SysUtils, Classes, XMLDoc, XMLIntf, TypInfo;
+  SysUtils, Classes, XMLDoc, XMLIntf, TypInfo, Generics.Collections;
 
 const
   CURRENT_TIMEZONE = -(3 * 3600);
@@ -19,6 +19,12 @@ type
   TCustomXMLNodeArray = array of IXMLNode;
 
   TStringArray = array of TString;
+
+  TLongList = TList<Int64>;
+
+  TDouble = double;
+
+  TCharacter = char;
 
   TInterfacedPersistentClass = class of TInterfacedPersistent;
 

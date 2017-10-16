@@ -8,7 +8,7 @@ uses
 type
 
   INCM = interface(IModel)
-    ['{ACBC93B7-6220-4A1D-BC88-BF4BBC74F3EE}']
+    ['{B6E40182-550D-435C-8887-21C19BA1921C}']
     function GetId: Int64;
     procedure SetId(const AId: Int64);
     function GetDescricao: TString;
@@ -23,7 +23,7 @@ type
   TNCMList = class;
 
   INCMList = interface
-	['{EDF18978-280A-4555-A836-7E90340149DF}']
+	['{A63BC240-425C-4059-8999-4D11A7901C48}']
     function GetReference: TNCMList;
     function GetItems(AIndex: Integer): INCM;
     procedure SetItems(AIndex: Integer; const Value: INCM);
@@ -68,7 +68,7 @@ type
     class operator Implicit(AListRec: TNCMListRec): TNCMList;
   end;
 
-  TNCM = class(TInterfacedObject, INCM)
+  TNCM = class(TInterfacedModel, INCM)
   private
 	FId: Int64;
 	FDescricao: TString;

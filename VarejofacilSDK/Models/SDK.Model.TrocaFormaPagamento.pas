@@ -8,7 +8,7 @@ uses
 type
 
   ITrocaFormaPagamento = interface(IModel)
-    ['{BFD3A72B-7CD6-4068-B3AD-E249A6E77DF7}']
+    ['{A79D9208-8083-4E50-90FC-7708936EA139}']
     function GetId: TString;
     procedure SetId(const AId: TString);
     function GetSequencial: TString;
@@ -59,7 +59,7 @@ type
   TTrocaFormaPagamentoList = class;
 
   ITrocaFormaPagamentoList = interface
-	['{95DC30CE-E13F-4591-8384-0D5E14215F0A}']
+	['{6CF4A895-7D29-46DF-9C13-EA9D78FEAA48}']
     function GetReference: TTrocaFormaPagamentoList;
     function GetItems(AIndex: Integer): ITrocaFormaPagamento;
     procedure SetItems(AIndex: Integer; const Value: ITrocaFormaPagamento);
@@ -104,7 +104,7 @@ type
     class operator Implicit(AListRec: TTrocaFormaPagamentoListRec): TTrocaFormaPagamentoList;
   end;
 
-  TTrocaFormaPagamento = class(TInterfacedObject, ITrocaFormaPagamento)
+  TTrocaFormaPagamento = class(TInterfacedModel, ITrocaFormaPagamento)
   private
 	FId: TString;
 	FSequencial: TString;

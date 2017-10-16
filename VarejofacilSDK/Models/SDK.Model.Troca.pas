@@ -3,12 +3,12 @@
 interface
 
 uses
-  SysUtils, Classes, SDK.Types, SDK.Enums;
+  SysUtils, Classes, SDK.Types, SDK.Enums, SDK.Model.ItemTroca;
 
 type
 
   ITroca = interface(IModel)
-    ['{64EA2ADC-92E3-4657-9025-AEAE01E13123}']
+    ['{EE4CA8A9-894A-4219-B05B-910AB1FD9FE8}']
     function GetId: TString;
     procedure SetId(const AId: TString);
     function GetCooECF: Integer;
@@ -57,8 +57,8 @@ type
     procedure SetVendedorId(const AVendedorId: TString);
     function GetCodigoNaRetaguarda: Int64;
     procedure SetCodigoNaRetaguarda(const ACodigoNaRetaguarda: Int64);
-    function GetItensTroca: TList<ItemTroca>;
-    procedure SetItensTroca(const AItensTroca: TList<ItemTroca>);
+    function GetItensTroca: TItemTrocaList;
+    procedure SetItensTroca(const AItensTroca: TItemTrocaList);
     property Id: TString read GetId write SetId;
     property CooECF: Integer read GetCooECF write SetCooECF;
     property OperadorId: TString read GetOperadorId write SetOperadorId;
@@ -83,13 +83,13 @@ type
     property ModeloImpressora: TModeloImpressora read GetModeloImpressora write SetModeloImpressora;
     property VendedorId: TString read GetVendedorId write SetVendedorId;
     property CodigoNaRetaguarda: Int64 read GetCodigoNaRetaguarda write SetCodigoNaRetaguarda;
-    property ItensTroca: TList<ItemTroca> read GetItensTroca write SetItensTroca;
+    property ItensTroca: TItemTrocaList read GetItensTroca write SetItensTroca;
   end;
 
   TTrocaList = class;
 
   ITrocaList = interface
-	['{5E75ED8D-E514-4F10-AEAE-A1EFFC971E32}']
+	['{D9A0ADDE-444F-4075-B261-EF63A09D04FA}']
     function GetReference: TTrocaList;
     function GetItems(AIndex: Integer): ITroca;
     procedure SetItems(AIndex: Integer; const Value: ITroca);
@@ -134,7 +134,7 @@ type
     class operator Implicit(AListRec: TTrocaListRec): TTrocaList;
   end;
 
-  TTroca = class(TInterfacedObject, ITroca)
+  TTroca = class(TInterfacedModel, ITroca)
   private
 	FId: TString;
 	FCooECF: Integer;
@@ -160,7 +160,7 @@ type
 	FModeloImpressora: TModeloImpressora;
 	FVendedorId: TString;
 	FCodigoNaRetaguarda: Int64;
-	FItensTroca: TList<ItemTroca>;
+	FItensTroca: TItemTrocaList;
     function GetId: TString;
     procedure SetId(const AId: TString);
     function GetCooECF: Integer;
@@ -209,8 +209,8 @@ type
     procedure SetVendedorId(const AVendedorId: TString);
     function GetCodigoNaRetaguarda: Int64;
     procedure SetCodigoNaRetaguarda(const ACodigoNaRetaguarda: Int64);
-    function GetItensTroca: TList<ItemTroca>;
-    procedure SetItensTroca(const AItensTroca: TList<ItemTroca>);
+    function GetItensTroca: TItemTrocaList;
+    procedure SetItensTroca(const AItensTroca: TItemTrocaList);
   public
     property Id: TString read GetId write SetId;
     property CooECF: Integer read GetCooECF write SetCooECF;
@@ -236,7 +236,7 @@ type
     property ModeloImpressora: TModeloImpressora read GetModeloImpressora write SetModeloImpressora;
     property VendedorId: TString read GetVendedorId write SetVendedorId;
     property CodigoNaRetaguarda: Int64 read GetCodigoNaRetaguarda write SetCodigoNaRetaguarda;
-    property ItensTroca: TList<ItemTroca> read GetItensTroca write SetItensTroca;
+    property ItensTroca: TItemTrocaList read GetItensTroca write SetItensTroca;
   end;
 
 implementation
@@ -565,12 +565,12 @@ begin
   FCodigoNaRetaguarda := ACodigoNaRetaguarda;
 end;
 
-function TTroca.GetItensTroca: TList<ItemTroca>;
+function TTroca.GetItensTroca: TItemTrocaList;
 begin
   Result := FItensTroca;
 end;
 
-procedure TTroca.SetItensTroca(const AItensTroca: TList<ItemTroca>);
+procedure TTroca.SetItensTroca(const AItensTroca: TItemTrocaList);
 begin
   FItensTroca := AItensTroca;
 end;

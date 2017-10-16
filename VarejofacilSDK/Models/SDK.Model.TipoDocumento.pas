@@ -8,7 +8,7 @@ uses
 type
 
   ITipoDocumento = interface(IModel)
-    ['{0EEC1F3D-B1DF-409C-9BB0-1C95FAF64DCD}']
+    ['{2C923624-ECCD-4DF6-A03C-1E60E9F3B9BB}']
     function GetId: Integer;
     procedure SetId(const AId: Integer);
     function GetDescricao: TString;
@@ -20,7 +20,7 @@ type
   TTipoDocumentoList = class;
 
   ITipoDocumentoList = interface
-	['{1F5D99CF-5ED2-44D5-ABD7-D13AE499F371}']
+	['{818EC8BA-5269-42A1-904A-76B347CEF9B4}']
     function GetReference: TTipoDocumentoList;
     function GetItems(AIndex: Integer): ITipoDocumento;
     procedure SetItems(AIndex: Integer; const Value: ITipoDocumento);
@@ -65,7 +65,7 @@ type
     class operator Implicit(AListRec: TTipoDocumentoListRec): TTipoDocumentoList;
   end;
 
-  TTipoDocumento = class(TInterfacedObject, ITipoDocumento)
+  TTipoDocumento = class(TInterfacedModel, ITipoDocumento)
   private
 	FId: Integer;
 	FDescricao: TString;

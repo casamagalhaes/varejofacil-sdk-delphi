@@ -8,7 +8,7 @@ uses
 type
 
   ISubGrupo = interface(IModel)
-    ['{51D024CB-44A1-4777-ABCE-905EEA137A42}']
+    ['{DFD8B362-76C9-4E0A-AAAB-E1E348B82D22}']
     function GetId: Integer;
     procedure SetId(const AId: Integer);
     function GetDescricao: TString;
@@ -20,7 +20,7 @@ type
   TSubGrupoList = class;
 
   ISubGrupoList = interface
-	['{3750895A-A4E4-4AE9-A3AA-F2DA7FE52F84}']
+	['{40BEE597-647D-46BE-9BDF-15B530674C7C}']
     function GetReference: TSubGrupoList;
     function GetItems(AIndex: Integer): ISubGrupo;
     procedure SetItems(AIndex: Integer; const Value: ISubGrupo);
@@ -65,7 +65,7 @@ type
     class operator Implicit(AListRec: TSubGrupoListRec): TSubGrupoList;
   end;
 
-  TSubGrupo = class(TInterfacedObject, ISubGrupo)
+  TSubGrupo = class(TInterfacedModel, ISubGrupo)
   private
 	FId: Integer;
 	FDescricao: TString;

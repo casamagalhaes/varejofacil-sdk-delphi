@@ -3,12 +3,13 @@
 interface
 
 uses
-  SysUtils, Classes, SDK.Types, SDK.Enums;
+  SysUtils, Classes, SDK.Types, SDK.Enums, SDK.Model.RegimeEstadualProduto, SDK.Model.ItemImpostoFederal,
+  SDK.Model.PautaDoProduto, SDK.Model.EstoqueDoProduto;
 
 type
 
   IProduto = interface(IModel)
-    ['{4FEFA47F-E836-4F21-A217-10057BA5BEC8}']
+    ['{48A4F7F9-2328-4F1A-9689-37C018CA8F44}']
     function GetId: Int64;
     procedure SetId(const AId: Int64);
     function GetProdutoDestinoId: Int64;
@@ -185,18 +186,18 @@ type
     procedure SetFornecedorId(const AFornecedorId: Int64);
     function GetLocalDeImpressaoId: Int64;
     procedure SetLocalDeImpressaoId(const ALocalDeImpressaoId: Int64);
-    function GetAplicacoesIds: TList<Long>;
-    procedure SetAplicacoesIds(const AAplicacoesIds: TList<Long>);
-    function GetCaracteristicasIds: TList<Long>;
-    procedure SetCaracteristicasIds(const ACaracteristicasIds: TList<Long>);
-    function GetRegimesDoProduto: TList<RegimeEstadualProduto>;
-    procedure SetRegimesDoProduto(const ARegimesDoProduto: TList<RegimeEstadualProduto>);
-    function GetItensImpostosFederais: TList<ItemImpostoFederal>;
-    procedure SetItensImpostosFederais(const AItensImpostosFederais: TList<ItemImpostoFederal>);
-    function GetPautasDoProduto: TList<PautaDoProduto>;
-    procedure SetPautasDoProduto(const APautasDoProduto: TList<PautaDoProduto>);
-    function GetEstoqueDoProduto: TList<EstoqueDoProduto>;
-    procedure SetEstoqueDoProduto(const AEstoqueDoProduto: TList<EstoqueDoProduto>);
+    function GetAplicacoesIds: TLongList;
+    procedure SetAplicacoesIds(const AAplicacoesIds: TLongList);
+    function GetCaracteristicasIds: TLongList;
+    procedure SetCaracteristicasIds(const ACaracteristicasIds: TLongList);
+    function GetRegimesDoProduto: TRegimeEstadualProdutoList;
+    procedure SetRegimesDoProduto(const ARegimesDoProduto: TRegimeEstadualProdutoList);
+    function GetItensImpostosFederais: TItemImpostoFederalList;
+    procedure SetItensImpostosFederais(const AItensImpostosFederais: TItemImpostoFederalList);
+    function GetPautasDoProduto: TPautaDoProdutoList;
+    procedure SetPautasDoProduto(const APautasDoProduto: TPautaDoProdutoList);
+    function GetEstoqueDoProduto: TEstoqueDoProdutoList;
+    procedure SetEstoqueDoProduto(const AEstoqueDoProduto: TEstoqueDoProdutoList);
     property Id: Int64 read GetId write SetId;
     property ProdutoDestinoId: Int64 read GetProdutoDestinoId write SetProdutoDestinoId;
     property SubgrupoId: Integer read GetSubgrupoId write SetSubgrupoId;
@@ -285,18 +286,18 @@ type
     property FuncionarioId: Integer read GetFuncionarioId write SetFuncionarioId;
     property FornecedorId: Int64 read GetFornecedorId write SetFornecedorId;
     property LocalDeImpressaoId: Int64 read GetLocalDeImpressaoId write SetLocalDeImpressaoId;
-    property AplicacoesIds: TList<Long> read GetAplicacoesIds write SetAplicacoesIds;
-    property CaracteristicasIds: TList<Long> read GetCaracteristicasIds write SetCaracteristicasIds;
-    property RegimesDoProduto: TList<RegimeEstadualProduto> read GetRegimesDoProduto write SetRegimesDoProduto;
-    property ItensImpostosFederais: TList<ItemImpostoFederal> read GetItensImpostosFederais write SetItensImpostosFederais;
-    property PautasDoProduto: TList<PautaDoProduto> read GetPautasDoProduto write SetPautasDoProduto;
-    property EstoqueDoProduto: TList<EstoqueDoProduto> read GetEstoqueDoProduto write SetEstoqueDoProduto;
+    property AplicacoesIds: TLongList read GetAplicacoesIds write SetAplicacoesIds;
+    property CaracteristicasIds: TLongList read GetCaracteristicasIds write SetCaracteristicasIds;
+    property RegimesDoProduto: TRegimeEstadualProdutoList read GetRegimesDoProduto write SetRegimesDoProduto;
+    property ItensImpostosFederais: TItemImpostoFederalList read GetItensImpostosFederais write SetItensImpostosFederais;
+    property PautasDoProduto: TPautaDoProdutoList read GetPautasDoProduto write SetPautasDoProduto;
+    property EstoqueDoProduto: TEstoqueDoProdutoList read GetEstoqueDoProduto write SetEstoqueDoProduto;
   end;
 
   TProdutoList = class;
 
   IProdutoList = interface
-	['{EF4328C2-6149-447B-8AD6-85E142C396E0}']
+	['{AE9EA4A3-1D81-46B1-B842-4919304E8DFE}']
     function GetReference: TProdutoList;
     function GetItems(AIndex: Integer): IProduto;
     procedure SetItems(AIndex: Integer; const Value: IProduto);
@@ -341,7 +342,7 @@ type
     class operator Implicit(AListRec: TProdutoListRec): TProdutoList;
   end;
 
-  TProduto = class(TInterfacedObject, IProduto)
+  TProduto = class(TInterfacedModel, IProduto)
   private
 	FId: Int64;
 	FProdutoDestinoId: Int64;
@@ -431,12 +432,12 @@ type
 	FFuncionarioId: Integer;
 	FFornecedorId: Int64;
 	FLocalDeImpressaoId: Int64;
-	FAplicacoesIds: TList<Long>;
-	FCaracteristicasIds: TList<Long>;
-	FRegimesDoProduto: TList<RegimeEstadualProduto>;
-	FItensImpostosFederais: TList<ItemImpostoFederal>;
-	FPautasDoProduto: TList<PautaDoProduto>;
-	FEstoqueDoProduto: TList<EstoqueDoProduto>;
+	FAplicacoesIds: TLongList;
+	FCaracteristicasIds: TLongList;
+	FRegimesDoProduto: TRegimeEstadualProdutoList;
+	FItensImpostosFederais: TItemImpostoFederalList;
+	FPautasDoProduto: TPautaDoProdutoList;
+	FEstoqueDoProduto: TEstoqueDoProdutoList;
     function GetId: Int64;
     procedure SetId(const AId: Int64);
     function GetProdutoDestinoId: Int64;
@@ -613,18 +614,18 @@ type
     procedure SetFornecedorId(const AFornecedorId: Int64);
     function GetLocalDeImpressaoId: Int64;
     procedure SetLocalDeImpressaoId(const ALocalDeImpressaoId: Int64);
-    function GetAplicacoesIds: TList<Long>;
-    procedure SetAplicacoesIds(const AAplicacoesIds: TList<Long>);
-    function GetCaracteristicasIds: TList<Long>;
-    procedure SetCaracteristicasIds(const ACaracteristicasIds: TList<Long>);
-    function GetRegimesDoProduto: TList<RegimeEstadualProduto>;
-    procedure SetRegimesDoProduto(const ARegimesDoProduto: TList<RegimeEstadualProduto>);
-    function GetItensImpostosFederais: TList<ItemImpostoFederal>;
-    procedure SetItensImpostosFederais(const AItensImpostosFederais: TList<ItemImpostoFederal>);
-    function GetPautasDoProduto: TList<PautaDoProduto>;
-    procedure SetPautasDoProduto(const APautasDoProduto: TList<PautaDoProduto>);
-    function GetEstoqueDoProduto: TList<EstoqueDoProduto>;
-    procedure SetEstoqueDoProduto(const AEstoqueDoProduto: TList<EstoqueDoProduto>);
+    function GetAplicacoesIds: TLongList;
+    procedure SetAplicacoesIds(const AAplicacoesIds: TLongList);
+    function GetCaracteristicasIds: TLongList;
+    procedure SetCaracteristicasIds(const ACaracteristicasIds: TLongList);
+    function GetRegimesDoProduto: TRegimeEstadualProdutoList;
+    procedure SetRegimesDoProduto(const ARegimesDoProduto: TRegimeEstadualProdutoList);
+    function GetItensImpostosFederais: TItemImpostoFederalList;
+    procedure SetItensImpostosFederais(const AItensImpostosFederais: TItemImpostoFederalList);
+    function GetPautasDoProduto: TPautaDoProdutoList;
+    procedure SetPautasDoProduto(const APautasDoProduto: TPautaDoProdutoList);
+    function GetEstoqueDoProduto: TEstoqueDoProdutoList;
+    procedure SetEstoqueDoProduto(const AEstoqueDoProduto: TEstoqueDoProdutoList);
   public
     property Id: Int64 read GetId write SetId;
     property ProdutoDestinoId: Int64 read GetProdutoDestinoId write SetProdutoDestinoId;
@@ -714,12 +715,12 @@ type
     property FuncionarioId: Integer read GetFuncionarioId write SetFuncionarioId;
     property FornecedorId: Int64 read GetFornecedorId write SetFornecedorId;
     property LocalDeImpressaoId: Int64 read GetLocalDeImpressaoId write SetLocalDeImpressaoId;
-    property AplicacoesIds: TList<Long> read GetAplicacoesIds write SetAplicacoesIds;
-    property CaracteristicasIds: TList<Long> read GetCaracteristicasIds write SetCaracteristicasIds;
-    property RegimesDoProduto: TList<RegimeEstadualProduto> read GetRegimesDoProduto write SetRegimesDoProduto;
-    property ItensImpostosFederais: TList<ItemImpostoFederal> read GetItensImpostosFederais write SetItensImpostosFederais;
-    property PautasDoProduto: TList<PautaDoProduto> read GetPautasDoProduto write SetPautasDoProduto;
-    property EstoqueDoProduto: TList<EstoqueDoProduto> read GetEstoqueDoProduto write SetEstoqueDoProduto;
+    property AplicacoesIds: TLongList read GetAplicacoesIds write SetAplicacoesIds;
+    property CaracteristicasIds: TLongList read GetCaracteristicasIds write SetCaracteristicasIds;
+    property RegimesDoProduto: TRegimeEstadualProdutoList read GetRegimesDoProduto write SetRegimesDoProduto;
+    property ItensImpostosFederais: TItemImpostoFederalList read GetItensImpostosFederais write SetItensImpostosFederais;
+    property PautasDoProduto: TPautaDoProdutoList read GetPautasDoProduto write SetPautasDoProduto;
+    property EstoqueDoProduto: TEstoqueDoProdutoList read GetEstoqueDoProduto write SetEstoqueDoProduto;
   end;
 
 implementation
@@ -1688,62 +1689,62 @@ begin
   FLocalDeImpressaoId := ALocalDeImpressaoId;
 end;
 
-function TProduto.GetAplicacoesIds: TList<Long>;
+function TProduto.GetAplicacoesIds: TLongList;
 begin
   Result := FAplicacoesIds;
 end;
 
-procedure TProduto.SetAplicacoesIds(const AAplicacoesIds: TList<Long>);
+procedure TProduto.SetAplicacoesIds(const AAplicacoesIds: TLongList);
 begin
   FAplicacoesIds := AAplicacoesIds;
 end;
 
-function TProduto.GetCaracteristicasIds: TList<Long>;
+function TProduto.GetCaracteristicasIds: TLongList;
 begin
   Result := FCaracteristicasIds;
 end;
 
-procedure TProduto.SetCaracteristicasIds(const ACaracteristicasIds: TList<Long>);
+procedure TProduto.SetCaracteristicasIds(const ACaracteristicasIds: TLongList);
 begin
   FCaracteristicasIds := ACaracteristicasIds;
 end;
 
-function TProduto.GetRegimesDoProduto: TList<RegimeEstadualProduto>;
+function TProduto.GetRegimesDoProduto: TRegimeEstadualProdutoList;
 begin
   Result := FRegimesDoProduto;
 end;
 
-procedure TProduto.SetRegimesDoProduto(const ARegimesDoProduto: TList<RegimeEstadualProduto>);
+procedure TProduto.SetRegimesDoProduto(const ARegimesDoProduto: TRegimeEstadualProdutoList);
 begin
   FRegimesDoProduto := ARegimesDoProduto;
 end;
 
-function TProduto.GetItensImpostosFederais: TList<ItemImpostoFederal>;
+function TProduto.GetItensImpostosFederais: TItemImpostoFederalList;
 begin
   Result := FItensImpostosFederais;
 end;
 
-procedure TProduto.SetItensImpostosFederais(const AItensImpostosFederais: TList<ItemImpostoFederal>);
+procedure TProduto.SetItensImpostosFederais(const AItensImpostosFederais: TItemImpostoFederalList);
 begin
   FItensImpostosFederais := AItensImpostosFederais;
 end;
 
-function TProduto.GetPautasDoProduto: TList<PautaDoProduto>;
+function TProduto.GetPautasDoProduto: TPautaDoProdutoList;
 begin
   Result := FPautasDoProduto;
 end;
 
-procedure TProduto.SetPautasDoProduto(const APautasDoProduto: TList<PautaDoProduto>);
+procedure TProduto.SetPautasDoProduto(const APautasDoProduto: TPautaDoProdutoList);
 begin
   FPautasDoProduto := APautasDoProduto;
 end;
 
-function TProduto.GetEstoqueDoProduto: TList<EstoqueDoProduto>;
+function TProduto.GetEstoqueDoProduto: TEstoqueDoProdutoList;
 begin
   Result := FEstoqueDoProduto;
 end;
 
-procedure TProduto.SetEstoqueDoProduto(const AEstoqueDoProduto: TList<EstoqueDoProduto>);
+procedure TProduto.SetEstoqueDoProduto(const AEstoqueDoProduto: TEstoqueDoProdutoList);
 begin
   FEstoqueDoProduto := AEstoqueDoProduto;
 end;

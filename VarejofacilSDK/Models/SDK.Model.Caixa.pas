@@ -8,7 +8,7 @@ uses
 type
 
   ICaixa = interface(IModel)
-    ['{274597ED-D568-48B3-AF5B-480CD534C137}']
+    ['{15F9E255-E8F9-497E-BD0E-74F21B42CE84}']
     function GetId: TString;
     procedure SetId(const AId: TString);
     function GetLojaId: Int64;
@@ -44,7 +44,7 @@ type
   TCaixaList = class;
 
   ICaixaList = interface
-	['{2D353BD3-6296-439D-9BFF-826C045EE768}']
+	['{A6640812-180D-4453-B6F3-9FAC53DD872A}']
     function GetReference: TCaixaList;
     function GetItems(AIndex: Integer): ICaixa;
     procedure SetItems(AIndex: Integer; const Value: ICaixa);
@@ -89,7 +89,7 @@ type
     class operator Implicit(AListRec: TCaixaListRec): TCaixaList;
   end;
 
-  TCaixa = class(TInterfacedObject, ICaixa)
+  TCaixa = class(TInterfacedModel, ICaixa)
   private
 	FId: TString;
 	FLojaId: Int64;

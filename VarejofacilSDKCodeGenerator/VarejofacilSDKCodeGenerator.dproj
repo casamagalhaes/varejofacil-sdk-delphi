@@ -1,4 +1,4 @@
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
         <ProjectGuid>{8E23D56C-7E1C-4E31-8F57-FCB0387369E2}</ProjectGuid>
         <ProjectVersion>16.1</ProjectVersion>
@@ -112,7 +112,7 @@
         <DCC_RemoteDebug>true</DCC_RemoteDebug>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
-        <Debugger_RunParams>/models /filter:Test*</Debugger_RunParams>
+        <Debugger_RunParams>/models /filter:SDK.Model.*</Debugger_RunParams>
         <PostBuildEvent><![CDATA[copy *.tpl ".\$(Platform)\$(Config)\" 
  copy *.ini ".\$(Platform)\$(Config)\"
 $(PostBuildEvent)]]></PostBuildEvent>
@@ -164,17 +164,17 @@ $(PostBuildEvent)]]></PostBuildEvent>
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment>
-                <DeployFile LocalName="Win32\Debug\VarejofacilSDKCodeGenerator.exe" Configuration="Debug" Class="ProjectOutput">
-                    <Platform Name="Win32">
-                        <RemoteName>VarejofacilSDKCodeGenerator.exe</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployFile LocalName="$(BDS)\Redist\osx32\libcgunwind.1.0.dylib" Class="DependencyModule">
                     <Platform Name="OSX32">
                         <Overwrite>true</Overwrite>
                     </Platform>
                     <Platform Name="iOSSimulator">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Win32\Debug\VarejofacilSDKCodeGenerator.exe" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>VarejofacilSDKCodeGenerator.exe</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -529,9 +529,7 @@ $(PostBuildEvent)]]></PostBuildEvent>
         <PreBuildEventIgnoreExitCode>False</PreBuildEventIgnoreExitCode>
         <PreLinkEvent/>
         <PreLinkEventIgnoreExitCode>False</PreLinkEventIgnoreExitCode>
-        <PostBuildEvent>copy *.tpl &quot;.\$(Platform)\$(Config)\&quot; 
-&amp;&amp; copy *.ini &quot;.\$(Platform)\$(Config)\&quot;
-</PostBuildEvent>
+        <PostBuildEvent>copy *.tpl &quot;.\$(Platform)\$(Config)\&quot; &amp;&amp; copy *.ini &quot;.\$(Platform)\$(Config)\&quot;</PostBuildEvent>
         <PostBuildEventIgnoreExitCode>False</PostBuildEventIgnoreExitCode>
     </PropertyGroup>
 </Project>

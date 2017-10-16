@@ -8,7 +8,7 @@ uses
 type
 
   IFinalizadora = interface(IModel)
-    ['{69C0BD05-49E3-4344-AE96-ACF94DF30537}']
+    ['{D7C4BF81-4BAF-4707-892C-C428F0FA2E9D}']
     function GetId: Integer;
     procedure SetId(const AId: Integer);
     function GetDescricao: TString;
@@ -23,7 +23,7 @@ type
   TFinalizadoraList = class;
 
   IFinalizadoraList = interface
-	['{14308B76-8138-4233-B496-E49E128A0226}']
+	['{180F859D-11BB-4BCB-9D5D-9398EB9D413C}']
     function GetReference: TFinalizadoraList;
     function GetItems(AIndex: Integer): IFinalizadora;
     procedure SetItems(AIndex: Integer; const Value: IFinalizadora);
@@ -68,7 +68,7 @@ type
     class operator Implicit(AListRec: TFinalizadoraListRec): TFinalizadoraList;
   end;
 
-  TFinalizadora = class(TInterfacedObject, IFinalizadora)
+  TFinalizadora = class(TInterfacedModel, IFinalizadora)
   private
 	FId: Integer;
 	FDescricao: TString;

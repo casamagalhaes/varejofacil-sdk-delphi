@@ -3,12 +3,12 @@
 interface
 
 uses
-  SysUtils, Classes, SDK.Types, SDK.Enums;
+  SysUtils, Classes, SDK.Types, SDK.Enums, SDK.Model.Endereco;
 
 type
 
   IFornecedor = interface(IModel)
-    ['{03E8049C-66F0-42D8-846D-6BC71D5E7EBD}']
+    ['{AA61516C-0D8E-4771-80A0-7E33B185A76D}']
     function GetId: Int64;
     procedure SetId(const AId: Int64);
     function GetContato: TString;
@@ -113,7 +113,7 @@ type
   TFornecedorList = class;
 
   IFornecedorList = interface
-	['{0F702B50-4E4C-4A61-A4DA-FD62C84A52F4}']
+	['{CCC3CE7F-F560-44D4-B08B-1831107B580B}']
     function GetReference: TFornecedorList;
     function GetItems(AIndex: Integer): IFornecedor;
     procedure SetItems(AIndex: Integer; const Value: IFornecedor);
@@ -158,7 +158,7 @@ type
     class operator Implicit(AListRec: TFornecedorListRec): TFornecedorList;
   end;
 
-  TFornecedor = class(TInterfacedObject, IFornecedor)
+  TFornecedor = class(TInterfacedModel, IFornecedor)
   private
 	FId: Int64;
 	FContato: TString;

@@ -8,7 +8,7 @@ uses
 type
 
   IVenda = interface(IModel)
-    ['{DD317BBA-5DB4-474E-A563-BD26055F06C2}']
+    ['{8B03BEF9-740B-4E28-B2D9-BFB29935EC46}']
     function GetId: TString;
     procedure SetId(const AId: TString);
     function GetSequencial: TString;
@@ -69,10 +69,10 @@ type
     procedure SetTransacaoVendaEnvelope(const ATransacaoVendaEnvelope: TString);
     function GetSequencialOperador: TString;
     procedure SetSequencialOperador(const ASequencialOperador: TString);
-    function GetAbonoServico: Tboolean;
-    procedure SetAbonoServico(const AAbonoServico: Tboolean);
-    function GetImprimiuNotaFiscal: Tboolean;
-    procedure SetImprimiuNotaFiscal(const AImprimiuNotaFiscal: Tboolean);
+    function GetAbonoServico: Boolean;
+    procedure SetAbonoServico(const AAbonoServico: Boolean);
+    function GetImprimiuNotaFiscal: Boolean;
+    procedure SetImprimiuNotaFiscal(const AImprimiuNotaFiscal: Boolean);
     function GetStatusXMLNota: TStatusXmlNotaPDV;
     procedure SetStatusXMLNota(const AStatusXMLNota: TStatusXmlNotaPDV);
     property Id: TString read GetId write SetId;
@@ -105,15 +105,15 @@ type
     property ContadorDocumento: TString read GetContadorDocumento write SetContadorDocumento;
     property TransacaoVendaEnvelope: TString read GetTransacaoVendaEnvelope write SetTransacaoVendaEnvelope;
     property SequencialOperador: TString read GetSequencialOperador write SetSequencialOperador;
-    property AbonoServico: Tboolean read GetAbonoServico write SetAbonoServico;
-    property ImprimiuNotaFiscal: Tboolean read GetImprimiuNotaFiscal write SetImprimiuNotaFiscal;
+    property AbonoServico: Boolean read GetAbonoServico write SetAbonoServico;
+    property ImprimiuNotaFiscal: Boolean read GetImprimiuNotaFiscal write SetImprimiuNotaFiscal;
     property StatusXMLNota: TStatusXmlNotaPDV read GetStatusXMLNota write SetStatusXMLNota;
   end;
 
   TVendaList = class;
 
   IVendaList = interface
-	['{DEFCFCDF-5F33-480C-A023-ED199331EE13}']
+	['{AE1F6DB3-5CF8-4F85-9DE2-594763568A34}']
     function GetReference: TVendaList;
     function GetItems(AIndex: Integer): IVenda;
     procedure SetItems(AIndex: Integer; const Value: IVenda);
@@ -158,7 +158,7 @@ type
     class operator Implicit(AListRec: TVendaListRec): TVendaList;
   end;
 
-  TVenda = class(TInterfacedObject, IVenda)
+  TVenda = class(TInterfacedModel, IVenda)
   private
 	FId: TString;
 	FSequencial: TString;
@@ -190,8 +190,8 @@ type
 	FContadorDocumento: TString;
 	FTransacaoVendaEnvelope: TString;
 	FSequencialOperador: TString;
-	FAbonoServico: Tboolean;
-	FImprimiuNotaFiscal: Tboolean;
+	FAbonoServico: Boolean;
+	FImprimiuNotaFiscal: Boolean;
 	FStatusXMLNota: TStatusXmlNotaPDV;
     function GetId: TString;
     procedure SetId(const AId: TString);
@@ -253,10 +253,10 @@ type
     procedure SetTransacaoVendaEnvelope(const ATransacaoVendaEnvelope: TString);
     function GetSequencialOperador: TString;
     procedure SetSequencialOperador(const ASequencialOperador: TString);
-    function GetAbonoServico: Tboolean;
-    procedure SetAbonoServico(const AAbonoServico: Tboolean);
-    function GetImprimiuNotaFiscal: Tboolean;
-    procedure SetImprimiuNotaFiscal(const AImprimiuNotaFiscal: Tboolean);
+    function GetAbonoServico: Boolean;
+    procedure SetAbonoServico(const AAbonoServico: Boolean);
+    function GetImprimiuNotaFiscal: Boolean;
+    procedure SetImprimiuNotaFiscal(const AImprimiuNotaFiscal: Boolean);
     function GetStatusXMLNota: TStatusXmlNotaPDV;
     procedure SetStatusXMLNota(const AStatusXMLNota: TStatusXmlNotaPDV);
   public
@@ -290,8 +290,8 @@ type
     property ContadorDocumento: TString read GetContadorDocumento write SetContadorDocumento;
     property TransacaoVendaEnvelope: TString read GetTransacaoVendaEnvelope write SetTransacaoVendaEnvelope;
     property SequencialOperador: TString read GetSequencialOperador write SetSequencialOperador;
-    property AbonoServico: Tboolean read GetAbonoServico write SetAbonoServico;
-    property ImprimiuNotaFiscal: Tboolean read GetImprimiuNotaFiscal write SetImprimiuNotaFiscal;
+    property AbonoServico: Boolean read GetAbonoServico write SetAbonoServico;
+    property ImprimiuNotaFiscal: Boolean read GetImprimiuNotaFiscal write SetImprimiuNotaFiscal;
     property StatusXMLNota: TStatusXmlNotaPDV read GetStatusXMLNota write SetStatusXMLNota;
   end;
 
@@ -681,22 +681,22 @@ begin
   FSequencialOperador := ASequencialOperador;
 end;
 
-function TVenda.GetAbonoServico: Tboolean;
+function TVenda.GetAbonoServico: Boolean;
 begin
   Result := FAbonoServico;
 end;
 
-procedure TVenda.SetAbonoServico(const AAbonoServico: Tboolean);
+procedure TVenda.SetAbonoServico(const AAbonoServico: Boolean);
 begin
   FAbonoServico := AAbonoServico;
 end;
 
-function TVenda.GetImprimiuNotaFiscal: Tboolean;
+function TVenda.GetImprimiuNotaFiscal: Boolean;
 begin
   Result := FImprimiuNotaFiscal;
 end;
 
-procedure TVenda.SetImprimiuNotaFiscal(const AImprimiuNotaFiscal: Tboolean);
+procedure TVenda.SetImprimiuNotaFiscal(const AImprimiuNotaFiscal: Boolean);
 begin
   FImprimiuNotaFiscal := AImprimiuNotaFiscal;
 end;

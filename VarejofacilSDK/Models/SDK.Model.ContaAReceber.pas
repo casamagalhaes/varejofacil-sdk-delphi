@@ -3,12 +3,12 @@
 interface
 
 uses
-  SysUtils, Classes, SDK.Types, SDK.Enums;
+  SysUtils, Classes, SDK.Types, SDK.Enums, SDK.Model.TituloAReceber;
 
 type
 
   IContaAReceber = interface(IModel)
-    ['{1FC9830D-79E9-4780-B59B-4B8638A26529}']
+    ['{1CDC4F79-88C8-4824-9EA0-ECA3642D20A2}']
     function GetId: Int64;
     procedure SetId(const AId: Int64);
     function GetObservacao: TString;
@@ -45,10 +45,10 @@ type
     procedure SetNumeroDoCaixa(const ANumeroDoCaixa: TString);
     function GetIntervaloDeDiasEntreOsTitulos: Integer;
     procedure SetIntervaloDeDiasEntreOsTitulos(const AIntervaloDeDiasEntreOsTitulos: Integer);
-    function GetTitulos: TList<TituloAReceber>;
-    procedure SetTitulos(const ATitulos: TList<TituloAReceber>);
-    function GetGeraTitulos: Tboolean;
-    procedure SetGeraTitulos(const AGeraTitulos: Tboolean);
+    function GetTitulos: TTituloAReceberList;
+    procedure SetTitulos(const ATitulos: TTituloAReceberList);
+    function GetGeraTitulos: Boolean;
+    procedure SetGeraTitulos(const AGeraTitulos: Boolean);
     property Id: Int64 read GetId write SetId;
     property Observacao: TString read GetObservacao write SetObservacao;
     property NumeroDocumento: TString read GetNumeroDocumento write SetNumeroDocumento;
@@ -67,14 +67,14 @@ type
     property Sequencial: TString read GetSequencial write SetSequencial;
     property NumeroDoCaixa: TString read GetNumeroDoCaixa write SetNumeroDoCaixa;
     property IntervaloDeDiasEntreOsTitulos: Integer read GetIntervaloDeDiasEntreOsTitulos write SetIntervaloDeDiasEntreOsTitulos;
-    property Titulos: TList<TituloAReceber> read GetTitulos write SetTitulos;
-    property GeraTitulos: Tboolean read GetGeraTitulos write SetGeraTitulos;
+    property Titulos: TTituloAReceberList read GetTitulos write SetTitulos;
+    property GeraTitulos: Boolean read GetGeraTitulos write SetGeraTitulos;
   end;
 
   TContaAReceberList = class;
 
   IContaAReceberList = interface
-	['{8DA53D2E-7A08-40B6-BC45-AF8DCA8C3E5B}']
+	['{DAFC9377-16D2-49EA-80C7-60DE38F6FD25}']
     function GetReference: TContaAReceberList;
     function GetItems(AIndex: Integer): IContaAReceber;
     procedure SetItems(AIndex: Integer; const Value: IContaAReceber);
@@ -119,7 +119,7 @@ type
     class operator Implicit(AListRec: TContaAReceberListRec): TContaAReceberList;
   end;
 
-  TContaAReceber = class(TInterfacedObject, IContaAReceber)
+  TContaAReceber = class(TInterfacedModel, IContaAReceber)
   private
 	FId: Int64;
 	FObservacao: TString;
@@ -139,8 +139,8 @@ type
 	FSequencial: TString;
 	FNumeroDoCaixa: TString;
 	FIntervaloDeDiasEntreOsTitulos: Integer;
-	FTitulos: TList<TituloAReceber>;
-	FGeraTitulos: Tboolean;
+	FTitulos: TTituloAReceberList;
+	FGeraTitulos: Boolean;
     function GetId: Int64;
     procedure SetId(const AId: Int64);
     function GetObservacao: TString;
@@ -177,10 +177,10 @@ type
     procedure SetNumeroDoCaixa(const ANumeroDoCaixa: TString);
     function GetIntervaloDeDiasEntreOsTitulos: Integer;
     procedure SetIntervaloDeDiasEntreOsTitulos(const AIntervaloDeDiasEntreOsTitulos: Integer);
-    function GetTitulos: TList<TituloAReceber>;
-    procedure SetTitulos(const ATitulos: TList<TituloAReceber>);
-    function GetGeraTitulos: Tboolean;
-    procedure SetGeraTitulos(const AGeraTitulos: Tboolean);
+    function GetTitulos: TTituloAReceberList;
+    procedure SetTitulos(const ATitulos: TTituloAReceberList);
+    function GetGeraTitulos: Boolean;
+    procedure SetGeraTitulos(const AGeraTitulos: Boolean);
   public
     property Id: Int64 read GetId write SetId;
     property Observacao: TString read GetObservacao write SetObservacao;
@@ -200,8 +200,8 @@ type
     property Sequencial: TString read GetSequencial write SetSequencial;
     property NumeroDoCaixa: TString read GetNumeroDoCaixa write SetNumeroDoCaixa;
     property IntervaloDeDiasEntreOsTitulos: Integer read GetIntervaloDeDiasEntreOsTitulos write SetIntervaloDeDiasEntreOsTitulos;
-    property Titulos: TList<TituloAReceber> read GetTitulos write SetTitulos;
-    property GeraTitulos: Tboolean read GetGeraTitulos write SetGeraTitulos;
+    property Titulos: TTituloAReceberList read GetTitulos write SetTitulos;
+    property GeraTitulos: Boolean read GetGeraTitulos write SetGeraTitulos;
   end;
 
 implementation
@@ -470,22 +470,22 @@ begin
   FIntervaloDeDiasEntreOsTitulos := AIntervaloDeDiasEntreOsTitulos;
 end;
 
-function TContaAReceber.GetTitulos: TList<TituloAReceber>;
+function TContaAReceber.GetTitulos: TTituloAReceberList;
 begin
   Result := FTitulos;
 end;
 
-procedure TContaAReceber.SetTitulos(const ATitulos: TList<TituloAReceber>);
+procedure TContaAReceber.SetTitulos(const ATitulos: TTituloAReceberList);
 begin
   FTitulos := ATitulos;
 end;
 
-function TContaAReceber.GetGeraTitulos: Tboolean;
+function TContaAReceber.GetGeraTitulos: Boolean;
 begin
   Result := FGeraTitulos;
 end;
 
-procedure TContaAReceber.SetGeraTitulos(const AGeraTitulos: Tboolean);
+procedure TContaAReceber.SetGeraTitulos(const AGeraTitulos: Boolean);
 begin
   FGeraTitulos := AGeraTitulos;
 end;

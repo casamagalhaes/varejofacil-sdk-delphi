@@ -8,7 +8,7 @@ uses
 type
 
   IReducao = interface(IModel)
-    ['{9E459249-2504-40DF-BE96-0FC727B331EE}']
+    ['{814042D7-AFAB-44AF-AD24-18F3DD109D49}']
     function GetId: Int64;
     procedure SetId(const AId: Int64);
     function GetData: TDateTime;
@@ -206,7 +206,7 @@ type
   TReducaoList = class;
 
   IReducaoList = interface
-	['{F3BDCA01-6531-46A1-8732-5E6A3E6817D7}']
+	['{7548D0DA-99F4-48D2-BD23-F1244458E01C}']
     function GetReference: TReducaoList;
     function GetItems(AIndex: Integer): IReducao;
     procedure SetItems(AIndex: Integer; const Value: IReducao);
@@ -251,7 +251,7 @@ type
     class operator Implicit(AListRec: TReducaoListRec): TReducaoList;
   end;
 
-  TReducao = class(TInterfacedObject, IReducao)
+  TReducao = class(TInterfacedModel, IReducao)
   private
 	FId: Int64;
 	FData: TDateTime;

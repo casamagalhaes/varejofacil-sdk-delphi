@@ -8,7 +8,7 @@ uses
 type
 
   IGenero = interface(IModel)
-    ['{FBFF2A8E-73CC-4533-ACAB-1ED64C7FB059}']
+    ['{7CD166C7-95DE-4532-BCCB-4AEB3F33BDEE}']
     function GetId: Int64;
     procedure SetId(const AId: Int64);
     function GetDescricao: TString;
@@ -23,7 +23,7 @@ type
   TGeneroList = class;
 
   IGeneroList = interface
-	['{C557F38D-D6B8-4A85-991E-67AA29950DD7}']
+	['{065170F0-429C-4588-95A4-5764680B84FA}']
     function GetReference: TGeneroList;
     function GetItems(AIndex: Integer): IGenero;
     procedure SetItems(AIndex: Integer; const Value: IGenero);
@@ -68,7 +68,7 @@ type
     class operator Implicit(AListRec: TGeneroListRec): TGeneroList;
   end;
 
-  TGenero = class(TInterfacedObject, IGenero)
+  TGenero = class(TInterfacedModel, IGenero)
   private
 	FId: Int64;
 	FDescricao: TString;

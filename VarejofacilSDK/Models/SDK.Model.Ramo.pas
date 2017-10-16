@@ -8,7 +8,7 @@ uses
 type
 
   IRamo = interface(IModel)
-    ['{D0EA4865-AAA9-499B-8AFC-4F347C3B630A}']
+    ['{B1CD78CF-1DBB-439E-8661-B9B4FD21D3AF}']
     function GetId: Integer;
     procedure SetId(const AId: Integer);
     function GetDescricao: TString;
@@ -20,7 +20,7 @@ type
   TRamoList = class;
 
   IRamoList = interface
-	['{8A5C95B6-CBF2-4515-8D2A-A7277C4F2105}']
+	['{470D4923-8CDE-4353-9C8A-355F09584C0F}']
     function GetReference: TRamoList;
     function GetItems(AIndex: Integer): IRamo;
     procedure SetItems(AIndex: Integer; const Value: IRamo);
@@ -65,7 +65,7 @@ type
     class operator Implicit(AListRec: TRamoListRec): TRamoList;
   end;
 
-  TRamo = class(TInterfacedObject, IRamo)
+  TRamo = class(TInterfacedModel, IRamo)
   private
 	FId: Integer;
 	FDescricao: TString;

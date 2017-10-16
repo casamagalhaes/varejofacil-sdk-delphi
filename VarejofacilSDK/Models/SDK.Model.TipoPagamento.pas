@@ -8,7 +8,7 @@ uses
 type
 
   ITipoPagamento = interface(IModel)
-    ['{CCED96DD-9A49-4881-8CA7-7A818AE66DFD}']
+    ['{905FD00E-2461-477C-9FCA-52E50682C3EC}']
     function GetId: TString;
     procedure SetId(const AId: TString);
     function GetDescricao: TString;
@@ -23,7 +23,7 @@ type
   TTipoPagamentoList = class;
 
   ITipoPagamentoList = interface
-	['{9D5E345B-A7AD-49AD-803D-7D977FA1DA13}']
+	['{5C9FCC3A-68F0-4496-95F0-8FACB5BEDCB7}']
     function GetReference: TTipoPagamentoList;
     function GetItems(AIndex: Integer): ITipoPagamento;
     procedure SetItems(AIndex: Integer; const Value: ITipoPagamento);
@@ -68,7 +68,7 @@ type
     class operator Implicit(AListRec: TTipoPagamentoListRec): TTipoPagamentoList;
   end;
 
-  TTipoPagamento = class(TInterfacedObject, ITipoPagamento)
+  TTipoPagamento = class(TInterfacedModel, ITipoPagamento)
   private
 	FId: TString;
 	FDescricao: TString;

@@ -8,7 +8,7 @@ uses
 type
 
   ISangria = interface(IModel)
-    ['{5E90DF49-EF83-466D-B865-E9DE798272EC}']
+    ['{5418DF3A-F8BC-4989-8BF8-426DDCD615B1}']
     function GetId: TString;
     procedure SetId(const AId: TString);
     function GetSequencial: TString;
@@ -59,7 +59,7 @@ type
   TSangriaList = class;
 
   ISangriaList = interface
-	['{FD577911-E840-4A51-9BFE-4B2E1A39C6A0}']
+	['{7CAFCA97-756E-4598-9A93-2204B88A35BE}']
     function GetReference: TSangriaList;
     function GetItems(AIndex: Integer): ISangria;
     procedure SetItems(AIndex: Integer; const Value: ISangria);
@@ -104,7 +104,7 @@ type
     class operator Implicit(AListRec: TSangriaListRec): TSangriaList;
   end;
 
-  TSangria = class(TInterfacedObject, ISangria)
+  TSangria = class(TInterfacedModel, ISangria)
   private
 	FId: TString;
 	FSequencial: TString;

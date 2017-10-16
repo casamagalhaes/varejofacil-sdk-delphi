@@ -3,12 +3,12 @@
 interface
 
 uses
-  SysUtils, Classes, SDK.Types, SDK.Enums;
+  SysUtils, Classes, SDK.Types, SDK.Enums, SDK.Model.Endereco;
 
 type
 
   IFuncionario = interface(IModel)
-    ['{669D99E8-969B-40A2-BB59-B612D3695FEA}']
+    ['{63CCD3AC-F6D2-4138-BABA-2142A421C3A2}']
     function GetId: Int64;
     procedure SetId(const AId: Int64);
     function GetRamal: TString;
@@ -113,7 +113,7 @@ type
   TFuncionarioList = class;
 
   IFuncionarioList = interface
-	['{4E09E50D-F4D4-42CB-A1F1-B1FD0A41EAC4}']
+	['{2E31C137-85AB-44E5-A6F2-1F0DF91A2A05}']
     function GetReference: TFuncionarioList;
     function GetItems(AIndex: Integer): IFuncionario;
     procedure SetItems(AIndex: Integer; const Value: IFuncionario);
@@ -158,7 +158,7 @@ type
     class operator Implicit(AListRec: TFuncionarioListRec): TFuncionarioList;
   end;
 
-  TFuncionario = class(TInterfacedObject, IFuncionario)
+  TFuncionario = class(TInterfacedModel, IFuncionario)
   private
 	FId: Int64;
 	FRamal: TString;

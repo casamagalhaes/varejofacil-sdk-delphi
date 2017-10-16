@@ -8,7 +8,7 @@ uses
 type
 
   ISaidaOperador = interface(IModel)
-    ['{0944BA96-DB5B-440F-8158-4F4B0EB21C1E}']
+    ['{D0BA96AF-3F57-42E0-B94E-AFF5C12E1564}']
     function GetId: TString;
     procedure SetId(const AId: TString);
     function GetSequencial: TString;
@@ -56,7 +56,7 @@ type
   TSaidaOperadorList = class;
 
   ISaidaOperadorList = interface
-	['{09D705CA-B58A-42D9-878C-B82D71E970E3}']
+	['{63297CCE-D97E-4364-9FDB-06BB6716BBC3}']
     function GetReference: TSaidaOperadorList;
     function GetItems(AIndex: Integer): ISaidaOperador;
     procedure SetItems(AIndex: Integer; const Value: ISaidaOperador);
@@ -101,7 +101,7 @@ type
     class operator Implicit(AListRec: TSaidaOperadorListRec): TSaidaOperadorList;
   end;
 
-  TSaidaOperador = class(TInterfacedObject, ISaidaOperador)
+  TSaidaOperador = class(TInterfacedModel, ISaidaOperador)
   private
 	FId: TString;
 	FSequencial: TString;

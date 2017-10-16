@@ -8,7 +8,7 @@ uses
 type
 
   ISecao = interface(IModel)
-    ['{EA9FE686-A0F0-44E6-81BD-93BC7FDB9490}']
+    ['{04BC5296-0522-42A8-B650-713CC86D771F}']
     function GetId: Integer;
     procedure SetId(const AId: Integer);
     function GetDescricao: TString;
@@ -20,7 +20,7 @@ type
   TSecaoList = class;
 
   ISecaoList = interface
-	['{82404B4B-5AFC-43DB-95E9-E82A1FE17F66}']
+	['{9494FC25-C90C-4010-B9AA-7A918B1E31A2}']
     function GetReference: TSecaoList;
     function GetItems(AIndex: Integer): ISecao;
     procedure SetItems(AIndex: Integer; const Value: ISecao);
@@ -65,7 +65,7 @@ type
     class operator Implicit(AListRec: TSecaoListRec): TSecaoList;
   end;
 
-  TSecao = class(TInterfacedObject, ISecao)
+  TSecao = class(TInterfacedModel, ISecao)
   private
 	FId: Integer;
 	FDescricao: TString;

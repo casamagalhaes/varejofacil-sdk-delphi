@@ -8,7 +8,7 @@ uses
 type
 
   ICliente = interface(IModel)
-    ['{0DE736FC-4A8A-402D-947D-52CF88BEDCAC}']
+    ['{3274B1D8-56E4-4965-A0FA-3684BAB7064F}']
     function GetId: Int64;
     procedure SetId(const AId: Int64);
     function GetSenha: TString;
@@ -167,7 +167,7 @@ type
   TClienteList = class;
 
   IClienteList = interface
-	['{CDEE912E-EE57-44F1-8698-8A945FF70353}']
+	['{9529A742-A053-4B8E-9CB5-3FAEE7E6BD41}']
     function GetReference: TClienteList;
     function GetItems(AIndex: Integer): ICliente;
     procedure SetItems(AIndex: Integer; const Value: ICliente);
@@ -212,7 +212,7 @@ type
     class operator Implicit(AListRec: TClienteListRec): TClienteList;
   end;
 
-  TCliente = class(TInterfacedObject, ICliente)
+  TCliente = class(TInterfacedModel, ICliente)
   private
 	FId: Int64;
 	FSenha: TString;

@@ -8,7 +8,7 @@ uses
 type
 
   IConfiguracaoPDV = interface(IModel)
-    ['{6D8F21D0-DE0C-4733-B6EA-82ACF907DDE1}']
+    ['{46DE1A2A-2C0C-4679-83D1-69CD7ED25D24}']
     function GetId: Int64;
     procedure SetId(const AId: Int64);
     function GetIdentificadorDeBINSParaCartoes: TString;
@@ -176,7 +176,7 @@ type
   TConfiguracaoPDVList = class;
 
   IConfiguracaoPDVList = interface
-	['{591871D4-E9D9-4CA9-A01F-8E8E15195992}']
+	['{33B1B8F7-0F17-4FBC-911E-BF0D985B6F0E}']
     function GetReference: TConfiguracaoPDVList;
     function GetItems(AIndex: Integer): IConfiguracaoPDV;
     procedure SetItems(AIndex: Integer; const Value: IConfiguracaoPDV);
@@ -221,7 +221,7 @@ type
     class operator Implicit(AListRec: TConfiguracaoPDVListRec): TConfiguracaoPDVList;
   end;
 
-  TConfiguracaoPDV = class(TInterfacedObject, IConfiguracaoPDV)
+  TConfiguracaoPDV = class(TInterfacedModel, IConfiguracaoPDV)
   private
 	FId: Int64;
 	FIdentificadorDeBINSParaCartoes: TString;

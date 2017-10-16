@@ -8,7 +8,7 @@ uses
 type
 
   IRecebimento = interface(IModel)
-    ['{4CDF49BB-C448-455A-8C55-CE08F5528BDC}']
+    ['{E41B6CAF-DCCF-43C3-B196-F00E69F09178}']
     function GetId: TString;
     procedure SetId(const AId: TString);
     function GetSequencial: TString;
@@ -62,7 +62,7 @@ type
   TRecebimentoList = class;
 
   IRecebimentoList = interface
-	['{A31F73E0-4D97-4AD8-A7C6-FD4638B748C4}']
+	['{DBF96850-5EDD-45CB-87BA-B93D536EFCE3}']
     function GetReference: TRecebimentoList;
     function GetItems(AIndex: Integer): IRecebimento;
     procedure SetItems(AIndex: Integer; const Value: IRecebimento);
@@ -107,7 +107,7 @@ type
     class operator Implicit(AListRec: TRecebimentoListRec): TRecebimentoList;
   end;
 
-  TRecebimento = class(TInterfacedObject, IRecebimento)
+  TRecebimento = class(TInterfacedModel, IRecebimento)
   private
 	FId: TString;
 	FSequencial: TString;

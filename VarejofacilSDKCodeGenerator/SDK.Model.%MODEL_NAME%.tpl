@@ -62,7 +62,7 @@ type
     class operator Implicit(AListRec: T%MODEL_NAME%ListRec): T%MODEL_NAME%List;
   end;
 
-  T%MODEL_NAME% = class(TInterfacedObject, I%MODEL_NAME%)
+  T%MODEL_NAME% = class(TInterfacedModel, I%MODEL_NAME%)
   private%BEGIN_LOOP(FIELDS)%
 	F%FIELD.NAME%: %FIELD.TYPE%;%END_LOOP%%BEGIN_LOOP(FIELDS)%
     function Get%FIELD.NAME%: %FIELD.TYPE%;

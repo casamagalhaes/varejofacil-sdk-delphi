@@ -3,12 +3,12 @@
 interface
 
 uses
-  SysUtils, Classes, SDK.Types, SDK.Enums;
+  SysUtils, Classes, SDK.Types, SDK.Enums, SDK.Model.ItemDevolucao;
 
 type
 
   IDevolucao = interface(IModel)
-    ['{7481E823-C9CB-4F0F-950E-806E69593E3C}']
+    ['{A0A95254-DF89-4101-ADEB-F53F92193587}']
     function GetId: Integer;
     procedure SetId(const AId: Integer);
     function GetOperadorId: Int64;
@@ -51,8 +51,8 @@ type
     procedure SetLog(const ALog: TString);
     function GetModeloImpressora: TModeloImpressora;
     procedure SetModeloImpressora(const AModeloImpressora: TModeloImpressora);
-    function GetItensDevolucao: TList<ItemDevolucao>;
-    procedure SetItensDevolucao(const AItensDevolucao: TList<ItemDevolucao>);
+    function GetItensDevolucao: TItemDevolucaoList;
+    procedure SetItensDevolucao(const AItensDevolucao: TItemDevolucaoList);
     property Id: Integer read GetId write SetId;
     property OperadorId: Int64 read GetOperadorId write SetOperadorId;
     property Data: TDateTime read GetData write SetData;
@@ -74,13 +74,13 @@ type
     property DataTransacao: TDateTime read GetDataTransacao write SetDataTransacao;
     property Log: TString read GetLog write SetLog;
     property ModeloImpressora: TModeloImpressora read GetModeloImpressora write SetModeloImpressora;
-    property ItensDevolucao: TList<ItemDevolucao> read GetItensDevolucao write SetItensDevolucao;
+    property ItensDevolucao: TItemDevolucaoList read GetItensDevolucao write SetItensDevolucao;
   end;
 
   TDevolucaoList = class;
 
   IDevolucaoList = interface
-	['{32BFEB33-C088-4BD2-B9C9-043BD377624A}']
+	['{D2857BAA-E252-43E7-83DB-0E1779849E96}']
     function GetReference: TDevolucaoList;
     function GetItems(AIndex: Integer): IDevolucao;
     procedure SetItems(AIndex: Integer; const Value: IDevolucao);
@@ -125,7 +125,7 @@ type
     class operator Implicit(AListRec: TDevolucaoListRec): TDevolucaoList;
   end;
 
-  TDevolucao = class(TInterfacedObject, IDevolucao)
+  TDevolucao = class(TInterfacedModel, IDevolucao)
   private
 	FId: Integer;
 	FOperadorId: Int64;
@@ -148,7 +148,7 @@ type
 	FDataTransacao: TDateTime;
 	FLog: TString;
 	FModeloImpressora: TModeloImpressora;
-	FItensDevolucao: TList<ItemDevolucao>;
+	FItensDevolucao: TItemDevolucaoList;
     function GetId: Integer;
     procedure SetId(const AId: Integer);
     function GetOperadorId: Int64;
@@ -191,8 +191,8 @@ type
     procedure SetLog(const ALog: TString);
     function GetModeloImpressora: TModeloImpressora;
     procedure SetModeloImpressora(const AModeloImpressora: TModeloImpressora);
-    function GetItensDevolucao: TList<ItemDevolucao>;
-    procedure SetItensDevolucao(const AItensDevolucao: TList<ItemDevolucao>);
+    function GetItensDevolucao: TItemDevolucaoList;
+    procedure SetItensDevolucao(const AItensDevolucao: TItemDevolucaoList);
   public
     property Id: Integer read GetId write SetId;
     property OperadorId: Int64 read GetOperadorId write SetOperadorId;
@@ -215,7 +215,7 @@ type
     property DataTransacao: TDateTime read GetDataTransacao write SetDataTransacao;
     property Log: TString read GetLog write SetLog;
     property ModeloImpressora: TModeloImpressora read GetModeloImpressora write SetModeloImpressora;
-    property ItensDevolucao: TList<ItemDevolucao> read GetItensDevolucao write SetItensDevolucao;
+    property ItensDevolucao: TItemDevolucaoList read GetItensDevolucao write SetItensDevolucao;
   end;
 
 implementation
@@ -514,12 +514,12 @@ begin
   FModeloImpressora := AModeloImpressora;
 end;
 
-function TDevolucao.GetItensDevolucao: TList<ItemDevolucao>;
+function TDevolucao.GetItensDevolucao: TItemDevolucaoList;
 begin
   Result := FItensDevolucao;
 end;
 
-procedure TDevolucao.SetItensDevolucao(const AItensDevolucao: TList<ItemDevolucao>);
+procedure TDevolucao.SetItensDevolucao(const AItensDevolucao: TItemDevolucaoList);
 begin
   FItensDevolucao := AItensDevolucao;
 end;

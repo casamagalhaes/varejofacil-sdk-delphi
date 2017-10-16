@@ -8,7 +8,7 @@ uses
 type
 
   IComponente = interface(IModel)
-    ['{68DEB3E0-11C0-41C1-853B-C0A29F611608}']
+    ['{024746CE-2A36-448D-98A9-F6F5F93927C7}']
     function GetId: Int64;
     procedure SetId(const AId: Int64);
     function GetProdutoId: Int64;
@@ -35,7 +35,7 @@ type
   TComponenteList = class;
 
   IComponenteList = interface
-	['{8C2BF784-E721-43E9-B32D-384348DE9742}']
+	['{989EA73A-66CC-4E00-A38A-4E3BA3F70ACE}']
     function GetReference: TComponenteList;
     function GetItems(AIndex: Integer): IComponente;
     procedure SetItems(AIndex: Integer; const Value: IComponente);
@@ -80,7 +80,7 @@ type
     class operator Implicit(AListRec: TComponenteListRec): TComponenteList;
   end;
 
-  TComponente = class(TInterfacedObject, IComponente)
+  TComponente = class(TInterfacedModel, IComponente)
   private
 	FId: Int64;
 	FProdutoId: Int64;

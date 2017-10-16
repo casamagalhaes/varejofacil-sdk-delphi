@@ -8,7 +8,7 @@ uses
 type
 
   ICfop = interface(IModel)
-    ['{A60C5C65-807B-4426-9BBF-10EC4450F0A1}']
+    ['{117BF5DD-E3BA-4461-A2E1-770CFFAABCDB}']
     function GetId: Int64;
     procedure SetId(const AId: Int64);
     function GetDescricao: TString;
@@ -26,7 +26,7 @@ type
   TCfopList = class;
 
   ICfopList = interface
-	['{5CBA4B51-7E44-4B06-8898-4AFD8EF218BC}']
+	['{24403026-B4FC-4F2F-ABF0-2D8B72D4EF48}']
     function GetReference: TCfopList;
     function GetItems(AIndex: Integer): ICfop;
     procedure SetItems(AIndex: Integer; const Value: ICfop);
@@ -71,7 +71,7 @@ type
     class operator Implicit(AListRec: TCfopListRec): TCfopList;
   end;
 
-  TCfop = class(TInterfacedObject, ICfop)
+  TCfop = class(TInterfacedModel, ICfop)
   private
 	FId: Int64;
 	FDescricao: TString;

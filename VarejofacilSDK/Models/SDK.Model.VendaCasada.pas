@@ -8,7 +8,7 @@ uses
 type
 
   IVendaCasada = interface(IModel)
-    ['{1A6035D3-845D-4C1F-B64D-5EB214EA6DE9}']
+    ['{29440A2A-47A3-4631-B324-94BD92FE8DBB}']
     function GetId: Int64;
     procedure SetId(const AId: Int64);
     function GetDescricao: TString;
@@ -35,7 +35,7 @@ type
   TVendaCasadaList = class;
 
   IVendaCasadaList = interface
-	['{5F4C3604-5EBE-466B-9FE9-FD56425ABC39}']
+	['{A8132275-BA84-43FB-BAF0-58FB4F9981C6}']
     function GetReference: TVendaCasadaList;
     function GetItems(AIndex: Integer): IVendaCasada;
     procedure SetItems(AIndex: Integer; const Value: IVendaCasada);
@@ -80,7 +80,7 @@ type
     class operator Implicit(AListRec: TVendaCasadaListRec): TVendaCasadaList;
   end;
 
-  TVendaCasada = class(TInterfacedObject, IVendaCasada)
+  TVendaCasada = class(TInterfacedModel, IVendaCasada)
   private
 	FId: Int64;
 	FDescricao: TString;

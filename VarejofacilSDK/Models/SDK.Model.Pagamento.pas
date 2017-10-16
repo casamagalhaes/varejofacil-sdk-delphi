@@ -8,7 +8,7 @@ uses
 type
 
   IPagamento = interface(IModel)
-    ['{1E3FB8D1-B5F5-4A6A-AE70-FFC124626B85}']
+    ['{9E2D6016-FC83-4EED-BD9B-2FE38544E70A}']
     function GetId: TString;
     procedure SetId(const AId: TString);
     function GetSequencial: TString;
@@ -62,7 +62,7 @@ type
   TPagamentoList = class;
 
   IPagamentoList = interface
-	['{8E6C6994-F92E-46B6-A9DA-FE3A5FF018BB}']
+	['{DE0D5D58-CFF5-4616-8A2D-B91CF77BD491}']
     function GetReference: TPagamentoList;
     function GetItems(AIndex: Integer): IPagamento;
     procedure SetItems(AIndex: Integer; const Value: IPagamento);
@@ -107,7 +107,7 @@ type
     class operator Implicit(AListRec: TPagamentoListRec): TPagamentoList;
   end;
 
-  TPagamento = class(TInterfacedObject, IPagamento)
+  TPagamento = class(TInterfacedModel, IPagamento)
   private
 	FId: TString;
 	FSequencial: TString;

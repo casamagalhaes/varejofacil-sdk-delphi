@@ -1,4 +1,4 @@
-program VarejofacilSDKCodeGenerator;
+﻿program VarejofacilSDKCodeGenerator;
 
 {$APPTYPE CONSOLE}
 
@@ -16,7 +16,7 @@ uses
   IniFiles,
   IOUtils;
 
-// /enums /filter:SDK.Enums* /enumfile:C:\Users\developer\Documents\Embarcadero\Studio\Projects\VarejofacilSDK\VarejofacilSDKCodeGenerator\enums.xml
+// /enums /filter:SDK.Enums* /enumfile:C:\varejofacil-sdk-delphi\VarejofacilSDKCodeGenerator\enums.xml
 
 type
 
@@ -45,8 +45,8 @@ const
   JAVA_IMPORT_KEYWORD = 'import';
 
 var
-  JAVA_PRIMARY_TYPES: array[0..12] of TString = ('byte', 'short', 'int', 'Long', 'float', 'double', 'char', 'String', 'Boolean', 'BigDecimal', 'Date', 'Integer', 'byte[]');
-  DELPHI_PRIMARY_TYPES: array[0..12] of TString = ('Byte', 'SmallInt', 'Integer', 'Int64', 'Double', 'Double', 'Char', 'TString', 'Boolean', 'Double', 'TDateTime', 'Integer', 'TByteArray');
+  JAVA_PRIMARY_TYPES: array[0..13] of TString = ('byte', 'short', 'int', 'Long', 'float', 'double', 'char', 'String', 'Boolean', 'BigDecimal', 'Date', 'Integer', 'byte[]', 'boolean');
+  DELPHI_PRIMARY_TYPES: array[0..13] of TString = ('Byte', 'SmallInt', 'Integer', 'Int64', 'Double', 'Double', 'Char', 'TString', 'Boolean', 'Double', 'TDateTime', 'Integer', 'TByteArray', 'Boolean');
   JAVA_MODIFIERS: array[0..7] of TString = ('public', 'private', 'protected', 'static', 'final', 'abstract', 'synchronized', 'volatile');
 
 function GetEnums(const APath: TString): TStrings;
@@ -233,10 +233,18 @@ procedure GenerateClass(const ATemplate, AModel, ARoute: TString; AFields: TStri
   var
     Idx: Integer;
   begin
-    Result := 'T' + AJavaType;
-    for Idx := Low(JAVA_PRIMARY_TYPES) to High(JAVA_PRIMARY_TYPES) do
-      if JAVA_PRIMARY_TYPES[Idx] = AJavaType then
-        Exit(DELPHI_PRIMARY_TYPES[Idx]);
+    if Pos('List<', AJavaType) > 0 then
+    begin
+      Result := StringReplace(AJavaType, 'List<', 'T', []);
+      Result := StringReplace(Result, '>', 'List', []);
+    end
+    else
+    begin
+      Result := 'T' + AJavaType;
+      for Idx := Low(JAVA_PRIMARY_TYPES) to High(JAVA_PRIMARY_TYPES) do
+        if JAVA_PRIMARY_TYPES[Idx] = AJavaType then
+          Exit(DELPHI_PRIMARY_TYPES[Idx]);
+    end;
   end;
 
   function Tokenize(const AInput: TString): TStrings;

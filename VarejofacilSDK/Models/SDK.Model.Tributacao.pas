@@ -8,7 +8,7 @@ uses
 type
 
   ITributacao = interface(IModel)
-    ['{32F1D1D6-BB77-438E-B074-44962BE7343B}']
+    ['{2B8CFD2B-75D4-4E64-B466-BA9CC9A9748C}']
     function GetId: TString;
     procedure SetId(const AId: TString);
     function GetDescricao: TString;
@@ -56,7 +56,7 @@ type
   TTributacaoList = class;
 
   ITributacaoList = interface
-	['{29FE32E1-5781-49E8-B5AA-5BBF044FF2E4}']
+	['{16A850E3-FDC2-4216-8F20-4B3971B6D313}']
     function GetReference: TTributacaoList;
     function GetItems(AIndex: Integer): ITributacao;
     procedure SetItems(AIndex: Integer; const Value: ITributacao);
@@ -101,7 +101,7 @@ type
     class operator Implicit(AListRec: TTributacaoListRec): TTributacaoList;
   end;
 
-  TTributacao = class(TInterfacedObject, ITributacao)
+  TTributacao = class(TInterfacedModel, ITributacao)
   private
 	FId: TString;
 	FDescricao: TString;

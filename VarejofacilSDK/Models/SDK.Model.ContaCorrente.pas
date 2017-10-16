@@ -8,7 +8,7 @@ uses
 type
 
   IContaCorrente = interface(IModel)
-    ['{C2B67F17-0EBA-4779-87A8-11C777FA9981}']
+    ['{3353E87E-4CCD-4097-BE57-E62110B8F5AB}']
     function GetId: Int64;
     procedure SetId(const AId: Int64);
     function GetDescricao: TString;
@@ -38,7 +38,7 @@ type
   TContaCorrenteList = class;
 
   IContaCorrenteList = interface
-	['{3570FA20-2233-4557-8029-E2FF78C63629}']
+	['{8D099DE3-4980-4BBD-9377-E081332D4453}']
     function GetReference: TContaCorrenteList;
     function GetItems(AIndex: Integer): IContaCorrente;
     procedure SetItems(AIndex: Integer; const Value: IContaCorrente);
@@ -83,7 +83,7 @@ type
     class operator Implicit(AListRec: TContaCorrenteListRec): TContaCorrenteList;
   end;
 
-  TContaCorrente = class(TInterfacedObject, IContaCorrente)
+  TContaCorrente = class(TInterfacedModel, IContaCorrente)
   private
 	FId: Int64;
 	FDescricao: TString;
