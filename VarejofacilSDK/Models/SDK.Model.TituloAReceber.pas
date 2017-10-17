@@ -151,7 +151,7 @@ type
     procedure SetCategoriaFinanceiraId(const ACategoriaFinanceiraId: Int64);
     function GetNumeroDocumento: TString;
     procedure SetNumeroDocumento(const ANumeroDocumento: TString);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property Ordem: Integer read GetOrdem write SetOrdem;
     property Prazo: Integer read GetPrazo write SetPrazo;

@@ -385,7 +385,7 @@ type
     procedure SetCodigoDaFinalizadoraNetPoint(const ACodigoDaFinalizadoraNetPoint: TString);
     function GetDescricaoDaFinalizadoraNetPoint: TString;
     procedure SetDescricaoDaFinalizadoraNetPoint(const ADescricaoDaFinalizadoraNetPoint: TString);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property IdentificadorDeBINSParaCartoes: TString read GetIdentificadorDeBINSParaCartoes write SetIdentificadorDeBINSParaCartoes;
     property ClientePadraoASerUtilizadoNasVendas: TString read GetClientePadraoASerUtilizadoNasVendas write SetClientePadraoASerUtilizadoNasVendas;

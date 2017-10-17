@@ -103,7 +103,7 @@ type
     procedure SetPreco2(const APreco2: Double);
     function GetPreco3: Double;
     procedure SetPreco3(const APreco3: Double);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property ProdutoId: Int64 read GetProdutoId write SetProdutoId;
     property CompostoId: Int64 read GetCompostoId write SetCompostoId;

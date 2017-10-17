@@ -250,6 +250,13 @@ begin
             else
               Value := RemoveLowerCase(VarToStr(GetPropValue(AModel.GetReference, TString(Prop^.Name))));
           end;
+          tkDynArray:
+          begin
+            if SameText(TString(Prop^.PropType^.Name), 'TLongList') then
+            begin
+              Value := '';
+            end;
+          end
           else
             Value := VarToStr(GetPropValue(AModel.GetReference, TString(Prop^.Name)));
         end;

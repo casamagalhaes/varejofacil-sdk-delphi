@@ -121,7 +121,7 @@ type
     procedure SetVisivelNoMonitoramento(const AVisivelNoMonitoramento: Boolean);
     function GetTipoFrenteLoja: TTipoFrenteLoja;
     procedure SetTipoFrenteLoja(const ATipoFrenteLoja: TTipoFrenteLoja);
-  public
+  published
     property Id: TString read GetId write SetId;
     property LojaId: Int64 read GetLojaId write SetLojaId;
     property SerieDoEquipamento: TString read GetSerieDoEquipamento write SetSerieDoEquipamento;

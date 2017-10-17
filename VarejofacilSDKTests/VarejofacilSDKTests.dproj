@@ -1,4 +1,4 @@
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
         <ProjectGuid>{7704FF1B-8F60-4B27-9D5A-1882862FE507}</ProjectGuid>
         <ProjectVersion>16.1</ProjectVersion>
@@ -81,7 +81,7 @@
         <DCC_RemoteDebug>true</DCC_RemoteDebug>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
-        <Debugger_RunParams>/varejofacil:http://172.16.13.109:8080</Debugger_RunParams>
+        <Debugger_RunParams>/varejofacil:http://vfcli.varejofacil.com</Debugger_RunParams>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <Manifest_File>None</Manifest_File>
         <DCC_RemoteDebug>false</DCC_RemoteDebug>
@@ -99,95 +99,7 @@
         <DCCReference Include="SDK.TestCase.pas"/>
         <DCCReference Include="SDK.TestConfig.pas"/>
         <DCCReference Include="SDK.TestValueGenerator.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Abastecimento.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Agente.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Bairro.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Bandeira.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Bico.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Caixa.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Campo.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Cfop.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Cliente.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Combustivel.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Componente.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.ComposicaoAlimento.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Composto.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.ConfiguracaoPdv.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.ContaAPagar.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.ContaAPagarLiquidacao.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.ContaAReceber.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.ContaCorrente.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Controle.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.ControleCargaPdv.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Corretor.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Csosn.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Cst.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Devolucao.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.DocumentoNaoFiscalEmitido.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Ecf.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.EmailGrupo.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.EmailOcorrencia.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Entrega.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.ErroPDV.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Estoque.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.EstoqueMovimentacao.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.FatoGerador.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Ficha.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.FilaImpressao.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Finalizadora.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.FiscoEcf.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Funcao.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Funcionario.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.GarantiaEstendida.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Genero.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Grupo.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Local.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.LocalImpressao.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.MapaResumo.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Marca.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Moeda.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.MoedaCotacao.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.NaturezaImpostosFederais.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Nbs.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Ncm.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.NotaFiscal.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Operacao.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.OperacaoCfop.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Pagamento.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.PagueContas.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.PedidoVenda.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.PlanoConta.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.PlanoPagamento.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.PreVenda.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Produto.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.ProdutoAux.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.PromocaoAssistida.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.PromocaoMovimentacao.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Proprio.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Ramo.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Recebimento.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.RecebimentoConvenio.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.RecebimentoVendaAssistida.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Reducao.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.SaidaOperador.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Sangria.pas"/>
         <DCCReference Include="Services\TestSDK.Service.Secao.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.SerieProduto.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Servico.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.SpedDoc.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.StatusCliente.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.SubGrupo.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Tanque.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.TipoDesconto.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.TipoDocumento.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.TipoRecebimento.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Troca.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.TrocaFormaPagamento.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Unidade.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Venda.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.VendaCasada.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Zona.pas"/>
-        <DCCReference Include="Services\TestSDK.Service.Fornecedor.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -215,17 +127,17 @@
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment>
+                <DeployFile LocalName="Win32\Debug\VarejofacilSDKTests.exe" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>VarejofacilSDKTests.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="$(BDS)\Redist\osx32\libcgunwind.1.0.dylib" Class="DependencyModule">
                     <Platform Name="OSX32">
                         <Overwrite>true</Overwrite>
                     </Platform>
                     <Platform Name="iOSSimulator">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Win32\Debug\VarejofacilSDKTests.exe" Configuration="Debug" Class="ProjectOutput">
-                    <Platform Name="Win32">
-                        <RemoteName>VarejofacilSDKTests.exe</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>

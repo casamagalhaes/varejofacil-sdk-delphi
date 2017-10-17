@@ -367,7 +367,7 @@ type
     procedure SetStatusId(const AStatusId: Integer);
     function GetRamoId: Integer;
     procedure SetRamoId(const ARamoId: Integer);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property Senha: TString read GetSenha write SetSenha;
     property OrigemDeAlteracao: TString read GetOrigemDeAlteracao write SetOrigemDeAlteracao;

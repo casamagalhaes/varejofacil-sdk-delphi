@@ -91,7 +91,7 @@ type
     procedure SetContato(const AContato: TString);
     function GetDescricao: TString;
     procedure SetDescricao(const ADescricao: TString);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property DataDeAbertura: TDateTime read GetDataDeAbertura write SetDataDeAbertura;
     property Usuario: TString read GetUsuario write SetUsuario;

@@ -103,7 +103,7 @@ type
     procedure SetValor(const AValor: Double);
     function GetStatus: TString;
     procedure SetStatus(const AStatus: TString);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property OperadorId: Integer read GetOperadorId write SetOperadorId;
     property AutorizadorId: Integer read GetAutorizadorId write SetAutorizadorId;

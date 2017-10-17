@@ -115,7 +115,7 @@ type
     procedure SetTipoDeValor(const ATipoDeValor: TString);
     function GetStatus: TStatusDaPromocao;
     procedure SetStatus(const AStatus: TStatusDaPromocao);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property Descricao: TString read GetDescricao write SetDescricao;
     property Quantidade: Int64 read GetQuantidade write SetQuantidade;

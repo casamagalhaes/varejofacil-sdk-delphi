@@ -79,7 +79,7 @@ type
     procedure SetValorJuros(const AValorJuros: Double);
     function GetValorDesconto: Double;
     procedure SetValorDesconto(const AValorDesconto: Double);
-  public
+  published
     property ValorMulta: Double read GetValorMulta write SetValorMulta;
     property ValorJuros: Double read GetValorJuros write SetValorJuros;
     property ValorDesconto: Double read GetValorDesconto write SetValorDesconto;

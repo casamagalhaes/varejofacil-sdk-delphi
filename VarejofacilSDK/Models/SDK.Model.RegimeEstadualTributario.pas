@@ -91,7 +91,7 @@ type
     procedure SetLoja(const ALoja: Boolean);
     function GetFornecedor: Boolean;
     procedure SetFornecedor(const AFornecedor: Boolean);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property Descricao: TString read GetDescricao write SetDescricao;
     property Classificacao: TString read GetClassificacao write SetClassificacao;

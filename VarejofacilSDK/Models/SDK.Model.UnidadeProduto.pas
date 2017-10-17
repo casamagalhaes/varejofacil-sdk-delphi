@@ -79,7 +79,7 @@ type
     procedure SetDescricao(const ADescricao: TString);
     function GetFatorMedida: Double;
     procedure SetFatorMedida(const AFatorMedida: Double);
-  public
+  published
     property Id: TString read GetId write SetId;
     property Descricao: TString read GetDescricao write SetDescricao;
     property FatorMedida: Double read GetFatorMedida write SetFatorMedida;

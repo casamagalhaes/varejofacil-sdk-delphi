@@ -103,7 +103,7 @@ type
     procedure SetHabilitaF1(const AHabilitaF1: Boolean);
     function GetAcesso: TString;
     procedure SetAcesso(const AAcesso: TString);
-  public
+  published
     property Id: Integer read GetId write SetId;
     property FuncaoId: Integer read GetFuncaoId write SetFuncaoId;
     property Descricao: TString read GetDescricao write SetDescricao;

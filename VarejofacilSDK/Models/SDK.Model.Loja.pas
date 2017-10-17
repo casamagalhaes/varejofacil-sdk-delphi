@@ -637,7 +637,7 @@ type
     procedure SetCodigoIbge(const ACodigoIbge: Int64);
     function GetDescricaoMunicipio: TString;
     procedure SetDescricaoMunicipio(const ADescricaoMunicipio: TString);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property PerfilFiscal: TPerfilFiscal read GetPerfilFiscal write SetPerfilFiscal;
     property AtividadeEconomica: TAtividadeEconomica read GetAtividadeEconomica write SetAtividadeEconomica;

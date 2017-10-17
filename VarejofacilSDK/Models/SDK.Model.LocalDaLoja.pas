@@ -91,7 +91,7 @@ type
     procedure SetPadrao(const APadrao: Boolean);
     function GetInsumo: Boolean;
     procedure SetInsumo(const AInsumo: Boolean);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property LocalId: Int64 read GetLocalId write SetLocalId;
     property LojaId: Int64 read GetLojaId write SetLojaId;

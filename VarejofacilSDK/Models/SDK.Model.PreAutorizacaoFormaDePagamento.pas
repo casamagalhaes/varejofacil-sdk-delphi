@@ -73,7 +73,7 @@ type
     procedure SetFinalizadoraId(const AFinalizadoraId: Integer);
     function GetValor: Double;
     procedure SetValor(const AValor: Double);
-  public
+  published
     property FinalizadoraId: Integer read GetFinalizadoraId write SetFinalizadoraId;
     property Valor: Double read GetValor write SetValor;
   end;

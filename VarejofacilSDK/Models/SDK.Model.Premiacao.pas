@@ -241,7 +241,7 @@ type
     procedure SetTipoTexto4(const ATipoTexto4: TString);
     function GetTamanhoTexto4: Integer;
     procedure SetTamanhoTexto4(const ATamanhoTexto4: Integer);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property Descricao: TString read GetDescricao write SetDescricao;
     property FornecedorId: Int64 read GetFornecedorId write SetFornecedorId;

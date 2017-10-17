@@ -139,7 +139,7 @@ type
     procedure SetDataDeSuspensao(const ADataDeSuspensao: TDateTime);
     function GetRestricoes: TString;
     procedure SetRestricoes(const ARestricoes: TString);
-  public
+  published
     property Cep: TString read GetCep write SetCep;
     property Uf: TString read GetUf write SetUf;
     property CodigoIbge: Int64 read GetCodigoIbge write SetCodigoIbge;

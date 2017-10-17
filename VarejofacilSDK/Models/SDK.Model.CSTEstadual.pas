@@ -91,7 +91,7 @@ type
     procedure SetIcmsSubstituto(const AIcmsSubstituto: Boolean);
     function GetIcmsReducao: Boolean;
     procedure SetIcmsReducao(const AIcmsReducao: Boolean);
-  public
+  published
     property Id: Integer read GetId write SetId;
     property Descricao: TString read GetDescricao write SetDescricao;
     property IcmsNormal: Boolean read GetIcmsNormal write SetIcmsNormal;

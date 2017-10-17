@@ -5,7 +5,7 @@ interface
 type
 
   TTestConfig = record
-    VarejofacilURL: string;
+    VarejofacilURL, Username, Password: string;
   end;
 
 var

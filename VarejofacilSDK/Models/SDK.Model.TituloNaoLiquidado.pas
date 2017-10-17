@@ -169,7 +169,7 @@ type
     procedure SetJuros(const AJuros: Double);
     function GetValorDevido: Double;
     procedure SetValorDevido(const AValorDevido: Double);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property Numero: TString read GetNumero write SetNumero;
     property ClienteId: Int64 read GetClienteId write SetClienteId;

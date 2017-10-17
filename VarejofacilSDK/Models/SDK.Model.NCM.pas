@@ -79,7 +79,7 @@ type
     procedure SetDescricao(const ADescricao: TString);
     function GetAliquotaIPI: Double;
     procedure SetAliquotaIPI(const AAliquotaIPI: Double);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property Descricao: TString read GetDescricao write SetDescricao;
     property AliquotaIPI: Double read GetAliquotaIPI write SetAliquotaIPI;

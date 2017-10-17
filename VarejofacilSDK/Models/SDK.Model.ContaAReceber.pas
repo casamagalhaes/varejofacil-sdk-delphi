@@ -181,7 +181,7 @@ type
     procedure SetTitulos(const ATitulos: TTituloAReceberList);
     function GetGeraTitulos: Boolean;
     procedure SetGeraTitulos(const AGeraTitulos: Boolean);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property Observacao: TString read GetObservacao write SetObservacao;
     property NumeroDocumento: TString read GetNumeroDocumento write SetNumeroDocumento;

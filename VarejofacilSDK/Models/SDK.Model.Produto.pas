@@ -626,7 +626,7 @@ type
     procedure SetPautasDoProduto(const APautasDoProduto: TPautaDoProdutoList);
     function GetEstoqueDoProduto: TEstoqueDoProdutoList;
     procedure SetEstoqueDoProduto(const AEstoqueDoProduto: TEstoqueDoProdutoList);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property ProdutoDestinoId: Int64 read GetProdutoDestinoId write SetProdutoDestinoId;
     property SubgrupoId: Integer read GetSubgrupoId write SetSubgrupoId;

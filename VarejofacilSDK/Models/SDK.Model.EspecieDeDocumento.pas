@@ -151,7 +151,7 @@ type
     procedure SetTipoValorMoraDiaria(const ATipoValorMoraDiaria: TTipoEntrada);
     function GetTipoValorMulta: TTipoEntrada;
     procedure SetTipoValorMulta(const ATipoValorMulta: TTipoEntrada);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property Descricao: TString read GetDescricao write SetDescricao;
     property Sigla: TString read GetSigla write SetSigla;

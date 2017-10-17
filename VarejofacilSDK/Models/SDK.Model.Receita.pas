@@ -73,7 +73,7 @@ type
     procedure SetProdutoId(const AProdutoId: Int64);
     function GetTextoReceita: TString;
     procedure SetTextoReceita(const ATextoReceita: TString);
-  public
+  published
     property ProdutoId: Int64 read GetProdutoId write SetProdutoId;
     property TextoReceita: TString read GetTextoReceita write SetTextoReceita;
   end;

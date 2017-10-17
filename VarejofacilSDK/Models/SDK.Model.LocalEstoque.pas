@@ -85,7 +85,7 @@ type
     procedure SetBloqueio(const ABloqueio: Boolean);
     function GetTipoDeEstoque: TTipoEstoque;
     procedure SetTipoDeEstoque(const ATipoDeEstoque: TTipoEstoque);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property Descricao: TString read GetDescricao write SetDescricao;
     property Bloqueio: Boolean read GetBloqueio write SetBloqueio;

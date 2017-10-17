@@ -73,7 +73,7 @@ type
     procedure SetDataConsulta(const ADataConsulta: TDateTime);
     function GetTitulos: TTituloNaoLiquidadoList;
     procedure SetTitulos(const ATitulos: TTituloNaoLiquidadoList);
-  public
+  published
     property DataConsulta: TDateTime read GetDataConsulta write SetDataConsulta;
     property Titulos: TTituloNaoLiquidadoList read GetTitulos write SetTitulos;
   end;

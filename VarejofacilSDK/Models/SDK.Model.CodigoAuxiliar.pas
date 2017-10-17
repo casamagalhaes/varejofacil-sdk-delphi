@@ -85,7 +85,7 @@ type
     procedure SetFator(const AFator: Double);
     function GetProdutoId: Int64;
     procedure SetProdutoId(const AProdutoId: Int64);
-  public
+  published
     property Id: TString read GetId write SetId;
     property Tipo: TTipoProdutoAuxiliar read GetTipo write SetTipo;
     property Fator: Double read GetFator write SetFator;

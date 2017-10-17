@@ -79,7 +79,7 @@ type
     procedure SetDescricao(const ADescricao: TString);
     function GetValorMaximo: Double;
     procedure SetValorMaximo(const AValorMaximo: Double);
-  public
+  published
     property Id: TString read GetId write SetId;
     property Descricao: TString read GetDescricao write SetDescricao;
     property ValorMaximo: Double read GetValorMaximo write SetValorMaximo;

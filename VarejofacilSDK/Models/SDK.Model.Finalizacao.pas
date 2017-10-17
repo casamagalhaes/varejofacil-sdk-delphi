@@ -289,7 +289,7 @@ type
     procedure SetDescontoMoeda(const ADescontoMoeda: Double);
     function GetTrocoDoacao: Double;
     procedure SetTrocoDoacao(const ATrocoDoacao: Double);
-  public
+  published
     property Id: Integer read GetId write SetId;
     property FinalizadoraId: Integer read GetFinalizadoraId write SetFinalizadoraId;
     property DataVencimento: TDateTime read GetDataVencimento write SetDataVencimento;

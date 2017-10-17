@@ -85,7 +85,7 @@ type
     procedure SetTipoDePauta(const ATipoDePauta: TTipoPauta);
     function GetValorDePauta: Double;
     procedure SetValorDePauta(const AValorDePauta: Double);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property Uf: TString read GetUf write SetUf;
     property TipoDePauta: TTipoPauta read GetTipoDePauta write SetTipoDePauta;

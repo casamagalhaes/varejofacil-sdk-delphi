@@ -73,7 +73,7 @@ type
     procedure SetId(const AId: Int64);
     function GetDescricao: TString;
     procedure SetDescricao(const ADescricao: TString);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property Descricao: TString read GetDescricao write SetDescricao;
   end;

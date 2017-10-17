@@ -73,7 +73,7 @@ type
     procedure SetTributacaoId(const ATributacaoId: TString);
     function GetPreco: TPreco;
     procedure SetPreco(const APreco: TPreco);
-  public
+  published
     property TributacaoId: TString read GetTributacaoId write SetTributacaoId;
     property Preco: TPreco read GetPreco write SetPreco;
   end;

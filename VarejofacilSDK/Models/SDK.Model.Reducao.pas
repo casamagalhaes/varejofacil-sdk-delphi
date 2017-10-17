@@ -445,7 +445,7 @@ type
     procedure SetIssValorBase4(const AIssValorBase4: Double);
     function GetIssValorImposto4: Double;
     procedure SetIssValorImposto4(const AIssValorImposto4: Double);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property Data: TDateTime read GetData write SetData;
     property LojaId: Int64 read GetLojaId write SetLojaId;

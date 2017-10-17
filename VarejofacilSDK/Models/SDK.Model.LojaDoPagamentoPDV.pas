@@ -73,7 +73,7 @@ type
     procedure SetLojaId(const ALojaId: Int64);
     function GetValorMaximo: Double;
     procedure SetValorMaximo(const AValorMaximo: Double);
-  public
+  published
     property LojaId: Int64 read GetLojaId write SetLojaId;
     property ValorMaximo: Double read GetValorMaximo write SetValorMaximo;
   end;

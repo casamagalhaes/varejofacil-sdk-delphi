@@ -175,7 +175,7 @@ type
     procedure SetPlanoContaReduzido(const APlanoContaReduzido: TString);
     function GetContaReceberId: Integer;
     procedure SetContaReceberId(const AContaReceberId: Integer);
-  public
+  published
     property Id: Integer read GetId write SetId;
     property Descricao: TString read GetDescricao write SetDescricao;
     property Documento: TString read GetDocumento write SetDocumento;

@@ -5,7 +5,7 @@ unit SDK.Types;
 interface
 
 uses
-  SysUtils, Classes, XMLDoc, XMLIntf, TypInfo, Generics.Collections;
+  SysUtils, Classes, XMLDoc, XMLIntf, TypInfo;
 
 const
   CURRENT_TIMEZONE = -(3 * 3600);
@@ -20,7 +20,7 @@ type
 
   TStringArray = array of TString;
 
-  TLongList = TList<Int64>;
+  TLongList = array of Integer;
 
   TDouble = double;
 
@@ -61,11 +61,22 @@ type
     property Content: TString read GetContent write SetContent;
   end;
 
-  TRequestFunction = function(const ARequest: IRequest): IResponse of object;
+  TTokenStorage = class
+  private
+    FAccessToken: string;
+    FRefreshToken: string;
+  public
+    property AccessToken: string read FAccessToken write FAccessToken;
+    property RefreshToken: string read FRefreshToken write FRefreshToken;
+    class function From(const AResponse: IResponse): TTokenStorage;
+    function Clone: TTokenStorage;
+  end;
+
+  TAuthenticatedRequest = reference to function(Tokens: TTokenStorage): IResponse;
 
   IClient = interface
     ['{D9CBE96B-2ACC-4C93-B6C7-CEAC97A24471}']
-    function Authenticate(ARequestFunction: TRequestFunction): IResponse;
+    function Authenticate(ARequestFunction: TAuthenticatedRequest): IResponse;
     function MakeRequest(const ARequest: IRequest): IResponse;
     function Get(const AURL: TString; AParams, AHeaders: TStrings): IResponse;
     function Put(const AURL, AContent: TString; AHeaders: TStrings): IResponse;
@@ -101,6 +112,9 @@ type
   function IndexOf(const AItem: TString; AArray: TStringArray): Integer;
 
 implementation
+
+uses
+  SDK.XML;
 
 { TInterfacedModel }
 
@@ -157,6 +171,30 @@ begin
       Result := I;
       Exit;
     end;
+end;
+
+{ TTokenStorage }
+
+function TTokenStorage.Clone: TTokenStorage;
+begin
+  Result := TTokenStorage.Create;
+  Result.AccessToken := FAccessToken;
+  Result.RefreshToken := FRefreshToken;
+end;
+
+class function TTokenStorage.From(const AResponse: IResponse): TTokenStorage;
+var
+  Document: IXMLDocument;
+  AccessTokenNode, RefreshTokenNode: TCustomXMLNodeArray;
+begin
+  Document := AResponse.AsXML;
+  AccessTokenNode := TXMLHelper.XPathSelect(Document, '//ResultToken/accessToken');
+  RefreshTokenNode := TXMLHelper.XPathSelect(Document, '//ResultToken/refreshToken');
+  Result := TTokenStorage.Create;
+  if Length(AccessTokenNode) > 0 then
+    Result.AccessToken := AccessTokenNode[0].Text;
+  if Length(RefreshTokenNode) > 0 then
+    Result.RefreshToken := RefreshTokenNode[0].Text;
 end;
 
 end.

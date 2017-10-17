@@ -85,7 +85,7 @@ type
     procedure SetAliquotaIPI(const AAliquotaIPI: Double);
     function GetAliquotas: TNCMExcecaoAliquotaList;
     procedure SetAliquotas(const AAliquotas: TNCMExcecaoAliquotaList);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property Descricao: TString read GetDescricao write SetDescricao;
     property AliquotaIPI: Double read GetAliquotaIPI write SetAliquotaIPI;

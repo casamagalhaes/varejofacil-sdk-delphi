@@ -73,7 +73,7 @@ type
     procedure SetReducao(const AReducao: Double);
     function GetDesconto: Double;
     procedure SetDesconto(const ADesconto: Double);
-  public
+  published
     property Reducao: Double read GetReducao write SetReducao;
     property Desconto: Double read GetDesconto write SetDesconto;
   end;

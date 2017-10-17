@@ -45,12 +45,19 @@ begin
       else
         Result :=  RoundTo(Random(999) / 3, -2) + 1000;
     end;
-    tkEnumeration, tkInterface:
+    tkEnumeration, tkInterface, tkClass:
     begin
       Result := Null;
     end;
     else
-      raise Exception.CreateFmt('Não é possível gerar dados para o tipo %s', [APropType^.Name]);
+    begin
+      if SameText(APropType^.Name, 'TLongList') then
+      begin
+        Result := VarArrayCreate([0,1], varInteger);
+      end
+      else
+        raise Exception.CreateFmt('Não é possível gerar dados para o tipo %s', [APropType^.Name]);
+    end;
   end;
 end;
 

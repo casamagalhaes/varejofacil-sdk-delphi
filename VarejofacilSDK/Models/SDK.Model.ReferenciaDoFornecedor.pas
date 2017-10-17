@@ -97,7 +97,7 @@ type
     procedure SetQuantidade(const AQuantidade: Double);
     function GetNivel: TNivelFornecedor;
     procedure SetNivel(const ANivel: TNivelFornecedor);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property FornecedorId: Int64 read GetFornecedorId write SetFornecedorId;
     property Referencia: TString read GetReferencia write SetReferencia;

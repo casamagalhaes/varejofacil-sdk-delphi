@@ -79,7 +79,7 @@ type
     procedure SetDescricao(const ADescricao: TString);
     function GetDescricaoCompleta: TString;
     procedure SetDescricaoCompleta(const ADescricaoCompleta: TString);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property Descricao: TString read GetDescricao write SetDescricao;
     property DescricaoCompleta: TString read GetDescricaoCompleta write SetDescricaoCompleta;

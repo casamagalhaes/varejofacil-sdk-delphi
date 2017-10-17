@@ -79,7 +79,7 @@ type
     procedure SetLojaId(const ALojaId: Int64);
     function GetContaCorrenteId: Int64;
     procedure SetContaCorrenteId(const AContaCorrenteId: Int64);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property LojaId: Int64 read GetLojaId write SetLojaId;
     property ContaCorrenteId: Int64 read GetContaCorrenteId write SetContaCorrenteId;

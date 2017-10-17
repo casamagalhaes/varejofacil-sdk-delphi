@@ -127,7 +127,7 @@ type
     procedure SetValorTotalDevolvido(const AValorTotalDevolvido: Double);
     function GetMotivoDaDevolucaoId: Int64;
     procedure SetMotivoDaDevolucaoId(const AMotivoDaDevolucaoId: Int64);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property ProdutoId: Int64 read GetProdutoId write SetProdutoId;
     property VendedorId: Int64 read GetVendedorId write SetVendedorId;

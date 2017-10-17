@@ -67,7 +67,7 @@ type
 	FTipoDeTransacaoDoTitulo: Tenum;
     function GetTipoDeTransacaoDoTitulo: Tenum;
     procedure SetTipoDeTransacaoDoTitulo(const ATipoDeTransacaoDoTitulo: Tenum);
-  public
+  published
     property TipoDeTransacaoDoTitulo: Tenum read GetTipoDeTransacaoDoTitulo write SetTipoDeTransacaoDoTitulo;
   end;
 

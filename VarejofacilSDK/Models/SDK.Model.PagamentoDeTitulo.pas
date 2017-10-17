@@ -79,7 +79,7 @@ type
     procedure SetContaCorrenteId(const AContaCorrenteId: Int64);
     function GetValorDoPagamento: Double;
     procedure SetValorDoPagamento(const AValorDoPagamento: Double);
-  public
+  published
     property FormaDePagamentoId: Integer read GetFormaDePagamentoId write SetFormaDePagamentoId;
     property ContaCorrenteId: Int64 read GetContaCorrenteId write SetContaCorrenteId;
     property ValorDoPagamento: Double read GetValorDoPagamento write SetValorDoPagamento;

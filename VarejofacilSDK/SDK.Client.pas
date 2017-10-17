@@ -10,14 +10,17 @@ type
   TClient = class(TInterfacedObject, IClient)
   strict private
     FBaseURL: TString;
-    function Authenticate(ARequestFunction: TRequestFunction): IResponse;
+    FTokens: TTokenStorage;
+    FUsername: string;
+    FPassword: string;
+    function Authenticate(ARequestFunction: TAuthenticatedRequest): IResponse;
     function MakeRequest(const ARequest: IRequest): IResponse;
   public
     function Get(const AURL: TString; AParams, AHeaders: TStrings): IResponse;
     function Put(const AURL, AContent: TString; AHeaders: TStrings): IResponse;
     function Post(const AURL, AContent: TString; AHeaders: TStrings): IResponse;
     function Delete(const AURL: TString; AParams, AHeaders: TStrings): IResponse;
-    constructor Create(const ABaseURL: TString);
+    constructor Create(const ABaseURL: TString; const AUsername, APassword: string);
     destructor Destroy; override;
   end;
 
@@ -25,38 +28,124 @@ implementation
 
 { TClient }
 
-function TClient.Authenticate(ARequestFunction: TRequestFunction): IResponse;
+function TClient.Authenticate(ARequestFunction: TAuthenticatedRequest): IResponse;
+var
+  AuthRequest: IRequest;
+  AuthResponse: IResponse;
+  AuthHeaders: TStrings;
+  RefreshRequest: IRequest;
+  RefreshResponse: IResponse;
+  RefreshHeaders: TStrings;
 begin
-  //Do authenticate
-  //make request
-  //return response
+  if Assigned(FTokens) then
+  begin
+    Result := ARequestFunction(FTokens);
+    if Result.Status = 401 then
+    begin
+      RefreshHeaders := TStringList.Create;
+      try
+        RefreshHeaders.Values['Accept'] := 'application/xml';
+        RefreshHeaders.Values['Authorization'] := FTokens.RefreshToken;
+        RefreshRequest := TRequest.Create(Concat(FBaseURL, '/api/refresh'), mtGET, nil, RefreshHeaders, Format('{"username": "%s", "password": "%s"}', [FUsername, FPassword]));
+        RefreshResponse := MakeRequest(RefreshRequest);
+        if RefreshResponse.Status = 200 then
+        begin
+          FTokens := TTokenStorage.From(RefreshResponse);
+          Result := ARequestFunction(FTokens);
+        end
+        else
+          raise Exception.CreateFmt('Refresh falhou com código %d', [AuthResponse.Status]);
+      finally
+        RefreshHeaders.Free;
+      end;
+    end;
+  end
+  else
+  begin
+    AuthHeaders := TStringList.Create;
+    try
+      AuthHeaders.Values['Content-Type'] := 'application/json';
+      AuthHeaders.Values['Accept'] := 'application/xml';
+      AuthRequest := TRequest.Create(Concat(FBaseURL, '/api/auth'), mtPOST, nil, AuthHeaders, Format('{"username": "%s", "password": "%s"}', [FUsername, FPassword]));
+      AuthResponse := MakeRequest(AuthRequest);
+      if AuthResponse.Status = 200 then
+      begin
+        FTokens := TTokenStorage.From(AuthResponse);
+        Result := ARequestFunction(FTokens);
+      end
+      else
+        raise Exception.CreateFmt('Autenticação falhou com código %d', [AuthResponse.Status]);
+    finally
+      AuthHeaders.Free;
+    end;
+  end;
 end;
 
-constructor TClient.Create(const ABaseURL: TString);
+constructor TClient.Create(const ABaseURL: TString; const AUsername, APassword: string);
 begin
   inherited Create;
   FBaseURL := ABaseURL;
+  FUsername := AUsername;
+  FPassword := APassword;
 end;
 
 function TClient.Delete(const AURL: TString; AParams, AHeaders: TStrings): IResponse;
-var
-  Request: IRequest;
 begin
-  Request := TRequest.Create(Concat(FBaseURL, AURL), mtDELETE, AParams, AHeaders);
-  Result := MakeRequest(Request);
+  Result := Authenticate(
+    function(ATokens: TTokenStorage): IResponse
+    var
+      Request: IRequest;
+    begin
+      Request := TRequest.Create(Concat(FBaseURL, AURL), mtDELETE, AParams, AHeaders, EmptyStr, ATokens);
+      Result := MakeRequest(Request);
+    end
+  );
 end;
 
 destructor TClient.Destroy;
 begin
+  if Assigned(FTokens) then
+    FreeAndNil(FTokens);
   inherited;
 end;
 
 function TClient.Get(const AURL: TString; AParams, AHeaders: TStrings): IResponse;
-var
-  Request: IRequest;
 begin
-  Request := TRequest.Create(Concat(FBaseURL, AURL), mtGET, AParams, AHeaders);
-  Result := MakeRequest(Request);
+  Result := Authenticate(
+    function(ATokens: TTokenStorage): IResponse
+    var
+      Request: IRequest;
+    begin
+      Request := TRequest.Create(Concat(FBaseURL, AURL), mtGET, AParams, AHeaders, EmptyStr, ATokens);
+      Result := MakeRequest(Request);
+    end
+  );
+end;
+
+function TClient.Post(const AURL, AContent: TString; AHeaders: TStrings): IResponse;
+begin
+  Result := Authenticate(
+    function(ATokens: TTokenStorage): IResponse
+    var
+      Request: IRequest;
+    begin
+      Request := TRequest.Create(Concat(FBaseURL, AURL), mtPOST, nil, nil, AContent, ATokens);
+      Result := MakeRequest(Request);
+    end
+  );
+end;
+
+function TClient.Put(const AURL, AContent: TString; AHeaders: TStrings): IResponse;
+begin
+  Result := Authenticate(
+    function(ATokens: TTokenStorage): IResponse
+    var
+      Request: IRequest;
+    begin
+      Request := TRequest.Create(Concat(FBaseURL, AURL), mtPUT, nil, nil, AContent, ATokens);
+      Result := MakeRequest(Request);
+    end
+  );
 end;
 
 function TClient.MakeRequest(const ARequest: IRequest): IResponse;
@@ -86,11 +175,26 @@ begin
     try
       HTTP.Request := HTTPRequest;
       if Assigned(ARequest.Headers) then
+      begin
         HTTP.Request.CustomHeaders.AddStrings(ARequest.Headers);
+        HTTP.Request.RawHeaders.AddStrings(ARequest.Headers);
+        if ARequest.Headers.IndexOfName('Content-Type') > -1 then
+          HTTP.Request.ContentType := ARequest.Headers.Values['Content-Type'];
+        if ARequest.Headers.IndexOfName('Accept') > -1 then
+          HTTP.Request.Accept := ARequest.Headers.Values['Accept'];
+      end;
       if HTTP.Request.CustomHeaders.IndexOfName('Content-Type') = -1 then
+      begin
+        HTTP.Request.ContentType := 'application/xml';
         HTTP.Request.CustomHeaders.Values['Content-Type'] := 'application/xml';
+        HTTP.Request.RawHeaders.Values['Content-Type'] := 'application/xml';
+      end;
       if HTTP.Request.CustomHeaders.IndexOfName('Accept') = -1 then
+      begin
+        HTTP.Request.Accept := 'application/xml';
         HTTP.Request.CustomHeaders.Values['Accept'] := 'application/xml';
+        HTTP.Request.RawHeaders.Values['Accept'] := 'application/xml';
+      end;
       try
         case ARequest.Method of
           mtGET:
@@ -148,22 +252,6 @@ begin
   finally
     FreeAndNil(HTTP);
   end;
-end;
-
-function TClient.Post(const AURL, AContent: TString; AHeaders: TStrings): IResponse;
-var
-  Request: IRequest;
-begin
-  Request := TRequest.Create(Concat(FBaseURL, AURL), mtPOST, nil, nil, AContent);
-  Result := MakeRequest(Request);
-end;
-
-function TClient.Put(const AURL, AContent: TString; AHeaders: TStrings): IResponse;
-var
-  Request: IRequest;
-begin
-  Request := TRequest.Create(Concat(FBaseURL, AURL), mtPUT, nil, nil, AContent);
-  Result := MakeRequest(Request);
 end;
 
 end.

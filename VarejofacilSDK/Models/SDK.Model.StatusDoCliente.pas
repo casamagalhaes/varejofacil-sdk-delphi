@@ -79,7 +79,7 @@ type
     procedure SetDescricao(const ADescricao: TString);
     function GetStatus: TStatusBloqueioCliente;
     procedure SetStatus(const AStatus: TStatusBloqueioCliente);
-  public
+  published
     property Id: Integer read GetId write SetId;
     property Descricao: TString read GetDescricao write SetDescricao;
     property Status: TStatusBloqueioCliente read GetStatus write SetStatus;

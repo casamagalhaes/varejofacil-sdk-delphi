@@ -79,7 +79,7 @@ type
     procedure SetDescricao(const ADescricao: TString);
     function GetTipoDocumentoId: Integer;
     procedure SetTipoDocumentoId(const ATipoDocumentoId: Integer);
-  public
+  published
     property Id: Integer read GetId write SetId;
     property Descricao: TString read GetDescricao write SetDescricao;
     property TipoDocumentoId: Integer read GetTipoDocumentoId write SetTipoDocumentoId;

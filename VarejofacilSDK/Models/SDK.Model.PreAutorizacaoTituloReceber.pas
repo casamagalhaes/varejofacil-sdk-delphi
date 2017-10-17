@@ -79,7 +79,7 @@ type
     procedure SetVencimento(const AVencimento: TDateTime);
     function GetValor: Double;
     procedure SetValor(const AValor: Double);
-  public
+  published
     property Ordem: Integer read GetOrdem write SetOrdem;
     property Vencimento: TDateTime read GetVencimento write SetVencimento;
     property Valor: Double read GetValor write SetValor;

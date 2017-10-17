@@ -199,7 +199,7 @@ type
     procedure SetPermiteDesconto(const APermiteDesconto: Boolean);
     function GetIncentivoEmZonaFranca: TString;
     procedure SetIncentivoEmZonaFranca(const AIncentivoEmZonaFranca: TString);
-  public
+  published
     property Id: Integer read GetId write SetId;
     property LojaId: Int64 read GetLojaId write SetLojaId;
     property ProdutoId: Int64 read GetProdutoId write SetProdutoId;

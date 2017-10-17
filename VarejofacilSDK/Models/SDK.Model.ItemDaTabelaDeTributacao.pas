@@ -175,7 +175,7 @@ type
     procedure SetCfopId(const ACfopId: Int64);
     function GetCfopCuponsFiscaisId: Int64;
     procedure SetCfopCuponsFiscaisId(const ACfopCuponsFiscaisId: Int64);
-  public
+  published
     property Uf: TString read GetUf write SetUf;
     property ClassificacaoDePessoa: TClassificacaoPessoa read GetClassificacaoDePessoa write SetClassificacaoDePessoa;
     property TributadoNF: Double read GetTributadoNF write SetTributadoNF;

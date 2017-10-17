@@ -121,7 +121,7 @@ type
     procedure SetSenha(const ASenha: TString);
     function GetPadrao: Boolean;
     procedure SetPadrao(const APadrao: Boolean);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property Descricao: TString read GetDescricao write SetDescricao;
     property Autenticacao: Boolean read GetAutenticacao write SetAutenticacao;

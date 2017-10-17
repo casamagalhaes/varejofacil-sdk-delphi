@@ -91,7 +91,7 @@ type
     procedure SetSubstituto(const ASubstituto: Boolean);
     function GetTributacaoRms: TString;
     procedure SetTributacaoRms(const ATributacaoRms: TString);
-  public
+  published
     property Id: Integer read GetId write SetId;
     property Descricao: TString read GetDescricao write SetDescricao;
     property DescricaoCompleta: TString read GetDescricaoCompleta write SetDescricaoCompleta;

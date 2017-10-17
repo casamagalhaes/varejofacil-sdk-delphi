@@ -259,7 +259,7 @@ type
     procedure SetImprimiuNotaFiscal(const AImprimiuNotaFiscal: Boolean);
     function GetStatusXMLNota: TStatusXmlNotaPDV;
     procedure SetStatusXMLNota(const AStatusXMLNota: TStatusXmlNotaPDV);
-  public
+  published
     property Id: TString read GetId write SetId;
     property Sequencial: TString read GetSequencial write SetSequencial;
     property NumeroCaixa: TString read GetNumeroCaixa write SetNumeroCaixa;

@@ -112,7 +112,7 @@
         <DCC_RemoteDebug>true</DCC_RemoteDebug>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
-        <Debugger_RunParams>/models /filter:SDK.Model.*</Debugger_RunParams>
+        <Debugger_RunParams>/models /filter:TestSDK.*</Debugger_RunParams>
         <PostBuildEvent><![CDATA[copy *.tpl ".\$(Platform)\$(Config)\" 
  copy *.ini ".\$(Platform)\$(Config)\"
 $(PostBuildEvent)]]></PostBuildEvent>

@@ -79,7 +79,7 @@ type
     procedure SetDescricao(const ADescricao: TString);
     function GetSecaoId: Integer;
     procedure SetSecaoId(const ASecaoId: Integer);
-  public
+  published
     property Id: Integer read GetId write SetId;
     property Descricao: TString read GetDescricao write SetDescricao;
     property SecaoId: Integer read GetSecaoId write SetSecaoId;

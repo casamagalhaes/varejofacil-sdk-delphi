@@ -157,7 +157,7 @@ type
     procedure SetCstEntradaSimples(const ACstEntradaSimples: Integer);
     function GetCstSaidaSimples: Integer;
     procedure SetCstSaidaSimples(const ACstSaidaSimples: Integer);
-  public
+  published
     property Id: TString read GetId write SetId;
     property Descricao: TString read GetDescricao write SetDescricao;
     property Retencao: Double read GetRetencao write SetRetencao;

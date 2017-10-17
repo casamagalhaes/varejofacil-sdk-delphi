@@ -103,7 +103,7 @@ type
     procedure SetImpostoFederalId(const AImpostoFederalId: Integer);
     function GetUsuarioId: Int64;
     procedure SetUsuarioId(const AUsuarioId: Int64);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property DataAlteracao: TDateTime read GetDataAlteracao write SetDataAlteracao;
     property FundamentoEstadual: TString read GetFundamentoEstadual write SetFundamentoEstadual;

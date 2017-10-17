@@ -133,7 +133,7 @@ type
     procedure SetValor(const AValor: Double);
     function GetSenha: TString;
     procedure SetSenha(const ASenha: TString);
-  public
+  published
     property Sequencial: TString read GetSequencial write SetSequencial;
     property NumeroCaixa: TString read GetNumeroCaixa write SetNumeroCaixa;
     property Data: TDateTime read GetData write SetData;

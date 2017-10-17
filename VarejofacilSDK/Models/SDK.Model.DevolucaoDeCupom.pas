@@ -145,7 +145,7 @@ type
     procedure SetDataDaTransacao(const ADataDaTransacao: TDateTime);
     function GetObservacao: TString;
     procedure SetObservacao(const AObservacao: TString);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property LocalId: Int64 read GetLocalId write SetLocalId;
     property LojaId: Int64 read GetLojaId write SetLojaId;

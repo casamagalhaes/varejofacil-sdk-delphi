@@ -79,7 +79,7 @@ type
     procedure SetDescricao(const ADescricao: TString);
     function GetSituacao: TSituacaoSetor;
     procedure SetSituacao(const ASituacao: TSituacaoSetor);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property Descricao: TString read GetDescricao write SetDescricao;
     property Situacao: TSituacaoSetor read GetSituacao write SetSituacao;

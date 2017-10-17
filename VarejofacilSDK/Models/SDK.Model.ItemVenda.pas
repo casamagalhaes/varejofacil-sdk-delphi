@@ -301,7 +301,7 @@ type
     procedure SetTabelaB(const ATabelaB: TString);
     function GetCfop: TString;
     procedure SetCfop(const ACfop: TString);
-  public
+  published
     property Id: Integer read GetId write SetId;
     property ProdutoId: Int64 read GetProdutoId write SetProdutoId;
     property FuncionarioVendedorId: Integer read GetFuncionarioVendedorId write SetFuncionarioVendedorId;

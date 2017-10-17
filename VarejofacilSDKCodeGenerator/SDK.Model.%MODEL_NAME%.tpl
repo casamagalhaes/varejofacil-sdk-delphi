@@ -67,7 +67,7 @@ type
 	F%FIELD.NAME%: %FIELD.TYPE%;%END_LOOP%%BEGIN_LOOP(FIELDS)%
     function Get%FIELD.NAME%: %FIELD.TYPE%;
     procedure Set%FIELD.NAME%(const A%FIELD.NAME%: %FIELD.TYPE%);%END_LOOP%
-  public%BEGIN_LOOP(FIELDS)%
+  published%BEGIN_LOOP(FIELDS)%
     property %FIELD.NAME%: %FIELD.TYPE% read Get%FIELD.NAME% write Set%FIELD.NAME%;%END_LOOP%
   end;
 

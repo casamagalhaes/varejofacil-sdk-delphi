@@ -85,7 +85,7 @@ type
     procedure SetObservacao(const AObservacao: TString);
     function GetCodigoAuxiliar: Integer;
     procedure SetCodigoAuxiliar(const ACodigoAuxiliar: Integer);
-  public
+  published
     property TipoPagamentoId: Integer read GetTipoPagamentoId write SetTipoPagamentoId;
     property Valor: Double read GetValor write SetValor;
     property Observacao: TString read GetObservacao write SetObservacao;

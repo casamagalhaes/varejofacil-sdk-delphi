@@ -97,7 +97,7 @@ type
     procedure SetEstadual(const AEstadual: Double);
     function GetMunicipal: Double;
     procedure SetMunicipal(const AMunicipal: Double);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property Uf: TString read GetUf write SetUf;
     property Importado: Double read GetImportado write SetImportado;

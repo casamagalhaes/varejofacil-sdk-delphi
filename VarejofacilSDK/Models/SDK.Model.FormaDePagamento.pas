@@ -97,7 +97,7 @@ type
     procedure SetCategoriaFinanceiraId(const ACategoriaFinanceiraId: Int64);
     function GetMetodoDePagamento: TMetodoPagamentoEcommerce;
     procedure SetMetodoDePagamento(const AMetodoDePagamento: TMetodoPagamentoEcommerce);
-  public
+  published
     property Id: Integer read GetId write SetId;
     property Descricao: TString read GetDescricao write SetDescricao;
     property EspecieDeDocumentoId: Int64 read GetEspecieDeDocumentoId write SetEspecieDeDocumentoId;

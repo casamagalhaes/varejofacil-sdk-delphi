@@ -139,7 +139,7 @@ type
     procedure SetObservacao(const AObservacao: TString);
     function GetTitulos: TPreAutorizacaoTituloReceberList;
     procedure SetTitulos(const ATitulos: TPreAutorizacaoTituloReceberList);
-  public
+  published
     property Data: TDateTime read GetData write SetData;
     property LojaId: Int64 read GetLojaId write SetLojaId;
     property Caixa: TString read GetCaixa write SetCaixa;

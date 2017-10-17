@@ -404,6 +404,9 @@ type
     function GetItensTransacaoItemTef: TTransacaoItemTefList;
     procedure SetItensTransacaoItemTef(const AItensTransacaoItemTef: TTransacaoItemTefList);
   public
+    property PrimeiraViaComprovantePagamento: TByteArray read GetPrimeiraViaComprovantePagamento write SetPrimeiraViaComprovantePagamento;
+    property SegundaViaComprovantePagamento: TByteArray read GetSegundaViaComprovantePagamento write SetSegundaViaComprovantePagamento;
+  published
     property Id: Integer read GetId write SetId;
     property SequencialTransacaoTef: TString read GetSequencialTransacaoTef write SetSequencialTransacaoTef;
     property DataTransacaoTef: TString read GetDataTransacaoTef write SetDataTransacaoTef;
@@ -415,8 +418,6 @@ type
     property DataEHora: TString read GetDataEHora write SetDataEHora;
     property ModalidadeDeCancelamento: TString read GetModalidadeDeCancelamento write SetModalidadeDeCancelamento;
     property LinhaAutenticacaoDoCheque: TString read GetLinhaAutenticacaoDoCheque write SetLinhaAutenticacaoDoCheque;
-    property PrimeiraViaComprovantePagamento: TByteArray read GetPrimeiraViaComprovantePagamento write SetPrimeiraViaComprovantePagamento;
-    property SegundaViaComprovantePagamento: TByteArray read GetSegundaViaComprovantePagamento write SetSegundaViaComprovantePagamento;
     property TrocoEmDinheiroParaSerDevolvido: TString read GetTrocoEmDinheiroParaSerDevolvido write SetTrocoEmDinheiroParaSerDevolvido;
     property InstituicaoQueIraProcessarTransacao: TString read GetInstituicaoQueIraProcessarTransacao write SetInstituicaoQueIraProcessarTransacao;
     property TipoDoCartao: TString read GetTipoDoCartao write SetTipoDoCartao;

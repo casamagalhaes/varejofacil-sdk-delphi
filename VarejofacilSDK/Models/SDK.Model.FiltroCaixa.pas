@@ -97,7 +97,7 @@ type
     procedure SetOperador(const AOperador: Int64);
     function GetCaixa: TString;
     procedure SetCaixa(const ACaixa: TString);
-  public
+  published
     property Cliente: Int64 read GetCliente write SetCliente;
     property Documento: TString read GetDocumento write SetDocumento;
     property Cartao: TString read GetCartao write SetCartao;

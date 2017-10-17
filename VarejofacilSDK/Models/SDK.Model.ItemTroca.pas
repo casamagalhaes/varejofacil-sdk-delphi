@@ -133,7 +133,7 @@ type
     procedure SetFuncionarioId(const AFuncionarioId: TString);
     function GetSerieProduto: TString;
     procedure SetSerieProduto(const ASerieProduto: TString);
-  public
+  published
     property ProdutoId: Int64 read GetProdutoId write SetProdutoId;
     property Quantidade: Double read GetQuantidade write SetQuantidade;
     property TipoPreco: TString read GetTipoPreco write SetTipoPreco;

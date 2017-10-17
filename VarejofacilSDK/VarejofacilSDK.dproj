@@ -72,6 +72,132 @@
         <DCCReference Include="SDK.Enums.pas"/>
         <DCCReference Include="SDK.Exceptions.pas"/>
         <DCCReference Include="SDK.SortParams.pas"/>
+        <DCCReference Include="Models\SDK.Model.AgenteFinanceiro.pas"/>
+        <DCCReference Include="Models\SDK.Model.Aplicacao.pas"/>
+        <DCCReference Include="Models\SDK.Model.Caixa.pas"/>
+        <DCCReference Include="Models\SDK.Model.CancelamentoDeTituloAReceber.pas"/>
+        <DCCReference Include="Models\SDK.Model.Caracteristica.pas"/>
+        <DCCReference Include="Models\SDK.Model.CargaProduto.pas"/>
+        <DCCReference Include="Models\SDK.Model.CategoriaFinanceira.pas"/>
+        <DCCReference Include="Models\SDK.Model.Cest.pas"/>
+        <DCCReference Include="Models\SDK.Model.Cfop.pas"/>
+        <DCCReference Include="Models\SDK.Model.Cliente.pas"/>
+        <DCCReference Include="Models\SDK.Model.CodigoAuxiliar.pas"/>
+        <DCCReference Include="Models\SDK.Model.Componente.pas"/>
+        <DCCReference Include="Models\SDK.Model.ComprovanteTransacao.pas"/>
+        <DCCReference Include="Models\SDK.Model.ConfiguracaoPDV.pas"/>
+        <DCCReference Include="Models\SDK.Model.ContaAReceber.pas"/>
+        <DCCReference Include="Models\SDK.Model.ContaAReceberRenegociacao.pas"/>
+        <DCCReference Include="Models\SDK.Model.ContaCorrente.pas"/>
+        <DCCReference Include="Models\SDK.Model.ContaDeEmail.pas"/>
+        <DCCReference Include="Models\SDK.Model.Contato.pas"/>
+        <DCCReference Include="Models\SDK.Model.CSTEstadual.pas"/>
+        <DCCReference Include="Models\SDK.Model.Devolucao.pas"/>
+        <DCCReference Include="Models\SDK.Model.DevolucaoDeCupom.pas"/>
+        <DCCReference Include="Models\SDK.Model.Endereco.pas"/>
+        <DCCReference Include="Models\SDK.Model.EspecieDeDocumento.pas"/>
+        <DCCReference Include="Models\SDK.Model.EstoqueDoProduto.pas"/>
+        <DCCReference Include="Models\SDK.Model.FiguraFiscal.pas"/>
+        <DCCReference Include="Models\SDK.Model.FiltroCaixa.pas"/>
+        <DCCReference Include="Models\SDK.Model.Finalizacao.pas"/>
+        <DCCReference Include="Models\SDK.Model.Finalizadora.pas"/>
+        <DCCReference Include="Models\SDK.Model.FinalizadoraDaPremiacao.pas"/>
+        <DCCReference Include="Models\SDK.Model.FormaDePagamento.pas"/>
+        <DCCReference Include="Models\SDK.Model.Fornecedor.pas"/>
+        <DCCReference Include="Models\SDK.Model.FuncaoDaLoja.pas"/>
+        <DCCReference Include="Models\SDK.Model.FuncaoDoPDV.pas"/>
+        <DCCReference Include="Models\SDK.Model.Funcionario.pas"/>
+        <DCCReference Include="Models\SDK.Model.Genero.pas"/>
+        <DCCReference Include="Models\SDK.Model.Grupo.pas"/>
+        <DCCReference Include="Models\SDK.Model.HistoricoValidacaoFiscal.pas"/>
+        <DCCReference Include="Models\SDK.Model.Holding.pas"/>
+        <DCCReference Include="Models\SDK.Model.ImpostoFederal.pas"/>
+        <DCCReference Include="Models\SDK.Model.ItemAplicacaoProduto.pas"/>
+        <DCCReference Include="Models\SDK.Model.ItemCaracteristicaProduto.pas"/>
+        <DCCReference Include="Models\SDK.Model.ItemDaTabelaDeTributacao.pas"/>
+        <DCCReference Include="Models\SDK.Model.ItemDevolucao.pas"/>
+        <DCCReference Include="Models\SDK.Model.ItemDevolucaoDeCupom.pas"/>
+        <DCCReference Include="Models\SDK.Model.ItemImpostoFederal.pas"/>
+        <DCCReference Include="Models\SDK.Model.ItemPagamento.pas"/>
+        <DCCReference Include="Models\SDK.Model.ItemRecebimento.pas"/>
+        <DCCReference Include="Models\SDK.Model.ItemSangria.pas"/>
+        <DCCReference Include="Models\SDK.Model.ItemTroca.pas"/>
+        <DCCReference Include="Models\SDK.Model.ItemTrocaFormaPagamento.pas"/>
+        <DCCReference Include="Models\SDK.Model.ItemVenda.pas"/>
+        <DCCReference Include="Models\SDK.Model.LimiteDeCredito.pas"/>
+        <DCCReference Include="Models\SDK.Model.LocalDaLoja.pas"/>
+        <DCCReference Include="Models\SDK.Model.LocalDeImpressao.pas"/>
+        <DCCReference Include="Models\SDK.Model.LocalEstoque.pas"/>
+        <DCCReference Include="Models\SDK.Model.Loja.pas"/>
+        <DCCReference Include="Models\SDK.Model.LojaDaFormaDePagamento.pas"/>
+        <DCCReference Include="Models\SDK.Model.LojaDoFuncionario.pas"/>
+        <DCCReference Include="Models\SDK.Model.LojaDoPagamentoPDV.pas"/>
+        <DCCReference Include="Models\SDK.Model.LojaView.pas"/>
+        <DCCReference Include="Models\SDK.Model.MarcaDoProduto.pas"/>
+        <DCCReference Include="Models\SDK.Model.MotivoDaDevolucao.pas"/>
+        <DCCReference Include="Models\SDK.Model.NCM.pas"/>
+        <DCCReference Include="Models\SDK.Model.NCMAliquota.pas"/>
+        <DCCReference Include="Models\SDK.Model.NCMExcecao.pas"/>
+        <DCCReference Include="Models\SDK.Model.NCMExcecaoAliquota.pas"/>
+        <DCCReference Include="Models\SDK.Model.NivelDeAcesso.pas"/>
+        <DCCReference Include="Models\SDK.Model.Ocorrencia.pas"/>
+        <DCCReference Include="Models\SDK.Model.OcorrenciaVenda.pas"/>
+        <DCCReference Include="Models\SDK.Model.Pagamento.pas"/>
+        <DCCReference Include="Models\SDK.Model.PagamentoDeTitulo.pas"/>
+        <DCCReference Include="Models\SDK.Model.PagamentoPDV.pas"/>
+        <DCCReference Include="Models\SDK.Model.PagueLeve.pas"/>
+        <DCCReference Include="Models\SDK.Model.PagueLeveItem.pas"/>
+        <DCCReference Include="Models\SDK.Model.PautaDoProduto.pas"/>
+        <DCCReference Include="Models\SDK.Model.PreAutorizacaoContaReceber.pas"/>
+        <DCCReference Include="Models\SDK.Model.PreAutorizacaoFormaDePagamento.pas"/>
+        <DCCReference Include="Models\SDK.Model.PreAutorizacaoLiquidacao.pas"/>
+        <DCCReference Include="Models\SDK.Model.PreAutorizacaoTituloReceber.pas"/>
+        <DCCReference Include="Models\SDK.Model.Preco.pas"/>
+        <DCCReference Include="Models\SDK.Model.Premiacao.pas"/>
+        <DCCReference Include="Models\SDK.Model.PremioLoja.pas"/>
+        <DCCReference Include="Models\SDK.Model.Produto.pas"/>
+        <DCCReference Include="Models\SDK.Model.ProdutoDaPremiacao.pas"/>
+        <DCCReference Include="Models\SDK.Model.ProdutoPrincipal.pas"/>
+        <DCCReference Include="Models\SDK.Model.ProdutoPromocional.pas"/>
+        <DCCReference Include="Models\SDK.Model.Ramo.pas"/>
+        <DCCReference Include="Models\SDK.Model.Recebimento.pas"/>
+        <DCCReference Include="Models\SDK.Model.Receita.pas"/>
+        <DCCReference Include="Models\SDK.Model.Reducao.pas"/>
+        <DCCReference Include="Models\SDK.Model.ReducaoComissao.pas"/>
+        <DCCReference Include="Models\SDK.Model.Referencia.pas"/>
+        <DCCReference Include="Models\SDK.Model.ReferenciaDoFornecedor.pas"/>
+        <DCCReference Include="Models\SDK.Model.RegimeEstadualProduto.pas"/>
+        <DCCReference Include="Models\SDK.Model.RegimeEstadualTributario.pas"/>
+        <DCCReference Include="Models\SDK.Model.SaidaOperador.pas"/>
+        <DCCReference Include="Models\SDK.Model.Sangria.pas"/>
+        <DCCReference Include="Models\SDK.Model.Secao.pas"/>
+        <DCCReference Include="Models\SDK.Model.Setor.pas"/>
+        <DCCReference Include="Models\SDK.Model.SituacaoFiscal.pas"/>
+        <DCCReference Include="Models\SDK.Model.StatusDoCliente.pas"/>
+        <DCCReference Include="Models\SDK.Model.SubGrupo.pas"/>
+        <DCCReference Include="Models\SDK.Model.TabelaDeTributacao.pas"/>
+        <DCCReference Include="Models\SDK.Model.TipoDocumento.pas"/>
+        <DCCReference Include="Models\SDK.Model.TipoPagamento.pas"/>
+        <DCCReference Include="Models\SDK.Model.TituloAReceber.pas"/>
+        <DCCReference Include="Models\SDK.Model.TituloAReceberCancelamento.pas"/>
+        <DCCReference Include="Models\SDK.Model.TituloAReceberEstorno.pas"/>
+        <DCCReference Include="Models\SDK.Model.TituloAReceberLiquidacao.pas"/>
+        <DCCReference Include="Models\SDK.Model.TituloNaoLiquidado.pas"/>
+        <DCCReference Include="Models\SDK.Model.TituloNaoLiquidadoMap.pas"/>
+        <DCCReference Include="Models\SDK.Model.TransacaoConvenio.pas"/>
+        <DCCReference Include="Models\SDK.Model.TransacaoItemTef.pas"/>
+        <DCCReference Include="Models\SDK.Model.TransacaoTef.pas"/>
+        <DCCReference Include="Models\SDK.Model.Tributacao.pas"/>
+        <DCCReference Include="Models\SDK.Model.Troca.pas"/>
+        <DCCReference Include="Models\SDK.Model.TrocaFormaPagamento.pas"/>
+        <DCCReference Include="Models\SDK.Model.UnidadeProduto.pas"/>
+        <DCCReference Include="Models\SDK.Model.Usuario.pas"/>
+        <DCCReference Include="Models\SDK.Model.Venda.pas"/>
+        <DCCReference Include="Models\SDK.Model.VendaCasada.pas"/>
+        <DCCReference Include="Services\SDK.Service.Secao.pas"/>
+        <DCCReference Include="Services\SDK.Service.Grupo.pas"/>
+        <DCCReference Include="Services\SDK.Service.Subgrupo.pas"/>
+        <DCCReference Include="Services\SDK.Service.Produto.pas"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -106,7 +232,7 @@
                 <Platform value="Win32">True</Platform>
             </Platforms>
             <Deployment>
-                <DeployFile LocalName="..\..\..\..\..\..\..\Public\Documents\Embarcadero\Studio\15.0\Bpl\VarejofacilSDK.bpl" Configuration="Release" Class="ProjectOutput">
+                <DeployFile LocalName="C:\Users\Public\Documents\Embarcadero\Studio\15.0\Bpl\VarejofacilSDK.bpl" Configuration="Release" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>VarejofacilSDK.bpl</RemoteName>
                         <Overwrite>true</Overwrite>
@@ -117,6 +243,12 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                     <Platform Name="iOSSimulator">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="..\..\..\..\..\..\..\Public\Documents\Embarcadero\Studio\15.0\Bpl\VarejofacilSDK.bpl" Configuration="Release" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>VarejofacilSDK.bpl</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>

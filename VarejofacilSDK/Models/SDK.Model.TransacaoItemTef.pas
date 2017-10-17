@@ -145,7 +145,7 @@ type
     procedure SetCodigoParaReimpressaoOucancelamento(const ACodigoParaReimpressaoOucancelamento: TString);
     function GetCodigoDeBarrasPago: TString;
     procedure SetCodigoDeBarrasPago(const ACodigoDeBarrasPago: TString);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property VencimentoTitulo: TString read GetVencimentoTitulo write SetVencimentoTitulo;
     property ValorPago: TString read GetValorPago write SetValorPago;

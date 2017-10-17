@@ -97,7 +97,7 @@ end;
 function TSDKTestCase.GetClient: IClient;
 begin
   if not Assigned(FClient) then
-    FClient := TClient.Create(TestConfig.VarejofacilURL);
+    FClient := TClient.Create(TestConfig.VarejofacilURL, TestConfig.Username, TestConfig.Password);
   Result := FClient;
 end;
 

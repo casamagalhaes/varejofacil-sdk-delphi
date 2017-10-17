@@ -145,7 +145,7 @@ type
     procedure SetCfopCF(const ACfopCF: TString);
     function GetAliquotaECF: Double;
     procedure SetAliquotaECF(const AAliquotaECF: Double);
-  public
+  published
     property Id: TString read GetId write SetId;
     property Descricao: TString read GetDescricao write SetDescricao;
     property Simbologia: TString read GetSimbologia write SetSimbologia;

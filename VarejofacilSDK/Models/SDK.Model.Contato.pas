@@ -121,7 +121,7 @@ type
     procedure SetObservacao(const AObservacao: TString);
     function GetEnviaNfePorEmail: Boolean;
     procedure SetEnviaNfePorEmail(const AEnviaNfePorEmail: Boolean);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property Nome: TString read GetNome write SetNome;
     property Cargo: TString read GetCargo write SetCargo;

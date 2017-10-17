@@ -9,11 +9,13 @@ type
 
   TRequest = class(TInterfacedObject, IRequest)
   strict private
+    FOwnedObjects: TStrings;
     FMethod: TMethod;
     FContent: TString;
     FHeaders: TStrings;
     FParams: TStrings;
     FURL: TString;
+    FTokens: TTokenStorage;
     function GetContent: TString;
     function GetHeaders: TStrings;
     function GetMethod: TMethod;
@@ -24,6 +26,8 @@ type
     procedure SetMethod(AMethod: TMethod);
     procedure SetParams(AParams: TStrings);
     procedure SetURL(const AURL: TString);
+    procedure SetTokens(const ATokens: TTokenStorage);
+    procedure SetAuthorizationHeaders;
   public
     destructor Destroy; override;
     property URL: TString read GetURL write SetURL;
@@ -31,15 +35,18 @@ type
     property Params: TStrings read GetParams write SetParams;
     property Headers: TStrings read GetHeaders write SetHeaders;
     property Content: TString read GetContent write SetContent;
-    constructor Create(AURL: TString; AMethod: TMethod; AParams, AHeaders: TStrings; AContent: TString = '');
+    constructor Create(AURL: TString; AMethod: TMethod;
+      AParams, AHeaders: TStrings; AContent: TString = ''; const ATokens: TTokenStorage = nil);
   end;
 
 implementation
 
 { TRequest }
 
-constructor TRequest.Create(AURL: TString; AMethod: TMethod; AParams, AHeaders: TStrings; AContent: TString);
+constructor TRequest.Create(AURL: TString; AMethod: TMethod; AParams, AHeaders: TStrings; AContent: TString; const ATokens: TTokenStorage);
 begin
+  FOwnedObjects := TStringList.Create(True);
+  SetTokens(ATokens);
   SetURL(AURL);
   SetMethod(AMethod);
   SetParams(AParams);
@@ -49,7 +56,7 @@ end;
 
 destructor TRequest.Destroy;
 begin
-
+  FOwnedObjects.Free;
   inherited;
 end;
 
@@ -78,6 +85,20 @@ begin
   Result := FURL;
 end;
 
+procedure TRequest.SetAuthorizationHeaders;
+begin
+  if Assigned(FTokens) then
+  begin
+    if not Assigned(FHeaders) then
+    begin
+      FHeaders := TStringList.Create;
+      FOwnedObjects.AddObject('Headers', FHeaders);
+    end;
+    if FHeaders.IndexOf('authorization') = -1 then
+      FHeaders.Values['authorization'] := FTokens.AccessToken;
+  end;
+end;
+
 procedure TRequest.SetContent(const AContent: TString);
 begin
   inherited;
@@ -88,6 +109,7 @@ procedure TRequest.SetHeaders(AHeaders: TStrings);
 begin
   inherited;
   FHeaders := AHeaders;
+  SetAuthorizationHeaders;
 end;
 
 procedure TRequest.SetMethod(AMethod: TMethod);
@@ -100,6 +122,12 @@ procedure TRequest.SetParams(AParams: TStrings);
 begin
   inherited;
   FParams := AParams;
+end;
+
+procedure TRequest.SetTokens(const ATokens: TTokenStorage);
+begin
+  if Assigned(ATokens) then
+    FTokens := ATokens.Clone;
 end;
 
 procedure TRequest.SetURL(const AURL: TString);

@@ -67,7 +67,7 @@ type
 	FId: Int64;
     function GetId: Int64;
     procedure SetId(const AId: Int64);
-  public
+  published
     property Id: Int64 read GetId write SetId;
   end;
 

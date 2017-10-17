@@ -103,7 +103,7 @@ type
     procedure SetValor(const AValor: TDouble);
     function GetDescricao: TString;
     procedure SetDescricao(const ADescricao: TString);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property FuncionarioVendedorId: TString read GetFuncionarioVendedorId write SetFuncionarioVendedorId;
     property FuncionarioAutorizadorId: TString read GetFuncionarioAutorizadorId write SetFuncionarioAutorizadorId;

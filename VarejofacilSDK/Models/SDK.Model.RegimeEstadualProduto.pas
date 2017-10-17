@@ -79,7 +79,7 @@ type
     procedure SetLojaId(const ALojaId: Int64);
     function GetRegimeEstadualId: Int64;
     procedure SetRegimeEstadualId(const ARegimeEstadualId: Int64);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property LojaId: Int64 read GetLojaId write SetLojaId;
     property RegimeEstadualId: Int64 read GetRegimeEstadualId write SetRegimeEstadualId;

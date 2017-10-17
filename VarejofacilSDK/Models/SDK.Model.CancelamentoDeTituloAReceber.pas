@@ -73,7 +73,7 @@ type
     procedure SetDataDeCancelamento(const ADataDeCancelamento: TDateTime);
     function GetMotivo: TString;
     procedure SetMotivo(const AMotivo: TString);
-  public
+  published
     property DataDeCancelamento: TDateTime read GetDataDeCancelamento write SetDataDeCancelamento;
     property Motivo: TString read GetMotivo write SetMotivo;
   end;

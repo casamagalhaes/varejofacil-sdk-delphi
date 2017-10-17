@@ -109,7 +109,7 @@ type
     procedure SetClassificacaoDaCategoria(const AClassificacaoDaCategoria: TClassificacaoCategoria);
     function GetTipoDeCategoria: TTipoCategoria;
     procedure SetTipoDeCategoria(const ATipoDeCategoria: TTipoCategoria);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property Descricao: TString read GetDescricao write SetDescricao;
     property CodigoDaCategoriaPai: Int64 read GetCodigoDaCategoriaPai write SetCodigoDaCategoriaPai;

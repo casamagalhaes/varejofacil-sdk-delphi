@@ -115,7 +115,7 @@ type
     procedure SetTipoDeOperacao(const ATipoDeOperacao: TTipoOperacao);
     function GetDecreto: TString;
     procedure SetDecreto(const ADecreto: TString);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property RegimeEstadualId: Int64 read GetRegimeEstadualId write SetRegimeEstadualId;
     property SituacaoFiscalId: Integer read GetSituacaoFiscalId write SetSituacaoFiscalId;

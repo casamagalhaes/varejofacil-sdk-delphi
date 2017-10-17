@@ -66,13 +66,17 @@ type
     procedure AddEnumDeserializer;
     procedure AddModelDeserializer;
     procedure ConfigureDeserializers;
+    function PathWithDependencies(const ADependencies: array of TVarRec): TString;
     function ToParams(const AQuery: TString; AStart, ACount: Integer; const ASortParams: TStringArray = []): TString;
     function InterpretLocation(const ALocation: TString): TString; virtual;
   public
     constructor Create(const APath: TString; const AClient: IClient); virtual;
-    function Update(const AId: TString; const AModel: IModel): Boolean; virtual;
+    function Update(const AId: TString; const AModel: IModel): Boolean; overload; virtual;
+    function Update(const AId: TString; const AModel: IModel; const APath: TString): Boolean; overload; virtual;
     function Delete(const AId: TString): Boolean; virtual;
-    function Insert(const AModel: IModel): TString; virtual;
+    function DeleteWithPath(const AId: TString; const APath: TString): Boolean; virtual;
+    function Insert(const AModel: IModel): TString; overload; virtual;
+    function Insert(const AModel: IModel; const APath: TString): TString; overload; virtual;
   end;
 
 implementation
@@ -124,22 +128,32 @@ begin
   ConfigureDeserializers;
 end;
 
-function TService.Delete(const AId: TString): Boolean;
+function TService.DeleteWithPath(const AId, APath: TString): Boolean;
 var
   Response: IResponse;
 begin
-  Response := FClient.Delete(Concat(FPath, '/', AId), nil, nil);
+  Response := FClient.Delete(Concat(APath, '/', AId), nil, nil);
   Result := Response.Status = 200;
 end;
 
-function TService.Insert(const AModel: IModel): TString;
+function TService.Delete(const AId: TString): Boolean;
+begin
+  Result := DeleteWithPath(AId, FPath);
+end;
+
+function TService.Insert(const AModel: IModel; const APath: TString): TString;
 var
   Response: IResponse;
 begin
   Result := EmptyStr;
-  Response := FClient.Post(FPath, TXMLHelper.Serialize(AModel), nil);
+  Response := FClient.Post(APath, TXMLHelper.Serialize(AModel), nil);
   if Assigned(Response) and (Response.Status = 201) and (Response.Headers.IndexOfName('Location') > -1) then
     Result := InterpretLocation(Response.Headers.Values['Location']);
+end;
+
+function TService.Insert(const AModel: IModel): TString;
+begin
+  Result := Insert(AModel, FPath);
 end;
 
 function TService.InterpretLocation(const ALocation: TString): TString;
@@ -148,6 +162,11 @@ var
 begin
   LastDelimiterPos := LastDelimiter('/', ALocation);
   Result := Copy(ALocation, LastDelimiterPos + 1, Length(ALocation) - LastDelimiterPos);
+end;
+
+function TService.PathWithDependencies(const ADependencies: array of TVarRec): TString;
+begin
+  Result := Format(FPath, ADependencies);
 end;
 
 function TService.ToParams(const AQuery: TString; AStart, ACount: Integer; const ASortParams: TStringArray): TString;
@@ -179,12 +198,17 @@ begin
   end;
 end;
 
-function TService.Update(const AId: TString; const AModel: IModel): Boolean;
+function TService.Update(const AId: TString; const AModel: IModel; const APath: TString): Boolean;
 var
   Response: IResponse;
 begin
-  Response := FClient.Put(Concat(FPath, '/', AId), TXMLHelper.Serialize(AModel), nil);
+  Response := FClient.Put(Concat(APath, '/', AId), TXMLHelper.Serialize(AModel), nil);
   Result := Response.Status = 200;
+end;
+
+function TService.Update(const AId: TString; const AModel: IModel): Boolean;
+begin
+  Result := Update(AId, AModel, FPath);
 end;
 
 { TBatchRequest }

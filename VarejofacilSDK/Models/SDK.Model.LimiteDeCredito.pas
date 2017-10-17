@@ -157,7 +157,7 @@ type
     procedure SetSituacao(const ASituacao: TSituacaoLimiteCliente);
     function GetStatusCliente: TStatusBloqueioCliente;
     procedure SetStatusCliente(const AStatusCliente: TStatusBloqueioCliente);
-  public
+  published
     property CodigoDoCliente: Int64 read GetCodigoDoCliente write SetCodigoDoCliente;
     property NomeDoCliente: TString read GetNomeDoCliente write SetNomeDoCliente;
     property InscricaoEstadual: TString read GetInscricaoEstadual write SetInscricaoEstadual;

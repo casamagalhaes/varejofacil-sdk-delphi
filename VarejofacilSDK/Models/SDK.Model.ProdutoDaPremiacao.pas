@@ -79,7 +79,7 @@ type
     procedure SetProdutoId(const AProdutoId: Int64);
     function GetQuantidadeDePontos: Double;
     procedure SetQuantidadeDePontos(const AQuantidadeDePontos: Double);
-  public
+  published
     property Id: Integer read GetId write SetId;
     property ProdutoId: Int64 read GetProdutoId write SetProdutoId;
     property QuantidadeDePontos: Double read GetQuantidadeDePontos write SetQuantidadeDePontos;

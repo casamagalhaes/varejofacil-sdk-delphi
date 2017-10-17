@@ -79,7 +79,7 @@ type
     procedure SetMotivo(const AMotivo: TString);
     function GetContasTitulosIds: TLongList;
     procedure SetContasTitulosIds(const AContasTitulosIds: TLongList);
-  public
+  published
     property DataDeCancelamento: TDateTime read GetDataDeCancelamento write SetDataDeCancelamento;
     property Motivo: TString read GetMotivo write SetMotivo;
     property ContasTitulosIds: TLongList read GetContasTitulosIds write SetContasTitulosIds;

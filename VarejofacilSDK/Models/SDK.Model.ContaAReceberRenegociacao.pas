@@ -163,7 +163,7 @@ type
     procedure SetNumeroDoCaixa(const ANumeroDoCaixa: TString);
     function GetIntervaloDeDiasEntreOsTitulos: Integer;
     procedure SetIntervaloDeDiasEntreOsTitulos(const AIntervaloDeDiasEntreOsTitulos: Integer);
-  public
+  published
     property Observacao: TString read GetObservacao write SetObservacao;
     property NumeroDoDocumento: TString read GetNumeroDoDocumento write SetNumeroDoDocumento;
     property DataDeEmissao: TDateTime read GetDataDeEmissao write SetDataDeEmissao;

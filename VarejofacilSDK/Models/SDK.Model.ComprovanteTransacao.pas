@@ -79,7 +79,7 @@ type
     procedure SetViaDoCliente(const AViaDoCliente: TString);
     function GetViaDaLoja: TString;
     procedure SetViaDaLoja(const AViaDaLoja: TString);
-  public
+  published
     property Nsu: TString read GetNsu write SetNsu;
     property ViaDoCliente: TString read GetViaDoCliente write SetViaDoCliente;
     property ViaDaLoja: TString read GetViaDaLoja write SetViaDaLoja;

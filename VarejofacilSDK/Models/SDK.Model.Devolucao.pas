@@ -193,7 +193,7 @@ type
     procedure SetModeloImpressora(const AModeloImpressora: TModeloImpressora);
     function GetItensDevolucao: TItemDevolucaoList;
     procedure SetItensDevolucao(const AItensDevolucao: TItemDevolucaoList);
-  public
+  published
     property Id: Integer read GetId write SetId;
     property OperadorId: Int64 read GetOperadorId write SetOperadorId;
     property Data: TDateTime read GetData write SetData;

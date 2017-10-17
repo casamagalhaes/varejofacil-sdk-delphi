@@ -109,7 +109,7 @@ type
     procedure SetTitulosId(const ATitulosId: TLongList);
     function GetFormaPagamento: TPreAutorizacaoFormaDePagamentoList;
     procedure SetFormaPagamento(const AFormaPagamento: TPreAutorizacaoFormaDePagamentoList);
-  public
+  published
     property DataConsulta: TDateTime read GetDataConsulta write SetDataConsulta;
     property Data: TDateTime read GetData write SetData;
     property LojaId: Int64 read GetLojaId write SetLojaId;

@@ -85,7 +85,7 @@ type
     procedure SetEstoqueMinimo(const AEstoqueMinimo: Double);
     function GetEstoqueMaximo: Double;
     procedure SetEstoqueMaximo(const AEstoqueMaximo: Double);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property LojaId: Int64 read GetLojaId write SetLojaId;
     property EstoqueMinimo: Double read GetEstoqueMinimo write SetEstoqueMinimo;

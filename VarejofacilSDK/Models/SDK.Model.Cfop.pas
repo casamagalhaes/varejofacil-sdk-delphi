@@ -85,7 +85,7 @@ type
     procedure SetCstICMSId(const ACstICMSId: Integer);
     function GetCsosn: TCSOSN;
     procedure SetCsosn(const ACsosn: TCSOSN);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property Descricao: TString read GetDescricao write SetDescricao;
     property CstICMSId: Integer read GetCstICMSId write SetCstICMSId;

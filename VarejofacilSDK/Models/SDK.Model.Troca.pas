@@ -211,7 +211,7 @@ type
     procedure SetCodigoNaRetaguarda(const ACodigoNaRetaguarda: Int64);
     function GetItensTroca: TItemTrocaList;
     procedure SetItensTroca(const AItensTroca: TItemTrocaList);
-  public
+  published
     property Id: TString read GetId write SetId;
     property CooECF: Integer read GetCooECF write SetCooECF;
     property OperadorId: TString read GetOperadorId write SetOperadorId;

@@ -103,7 +103,7 @@ type
     procedure SetQuantidadeProdutoPromocional(const AQuantidadeProdutoPromocional: Double);
     function GetValorUnitarioProdutoPromocional: Double;
     procedure SetValorUnitarioProdutoPromocional(const AValorUnitarioProdutoPromocional: Double);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property Descricao: TString read GetDescricao write SetDescricao;
     property DataInicial: TDateTime read GetDataInicial write SetDataInicial;

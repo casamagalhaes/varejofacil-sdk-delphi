@@ -85,7 +85,7 @@ type
     procedure SetTipo(const ATipo: TTipoFinalizadoraPremiacao);
     function GetQuantidadeDePontos: Double;
     procedure SetQuantidadeDePontos(const AQuantidadeDePontos: Double);
-  public
+  published
     property Id: Integer read GetId write SetId;
     property FinalizadoraId: Integer read GetFinalizadoraId write SetFinalizadoraId;
     property Tipo: TTipoFinalizadoraPremiacao read GetTipo write SetTipo;

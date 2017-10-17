@@ -109,7 +109,7 @@ type
     procedure SetConta(const AConta: TString);
     function GetLocalDePagamento: TString;
     procedure SetLocalDePagamento(const ALocalDePagamento: TString);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property Descricao: TString read GetDescricao write SetDescricao;
     property Tipo: TTipoContaCorrente read GetTipo write SetTipo;

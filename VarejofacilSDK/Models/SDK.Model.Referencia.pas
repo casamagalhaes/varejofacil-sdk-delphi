@@ -223,7 +223,7 @@ type
     procedure SetNomeEmpresa(const ANomeEmpresa: TString);
     function GetDataAdmissao: TString;
     procedure SetDataAdmissao(const ADataAdmissao: TString);
-  public
+  published
     property Id: Integer read GetId write SetId;
     property Nome: TString read GetNome write SetNome;
     property NumeroCartao: TString read GetNumeroCartao write SetNumeroCartao;

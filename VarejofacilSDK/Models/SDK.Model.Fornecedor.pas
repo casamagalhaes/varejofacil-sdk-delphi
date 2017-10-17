@@ -259,7 +259,7 @@ type
     procedure SetTipoDePessoa(const ATipoDePessoa: TTipoPessoa);
     function GetHoldingId: Integer;
     procedure SetHoldingId(const AHoldingId: Integer);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property Contato: TString read GetContato write SetContato;
     property Observacao: TString read GetObservacao write SetObservacao;

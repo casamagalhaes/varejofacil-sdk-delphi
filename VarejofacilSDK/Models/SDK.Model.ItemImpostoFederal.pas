@@ -67,7 +67,7 @@ type
 	FId: TString;
     function GetId: TString;
     procedure SetId(const AId: TString);
-  public
+  published
     property Id: TString read GetId write SetId;
   end;
 

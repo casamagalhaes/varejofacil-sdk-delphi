@@ -259,7 +259,7 @@ type
     procedure SetTipo(const ATipo: TTipoPessoa);
     function GetHoldingId: Integer;
     procedure SetHoldingId(const AHoldingId: Integer);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property Ramal: TString read GetRamal write SetRamal;
     property CargoSysPDVWeb: TString read GetCargoSysPDVWeb write SetCargoSysPDVWeb;

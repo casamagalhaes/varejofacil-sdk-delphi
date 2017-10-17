@@ -103,7 +103,7 @@ type
     procedure SetQuantidadeEmEstoque(const AQuantidadeEmEstoque: Integer);
     function GetIdNetpoints: Integer;
     procedure SetIdNetpoints(const AIdNetpoints: Integer);
-  public
+  published
     property Id: TString read GetId write SetId;
     property LojaId: Int64 read GetLojaId write SetLojaId;
     property ProdutoId: Int64 read GetProdutoId write SetProdutoId;

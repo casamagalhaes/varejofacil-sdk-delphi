@@ -73,7 +73,7 @@ type
     procedure SetId(const AId: Int64);
     function GetAtivo: Boolean;
     procedure SetAtivo(const AAtivo: Boolean);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property Ativo: Boolean read GetAtivo write SetAtivo;
   end;

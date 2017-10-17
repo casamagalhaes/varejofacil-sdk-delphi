@@ -145,7 +145,7 @@ type
     procedure SetValor(const AValor: Double);
     function GetValorContraValeTroco: Double;
     procedure SetValorContraValeTroco(const AValorContraValeTroco: Double);
-  public
+  published
     property SequencialVenda: TString read GetSequencialVenda write SetSequencialVenda;
     property NumeroCaixaVenda: TString read GetNumeroCaixaVenda write SetNumeroCaixaVenda;
     property DataVenda: TDateTime read GetDataVenda write SetDataVenda;
