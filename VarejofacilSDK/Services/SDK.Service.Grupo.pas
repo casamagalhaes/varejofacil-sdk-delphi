@@ -17,7 +17,7 @@ type
       const ASortParams: TStringArray = []): TGrupoListRec;
     function Insert(const AIdSecao: TString; const AModel: IModel): string;
     function Update(const AIdSecao, AId: TString; const AModel: IModel): Boolean;
-    function Delete(const AIdSecao, AId: TString): Boolean;
+    function Delete(const AIdSecao, AId: TString): Boolean; reintroduce;
   end;
 
 implementation

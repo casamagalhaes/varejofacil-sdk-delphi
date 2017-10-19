@@ -20,7 +20,13 @@ uses
   SDK.TestCase in 'SDK.TestCase.pas',
   SDK.TestConfig in 'SDK.TestConfig.pas',
   SDK.TestValueGenerator in 'SDK.TestValueGenerator.pas',
-  TestSDK.Service.Secao in 'Services\TestSDK.Service.Secao.pas';
+  TestSDK.Service.Secao in 'Services\TestSDK.Service.Secao.pas',
+  TestSDK.Service.Grupo in 'Services\TestSDK.Service.Grupo.pas',
+  TestSDK.Service.Subgrupo in 'Services\TestSDK.Service.Subgrupo.pas',
+  TestSDK.Service.Produto in 'Services\TestSDK.Service.Produto.pas',
+  TestSDK.Service.Genero in 'Services\TestSDK.Service.Genero.pas',
+  TestSDK.Service.ImpostoFederal in 'Services\TestSDK.Service.ImpostoFederal.pas',
+  TestSDK.Service.NCM in 'Services\TestSDK.Service.NCM.pas';
 
 {$R *.RES}
 

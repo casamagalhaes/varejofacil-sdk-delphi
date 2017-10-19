@@ -198,6 +198,12 @@
         <DCCReference Include="Services\SDK.Service.Grupo.pas"/>
         <DCCReference Include="Services\SDK.Service.Subgrupo.pas"/>
         <DCCReference Include="Services\SDK.Service.Produto.pas"/>
+        <DCCReference Include="Services\SDK.Service.Genero.pas"/>
+        <DCCReference Include="Services\SDK.Service.ImpostoFederal.pas"/>
+        <DCCReference Include="Services\SDK.Service.NCM.pas"/>
+        <DCCReference Include="SDK.PropertySerializers.pas"/>
+        <DCCReference Include="SDK.ListSerializers.pas"/>
+        <DCCReference Include="SDK.ListDeserializers.pas"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

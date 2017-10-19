@@ -20,6 +20,9 @@ type
 
 implementation
 
+uses
+  SDK.Model.RegimeEstadualProduto;
+
 procedure TTestProdutoService.SetUp;
 begin
   FProdutoService := TProdutoService.Create(GetClient);
@@ -33,11 +36,24 @@ end;
 procedure TTestProdutoService.TestBasicOperations;
 var
   Produto, ProdutoInserted, ProdutoUpdated, ProdutoDeleted: IProduto;
+  RegimesDoProduto: TRegimeEstadualProdutoList;
+  Regime: IRegimeEstadualProduto;
   Id: Variant;
 begin
   Produto := TProduto.Create;
   FillWithRandomValues(Produto);
+
+  Id := 5;
+  ProdutoInserted := FProdutoService.Get(Id);
+
   Id := Produto.Id;
+  Produto.GeneroId := 1;
+  Regime := TRegimeEstadualProduto.Create;
+  Regime.Id := 1;
+  RegimesDoProduto := TRegimeEstadualProdutoList.Create;
+  RegimesDoProduto.Add(Regime);
+  Produto.RegimesDoProduto := RegimesDoProduto;
+
 
   //Insert
   Assert(FProdutoService.Insert(Produto) <> EmptyStr, 'Erro no insert do Produto');
@@ -48,6 +64,7 @@ begin
   AssertAllPropertiesAreEqual(Produto, ProdutoInserted, 'Produto não inserido corretamente.');
   FillWithRandomValues(ProdutoInserted);
   ProdutoInserted.Id := Id;
+  ProdutoInserted.GeneroId := 1;
 
   //Update
   Assert(FProdutoService.Update(Id, ProdutoInserted), 'Erro no update do Produto.');

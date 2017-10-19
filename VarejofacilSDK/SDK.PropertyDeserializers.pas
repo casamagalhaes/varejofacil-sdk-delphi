@@ -3,7 +3,7 @@ unit SDK.PropertyDeserializers;
 interface
 
 uses
-  SDK.Types, SysUtils, Classes, SDK.XML, XMLIntf, TypInfo, SDK.Enums;
+  SDK.Types, SysUtils, Classes, SDK.XML, XMLIntf, TypInfo, SDK.Enums, StrUtils;
 
 type
 
@@ -27,10 +27,16 @@ type
     function IsCompatible(const AProperty: PPropInfo): Boolean;
   end;
 
+  TModelListPropertyDeserializer = class(TInterfacedObject, IPropertyDeserializer)
+    procedure Execute(const ANode: IXMLNode; const AInstance: IModel;
+      const AProperty: PPropInfo; ADeserializers: TPropertyDeserializerArray);
+    function IsCompatible(const AProperty: PPropInfo): Boolean;
+  end;
+
 implementation
 
 uses
-  XSBuiltIns;
+  XSBuiltIns, SDK.ListDeserializers;
 
 { TDateTimePropertyDeserializer }
 
@@ -103,6 +109,35 @@ end;
 function TModelPropertyDeserializer.IsCompatible(const AProperty: PPropInfo): Boolean;
 begin
   Result := (AProperty.PropType^.Kind = tkInterface);
+end;
+
+{ TModelListPropertyDeserializer }
+
+procedure TModelListPropertyDeserializer.Execute(const ANode: IXMLNode; const AInstance: IModel;
+  const AProperty: PPropInfo; ADeserializers: TPropertyDeserializerArray);
+var
+  ListDeserializer: TListDeserializer;
+begin
+  if ANode.HasChildNodes then
+  begin
+    ListDeserializer := TListDeserializer.Create(AProperty^.PropType^.Name);
+    try
+      ListDeserializer.Execute(ANode, AInstance.GetReference, TString(AProperty^.Name));
+    finally
+      ListDeserializer.Free;
+    end;
+//    ListClassName := TString('T' + Copy(AProperty^.PropType^.Name, 2, Length(AProperty^.PropType^.Name) - 1)) + 'List';
+//    if Assigned(ListClass) then
+//    begin
+//      TXMLHelper.Deserialize(ANode, ListClass, ADeserializers).QueryInterface(AProperty^.PropType^.TypeData^.Guid, ModelInstance);
+//      SetInterfaceProp(AInstance.GetReference, TString(AProperty^.Name), ModelInstance);
+//    end;
+  end;
+end;
+
+function TModelListPropertyDeserializer.IsCompatible(const AProperty: PPropInfo): Boolean;
+begin
+  Result := (AProperty^.PropType^.Name[1] = 'T') and EndsStr('List', AProperty^.PropType^.Name);
 end;
 
 end.

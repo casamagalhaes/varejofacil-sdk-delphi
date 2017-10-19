@@ -12,6 +12,10 @@ type
 
   TPropertyDeserializerArray = array of IPropertyDeserializer;
 
+  IPropertySerializer = interface;
+
+  TPropertySerializerArray = array of IPropertySerializer;
+
   IPropertyDeserializer = interface
     ['{FCB077A8-01F5-409E-BDB6-32EF0B0D7CA8}']
     function IsCompatible(const AProperty: PPropInfo): Boolean;
@@ -19,10 +23,18 @@ type
       const AProperty: PPropInfo; ADeserializers: TPropertyDeserializerArray);
   end;
 
+  IPropertySerializer = interface
+    ['{FCB077A8-01F5-409E-BDB6-32EF0B0D7CA8}']
+    function IsCompatible(const AProperty: PPropInfo): Boolean;
+    function Execute(const AInstance: IModel;
+      const AProperty: PPropInfo; ASerializers: TPropertySerializerArray): TString;
+  end;
+
   TXMLHelper = class
     public
       class function FindChildNode(const ANode: IXMLNode; const AName: TString): IXMLNode;
-      class function Serialize(const AModel: IModel; ARootTag: Boolean = True): TString;
+      class function Serialize(const AModel: IModel; ARootTag: Boolean = True;
+        ASerializers: TPropertySerializerArray = nil; ACamelCase: Boolean = False): TString;
       class function Deserialize(const ANode: IXMLNode; AClass: TInterfacedModelClass;
         ADeserializers: TPropertyDeserializerArray = nil): IModel;
       class function XPathSelect(const ANode: IXMLNode;
@@ -35,7 +47,7 @@ type
 implementation
 
 uses
-  XSBuiltIns;
+  XSBuiltIns, SDK.Enums;
 
 const
   DOM_VENDOR = adomxmldom.sAdom4XmlVendor;
@@ -159,7 +171,7 @@ begin
   end;
 end;
 
-class function TXMLHelper.Serialize(const AModel: IModel; ARootTag: Boolean): TString;
+class function TXMLHelper.Serialize(const AModel: IModel; ARootTag: Boolean; ASerializers: TPropertySerializerArray; ACamelCase: Boolean): TString;
 
   function CamelCase(const AInput: TString): TString;
   begin
@@ -172,7 +184,7 @@ class function TXMLHelper.Serialize(const AModel: IModel; ARootTag: Boolean): TS
     I, X: Integer;
   begin
     Result := EmptyStr;
-    UpperCaseChars := 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    UpperCaseChars := 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_';
     for X := Low(AInput) to High(AInput) do
       for I := Low(UpperCaseChars) to High(UpperCaseChars) do
         if AInput[X] = UpperCaseChars[I] then
@@ -191,7 +203,7 @@ class function TXMLHelper.Serialize(const AModel: IModel; ARootTag: Boolean): TS
   end;
 
 var
-  PropertiesSize: Integer;
+  PropertiesSize, SerializerIdx: Integer;
   Properties: PPropList;
   Prop: PPropInfo;
   I: Integer;
@@ -199,6 +211,7 @@ var
   ModelName, Value: TString;
   ChildModel: IModel;
   PropValue: Variant;
+  SerializerApplied: Boolean;
 begin
   ResultList := TStringList.Create;
   try
@@ -206,59 +219,71 @@ begin
     ModelName := Copy(AModel.GetReference.ClassName, 2,
       Length(AModel.GetReference.ClassName) - 1);
     if ARootTag then
-      ResultList.Add(Format('<%s>', [ModelName]));
+      if ACamelCase then
+        ResultList.Add(Format('<%s>', [CamelCase(ModelName)]))
+      else
+        ResultList.Add(Format('<%s>', [ModelName]));
     PropertiesSize := GetPropList(AModel.GetReference, Properties);
     try
       for I := 0 to PropertiesSize - 1 do
       begin
         Value := EmptyStr;
         Prop := Properties^[I];
-        case Prop^.PropType^.Kind of
-          tkVariant:
+        SerializerApplied := False;
+        if Assigned(ASerializers) and (Length(ASerializers) > 0) then
+        begin
+          for SerializerIdx := 0 to Length(ASerializers) - 1 do
           begin
-            PropValue := GetPropValue(AModel.GetReference, TString(Prop^.Name));
-            if not VarIsEmpty(PropValue) then
-              Value := VarToStr(PropValue);
-          end;
-          tkInterface:
-          begin
-            ChildModel := GetInterfaceProp(AModel.GetReference, TString(Prop^.Name)) as IModel;
-            if Assigned(ChildModel) then
-              Value := TXMLHelper.Serialize(ChildModel, False);
-          end;
-          tkFloat:
-          begin
-            if SameText(TString(Prop^.PropType^.Name), 'TDateTime') then
+            if ASerializers[SerializerIdx].IsCompatible(Prop) then
             begin
-              PropValue := StrToFloat(VarToStr(GetPropValue(AModel.GetReference, TString(Prop^.Name))));
-              if PropValue > 0 then
-                Value := DateTimeToISO8601(PropValue)
+              Value := ASerializers[SerializerIdx].Execute(AModel, Prop, ASerializers);
+              SerializerApplied := True;
+              Break;
+            end;
+          end;
+        end;
+        if not SerializerApplied then
+        begin
+          case Prop^.PropType^.Kind of
+            tkVariant:
+            begin
+              PropValue := GetPropValue(AModel.GetReference, TString(Prop^.Name));
+              if not VarIsEmpty(PropValue) then
+                Value := VarToStr(PropValue);
+            end;
+            tkInterface:
+            begin
+              ChildModel := GetInterfaceProp(AModel.GetReference, TString(Prop^.Name)) as IModel;
+              if Assigned(ChildModel) then
+                Value := TXMLHelper.Serialize(ChildModel, False, ASerializers);
+            end;
+            tkFloat:
+            begin
+              if SameText(TString(Prop^.PropType^.Name), 'TDateTime') then
+              begin
+                PropValue := StrToFloat(VarToStr(GetPropValue(AModel.GetReference, TString(Prop^.Name))));
+                if PropValue > 0 then
+                  Value := DateTimeToISO8601(PropValue)
+                else
+                  Value := EmptyStr;
+              end
               else
-                Value := EmptyStr;
-            end
-            else
+              begin
+                Value := VarToStr(GetPropValue(AModel.GetReference, TString(Prop^.Name)));
+                Value := StringReplace(Value, '.', '', [rfReplaceAll]);
+                Value := StringReplace(Value, ',', '.', [rfReplaceAll]);
+              end;
+            end;
+            tkEnumeration:
             begin
+              if SameText(TString(Prop^.PropType^.Name), 'Boolean') then
+                Value := VarToStr(GetPropValue(AModel.GetReference, TString(Prop^.Name)))
+              else
+                Value := RemoveLowerCase(VarToStr(GetPropValue(AModel.GetReference, TString(Prop^.Name))));
+            end;
+            else
               Value := VarToStr(GetPropValue(AModel.GetReference, TString(Prop^.Name)));
-              Value := StringReplace(Value, '.', '', [rfReplaceAll]);
-              Value := StringReplace(Value, ',', '.', [rfReplaceAll]);
-            end;
           end;
-          tkEnumeration:
-          begin
-            if SameText(TString(Prop^.PropType^.Name), 'Boolean') then
-              Value := VarToStr(GetPropValue(AModel.GetReference, TString(Prop^.Name)))
-            else
-              Value := RemoveLowerCase(VarToStr(GetPropValue(AModel.GetReference, TString(Prop^.Name))));
-          end;
-          tkDynArray:
-          begin
-            if SameText(TString(Prop^.PropType^.Name), 'TLongList') then
-            begin
-              Value := '';
-            end;
-          end
-          else
-            Value := VarToStr(GetPropValue(AModel.GetReference, TString(Prop^.Name)));
         end;
         if Value <> EmptyStr then
           ResultList.Add(Format('<%s>%s</%0:s>', [

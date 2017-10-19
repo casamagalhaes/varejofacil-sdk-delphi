@@ -3,7 +3,7 @@ unit SDK.Client;
 interface
 
 uses
-  SysUtils, Classes, IdHTTP, IdGlobalProtocols, IdStack, SDK.Types, SDK.Request, SDK.Response, SDK.Exceptions;
+  SysUtils, Classes, IdHTTP, IdSSLOpenSSL, IdGlobalProtocols, IdStack, SDK.Types, SDK.Request, SDK.Response, SDK.Exceptions;
 
 type
 
@@ -167,86 +167,93 @@ var
   ResponseContent: TString;
   HTTP: TIdHTTP;
   HTTPRequest: TIdHTTPRequest;
+  HTTPIOHandler: TIdSSLIOHandlerSocketOpenSSL;
   RequestContent: TStream;
 begin
   HTTP := TIdHTTP.Create(nil);
   try
-    HTTPRequest := TIdHTTPRequest.Create(nil);
+    HTTPIOHandler := TIdSSLIOHandlerSocketOpenSSL.Create(nil);
     try
-      HTTP.Request := HTTPRequest;
-      if Assigned(ARequest.Headers) then
-      begin
-        HTTP.Request.CustomHeaders.AddStrings(ARequest.Headers);
-        HTTP.Request.RawHeaders.AddStrings(ARequest.Headers);
-        if ARequest.Headers.IndexOfName('Content-Type') > -1 then
-          HTTP.Request.ContentType := ARequest.Headers.Values['Content-Type'];
-        if ARequest.Headers.IndexOfName('Accept') > -1 then
-          HTTP.Request.Accept := ARequest.Headers.Values['Accept'];
-      end;
-      if HTTP.Request.CustomHeaders.IndexOfName('Content-Type') = -1 then
-      begin
-        HTTP.Request.ContentType := 'application/xml';
-        HTTP.Request.CustomHeaders.Values['Content-Type'] := 'application/xml';
-        HTTP.Request.RawHeaders.Values['Content-Type'] := 'application/xml';
-      end;
-      if HTTP.Request.CustomHeaders.IndexOfName('Accept') = -1 then
-      begin
-        HTTP.Request.Accept := 'application/xml';
-        HTTP.Request.CustomHeaders.Values['Accept'] := 'application/xml';
-        HTTP.Request.RawHeaders.Values['Accept'] := 'application/xml';
-      end;
+      HTTPRequest := TIdHTTPRequest.Create(nil);
       try
-        case ARequest.Method of
-          mtGET:
-          begin
-            ResponseContent := HTTP.Get(ARequest.URL);
-          end;
-          mtPOST:
-          begin
-            RequestContent := TStringStream.Create(ARequest.Content, TEncoding.UTF8);
-            try
-              ResponseContent := HTTP.Post(ARequest.URL, RequestContent);
-            finally
-              FreeAndNil(RequestContent);
+        HTTP.IOHandler := HTTPIOHandler;
+        HTTP.Request := HTTPRequest;
+        if Assigned(ARequest.Headers) then
+        begin
+          HTTP.Request.CustomHeaders.AddStrings(ARequest.Headers);
+          HTTP.Request.RawHeaders.AddStrings(ARequest.Headers);
+          if ARequest.Headers.IndexOfName('Content-Type') > -1 then
+            HTTP.Request.ContentType := ARequest.Headers.Values['Content-Type'];
+          if ARequest.Headers.IndexOfName('Accept') > -1 then
+            HTTP.Request.Accept := ARequest.Headers.Values['Accept'];
+        end;
+        if HTTP.Request.CustomHeaders.IndexOfName('Content-Type') = -1 then
+        begin
+          HTTP.Request.ContentType := 'application/xml';
+          HTTP.Request.CustomHeaders.Values['Content-Type'] := 'application/xml';
+          HTTP.Request.RawHeaders.Values['Content-Type'] := 'application/xml';
+        end;
+        if HTTP.Request.CustomHeaders.IndexOfName('Accept') = -1 then
+        begin
+          HTTP.Request.Accept := 'application/xml';
+          HTTP.Request.CustomHeaders.Values['Accept'] := 'application/xml';
+          HTTP.Request.RawHeaders.Values['Accept'] := 'application/xml';
+        end;
+        try
+          case ARequest.Method of
+            mtGET:
+            begin
+              ResponseContent := HTTP.Get(ARequest.URL);
+            end;
+            mtPOST:
+            begin
+              RequestContent := TStringStream.Create(ARequest.Content, TEncoding.UTF8);
+              try
+                ResponseContent := HTTP.Post(ARequest.URL, RequestContent);
+              finally
+                FreeAndNil(RequestContent);
+              end;
+            end;
+            mtPUT:
+            begin
+              RequestContent := TStringStream.Create(ARequest.Content, TEncoding.UTF8);
+              try
+                ResponseContent := HTTP.Put(ARequest.URL, RequestContent);
+              finally
+                FreeAndNil(RequestContent);
+              end;
+            end;
+            mtDELETE:
+            begin
+              ResponseContent := HTTP.Delete(ARequest.URL);
             end;
           end;
-          mtPUT:
+        except
+          on E: EIdHTTPProtocolException do
           begin
-            RequestContent := TStringStream.Create(ARequest.Content, TEncoding.UTF8);
-            try
-              ResponseContent := HTTP.Put(ARequest.URL, RequestContent);
-            finally
-              FreeAndNil(RequestContent);
-            end;
+            if HTTP.ResponseCode = 500 then
+              raise SDKServerInternalException.Create(E.Message)
+            else
+            if HTTP.ResponseCode = 422 then
+              raise SDKUnprocessableEntityException.Create(E.Message)
+            else
+            if HTTP.ResponseCode = 400 then
+              raise SDKBadRequestException.Create(E.Message)
+            else
+            if HTTP.ResponseCode = 404 then
+            else
+              raise SDKHTTPProtocolException.Create(E.Message);
           end;
-          mtDELETE:
+          on E: EIdSocketError do
           begin
-            ResponseContent := HTTP.Delete(ARequest.URL);
+            raise SDKConnectionRefusedException.Create(E.Message);
           end;
         end;
-      except
-        on E: EIdHTTPProtocolException do
-        begin
-          if HTTP.ResponseCode = 500 then
-            raise SDKServerInternalException.Create(E.Message)
-          else
-          if HTTP.ResponseCode = 422 then
-            raise SDKUnprocessableEntityException.Create(E.Message)
-          else
-          if HTTP.ResponseCode = 400 then
-            raise SDKBadRequestException.Create(E.Message)
-          else
-          if HTTP.ResponseCode = 404 then
-          else
-            raise SDKHTTPProtocolException.Create(E.Message);
-        end;
-        on E: EIdSocketError do
-        begin
-          raise SDKConnectionRefusedException.Create(E.Message);
-        end;
+      finally
+        FreeAndNil(HTTPRequest);
       end;
     finally
-      FreeAndNil(HTTPRequest);
+      HTTPIOHandler.Free;
     end;
     Result := TResponse.Create(HTTP.ResponseCode, HTTP.Response.RawHeaders, ResponseContent);
   finally

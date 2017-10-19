@@ -4,7 +4,7 @@ interface
 
 uses
   SysUtils, Classes, Math, SDK.XML, SDK.Types, SDK.Client, SDK.ConfigProvider,
-  SDK.PropertyDeserializers, SDK.SortParams, XMLIntf;
+  SDK.PropertyDeserializers, SDK.PropertySerializers, SDK.SortParams, XMLIntf;
 
 type
 
@@ -56,20 +56,37 @@ type
     destructor Destroy; override;
   end;
 
+  TServiceMarshalling = class
+  protected
+    FDeserializers: TPropertyDeserializerArray;
+    FSerializers: TPropertySerializerArray;
+    procedure AddDeserializer(const ADeserializer: IPropertyDeserializer);
+    procedure AddSerializer(const ASerializer: IPropertySerializer);
+    procedure AddDateTimeDeserializer;
+    procedure AddEnumDeserializer;
+    procedure AddModelDeserializer;
+    procedure AddModelListDeserializer;
+    procedure AddModelListSerializer;
+    procedure ConfigureDeserializers;
+    procedure ConfigureSerializers;
+  public
+    property Deserializers: TPropertyDeserializerArray read FDeserializers;
+    property Serializers: TPropertySerializerArray read FSerializers;
+    constructor Create;
+  end;
+
   TService = class
   protected
     FPath: TString;
     FClient: IClient;
+    FMarshalling: TServiceMarshalling;
     FDeserializers: TPropertyDeserializerArray;
-    procedure AddDeserializer(const ADeserializer: IPropertyDeserializer);
-    procedure AddDateTimeDeserializer;
-    procedure AddEnumDeserializer;
-    procedure AddModelDeserializer;
-    procedure ConfigureDeserializers;
+    FSerializers: TPropertySerializerArray;
     function PathWithDependencies(const ADependencies: array of TVarRec): TString;
     function ToParams(const AQuery: TString; AStart, ACount: Integer; const ASortParams: TStringArray = []): TString;
     function InterpretLocation(const ALocation: TString): TString; virtual;
   public
+    destructor Destroy;
     constructor Create(const APath: TString; const AClient: IClient); virtual;
     function Update(const AId: TString; const AModel: IModel): Boolean; overload; virtual;
     function Update(const AId: TString; const AModel: IModel; const APath: TString): Boolean; overload; virtual;
@@ -81,51 +98,18 @@ type
 
 implementation
 
+uses
+  JvPropertyStore;
+
 { TService }
-
-procedure TService.AddDateTimeDeserializer;
-var
-  DateTimeDeserializer: IPropertyDeserializer;
-begin
-  DateTimeDeserializer := TDateTimePropertyDeserializer.Create;
-  AddDeserializer(DateTimeDeserializer);
-end;
-
-procedure TService.AddDeserializer(const ADeserializer: IPropertyDeserializer);
-begin
-  SetLength(FDeserializers, Length(FDeserializers) + 1);
-  FDeserializers[Length(FDeserializers) - 1] := ADeserializer;
-end;
-
-procedure TService.AddEnumDeserializer;
-var
-  EnumDeserializer: IPropertyDeserializer;
-begin
-  EnumDeserializer := TEnumPropertyDeserializer.Create;
-  AddDeserializer(EnumDeserializer);
-end;
-
-procedure TService.AddModelDeserializer;
-var
-  ModelDeserializer: IPropertyDeserializer;
-begin
-  ModelDeserializer := TModelPropertyDeserializer.Create;
-  AddDeserializer(ModelDeserializer);
-end;
-
-procedure TService.ConfigureDeserializers;
-begin
-  SetLength(FDeserializers, 0);
-  AddDateTimeDeserializer;
-  AddEnumDeserializer;
-  AddModelDeserializer;
-end;
 
 constructor TService.Create(const APath: TString; const AClient: IClient);
 begin
+  FMarshalling := TServiceMarshalling.Create;
+  FSerializers := FMarshalling.Serializers;
+  FDeserializers := FMarshalling.Deserializers;
   FPath := APath;
   FClient := AClient;
-  ConfigureDeserializers;
 end;
 
 function TService.DeleteWithPath(const AId, APath: TString): Boolean;
@@ -134,6 +118,12 @@ var
 begin
   Response := FClient.Delete(Concat(APath, '/', AId), nil, nil);
   Result := Response.Status = 200;
+end;
+
+destructor TService.Destroy;
+begin
+  FMarshalling.Free;
+  inherited Destroy;
 end;
 
 function TService.Delete(const AId: TString): Boolean;
@@ -146,7 +136,7 @@ var
   Response: IResponse;
 begin
   Result := EmptyStr;
-  Response := FClient.Post(APath, TXMLHelper.Serialize(AModel), nil);
+  Response := FClient.Post(APath, TXMLHelper.Serialize(AModel, True, FSerializers), nil);
   if Assigned(Response) and (Response.Status = 201) and (Response.Headers.IndexOfName('Location') > -1) then
     Result := InterpretLocation(Response.Headers.Values['Location']);
 end;
@@ -202,7 +192,7 @@ function TService.Update(const AId: TString; const AModel: IModel; const APath: 
 var
   Response: IResponse;
 begin
-  Response := FClient.Put(Concat(APath, '/', AId), TXMLHelper.Serialize(AModel), nil);
+  Response := FClient.Put(Concat(APath, '/', AId), TXMLHelper.Serialize(AModel, True, FSerializers), nil);
   Result := Response.Status = 200;
 end;
 
@@ -259,8 +249,15 @@ end;
 { TBatchItem }
 
 function TBatchItem.AsString: TString;
+var
+  Marshalling: TServiceMarshalling;
 begin
-  Result := TXMLHelper.Serialize(FModel, False);
+  Marshalling := TServiceMarshalling.Create;
+  try
+    Result := TXMLHelper.Serialize(FModel, False, Marshalling.Serializers);
+  finally
+    Marshalling.Free;
+  end;
 end;
 
 constructor TBatchItem.Create(const AModel: IModel);
@@ -333,6 +330,82 @@ begin
     if SuccessNode.HasChildNodes then
       Result.Values[SuccessNode.ChildNodes.FindNode('locator').Text] := SuccessNode.ChildNodes.FindNode('location').Text;
   end;
+end;
+
+{ TServiceMarshalling }
+
+constructor TServiceMarshalling.Create;
+begin
+  inherited;
+  ConfigureDeserializers;
+  ConfigureSerializers;
+end;
+
+procedure TServiceMarshalling.AddDateTimeDeserializer;
+var
+  DateTimeDeserializer: IPropertyDeserializer;
+begin
+  DateTimeDeserializer := TDateTimePropertyDeserializer.Create;
+  AddDeserializer(DateTimeDeserializer);
+end;
+
+procedure TServiceMarshalling.AddDeserializer(const ADeserializer: IPropertyDeserializer);
+begin
+  SetLength(FDeserializers, Length(FDeserializers) + 1);
+  FDeserializers[Length(FDeserializers) - 1] := ADeserializer;
+end;
+
+procedure TServiceMarshalling.AddEnumDeserializer;
+var
+  EnumDeserializer: IPropertyDeserializer;
+begin
+  EnumDeserializer := TEnumPropertyDeserializer.Create;
+  AddDeserializer(EnumDeserializer);
+end;
+
+procedure TServiceMarshalling.AddModelDeserializer;
+var
+  ModelDeserializer: IPropertyDeserializer;
+begin
+  ModelDeserializer := TModelPropertyDeserializer.Create;
+  AddDeserializer(ModelDeserializer);
+end;
+
+procedure TServiceMarshalling.AddModelListDeserializer;
+var
+  ModelListDeserializer: IPropertyDeserializer;
+begin
+  ModelListDeserializer := TModelListPropertyDeserializer.Create;
+  AddDeserializer(ModelListDeserializer);
+end;
+
+procedure TServiceMarshalling.AddModelListSerializer;
+var
+  ModelListSerializer: IPropertySerializer;
+begin
+  ModelListSerializer := TModelListPropertySerializer.Create;
+  AddSerializer(ModelListSerializer);
+end;
+
+procedure TServiceMarshalling.AddSerializer(const ASerializer: IPropertySerializer);
+begin
+  SetLength(FSerializers, Length(FSerializers) + 1);
+  FSerializers[Length(FSerializers) - 1] := ASerializer;
+end;
+
+procedure TServiceMarshalling.ConfigureDeserializers;
+begin
+  SetLength(FDeserializers, 0);
+  AddDateTimeDeserializer;
+  AddEnumDeserializer;
+  AddModelDeserializer;
+  AddModelListDeserializer;
+end;
+
+procedure TServiceMarshalling.ConfigureSerializers;
+begin
+  SetLength(FSerializers, 0);
+  AddModelListSerializer;
 end;
 
 end.

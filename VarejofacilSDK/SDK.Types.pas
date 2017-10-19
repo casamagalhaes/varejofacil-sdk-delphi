@@ -20,7 +20,53 @@ type
 
   TStringArray = array of TString;
 
-  TLongList = array of Integer;
+  TLongList = class;
+
+  ILongList = interface
+	['{A6640812-180D-4453-B6F3-9FAC53DD872A}']
+    function GetReference: TLongList;
+    function GetItems(AIndex: Integer): Int64;
+    procedure SetItems(AIndex: Integer; const Value: Int64);
+    procedure Add(const ALong: Int64);
+    procedure Clear;
+    function Count: Integer;
+    property Items[AIndex: Integer]: Int64 read GetItems write SetItems; default;
+  end;
+
+  TLongListEnumerator = class
+  private
+    FIndex: Integer;
+    FLongList: TLongList;
+  public
+    constructor Create(ALongList: TLongList);
+    function GetCurrent: Int64; inline;
+    function MoveNext: Boolean;
+    property Current: Int64 read GetCurrent;
+  end;
+
+  TLongList = class(TInterfacedObject, ILongList)
+  private
+    FArray: array of Int64;
+    function GetItems(AIndex: Integer): Int64;
+    procedure SetItems(AIndex: Integer; const Value: Int64);
+  public
+    constructor Create;
+    procedure Add(const ALong: Int64);
+    destructor Destroy; override;
+    function GetEnumerator: TLongListEnumerator;
+    procedure Clear;
+    function Count: Integer;
+    function GetReference: TLongList;
+    property Items[AIndex: Integer]: Int64 read GetItems write SetItems; default;
+  end;
+
+  TLongListRec = record
+  private
+    FList: ILongList;
+  public
+    class function Create(const AList: ILongList): TLongListRec; static;
+    class operator Implicit(AListRec: TLongListRec): TLongList;
+  end;
 
   TDouble = double;
 
@@ -195,6 +241,89 @@ begin
     Result.AccessToken := AccessTokenNode[0].Text;
   if Length(RefreshTokenNode) > 0 then
     Result.RefreshToken := RefreshTokenNode[0].Text;
+end;
+
+{ TLongList }
+
+procedure TLongList.Add(const ALong: Int64);
+begin
+  SetLength(FArray, Length(FArray) + 1);
+  FArray[Length(FArray) - 1] := ALong;
+end;
+
+procedure TLongList.Clear;
+begin
+  SetLength(FArray, 0);
+end;
+
+function TLongList.Count: Integer;
+begin
+  Result := Length(FArray);
+end;
+
+constructor TLongList.Create;
+begin
+  SetLength(FArray, 0);
+end;
+
+destructor TLongList.Destroy;
+begin
+  FreeAndNil(FArray);
+  inherited;
+end;
+
+function TLongList.GetEnumerator: TLongListEnumerator;
+begin
+  Result := TLongListEnumerator.Create(Self);
+end;
+
+function TLongList.GetItems(AIndex: Integer): Int64;
+begin
+  Result := FArray[AIndex];
+end;
+
+function TLongList.GetReference: TLongList;
+begin
+  Result := Self;
+end;
+
+procedure TLongList.SetItems(AIndex: Integer; const Value: Int64);
+begin
+  FArray[AIndex] := Value;
+end;
+
+{ TLongListEnumerator }
+
+constructor TLongListEnumerator.Create(ALongList: TLongList);
+begin
+  inherited Create;
+  FIndex := -1;
+  FLongList := ALongList;
+end;
+
+function TLongListEnumerator.GetCurrent: Int64;
+begin
+  Result := FLongList[FIndex];
+end;
+
+function TLongListEnumerator.MoveNext: Boolean;
+begin
+  Result := FIndex < FLongList.Count - 1;
+  if Result then
+      Inc(FIndex);
+end;
+
+{ TLongListRec }
+
+class function TLongListRec.Create(const AList: ILongList): TLongListRec;
+begin
+  FillChar(Result, SizeOf(TLongListRec), 0);
+  Result.FList := AList;
+end;
+
+class operator TLongListRec.Implicit(AListRec: TLongListRec): TLongList;
+begin
+  Result := AListRec.FList.GetReference;
 end;
 
 end.

@@ -29,18 +29,18 @@ type
     procedure SetAliquotaEntrada(const AAliquotaEntrada: Double);
     function GetAliquotaSaida: Double;
     procedure SetAliquotaSaida(const AAliquotaSaida: Double);
-    function GetCstEntradaPresumido: Integer;
-    procedure SetCstEntradaPresumido(const ACstEntradaPresumido: Integer);
-    function GetCstSaidaPresumido: Integer;
-    procedure SetCstSaidaPresumido(const ACstSaidaPresumido: Integer);
+    function GetCstEntradaPresumido: Variant;
+    procedure SetCstEntradaPresumido(const ACstEntradaPresumido: Variant);
+    function GetCstSaidaPresumido: Variant;
+    procedure SetCstSaidaPresumido(const ACstSaidaPresumido: Variant);
     function GetAliquotaEntradaPresumido: Double;
     procedure SetAliquotaEntradaPresumido(const AAliquotaEntradaPresumido: Double);
     function GetAliquotaSaidaPresumido: Double;
     procedure SetAliquotaSaidaPresumido(const AAliquotaSaidaPresumido: Double);
-    function GetCstEntradaSimples: Integer;
-    procedure SetCstEntradaSimples(const ACstEntradaSimples: Integer);
-    function GetCstSaidaSimples: Integer;
-    procedure SetCstSaidaSimples(const ACstSaidaSimples: Integer);
+    function GetCstEntradaSimples: Variant;
+    procedure SetCstEntradaSimples(const ACstEntradaSimples: Variant);
+    function GetCstSaidaSimples: Variant;
+    procedure SetCstSaidaSimples(const ACstSaidaSimples: Variant);
     property Id: TString read GetId write SetId;
     property Descricao: TString read GetDescricao write SetDescricao;
     property Retencao: Double read GetRetencao write SetRetencao;
@@ -51,12 +51,12 @@ type
     property CstSaida: Integer read GetCstSaida write SetCstSaida;
     property AliquotaEntrada: Double read GetAliquotaEntrada write SetAliquotaEntrada;
     property AliquotaSaida: Double read GetAliquotaSaida write SetAliquotaSaida;
-    property CstEntradaPresumido: Integer read GetCstEntradaPresumido write SetCstEntradaPresumido;
-    property CstSaidaPresumido: Integer read GetCstSaidaPresumido write SetCstSaidaPresumido;
+    property CstEntradaPresumido: Variant read GetCstEntradaPresumido write SetCstEntradaPresumido;
+    property CstSaidaPresumido: Variant read GetCstSaidaPresumido write SetCstSaidaPresumido;
     property AliquotaEntradaPresumido: Double read GetAliquotaEntradaPresumido write SetAliquotaEntradaPresumido;
     property AliquotaSaidaPresumido: Double read GetAliquotaSaidaPresumido write SetAliquotaSaidaPresumido;
-    property CstEntradaSimples: Integer read GetCstEntradaSimples write SetCstEntradaSimples;
-    property CstSaidaSimples: Integer read GetCstSaidaSimples write SetCstSaidaSimples;
+    property CstEntradaSimples: Variant read GetCstEntradaSimples write SetCstEntradaSimples;
+    property CstSaidaSimples: Variant read GetCstSaidaSimples write SetCstSaidaSimples;
   end;
 
   TImpostoFederalList = class;
@@ -67,7 +67,7 @@ type
     function GetItems(AIndex: Integer): IImpostoFederal;
     procedure SetItems(AIndex: Integer; const Value: IImpostoFederal);
     procedure Add(const AImpostoFederal: IImpostoFederal);
-    procedure Clear;
+    procedure Clear;                                                       
     function Count: Integer;
     property Items[AIndex: Integer]: IImpostoFederal read GetItems write SetItems; default;
   end;
@@ -119,12 +119,12 @@ type
 	FCstSaida: Integer;
 	FAliquotaEntrada: Double;
 	FAliquotaSaida: Double;
-	FCstEntradaPresumido: Integer;
-	FCstSaidaPresumido: Integer;
+	FCstEntradaPresumido: Variant;
+	FCstSaidaPresumido: Variant;
 	FAliquotaEntradaPresumido: Double;
 	FAliquotaSaidaPresumido: Double;
-	FCstEntradaSimples: Integer;
-	FCstSaidaSimples: Integer;
+	FCstEntradaSimples: Variant;
+	FCstSaidaSimples: Variant;
     function GetId: TString;
     procedure SetId(const AId: TString);
     function GetDescricao: TString;
@@ -145,18 +145,18 @@ type
     procedure SetAliquotaEntrada(const AAliquotaEntrada: Double);
     function GetAliquotaSaida: Double;
     procedure SetAliquotaSaida(const AAliquotaSaida: Double);
-    function GetCstEntradaPresumido: Integer;
-    procedure SetCstEntradaPresumido(const ACstEntradaPresumido: Integer);
-    function GetCstSaidaPresumido: Integer;
-    procedure SetCstSaidaPresumido(const ACstSaidaPresumido: Integer);
+    function GetCstEntradaPresumido: Variant;
+    procedure SetCstEntradaPresumido(const ACstEntradaPresumido: Variant);
+    function GetCstSaidaPresumido: Variant;
+    procedure SetCstSaidaPresumido(const ACstSaidaPresumido: Variant);
     function GetAliquotaEntradaPresumido: Double;
     procedure SetAliquotaEntradaPresumido(const AAliquotaEntradaPresumido: Double);
     function GetAliquotaSaidaPresumido: Double;
     procedure SetAliquotaSaidaPresumido(const AAliquotaSaidaPresumido: Double);
-    function GetCstEntradaSimples: Integer;
-    procedure SetCstEntradaSimples(const ACstEntradaSimples: Integer);
-    function GetCstSaidaSimples: Integer;
-    procedure SetCstSaidaSimples(const ACstSaidaSimples: Integer);
+    function GetCstEntradaSimples: Variant;
+    procedure SetCstEntradaSimples(const ACstEntradaSimples: Variant);
+    function GetCstSaidaSimples: Variant;
+    procedure SetCstSaidaSimples(const ACstSaidaSimples: Variant);
   published
     property Id: TString read GetId write SetId;
     property Descricao: TString read GetDescricao write SetDescricao;
@@ -168,12 +168,12 @@ type
     property CstSaida: Integer read GetCstSaida write SetCstSaida;
     property AliquotaEntrada: Double read GetAliquotaEntrada write SetAliquotaEntrada;
     property AliquotaSaida: Double read GetAliquotaSaida write SetAliquotaSaida;
-    property CstEntradaPresumido: Integer read GetCstEntradaPresumido write SetCstEntradaPresumido;
-    property CstSaidaPresumido: Integer read GetCstSaidaPresumido write SetCstSaidaPresumido;
+    property CstEntradaPresumido: Variant read GetCstEntradaPresumido write SetCstEntradaPresumido;
+    property CstSaidaPresumido: Variant read GetCstSaidaPresumido write SetCstSaidaPresumido;
     property AliquotaEntradaPresumido: Double read GetAliquotaEntradaPresumido write SetAliquotaEntradaPresumido;
     property AliquotaSaidaPresumido: Double read GetAliquotaSaidaPresumido write SetAliquotaSaidaPresumido;
-    property CstEntradaSimples: Integer read GetCstEntradaSimples write SetCstEntradaSimples;
-    property CstSaidaSimples: Integer read GetCstSaidaSimples write SetCstSaidaSimples;
+    property CstEntradaSimples: Variant read GetCstEntradaSimples write SetCstEntradaSimples;
+    property CstSaidaSimples: Variant read GetCstSaidaSimples write SetCstSaidaSimples;
   end;
 
 implementation
@@ -362,22 +362,22 @@ begin
   FAliquotaSaida := AAliquotaSaida;
 end;
 
-function TImpostoFederal.GetCstEntradaPresumido: Integer;
+function TImpostoFederal.GetCstEntradaPresumido: Variant;
 begin
   Result := FCstEntradaPresumido;
 end;
 
-procedure TImpostoFederal.SetCstEntradaPresumido(const ACstEntradaPresumido: Integer);
+procedure TImpostoFederal.SetCstEntradaPresumido(const ACstEntradaPresumido: Variant);
 begin
   FCstEntradaPresumido := ACstEntradaPresumido;
 end;
 
-function TImpostoFederal.GetCstSaidaPresumido: Integer;
+function TImpostoFederal.GetCstSaidaPresumido: Variant;
 begin
   Result := FCstSaidaPresumido;
 end;
 
-procedure TImpostoFederal.SetCstSaidaPresumido(const ACstSaidaPresumido: Integer);
+procedure TImpostoFederal.SetCstSaidaPresumido(const ACstSaidaPresumido: Variant);
 begin
   FCstSaidaPresumido := ACstSaidaPresumido;
 end;
@@ -402,22 +402,22 @@ begin
   FAliquotaSaidaPresumido := AAliquotaSaidaPresumido;
 end;
 
-function TImpostoFederal.GetCstEntradaSimples: Integer;
+function TImpostoFederal.GetCstEntradaSimples: Variant;
 begin
   Result := FCstEntradaSimples;
 end;
 
-procedure TImpostoFederal.SetCstEntradaSimples(const ACstEntradaSimples: Integer);
+procedure TImpostoFederal.SetCstEntradaSimples(const ACstEntradaSimples: Variant);
 begin
   FCstEntradaSimples := ACstEntradaSimples;
 end;
 
-function TImpostoFederal.GetCstSaidaSimples: Integer;
+function TImpostoFederal.GetCstSaidaSimples: Variant;
 begin
   Result := FCstSaidaSimples;
 end;
 
-procedure TImpostoFederal.SetCstSaidaSimples(const ACstSaidaSimples: Integer);
+procedure TImpostoFederal.SetCstSaidaSimples(const ACstSaidaSimples: Variant);
 begin
   FCstSaidaSimples := ACstSaidaSimples;
 end;

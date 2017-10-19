@@ -81,9 +81,9 @@
         <DCC_RemoteDebug>true</DCC_RemoteDebug>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
-        <Debugger_RunParams>/varejofacil:http://vfcli.varejofacil.com</Debugger_RunParams>
+        <DCC_ExeOutput>.\$(Platform)\$(Config)\_bin</DCC_ExeOutput>
+        <Debugger_RunParams>/varejofacil:https://vfcli.varejofacil.com /username:admin /password:admin</Debugger_RunParams>
         <VerInfo_Locale>1033</VerInfo_Locale>
-        <Manifest_File>None</Manifest_File>
         <DCC_RemoteDebug>false</DCC_RemoteDebug>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
@@ -100,6 +100,12 @@
         <DCCReference Include="SDK.TestConfig.pas"/>
         <DCCReference Include="SDK.TestValueGenerator.pas"/>
         <DCCReference Include="Services\TestSDK.Service.Secao.pas"/>
+        <DCCReference Include="Services\TestSDK.Service.Grupo.pas"/>
+        <DCCReference Include="Services\TestSDK.Service.Subgrupo.pas"/>
+        <DCCReference Include="Services\TestSDK.Service.Produto.pas"/>
+        <DCCReference Include="Services\TestSDK.Service.Genero.pas"/>
+        <DCCReference Include="Services\TestSDK.Service.ImpostoFederal.pas"/>
+        <DCCReference Include="Services\TestSDK.Service.NCM.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

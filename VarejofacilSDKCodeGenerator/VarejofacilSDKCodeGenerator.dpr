@@ -369,6 +369,150 @@ begin
   TFile.WriteAllText(NewFileName, ParsedTemplate, TEncoding.UTF8);
 end;
 
+procedure GenerateSingleFileMultipleClasses(const ATemplate: TString; AModels: TStrings);
+
+  function GenerateGuid: TString;
+  var
+    Uid: TGuid;
+    HndResult: HResult;
+  begin
+    Result := EmptyStr;
+    HndResult := CreateGuid(Uid);
+    if HndResult = S_OK then
+       Result := GuidToString(Uid);
+  end;
+
+  function RemoveExtension(const AFileName: TString): TString;
+  begin
+    Result := StringReplace(AFileName, '.tpl', '', [rfReplaceAll, rfIgnoreCase]);
+  end;
+
+  function MapToDelphiTypes(const AJavaType: TString): TString;
+  var
+    Idx: Integer;
+  begin
+    if Pos('List<', AJavaType) > 0 then
+    begin
+      Result := StringReplace(AJavaType, 'List<', 'T', []);
+      Result := StringReplace(Result, '>', 'List', []);
+    end
+    else
+    begin
+      Result := 'T' + AJavaType;
+      for Idx := Low(JAVA_PRIMARY_TYPES) to High(JAVA_PRIMARY_TYPES) do
+        if JAVA_PRIMARY_TYPES[Idx] = AJavaType then
+          Exit(DELPHI_PRIMARY_TYPES[Idx]);
+    end;
+  end;
+
+  function Tokenize(const AInput: TString): TStrings;
+  var
+    Tokens: TStringDynArray;
+    Idx: Integer;
+  begin
+    Result := TStringList.Create;
+    Result.LineBreak := EmptyStr;
+    Tokens := SplitString(AInput, '%');
+    for Idx := 0 to Length(Tokens) - 1 do
+      Result.Add(Tokens[Idx]);
+  end;
+
+  function Parse(const ATokens: TStrings): TString;
+  var
+    UpperToken, Token, Looping: TString;
+    Idx, LoopingIdx, LoopingLimit, LoopingCount: Integer;
+    ParsedResult: TStrings;
+  begin
+    ParsedResult := TStringList.Create;
+    try
+      ParsedResult.LineBreak := EmptyStr;
+      Looping := EmptyStr;
+      LoopingIdx := 0;
+      LoopingCount := 0;
+      LoopingLimit := 0;
+      Idx := 0;
+      while Idx < ATokens.Count do
+      begin
+        Token := ATokens[Idx];
+        UpperToken := UpperCase(Token);
+        {$REGION 'Variables & Methods'}
+        {$ENDREGION}
+        {$REGION 'Looping'}
+        if Pos('BEGIN_LOOP', UpperToken) > 0 then
+        begin
+          Looping := StringReplace(UpperToken, 'BEGIN_LOOP(', EmptyStr, [rfReplaceAll, rfIgnoreCase]);
+          Looping := StringReplace(Looping, ')', EmptyStr, [rfReplaceAll, rfIgnoreCase]);
+          LoopingIdx := Idx;
+          LoopingLimit := AModels.Count;
+        end
+        else
+        if UpperToken = 'END_LOOP' then
+        begin
+          if LoopingCount + 1 >= LoopingLimit then
+          begin
+            Looping := EmptyStr;
+            LoopingIdx := 0;
+            LoopingCount := 0;
+            LoopingLimit := 0;
+          end
+          else
+          begin
+            Inc(LoopingCount);
+            Idx := LoopingIdx;
+          end;
+        end
+        else
+        if (Looping <> EmptyStr) then
+        begin
+          if LoopingCount < LoopingLimit then
+          begin
+            if (Looping = 'MODELS') then
+            begin
+              if Token = 'MODEL_NAME' then
+              begin
+                ParsedResult.Add(AModels[LoopingCount]);
+              end
+              else
+                ParsedResult.Add(Token);
+            end;
+          end;
+        end
+        {$ENDREGION}
+        else
+          ParsedResult.Add(Token);
+        Inc(Idx);
+      end;
+      Result := ParsedResult.Text;
+    finally
+      ParsedResult.Free;
+    end;
+  end;
+
+  function InterpolateTags(const AInput: TString): TString;
+  var
+    Tokens: TStrings;
+  begin
+    Tokens := Tokenize(AInput);
+    try
+      Result := Parse(Tokens);
+    finally
+      Tokens.Free;
+    end;
+  end;
+
+var
+  OutputDir: TString;
+  NewFileName, TemplateContent, ParsedTemplate: TString;
+begin
+  OutputDir := Concat(GetCurrentDir, '\output');
+  if not DirectoryExists(OutputDir) then
+    CreateDir(OutputDir);
+  NewFileName := InterpolateTags(Concat(OutputDir, '\', RemoveExtension(ATemplate), '.pas'));
+  TemplateContent := TFile.ReadAllText(Concat(GetCurrentDir, '\', ATemplate));
+  ParsedTemplate := InterpolateTags(TemplateContent);
+  TFile.WriteAllText(NewFileName, ParsedTemplate, TEncoding.UTF8);
+end;
+
 procedure GenerateEnums(const ATemplate: TString; AEnums: TStrings);
 
   function RemoveExtension(const AFileName: TString): TString;
@@ -460,10 +604,10 @@ procedure GenerateEnums(const ATemplate: TString; AEnums: TStrings);
               if Token = 'KEY_TO_VALUE_CASES' then
               begin
                 for EnumKeyValueIdx := 0 to CurrentEnumerable.Enums.Count - 1 do
-                  ParsedResult.Add(Format('    %s: Result := ''%s'';'#13#10, [                  
+                  ParsedResult.Add(Format('  if Integer(%s) = AValue then Result := ''%s'' else'#13#10, [
                     CurrentEnumerable.Enums[EnumKeyValueIdx],
                     TStringHolder(CurrentEnumerable.Enums.Objects[EnumKeyValueIdx]).Value
-                  ]));              
+                  ]));
               end
               else
               if Token = 'VALUE_TO_KEY_CASES' then
@@ -519,7 +663,7 @@ procedure GenerateClasses(const ATemplate: TString);
 const
   MODEL_SECTION = 'Models';
   ROUTE_SECTION = 'Routes';
-  MAESTRO_SECTION = 'Varejofacil';
+  VAREJOFACIL_SECTION = 'Varejofacil';
   DIRECTORIES_SECTION = 'Directories';
 var
   Config: TIniFile;
@@ -531,7 +675,7 @@ begin
   try
     Models := TStringList.Create;
     try
-      Server := Config.ReadString(MAESTRO_SECTION, 'Server', EmptyStr);
+      Server := Config.ReadString(VAREJOFACIL_SECTION, 'Server', EmptyStr);
       ModelDirectory := Config.ReadString(DIRECTORIES_SECTION, 'Models', EmptyStr);
       Config.ReadSection(MODEL_SECTION, Models);
       for Model in Models do
@@ -546,6 +690,37 @@ begin
           Fields.Free;
         end;
       end;
+    finally
+      Models.Free;
+    end;
+  finally
+    Config.Free;
+  end;
+end;
+
+procedure GenerateSingleFileClasses(const ATemplate: TString);
+const
+  MODEL_SECTION = 'Models';
+  VAREJOFACIL_SECTION = 'Varejofacil';
+  DIRECTORIES_SECTION = 'Directories';
+var
+  Config: TIniFile;
+  Models: TStrings;
+  Model, ModelFilename, Server, ModelDirectory: TString;
+begin
+  Config := TIniFile.Create(Concat(GetCurrentDir, '\Config.ini'));
+  try
+    Models := TStringList.Create;
+    try
+      Server := Config.ReadString(VAREJOFACIL_SECTION, 'Server', EmptyStr);
+      ModelDirectory := Config.ReadString(DIRECTORIES_SECTION, 'Models', EmptyStr);
+      Config.ReadSection(MODEL_SECTION, Models);
+//      for Model in Models do
+//      begin
+//        ModelFilename := Config.ReadString(MODEL_SECTION, Model, EmptyStr);
+//        Models.AddObject(Model, TStringHolder.Create(TFile.ReadAllText(Concat(ModelDirectory, '\', ModelFilename))));
+//      end;
+      GenerateSingleFileMultipleClasses(ATemplate, Models);
     finally
       Models.Free;
     end;
@@ -633,7 +808,10 @@ begin
       begin
         if FindCmdLineSwitch('models') then
         begin
-          GenerateClasses(Template);
+          if FindCmdLineSwitch('singlefile') then
+            GenerateSingleFileClasses(Template)
+          else
+            GenerateClasses(Template);
         end
         else
         if FindCmdLineSwitch('enums') then

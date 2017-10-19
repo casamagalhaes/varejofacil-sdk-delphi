@@ -112,7 +112,7 @@
         <DCC_RemoteDebug>true</DCC_RemoteDebug>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
-        <Debugger_RunParams>/models /filter:TestSDK.*</Debugger_RunParams>
+        <Debugger_RunParams>/models /singlefile /filter:SDK.ListDes*</Debugger_RunParams>
         <PostBuildEvent><![CDATA[copy *.tpl ".\$(Platform)\$(Config)\" 
  copy *.ini ".\$(Platform)\$(Config)\"
 $(PostBuildEvent)]]></PostBuildEvent>
@@ -137,6 +137,8 @@ $(PostBuildEvent)]]></PostBuildEvent>
         <None Include="SDK.Service.%MODEL_NAME%.tpl"/>
         <None Include="SDK.Enums.tpl"/>
         <None Include="TestSDK.Service.%MODEL_NAME%.tpl"/>
+        <None Include="SDK.ListDeserializers.tpl"/>
+        <None Include="SDK.ListSerializers.tpl"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
