@@ -20,7 +20,7 @@ Compile os fontes do SDK para gerar as dcus em apenas um diretório ou adicione 
 
 ### Conceitos básicos
 
-- Os modelos seguem o nomenclatura SDK.Model.* (Por ex.: SDK.Model.Fornecedor)
+- Os modelos seguem a nomenclatura SDK.Model.* (Por ex.: SDK.Model.Fornecedor)
 - Os serviços seguem a nomenclatura SDK.Service.* (Por ex.: SDK.Service.Fornecedor)
 - Para um serviço ser utilizado, é necessário instanciar um TClient, que recebe o endereço do servidor, usuário e senha
 - Métodos de insert e update retornam uma classe de resultado que contém erros de validação na propriedade FailReasons caso ocorram, essa classe se chama TServiceCommandResult
