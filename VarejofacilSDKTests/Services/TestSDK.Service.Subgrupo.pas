@@ -62,7 +62,7 @@ begin
   FGrupoService.Insert(IdSecao, Grupo);
   try
     //Insert
-    Assert(FSubgrupoService.Insert(IdSecao, IdGrupo, Subgrupo) <> EmptyStr, 'Erro no insert do Subgrupo');
+    Assert(FSubgrupoService.Insert(IdSecao, IdGrupo, Subgrupo).Successful, 'Erro no insert do Subgrupo');
 
     //Get
     SubgrupoInserted := FSubgrupoService.Get(IdSecao, IdGrupo, Id);

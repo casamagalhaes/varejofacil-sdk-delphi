@@ -6,7 +6,7 @@ unit SDK.TestCase;
 interface
 
 uses
-  TestFramework, SysUtils, SDK.Client, SDK.Types, SDK.TestConfig, SDK.TestValueGenerator, TypInfo, Variants;
+  TestFramework, SysUtils, SDK.Client, SDK.Types, SDK.TestConfig, SDK.TestValueGenerator, TypInfo, Variants, Classes, System.IOUtils;
 
 type
 
@@ -55,31 +55,41 @@ var
   Prop: PPropInfo;
   VarValueA, VarValueB: Double;
   ValueA, ValueB: TString;
+  Differences: TStringList;
 begin
-  PropertiesSize := GetPropList(AModelA.GetReference, Properties);
-  for PropIdx := 0 to PropertiesSize - 1 do
-  begin
-    Prop := Properties[PropIdx];
-    if IndexOf(TString(Prop^.Name), AIgnoreFields) > -1 then
-      Continue;
-    case Prop^.PropType^.Kind of
-      tkInterface, tkEnumeration, tkMethod, tkProcedure, tkRecord, tkArray, tkDynArray, tkClass, tkSet, tkPointer:;
-      else
-      begin
-        if SameText(Prop^.PropType^.Name, 'TDateTime') then
-        begin
-          VarValueA := GetPropValue(AModelA.GetReference, Prop^.Name);
-          VarValueB := GetPropValue(AModelB.GetReference, Prop^.Name);
-          Assert(Trunc(VarValueA) = Trunc(VarValueB), Concat(AMessage, Format('Propriedade %s diferente', [Prop^.Name])));
-        end
+  Differences := TStringList.Create;
+  try
+    PropertiesSize := GetPropList(AModelA.GetReference, Properties);
+    for PropIdx := 0 to PropertiesSize - 1 do
+    begin
+      Prop := Properties[PropIdx];
+      if IndexOf(TString(Prop^.Name), AIgnoreFields) > -1 then
+        Continue;
+      case Prop^.PropType^.Kind of
+        tkInterface, tkEnumeration, tkMethod, tkProcedure, tkRecord, tkArray, tkDynArray, tkClass, tkSet, tkPointer:;
         else
         begin
-          ValueA := Trim(VarToStr(GetPropValue(AModelA.GetReference, Prop^.Name)));
-          ValueB := Trim(VarToStr(GetPropValue(AModelB.GetReference, Prop^.Name)));
+          if SameText(Prop^.PropType^.Name, 'TDateTime') then
+          begin
+            VarValueA := GetPropValue(AModelA.GetReference, Prop^.Name);
+            VarValueB := GetPropValue(AModelB.GetReference, Prop^.Name);
+            if Trunc(VarValueA) <> Trunc(VarValueB) then
+              Differences.Add(Format('Propriedade %s diferente', [Prop^.Name]));
+          end
+          else
+          begin
+            ValueA := Trim(VarToStr(GetPropValue(AModelA.GetReference, Prop^.Name)));
+            ValueB := Trim(VarToStr(GetPropValue(AModelB.GetReference, Prop^.Name)));
+          end;
+          if not SameText(ValueA, ValueB) then
+            Differences.Add(Format('| Propriedade %s diferente [ valor a: "%s", valor b: "%s" ] |', [Prop^.Name, ValueA, ValueB]));
         end;
-        Assert(SameText(ValueA, ValueB), Concat(AMessage, Format(' Propriedade %s diferente', [Prop^.Name])));
       end;
     end;
+    TFile.AppendAllText(GetCurrentDir + '\tests.log', Differences.Text);
+    Assert(Differences.Count = 0, Differences.Text);
+  finally
+    Differences.Free;
   end;
 end;
 

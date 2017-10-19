@@ -55,7 +55,7 @@ begin
   Id := 99;
   SetImpostoFederal(Id, ImpostoFederal);
   //Insert
-  Assert(FImpostoFederalService.Insert(ImpostoFederal) <> EmptyStr, 'Erro no insert do ImpostoFederal');
+  Assert(FImpostoFederalService.Insert(ImpostoFederal).Successful, 'Erro no insert do ImpostoFederal');
 
   //Get
   ImpostoFederalInserted := FImpostoFederalService.Get(Id);

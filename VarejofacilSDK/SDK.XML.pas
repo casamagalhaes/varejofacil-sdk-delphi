@@ -295,7 +295,10 @@ begin
       FreeMem(Properties);
     end;
     if ARootTag then
-      ResultList.Add(Format('</%s>', [ModelName]));
+      if ACamelCase then
+        ResultList.Add(Format('</%s>', [CamelCase(ModelName)]))
+      else
+        ResultList.Add(Format('</%s>', [ModelName]));
     Result := ResultList.Text;
   finally
     FreeAndNil(ResultList);

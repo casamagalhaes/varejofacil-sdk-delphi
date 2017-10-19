@@ -50,7 +50,7 @@ begin
   FSecaoService.Insert(Secao);
   try
     //Insert
-    Assert(FGrupoService.Insert(IdSecao, Grupo) <> EmptyStr, 'Erro no insert do Grupo');
+    Assert(FGrupoService.Insert(IdSecao, Grupo).Successful, 'Erro no insert do Grupo');
 
     //Get
     GrupoInserted := FGrupoService.Get(IdSecao, Id);

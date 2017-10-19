@@ -40,7 +40,7 @@ begin
   Id := Secao.Id;
 
   //Insert
-  Assert(FSecaoService.Insert(Secao) <> EmptyStr, 'Erro no insert do Secao');
+  Assert(FSecaoService.Insert(Secao).Successful, 'Erro no insert do Secao');
 
   //Get
   SecaoInserted := FSecaoService.Get(Id);

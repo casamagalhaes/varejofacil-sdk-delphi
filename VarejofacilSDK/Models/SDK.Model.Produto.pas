@@ -10,18 +10,18 @@ type
 
   IProduto = interface(IModel)
     ['{48A4F7F9-2328-4F1A-9689-37C018CA8F44}']
-    function GetId: Int64;
-    procedure SetId(const AId: Int64);
-    function GetProdutoDestinoId: Int64;
-    procedure SetProdutoDestinoId(const AProdutoDestinoId: Int64);
-    function GetSubgrupoId: Integer;
-    procedure SetSubgrupoId(const ASubgrupoId: Integer);
-    function GetGrupoId: Integer;
-    procedure SetGrupoId(const AGrupoId: Integer);
+    function GetId: Variant;
+    procedure SetId(const AId: Variant);
+    function GetProdutoDestinoId: Variant;
+    procedure SetProdutoDestinoId(const AProdutoDestinoId: Variant);
+    function GetSubGrupoId: Variant;
+    procedure SetSubgrupoId(const ASubGrupoId: Variant);
+    function GetGrupoId: Variant;
+    procedure SetGrupoId(const AGrupoId: Variant);
     function GetSecaoId: Integer;
     procedure SetSecaoId(const ASecaoId: Integer);
-    function GetNaturezaDeImpostoFederalId: Integer;
-    procedure SetNaturezaDeImpostoFederalId(const ANaturezaDeImpostoFederalId: Integer);
+    function GetNaturezaDeImpostoFederalId: Variant;
+    procedure SetNaturezaDeImpostoFederalId(const ANaturezaDeImpostoFederalId: Variant);
     function GetCest: Int64;
     procedure SetCest(const ACest: Int64);
     function GetQuantidadeEtiqueta: Integer;
@@ -102,8 +102,8 @@ type
     procedure SetComprimento(const AComprimento: TString);
     function GetUnidadeDeVenda: TString;
     procedure SetUnidadeDeVenda(const AUnidadeDeVenda: TString);
-    function GetNaturezaId: TString;
-    procedure SetNaturezaId(const ANaturezaId: TString);
+    function GetNaturezaId: Variant;
+    procedure SetNaturezaId(const ANaturezaId: Variant);
     function GetTextoDaReceita: TString;
     procedure SetTextoDaReceita(const ATextoDaReceita: TString);
     function GetPermiteDesconto: Boolean;
@@ -160,8 +160,8 @@ type
     procedure SetTipoFatorKit(const ATipoFatorKit: TTipoFator);
     function GetBaixaNaVendaComposto: Boolean;
     procedure SetBaixaNaVendaComposto(const ABaixaNaVendaComposto: Boolean);
-    function GetQuantidadeComposto: Double;
-    procedure SetQuantidadeComposto(const AQuantidadeComposto: Double);
+    function GetQuantidadeComposto: Variant;
+    procedure SetQuantidadeComposto(const AQuantidadeComposto: Variant);
     function GetComissaoCapitacao: Double;
     procedure SetComissaoCapitacao(const AComissaoCapitacao: Double);
     function GetComissaoProducao: Double;
@@ -172,20 +172,20 @@ type
     procedure SetPagaComissao(const APagaComissao: Boolean);
     function GetPesoVariavel: TPesoVariavel;
     procedure SetPesoVariavel(const APesoVariavel: TPesoVariavel);
-    function GetGeneroId: Int64;
-    procedure SetGeneroId(const AGeneroId: Int64);
-    function GetMarcaId: Int64;
-    procedure SetMarcaId(const AMarcaId: Int64);
-    function GetSituacaoFiscalId: Integer;
-    procedure SetSituacaoFiscalId(const ASituacaoFiscalId: Integer);
-    function GetSituacaoFiscalSaidaId: Integer;
-    procedure SetSituacaoFiscalSaidaId(const ASituacaoFiscalSaidaId: Integer);
-    function GetFuncionarioId: Integer;
-    procedure SetFuncionarioId(const AFuncionarioId: Integer);
-    function GetFornecedorId: Int64;
-    procedure SetFornecedorId(const AFornecedorId: Int64);
-    function GetLocalDeImpressaoId: Int64;
-    procedure SetLocalDeImpressaoId(const ALocalDeImpressaoId: Int64);
+    function GetGeneroId: Variant;
+    procedure SetGeneroId(const AGeneroId: Variant);
+    function GetMarcaId: Variant;
+    procedure SetMarcaId(const AMarcaId: Variant);
+    function GetSituacaoFiscalId: Variant;
+    procedure SetSituacaoFiscalId(const ASituacaoFiscalId: Variant);
+    function GetSituacaoFiscalSaidaId: Variant;
+    procedure SetSituacaoFiscalSaidaId(const ASituacaoFiscalSaidaId: Variant);
+    function GetFuncionarioId: Variant;
+    procedure SetFuncionarioId(const AFuncionarioId: Variant);
+    function GetFornecedorId: Variant;
+    procedure SetFornecedorId(const AFornecedorId: Variant);
+    function GetLocalDeImpressaoId: Variant;
+    procedure SetLocalDeImpressaoId(const ALocalDeImpressaoId: Variant);
     function GetAplicacoesIds: TLongList;
     procedure SetAplicacoesIds(const AAplicacoesIds: TLongList);
     function GetCaracteristicasIds: TLongList;
@@ -198,12 +198,12 @@ type
     procedure SetPautasDoProduto(const APautasDoProduto: TPautaDoProdutoList);
     function GetEstoqueDoProduto: TEstoqueDoProdutoList;
     procedure SetEstoqueDoProduto(const AEstoqueDoProduto: TEstoqueDoProdutoList);
-    property Id: Int64 read GetId write SetId;
-    property ProdutoDestinoId: Int64 read GetProdutoDestinoId write SetProdutoDestinoId;
-    property SubgrupoId: Integer read GetSubgrupoId write SetSubgrupoId;
-    property GrupoId: Integer read GetGrupoId write SetGrupoId;
+    property Id: Variant read GetId write SetId;
+    property ProdutoDestinoId: Variant read GetProdutoDestinoId write SetProdutoDestinoId;
+    property SubGrupoId: Variant read GetSubgrupoId write SetSubgrupoId;
+    property GrupoId: Variant read GetGrupoId write SetGrupoId;
     property SecaoId: Integer read GetSecaoId write SetSecaoId;
-    property NaturezaDeImpostoFederalId: Integer read GetNaturezaDeImpostoFederalId write SetNaturezaDeImpostoFederalId;
+    property NaturezaDeImpostoFederalId: Variant read GetNaturezaDeImpostoFederalId write SetNaturezaDeImpostoFederalId;
     property Cest: Int64 read GetCest write SetCest;
     property QuantidadeEtiqueta: Integer read GetQuantidadeEtiqueta write SetQuantidadeEtiqueta;
     property DiasDeSeguranca: Integer read GetDiasDeSeguranca write SetDiasDeSeguranca;
@@ -244,7 +244,7 @@ type
     property Largura: TString read GetLargura write SetLargura;
     property Comprimento: TString read GetComprimento write SetComprimento;
     property UnidadeDeVenda: TString read GetUnidadeDeVenda write SetUnidadeDeVenda;
-    property NaturezaId: TString read GetNaturezaId write SetNaturezaId;
+    property NaturezaId: Variant read GetNaturezaId write SetNaturezaId;
     property TextoDaReceita: TString read GetTextoDaReceita write SetTextoDaReceita;
     property PermiteDesconto: Boolean read GetPermiteDesconto write SetPermiteDesconto;
     property CompoeTotalDaNota: Boolean read GetCompoeTotalDaNota write SetCompoeTotalDaNota;
@@ -273,19 +273,19 @@ type
     property DataSaida: TDateTime read GetDataSaida write SetDataSaida;
     property TipoFatorKit: TTipoFator read GetTipoFatorKit write SetTipoFatorKit;
     property BaixaNaVendaComposto: Boolean read GetBaixaNaVendaComposto write SetBaixaNaVendaComposto;
-    property QuantidadeComposto: Double read GetQuantidadeComposto write SetQuantidadeComposto;
+    property QuantidadeComposto: Variant read GetQuantidadeComposto write SetQuantidadeComposto;
     property ComissaoCapitacao: Double read GetComissaoCapitacao write SetComissaoCapitacao;
     property ComissaoProducao: Double read GetComissaoProducao write SetComissaoProducao;
     property ComissaoVenda: Double read GetComissaoVenda write SetComissaoVenda;
     property PagaComissao: Boolean read GetPagaComissao write SetPagaComissao;
     property PesoVariavel: TPesoVariavel read GetPesoVariavel write SetPesoVariavel;
-    property GeneroId: Int64 read GetGeneroId write SetGeneroId;
-    property MarcaId: Int64 read GetMarcaId write SetMarcaId;
-    property SituacaoFiscalId: Integer read GetSituacaoFiscalId write SetSituacaoFiscalId;
-    property SituacaoFiscalSaidaId: Integer read GetSituacaoFiscalSaidaId write SetSituacaoFiscalSaidaId;
-    property FuncionarioId: Integer read GetFuncionarioId write SetFuncionarioId;
-    property FornecedorId: Int64 read GetFornecedorId write SetFornecedorId;
-    property LocalDeImpressaoId: Int64 read GetLocalDeImpressaoId write SetLocalDeImpressaoId;
+    property GeneroId: Variant read GetGeneroId write SetGeneroId;
+    property MarcaId: Variant read GetMarcaId write SetMarcaId;
+    property SituacaoFiscalId: Variant read GetSituacaoFiscalId write SetSituacaoFiscalId;
+    property SituacaoFiscalSaidaId: Variant read GetSituacaoFiscalSaidaId write SetSituacaoFiscalSaidaId;
+    property FuncionarioId: Variant read GetFuncionarioId write SetFuncionarioId;
+    property FornecedorId: Variant read GetFornecedorId write SetFornecedorId;
+    property LocalDeImpressaoId: Variant read GetLocalDeImpressaoId write SetLocalDeImpressaoId;
     property AplicacoesIds: TLongList read GetAplicacoesIds write SetAplicacoesIds;
     property CaracteristicasIds: TLongList read GetCaracteristicasIds write SetCaracteristicasIds;
     property RegimesDoProduto: TRegimeEstadualProdutoList read GetRegimesDoProduto write SetRegimesDoProduto;
@@ -344,12 +344,12 @@ type
 
   TProduto = class(TInterfacedModel, IProduto)
   private
-	FId: Int64;
-	FProdutoDestinoId: Int64;
-	FSubgrupoId: Integer;
-	FGrupoId: Integer;
+	FId: Variant;
+	FProdutoDestinoId: Variant;
+	FSubGrupoId: Variant;
+	FGrupoId: Variant;
 	FSecaoId: Integer;
-	FNaturezaDeImpostoFederalId: Integer;
+	FNaturezaDeImpostoFederalId: Variant;
 	FCest: Int64;
 	FQuantidadeEtiqueta: Integer;
 	FDiasDeSeguranca: Integer;
@@ -390,7 +390,7 @@ type
 	FLargura: TString;
 	FComprimento: TString;
 	FUnidadeDeVenda: TString;
-	FNaturezaId: TString;
+	FNaturezaId: Variant;
 	FTextoDaReceita: TString;
 	FPermiteDesconto: Boolean;
 	FCompoeTotalDaNota: Boolean;
@@ -419,37 +419,37 @@ type
 	FDataSaida: TDateTime;
 	FTipoFatorKit: TTipoFator;
 	FBaixaNaVendaComposto: Boolean;
-	FQuantidadeComposto: Double;
+	FQuantidadeComposto: Variant;
 	FComissaoCapitacao: Double;
 	FComissaoProducao: Double;
 	FComissaoVenda: Double;
 	FPagaComissao: Boolean;
 	FPesoVariavel: TPesoVariavel;
-	FGeneroId: Int64;
-	FMarcaId: Int64;
-	FSituacaoFiscalId: Integer;
-	FSituacaoFiscalSaidaId: Integer;
-	FFuncionarioId: Integer;
-	FFornecedorId: Int64;
-	FLocalDeImpressaoId: Int64;
+	FGeneroId: Variant;
+	FMarcaId: Variant;
+	FSituacaoFiscalId: Variant;
+	FSituacaoFiscalSaidaId: Variant;
+	FFuncionarioId: Variant;
+	FFornecedorId: Variant;
+	FLocalDeImpressaoId: Variant;
 	FAplicacoesIds: TLongList;
 	FCaracteristicasIds: TLongList;
 	FRegimesDoProduto: TRegimeEstadualProdutoList;
 	FItensImpostosFederais: TItemImpostoFederalList;
 	FPautasDoProduto: TPautaDoProdutoList;
 	FEstoqueDoProduto: TEstoqueDoProdutoList;
-    function GetId: Int64;
-    procedure SetId(const AId: Int64);
-    function GetProdutoDestinoId: Int64;
-    procedure SetProdutoDestinoId(const AProdutoDestinoId: Int64);
-    function GetSubgrupoId: Integer;
-    procedure SetSubgrupoId(const ASubgrupoId: Integer);
-    function GetGrupoId: Integer;
-    procedure SetGrupoId(const AGrupoId: Integer);
+    function GetId: Variant;
+    procedure SetId(const AId: Variant);
+    function GetProdutoDestinoId: Variant;
+    procedure SetProdutoDestinoId(const AProdutoDestinoId: Variant);
+    function GetSubGrupoId: Variant;
+    procedure SetSubgrupoId(const ASubGrupoId: Variant);
+    function GetGrupoId: Variant;
+    procedure SetGrupoId(const AGrupoId: Variant);
     function GetSecaoId: Integer;
     procedure SetSecaoId(const ASecaoId: Integer);
-    function GetNaturezaDeImpostoFederalId: Integer;
-    procedure SetNaturezaDeImpostoFederalId(const ANaturezaDeImpostoFederalId: Integer);
+    function GetNaturezaDeImpostoFederalId: Variant;
+    procedure SetNaturezaDeImpostoFederalId(const ANaturezaDeImpostoFederalId: Variant);
     function GetCest: Int64;
     procedure SetCest(const ACest: Int64);
     function GetQuantidadeEtiqueta: Integer;
@@ -530,8 +530,8 @@ type
     procedure SetComprimento(const AComprimento: TString);
     function GetUnidadeDeVenda: TString;
     procedure SetUnidadeDeVenda(const AUnidadeDeVenda: TString);
-    function GetNaturezaId: TString;
-    procedure SetNaturezaId(const ANaturezaId: TString);
+    function GetNaturezaId: Variant;
+    procedure SetNaturezaId(const ANaturezaId: Variant);
     function GetTextoDaReceita: TString;
     procedure SetTextoDaReceita(const ATextoDaReceita: TString);
     function GetPermiteDesconto: Boolean;
@@ -588,8 +588,8 @@ type
     procedure SetTipoFatorKit(const ATipoFatorKit: TTipoFator);
     function GetBaixaNaVendaComposto: Boolean;
     procedure SetBaixaNaVendaComposto(const ABaixaNaVendaComposto: Boolean);
-    function GetQuantidadeComposto: Double;
-    procedure SetQuantidadeComposto(const AQuantidadeComposto: Double);
+    function GetQuantidadeComposto: Variant;
+    procedure SetQuantidadeComposto(const AQuantidadeComposto: Variant);
     function GetComissaoCapitacao: Double;
     procedure SetComissaoCapitacao(const AComissaoCapitacao: Double);
     function GetComissaoProducao: Double;
@@ -600,20 +600,20 @@ type
     procedure SetPagaComissao(const APagaComissao: Boolean);
     function GetPesoVariavel: TPesoVariavel;
     procedure SetPesoVariavel(const APesoVariavel: TPesoVariavel);
-    function GetGeneroId: Int64;
-    procedure SetGeneroId(const AGeneroId: Int64);
-    function GetMarcaId: Int64;
-    procedure SetMarcaId(const AMarcaId: Int64);
-    function GetSituacaoFiscalId: Integer;
-    procedure SetSituacaoFiscalId(const ASituacaoFiscalId: Integer);
-    function GetSituacaoFiscalSaidaId: Integer;
-    procedure SetSituacaoFiscalSaidaId(const ASituacaoFiscalSaidaId: Integer);
-    function GetFuncionarioId: Integer;
-    procedure SetFuncionarioId(const AFuncionarioId: Integer);
-    function GetFornecedorId: Int64;
-    procedure SetFornecedorId(const AFornecedorId: Int64);
-    function GetLocalDeImpressaoId: Int64;
-    procedure SetLocalDeImpressaoId(const ALocalDeImpressaoId: Int64);
+    function GetGeneroId: Variant;
+    procedure SetGeneroId(const AGeneroId: Variant);
+    function GetMarcaId: Variant;
+    procedure SetMarcaId(const AMarcaId: Variant);
+    function GetSituacaoFiscalId: Variant;
+    procedure SetSituacaoFiscalId(const ASituacaoFiscalId: Variant);
+    function GetSituacaoFiscalSaidaId: Variant;
+    procedure SetSituacaoFiscalSaidaId(const ASituacaoFiscalSaidaId: Variant);
+    function GetFuncionarioId: Variant;
+    procedure SetFuncionarioId(const AFuncionarioId: Variant);
+    function GetFornecedorId: Variant;
+    procedure SetFornecedorId(const AFornecedorId: Variant);
+    function GetLocalDeImpressaoId: Variant;
+    procedure SetLocalDeImpressaoId(const ALocalDeImpressaoId: Variant);
     function GetAplicacoesIds: TLongList;
     procedure SetAplicacoesIds(const AAplicacoesIds: TLongList);
     function GetCaracteristicasIds: TLongList;
@@ -627,12 +627,12 @@ type
     function GetEstoqueDoProduto: TEstoqueDoProdutoList;
     procedure SetEstoqueDoProduto(const AEstoqueDoProduto: TEstoqueDoProdutoList);
   published
-    property Id: Int64 read GetId write SetId;
-    property ProdutoDestinoId: Int64 read GetProdutoDestinoId write SetProdutoDestinoId;
-    property SubgrupoId: Integer read GetSubgrupoId write SetSubgrupoId;
-    property GrupoId: Integer read GetGrupoId write SetGrupoId;
+    property Id: Variant read GetId write SetId;
+    property ProdutoDestinoId: Variant read GetProdutoDestinoId write SetProdutoDestinoId;
+    property SubGrupoId: Variant read GetSubgrupoId write SetSubgrupoId;
+    property GrupoId: Variant read GetGrupoId write SetGrupoId;
     property SecaoId: Integer read GetSecaoId write SetSecaoId;
-    property NaturezaDeImpostoFederalId: Integer read GetNaturezaDeImpostoFederalId write SetNaturezaDeImpostoFederalId;
+    property NaturezaDeImpostoFederalId: Variant read GetNaturezaDeImpostoFederalId write SetNaturezaDeImpostoFederalId;
     property Cest: Int64 read GetCest write SetCest;
     property QuantidadeEtiqueta: Integer read GetQuantidadeEtiqueta write SetQuantidadeEtiqueta;
     property DiasDeSeguranca: Integer read GetDiasDeSeguranca write SetDiasDeSeguranca;
@@ -673,7 +673,7 @@ type
     property Largura: TString read GetLargura write SetLargura;
     property Comprimento: TString read GetComprimento write SetComprimento;
     property UnidadeDeVenda: TString read GetUnidadeDeVenda write SetUnidadeDeVenda;
-    property NaturezaId: TString read GetNaturezaId write SetNaturezaId;
+    property NaturezaId: Variant read GetNaturezaId write SetNaturezaId;
     property TextoDaReceita: TString read GetTextoDaReceita write SetTextoDaReceita;
     property PermiteDesconto: Boolean read GetPermiteDesconto write SetPermiteDesconto;
     property CompoeTotalDaNota: Boolean read GetCompoeTotalDaNota write SetCompoeTotalDaNota;
@@ -702,19 +702,19 @@ type
     property DataSaida: TDateTime read GetDataSaida write SetDataSaida;
     property TipoFatorKit: TTipoFator read GetTipoFatorKit write SetTipoFatorKit;
     property BaixaNaVendaComposto: Boolean read GetBaixaNaVendaComposto write SetBaixaNaVendaComposto;
-    property QuantidadeComposto: Double read GetQuantidadeComposto write SetQuantidadeComposto;
+    property QuantidadeComposto: Variant read GetQuantidadeComposto write SetQuantidadeComposto;
     property ComissaoCapitacao: Double read GetComissaoCapitacao write SetComissaoCapitacao;
     property ComissaoProducao: Double read GetComissaoProducao write SetComissaoProducao;
     property ComissaoVenda: Double read GetComissaoVenda write SetComissaoVenda;
     property PagaComissao: Boolean read GetPagaComissao write SetPagaComissao;
     property PesoVariavel: TPesoVariavel read GetPesoVariavel write SetPesoVariavel;
-    property GeneroId: Int64 read GetGeneroId write SetGeneroId;
-    property MarcaId: Int64 read GetMarcaId write SetMarcaId;
-    property SituacaoFiscalId: Integer read GetSituacaoFiscalId write SetSituacaoFiscalId;
-    property SituacaoFiscalSaidaId: Integer read GetSituacaoFiscalSaidaId write SetSituacaoFiscalSaidaId;
-    property FuncionarioId: Integer read GetFuncionarioId write SetFuncionarioId;
-    property FornecedorId: Int64 read GetFornecedorId write SetFornecedorId;
-    property LocalDeImpressaoId: Int64 read GetLocalDeImpressaoId write SetLocalDeImpressaoId;
+    property GeneroId: Variant read GetGeneroId write SetGeneroId;
+    property MarcaId: Variant read GetMarcaId write SetMarcaId;
+    property SituacaoFiscalId: Variant read GetSituacaoFiscalId write SetSituacaoFiscalId;
+    property SituacaoFiscalSaidaId: Variant read GetSituacaoFiscalSaidaId write SetSituacaoFiscalSaidaId;
+    property FuncionarioId: Variant read GetFuncionarioId write SetFuncionarioId;
+    property FornecedorId: Variant read GetFornecedorId write SetFornecedorId;
+    property LocalDeImpressaoId: Variant read GetLocalDeImpressaoId write SetLocalDeImpressaoId;
     property AplicacoesIds: TLongList read GetAplicacoesIds write SetAplicacoesIds;
     property CaracteristicasIds: TLongList read GetCaracteristicasIds write SetCaracteristicasIds;
     property RegimesDoProduto: TRegimeEstadualProdutoList read GetRegimesDoProduto write SetRegimesDoProduto;
@@ -809,42 +809,42 @@ end;
 
 { TProduto }
 
-function TProduto.GetId: Int64;
+function TProduto.GetId: Variant;
 begin
   Result := FId;
 end;
 
-procedure TProduto.SetId(const AId: Int64);
+procedure TProduto.SetId(const AId: Variant);
 begin
   FId := AId;
 end;
 
-function TProduto.GetProdutoDestinoId: Int64;
+function TProduto.GetProdutoDestinoId: Variant;
 begin
   Result := FProdutoDestinoId;
 end;
 
-procedure TProduto.SetProdutoDestinoId(const AProdutoDestinoId: Int64);
+procedure TProduto.SetProdutoDestinoId(const AProdutoDestinoId: Variant);
 begin
   FProdutoDestinoId := AProdutoDestinoId;
 end;
 
-function TProduto.GetSubgrupoId: Integer;
+function TProduto.GetSubGrupoId: Variant;
 begin
   Result := FSubgrupoId;
 end;
 
-procedure TProduto.SetSubgrupoId(const ASubgrupoId: Integer);
+procedure TProduto.SetSubgrupoId(const ASubGrupoId: Variant);
 begin
   FSubgrupoId := ASubgrupoId;
 end;
 
-function TProduto.GetGrupoId: Integer;
+function TProduto.GetGrupoId: Variant;
 begin
   Result := FGrupoId;
 end;
 
-procedure TProduto.SetGrupoId(const AGrupoId: Integer);
+procedure TProduto.SetGrupoId(const AGrupoId: Variant);
 begin
   FGrupoId := AGrupoId;
 end;
@@ -859,12 +859,12 @@ begin
   FSecaoId := ASecaoId;
 end;
 
-function TProduto.GetNaturezaDeImpostoFederalId: Integer;
+function TProduto.GetNaturezaDeImpostoFederalId: Variant;
 begin
   Result := FNaturezaDeImpostoFederalId;
 end;
 
-procedure TProduto.SetNaturezaDeImpostoFederalId(const ANaturezaDeImpostoFederalId: Integer);
+procedure TProduto.SetNaturezaDeImpostoFederalId(const ANaturezaDeImpostoFederalId: Variant);
 begin
   FNaturezaDeImpostoFederalId := ANaturezaDeImpostoFederalId;
 end;
@@ -1269,12 +1269,12 @@ begin
   FUnidadeDeVenda := AUnidadeDeVenda;
 end;
 
-function TProduto.GetNaturezaId: TString;
+function TProduto.GetNaturezaId: Variant;
 begin
   Result := FNaturezaId;
 end;
 
-procedure TProduto.SetNaturezaId(const ANaturezaId: TString);
+procedure TProduto.SetNaturezaId(const ANaturezaId: Variant);
 begin
   FNaturezaId := ANaturezaId;
 end;
@@ -1559,12 +1559,12 @@ begin
   FBaixaNaVendaComposto := ABaixaNaVendaComposto;
 end;
 
-function TProduto.GetQuantidadeComposto: Double;
+function TProduto.GetQuantidadeComposto: Variant;
 begin
   Result := FQuantidadeComposto;
 end;
 
-procedure TProduto.SetQuantidadeComposto(const AQuantidadeComposto: Double);
+procedure TProduto.SetQuantidadeComposto(const AQuantidadeComposto: Variant);
 begin
   FQuantidadeComposto := AQuantidadeComposto;
 end;
@@ -1619,72 +1619,72 @@ begin
   FPesoVariavel := APesoVariavel;
 end;
 
-function TProduto.GetGeneroId: Int64;
+function TProduto.GetGeneroId: Variant;
 begin
   Result := FGeneroId;
 end;
 
-procedure TProduto.SetGeneroId(const AGeneroId: Int64);
+procedure TProduto.SetGeneroId(const AGeneroId: Variant);
 begin
   FGeneroId := AGeneroId;
 end;
 
-function TProduto.GetMarcaId: Int64;
+function TProduto.GetMarcaId: Variant;
 begin
   Result := FMarcaId;
 end;
 
-procedure TProduto.SetMarcaId(const AMarcaId: Int64);
+procedure TProduto.SetMarcaId(const AMarcaId: Variant);
 begin
   FMarcaId := AMarcaId;
 end;
 
-function TProduto.GetSituacaoFiscalId: Integer;
+function TProduto.GetSituacaoFiscalId: Variant;
 begin
   Result := FSituacaoFiscalId;
 end;
 
-procedure TProduto.SetSituacaoFiscalId(const ASituacaoFiscalId: Integer);
+procedure TProduto.SetSituacaoFiscalId(const ASituacaoFiscalId: Variant);
 begin
   FSituacaoFiscalId := ASituacaoFiscalId;
 end;
 
-function TProduto.GetSituacaoFiscalSaidaId: Integer;
+function TProduto.GetSituacaoFiscalSaidaId: Variant;
 begin
   Result := FSituacaoFiscalSaidaId;
 end;
 
-procedure TProduto.SetSituacaoFiscalSaidaId(const ASituacaoFiscalSaidaId: Integer);
+procedure TProduto.SetSituacaoFiscalSaidaId(const ASituacaoFiscalSaidaId: Variant);
 begin
   FSituacaoFiscalSaidaId := ASituacaoFiscalSaidaId;
 end;
 
-function TProduto.GetFuncionarioId: Integer;
+function TProduto.GetFuncionarioId: Variant;
 begin
   Result := FFuncionarioId;
 end;
 
-procedure TProduto.SetFuncionarioId(const AFuncionarioId: Integer);
+procedure TProduto.SetFuncionarioId(const AFuncionarioId: Variant);
 begin
   FFuncionarioId := AFuncionarioId;
 end;
 
-function TProduto.GetFornecedorId: Int64;
+function TProduto.GetFornecedorId: Variant;
 begin
   Result := FFornecedorId;
 end;
 
-procedure TProduto.SetFornecedorId(const AFornecedorId: Int64);
+procedure TProduto.SetFornecedorId(const AFornecedorId: Variant);
 begin
   FFornecedorId := AFornecedorId;
 end;
 
-function TProduto.GetLocalDeImpressaoId: Int64;
+function TProduto.GetLocalDeImpressaoId: Variant;
 begin
   Result := FLocalDeImpressaoId;
 end;
 
-procedure TProduto.SetLocalDeImpressaoId(const ALocalDeImpressaoId: Int64);
+procedure TProduto.SetLocalDeImpressaoId(const ALocalDeImpressaoId: Variant);
 begin
   FLocalDeImpressaoId := ALocalDeImpressaoId;
 end;

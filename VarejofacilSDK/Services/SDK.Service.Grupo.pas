@@ -15,7 +15,7 @@ type
       const ASortParams: TStringArray = []): TGrupoListRec;
     function Filter(const AQuery: TString; AStart: Integer = 0; ACount: Integer = 0;
       const ASortParams: TStringArray = []): TGrupoListRec;
-    function Insert(const AIdSecao: TString; const AModel: IModel): string;
+    function Insert(const AIdSecao: TString; const AModel: IModel): TServiceCommandResult;
     function Update(const AIdSecao, AId: TString; const AModel: IModel): Boolean;
     function Delete(const AIdSecao, AId: TString): Boolean; reintroduce;
   end;
@@ -48,7 +48,7 @@ begin
   Result := Filter(EmptyStr, AStart, ACount, ASortParams);
 end;
 
-function TGrupoService.Insert(const AIdSecao: TString; const AModel: IModel): string;
+function TGrupoService.Insert(const AIdSecao: TString; const AModel: IModel): TServiceCommandResult;
 begin
   Result := inherited Insert(AModel, PathWithDependencies([AIdSecao]));
 end;

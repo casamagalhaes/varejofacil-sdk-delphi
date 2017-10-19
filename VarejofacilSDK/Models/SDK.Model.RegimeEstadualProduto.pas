@@ -9,13 +9,13 @@ type
 
   IRegimeEstadualProduto = interface(IModel)
     ['{CC3948AC-235F-4DD7-B5CC-53D7C8081AF6}']
-    function GetId: Int64;
-    procedure SetId(const AId: Int64);
+    function GetId: Variant;
+    procedure SetId(const AId: Variant);
     function GetLojaId: Int64;
     procedure SetLojaId(const ALojaId: Int64);
     function GetRegimeEstadualId: Int64;
     procedure SetRegimeEstadualId(const ARegimeEstadualId: Int64);
-    property Id: Int64 read GetId write SetId;
+    property Id: Variant read GetId write SetId;
     property LojaId: Int64 read GetLojaId write SetLojaId;
     property RegimeEstadualId: Int64 read GetRegimeEstadualId write SetRegimeEstadualId;
   end;
@@ -70,17 +70,17 @@ type
 
   TRegimeEstadualProduto = class(TInterfacedModel, IRegimeEstadualProduto)
   private
-	FId: Int64;
+	FId: Variant;
 	FLojaId: Int64;
 	FRegimeEstadualId: Int64;
-    function GetId: Int64;
-    procedure SetId(const AId: Int64);
+    function GetId: Variant;
+    procedure SetId(const AId: Variant);
     function GetLojaId: Int64;
     procedure SetLojaId(const ALojaId: Int64);
     function GetRegimeEstadualId: Int64;
     procedure SetRegimeEstadualId(const ARegimeEstadualId: Int64);
   published
-    property Id: Int64 read GetId write SetId;
+    property Id: Variant read GetId write SetId;
     property LojaId: Int64 read GetLojaId write SetLojaId;
     property RegimeEstadualId: Int64 read GetRegimeEstadualId write SetRegimeEstadualId;
   end;
@@ -171,12 +171,12 @@ end;
 
 { TRegimeEstadualProduto }
 
-function TRegimeEstadualProduto.GetId: Int64;
+function TRegimeEstadualProduto.GetId: Variant;
 begin
   Result := FId;
 end;
 
-procedure TRegimeEstadualProduto.SetId(const AId: Int64);
+procedure TRegimeEstadualProduto.SetId(const AId: Variant);
 begin
   FId := AId;
 end;

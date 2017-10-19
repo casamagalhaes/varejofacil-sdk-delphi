@@ -75,6 +75,30 @@ type
     constructor Create;
   end;
 
+  TFailReason = TString;
+  
+  TFailReasonList = class(TStringList);
+      
+  TFailReasonHelper = class
+  public
+    class function FromStringArray(const AArray: TStringArray): TFailReasonList;
+    class function FromResponse(const AResponse: IResponse): TFailReasonList;
+    class function FromXML(const ADocument: IXMLDocument): TFailReasonList;
+  end;
+  
+  TServiceCommandResult = class
+  private
+    FSuccessful: Boolean;
+    FLocation: TString;
+    FFailReasons: TFailReasonList;
+  public
+    constructor Create(ASuccessful: Boolean; const AFailReasons: TFailReasonList; const ALocation: TString = '');
+    destructor Destroy;
+    property Location: TString read FLocation;
+    property Successful: Boolean read FSuccessful;
+    property FailReasons: TFailReasonList read FFailReasons;
+  end;
+
   TService = class
   protected
     FPath: TString;
@@ -92,8 +116,8 @@ type
     function Update(const AId: TString; const AModel: IModel; const APath: TString): Boolean; overload; virtual;
     function Delete(const AId: TString): Boolean; virtual;
     function DeleteWithPath(const AId: TString; const APath: TString): Boolean; virtual;
-    function Insert(const AModel: IModel): TString; overload; virtual;
-    function Insert(const AModel: IModel; const APath: TString): TString; overload; virtual;
+    function Insert(const AModel: IModel): TServiceCommandResult; overload; virtual;
+    function Insert(const AModel: IModel; const APath: TString): TServiceCommandResult; overload; virtual;
   end;
 
 implementation
@@ -131,17 +155,25 @@ begin
   Result := DeleteWithPath(AId, FPath);
 end;
 
-function TService.Insert(const AModel: IModel; const APath: TString): TString;
+function TService.Insert(const AModel: IModel; const APath: TString): TServiceCommandResult;
 var
   Response: IResponse;
+  FailReasons: TFailReasonList;
 begin
-  Result := EmptyStr;
+  Result := nil;
   Response := FClient.Post(APath, TXMLHelper.Serialize(AModel, True, FSerializers), nil);
-  if Assigned(Response) and (Response.Status = 201) and (Response.Headers.IndexOfName('Location') > -1) then
-    Result := InterpretLocation(Response.Headers.Values['Location']);
+  if Assigned(Response) then
+  begin
+    FailReasons := TFailReasonHelper.FromResponse(Response);
+    try
+      Result := TServiceCommandResult.Create(Response.Status = 201, FailReasons, InterpretLocation(Response.Headers.Values['Location']));
+    finally
+      FailReasons.Free;
+    end;
+  end;
 end;
 
-function TService.Insert(const AModel: IModel): TString;
+function TService.Insert(const AModel: IModel): TServiceCommandResult;
 begin
   Result := Insert(AModel, FPath);
 end;
@@ -406,6 +438,75 @@ procedure TServiceMarshalling.ConfigureSerializers;
 begin
   SetLength(FSerializers, 0);
   AddModelListSerializer;
+end;
+
+{ TServiceCommandResult }
+
+constructor TServiceCommandResult.Create(ASuccessful: Boolean; const AFailReasons: TFailReasonList; const ALocation: TString);
+begin
+  FSuccessful := ASuccessful;
+  FFailReasons := TFailReasonList.Create;
+  FFailReasons.AddStrings(AFailReasons);
+  FLocation := ALocation;
+end;
+
+destructor TServiceCommandResult.Destroy;
+var
+  Idx: Integer;
+begin
+  FFailReasons.Free;      
+  inherited;
+end;
+
+{ TFailReason }
+
+class function TFailReasonHelper.FromResponse(const AResponse: IResponse): TFailReasonList;
+var
+  Reasons: TFailReasonList;
+begin
+  Result := TFailReasonList.Create;
+  if AResponse.Status = 422 then
+  begin
+    Reasons := TFailReasonHelper.FromXML(AResponse.AsXML);
+    try
+      Result.AddStrings(Reasons);
+    finally
+      Reasons.Free;
+    end;               
+  end;
+end;
+
+class function TFailReasonHelper.FromStringArray(const AArray: TStringArray): TFailReasonList;
+var
+  Idx: Integer;
+begin
+  Result := TFailReasonList.Create;
+  for Idx := Low(AArray) to High(AArray) do
+    Result.Add(AArray[Idx]);
+end;
+
+class function TFailReasonHelper.FromXML(const ADocument: IXMLDocument): TFailReasonList;
+var
+  ReasonsNodes, MessageNodes: TCustomXMLNodeArray;
+  ReasonNode: IXMLNode;
+  ReasonNodeIdx: Integer;
+begin
+  Result := TFailReasonList.Create;
+  ReasonsNodes := TXMLHelper.XPathSelect(ADocument, '//ErrorResponse/reasons/*');
+  MessageNodes := TXMLHelper.XPathSelect(ADocument, '//ErrorResponse/message');
+  if Length(ReasonsNodes) > 0 then
+  begin
+    for ReasonNodeIdx := 0 to Length(ReasonsNodes) - 1 do
+    begin
+      ReasonNode := ReasonsNodes[ReasonNodeIdx];      
+      Result.Add(ReasonNode.Text);
+    end;
+  end
+  else
+  if Length(MessageNodes) > 0 then
+  begin
+    Result.Add(MessageNodes[0].Text);
+  end;
 end;
 
 end.
