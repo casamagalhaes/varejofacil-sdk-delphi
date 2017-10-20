@@ -1,7 +1,5 @@
 unit SDK.Types;
 
-
-
 interface
 
 uses
@@ -9,10 +7,14 @@ uses
 
 const
   CURRENT_TIMEZONE = -(3 * 3600);
+  UTF8_CODEPAGE = 65001;
+  LATIN_CODEPAGE = 28591;
 
 type
 
-  TString = string;
+  TString = type AnsiString(UTF8_CODEPAGE);
+
+  PString = ^TString;
 
   TMethod = (mtGET, mtPOST, mtPUT, mtDELETE);
 

@@ -46,6 +46,8 @@ type
         const XPath: TString): TCustomXMLNodeArray; overload;
       class function CreateDocument(const AXML: TString): IXMLDocument;
   end;
+type
+  TClasse = class(TComponent);
 
 implementation
 
@@ -55,17 +57,21 @@ uses
 const
   DOM_VENDOR = msxmldom.SMSXML;
 
+var
+  A: TClasse;
+
 { TXMLHelper }
 
 class function TXMLHelper.CreateDocument(const AXML: TString): IXMLDocument;
 var
   Document: TXMLDocument;
 begin
-  Document := TXMLDocument.Create(nil);
+  A := TClasse.Create(nil);
+  Document := TXMLDocument.Create(A);
   Document.Options := [doNodeAutoCreate, doNodeAutoIndent, doAttrNull,
                      doAutoPrefix, doNamespaceDecl];
   Document.DOMVendor := GetDOMVendor(DOM_VENDOR);
-  Document.LoadFromXML(AXML);
+  Document.LoadFromXML(AnsiToUtf8(AXML));
   Result := Document;
 end;
 

@@ -126,12 +126,6 @@ begin
     finally
       ListDeserializer.Free;
     end;
-//    ListClassName := TString('T' + Copy(AProperty^.PropType^.Name, 2, Length(AProperty^.PropType^.Name) - 1)) + 'List';
-//    if Assigned(ListClass) then
-//    begin
-//      TXMLHelper.Deserialize(ANode, ListClass, ADeserializers).QueryInterface(AProperty^.PropType^.TypeData^.Guid, ModelInstance);
-//      SetInterfaceProp(AInstance.GetReference, TString(AProperty^.Name), ModelInstance);
-//    end;
   end;
 end;
 
