@@ -12,9 +12,9 @@ type
     constructor Create(const AClient: IClient); reintroduce; overload;
     function Get(const AIdSecao, AId: TString): IGrupo;
     function GetAll(AStart: Integer = 0; ACount: Integer = 0;
-      const ASortParams: TStringArray = []): TGrupoListRec;
+      const ASortParams: TStringArray = nil): TGrupoListRec;
     function Filter(const AQuery: TString; AStart: Integer = 0; ACount: Integer = 0;
-      const ASortParams: TStringArray = []): TGrupoListRec;
+      const ASortParams: TStringArray = nil): TGrupoListRec;
     function Insert(const AIdSecao: TString; const AModel: IModel): TServiceCommandResult;
     function Update(const AIdSecao, AId: TString; const AModel: IModel): TServiceCommandResult;
     function Delete(const AIdSecao, AId: TString): Boolean; reintroduce;

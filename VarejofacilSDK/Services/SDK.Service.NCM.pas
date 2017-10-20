@@ -12,9 +12,9 @@ type
     constructor Create(const AClient: IClient); reintroduce; overload;
     function Get(const AId: TString): INCM;
     function GetAll(AStart: Integer = 0; ACount: Integer = 0;
-      const ASortParams: TStringArray = []): TNCMListRec;
+      const ASortParams: TStringArray = nil): TNCMListRec;
     function Filter(const AQuery: TString; AStart: Integer = 0; ACount: Integer = 0;
-      const ASortParams: TStringArray = []): TNCMListRec;
+      const ASortParams: TStringArray = nil): TNCMListRec;
   end;
 
 implementation

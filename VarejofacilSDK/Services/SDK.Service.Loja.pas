@@ -12,9 +12,9 @@ type
     constructor Create(const AClient: IClient); reintroduce; overload;
     function Get(const AId: TString): ILoja;
     function GetAll(AStart: Integer = 0; ACount: Integer = 0;
-      const ASortParams: TStringArray = []): TLojaListRec;
+      const ASortParams: TStringArray = nil): TLojaListRec;
     function Filter(const AQuery: TString; AStart: Integer = 0; ACount: Integer = 0;
-      const ASortParams: TStringArray = []): TLojaListRec;
+      const ASortParams: TStringArray = nil): TLojaListRec;
   end;
 
 implementation

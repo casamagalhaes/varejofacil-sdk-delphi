@@ -107,7 +107,7 @@ type
     FDeserializers: TPropertyDeserializerArray;
     FSerializers: TPropertySerializerArray;
     function PathWithDependencies(const ADependencies: array of TVarRec): TString;
-    function ToParams(const AQuery: TString; AStart, ACount: Integer; const ASortParams: TStringArray = []): TString;
+    function ToParams(const AQuery: TString; AStart, ACount: Integer; const ASortParams: TStringArray = nil): TString;
     function InterpretLocation(const ALocation: TString): TString; virtual;
   public
     destructor Destroy; override;
@@ -191,7 +191,6 @@ end;
 function TService.ToParams(const AQuery: TString; AStart, ACount: Integer; const ASortParams: TStringArray): TString;
 var
   Params: TStrings;
-  SortParams: PSortParams;
 begin
   Params := TStringList.Create;
   try
@@ -202,15 +201,7 @@ begin
       Params.Values['start'] := IntToStr(AStart);
     if ACount > 0 then
       Params.Values['count'] := IntToStr(Min(ACount, 500));
-    if Assigned(ASortParams) then
-    begin
-      SortParams := TSortParams.From(ASortParams);
-      try
-        Params.Values['sort'] := SortParams^;
-      finally
-        Dispose(SortParams);
-      end
-    end;
+    Params.Values['sort'] := TSortParams.FromArrayToString(ASortParams);
     Result := Copy(Params.Text, 1, Length(Params.Text) - 1);
   finally
     Params.Free;

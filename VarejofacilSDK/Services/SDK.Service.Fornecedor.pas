@@ -12,9 +12,9 @@ type
     constructor Create(const AClient: IClient); reintroduce; overload;
     function Get(const AId: TString): IFornecedor;
     function GetAll(AStart: Integer = 0; ACount: Integer = 0;
-      const ASortParams: TStringArray = []): TFornecedorListRec;
+      const ASortParams: TStringArray = nil): TFornecedorListRec;
     function Filter(const AQuery: TString; AStart: Integer = 0; ACount: Integer = 0;
-      const ASortParams: TStringArray = []): TFornecedorListRec;
+      const ASortParams: TStringArray = nil): TFornecedorListRec;
   end;
 
 implementation

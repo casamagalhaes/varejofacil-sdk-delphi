@@ -83,6 +83,13 @@ begin
 
   Produto.Id := 9999;
 
+  //Buscando gênero
+  Generos := FGeneroService.GetAll(0, 1, ['+id']);
+  Genero := Generos[0];
+  Genero.Descricao := 'ZÉ SERVIÇIN';
+  FGeneroService.Update(IntToStr(Genero.Id), Genero);
+  Produto.GeneroId := Genero.Id;
+
   //Criando seção
   FSecaoService.Delete('999');
   Secao := TSecao.Create;
@@ -90,13 +97,6 @@ begin
   Secao.Descricao := 'SECAO TESTE';
   FSecaoService.Insert(Secao);
   Produto.SecaoId := Secao.Id;
-
-  //Buscando gênero
-  Generos := FGeneroService.GetAll(0, 1, ['+id']);
-  Genero := Generos[0];
-  Genero.Descricao := 'ZÉ SERVIÇIN';
-  FGeneroService.Update(IntToStr(Genero.Id), Genero);
-  Produto.GeneroId := Genero.Id;
 
   //Buscando NCM
   NCMs := FNCMService.GetAll(0, 1);

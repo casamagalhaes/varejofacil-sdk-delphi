@@ -12,9 +12,9 @@ type
     constructor Create(const AClient: IClient); reintroduce; overload;
     function Get(const AId: TString): ISecao;
     function GetAll(AStart: Integer = 0; ACount: Integer = 0;
-      const ASortParams: TStringArray = []): TSecaoListRec;
+      const ASortParams: TStringArray = nil): TSecaoListRec;
     function Filter(const AQuery: TString; AStart: Integer = 0; ACount: Integer = 0;
-      const ASortParams: TStringArray = []): TSecaoListRec;
+      const ASortParams: TStringArray = nil): TSecaoListRec;
   end;
 
 implementation

@@ -16,7 +16,10 @@ type
     Next: PSortParams;
     function FormattedText: TString;
     class function From(const AParams: array of TString): PSortParams; static;
+    class function FromArrayToString(const AParams: TStringArray): TString; static;
     class operator Implicit(const ASortParams: TSortParams): TString; static;
+    class operator Implicit(const ASortParams: TSortParams): TStringArray; static;
+    class operator Implicit(const AArray: TStringArray): TSortParams; static;
   end;
 
 implementation
@@ -71,6 +74,42 @@ begin
     end;
   end;
   Result := Head;
+end;
+
+class function TSortParams.FromArrayToString(const AParams: TStringArray): TString;
+var
+  SortParams: PSortParams;
+begin
+  Result := EmptyStr;
+  if Assigned(AParams) then
+  begin
+    SortParams := TSortParams.From(AParams);
+    try
+      Result := SortParams^;
+    finally
+      Dispose(SortParams);
+    end;
+  end;
+end;
+
+class operator TSortParams.Implicit(const ASortParams: TSortParams): TStringArray;
+var
+  Current: PSortParams;
+begin
+  SetLength(Result, Length(Result) + 1);
+  Result[Length(Result) - 1] := ASortParams.FormattedText;
+  Current := ASortParams.Next;
+  while Assigned(Current) do
+  begin
+    SetLength(Result, Length(Result) + 1);
+    Result[Length(Result) - 1] := Current^.FormattedText;
+    Current := Current^.Next;
+  end;
+end;
+
+class operator TSortParams.Implicit(const AArray: TStringArray): TSortParams;
+begin
+  Result := From(AArray)^;
 end;
 
 class operator TSortParams.Implicit(const ASortParams: TSortParams): TString;

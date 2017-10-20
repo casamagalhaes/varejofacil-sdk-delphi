@@ -12,9 +12,9 @@ type
     constructor Create(const AClient: IClient); reintroduce; overload;
     function Get(const AId: TString): IImpostoFederal;
     function GetAll(AStart: Integer = 0; ACount: Integer = 0;
-      const ASortParams: TStringArray = []): TImpostoFederalListRec;
+      const ASortParams: TStringArray = nil): TImpostoFederalListRec;
     function Filter(const AQuery: TString; AStart: Integer = 0; ACount: Integer = 0;
-      const ASortParams: TStringArray = []): TImpostoFederalListRec;
+      const ASortParams: TStringArray = nil): TImpostoFederalListRec;
   end;
 
 implementation
