@@ -118,11 +118,11 @@ type
     function Clone: TTokenStorage;
   end;
 
-  TAuthenticatedRequest = reference to function(Tokens: TTokenStorage): IResponse;
+  TAuthenticatedRequest = function(const AURL: TString; AParams, AHeaders: TStrings; AContent: TString; ATokens: TTokenStorage): IResponse of object;
 
   IClient = interface
     ['{D9CBE96B-2ACC-4C93-B6C7-CEAC97A24471}']
-    function Authenticate(ARequestFunction: TAuthenticatedRequest): IResponse;
+    function Authenticate(const AURL: TString; AParams, AHeaders: TStrings; AContent: TString; ARequestFunction: TAuthenticatedRequest): IResponse;
     function MakeRequest(const ARequest: IRequest): IResponse;
     function Get(const AURL: TString; AParams, AHeaders: TStrings): IResponse;
     function Put(const AURL, AContent: TString; AHeaders: TStrings): IResponse;

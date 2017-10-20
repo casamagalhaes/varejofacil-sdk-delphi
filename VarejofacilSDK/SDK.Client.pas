@@ -13,7 +13,11 @@ type
     FTokens: TTokenStorage;
     FUsername: string;
     FPassword: string;
-    function Authenticate(ARequestFunction: TAuthenticatedRequest): IResponse;
+    function Authenticate(const AURL: TString; AParams, AHeaders: TStrings; AContent: TString; ARequestFunction: TAuthenticatedRequest): IResponse;
+    function AuthenticatedGet(const AURL: TString; AParams, AHeaders: TStrings; AContent: TString; ATokens: TTokenStorage): IResponse;
+    function AuthenticatedPut(const AURL: TString; AParams, AHeaders: TStrings; AContent: TString; ATokens: TTokenStorage): IResponse;
+    function AuthenticatedPost(const AURL: TString; AParams, AHeaders: TStrings; AContent: TString; ATokens: TTokenStorage): IResponse;
+    function AuthenticatedDelete(const AURL: TString; AParams, AHeaders: TStrings; AContent: TString; ATokens: TTokenStorage): IResponse;
     function MakeRequest(const ARequest: IRequest): IResponse;
   public
     function Get(const AURL: TString; AParams, AHeaders: TStrings): IResponse;
@@ -28,7 +32,7 @@ implementation
 
 { TClient }
 
-function TClient.Authenticate(ARequestFunction: TAuthenticatedRequest): IResponse;
+function TClient.Authenticate(const AURL: TString; AParams, AHeaders: TStrings; AContent: TString; ARequestFunction: TAuthenticatedRequest): IResponse;
 var
   AuthRequest: IRequest;
   AuthResponse: IResponse;
@@ -39,7 +43,7 @@ var
 begin
   if Assigned(FTokens) then
   begin
-    Result := ARequestFunction(FTokens);
+    Result := ARequestFunction(AURL, AParams, AHeaders, AContent, FTokens);
     if Result.Status = 401 then
     begin
       RefreshHeaders := TStringList.Create;
@@ -51,7 +55,7 @@ begin
         if RefreshResponse.Status = 200 then
         begin
           FTokens := TTokenStorage.From(RefreshResponse);
-          Result := ARequestFunction(FTokens);
+          Result := ARequestFunction(AURL, AParams, AHeaders, AContent, FTokens);
         end
         else
           raise Exception.CreateFmt('Refresh falhou com código %d', [AuthResponse.Status]);
@@ -71,7 +75,7 @@ begin
       if AuthResponse.Status = 200 then
       begin
         FTokens := TTokenStorage.From(AuthResponse);
-        Result := ARequestFunction(FTokens);
+        Result := ARequestFunction(AURL, AParams, AHeaders, AContent, FTokens);
       end
       else
         raise Exception.CreateFmt('Autenticação falhou com código %d', [AuthResponse.Status]);
@@ -91,15 +95,7 @@ end;
 
 function TClient.Delete(const AURL: TString; AParams, AHeaders: TStrings): IResponse;
 begin
-  Result := Authenticate(
-    function(ATokens: TTokenStorage): IResponse
-    var
-      Request: IRequest;
-    begin
-      Request := TRequest.Create(Concat(FBaseURL, AURL), mtDELETE, AParams, AHeaders, EmptyStr, ATokens);
-      Result := MakeRequest(Request);
-    end
-  );
+  Result := Authenticate(AURL, AParams, AHeaders, EmptyStr, AuthenticatedDelete);
 end;
 
 destructor TClient.Destroy;
@@ -109,43 +105,51 @@ begin
   inherited;
 end;
 
+function TClient.AuthenticatedDelete(const AURL: TString; AParams, AHeaders: TStrings; AContent: TString; ATokens: TTokenStorage): IResponse;
+var
+  Request: IRequest;
+begin
+  Request := TRequest.Create(Concat(FBaseURL, AURL), mtDELETE, AParams, AHeaders, EmptyStr, ATokens);
+  Result := MakeRequest(Request);
+end;
+
+function TClient.AuthenticatedGet(const AURL: TString; AParams, AHeaders: TStrings; AContent: TString; ATokens: TTokenStorage): IResponse;
+var
+  Request: IRequest;
+begin
+  Request := TRequest.Create(Concat(FBaseURL, AURL), mtGET, AParams, AHeaders, EmptyStr, ATokens);
+  Result := MakeRequest(Request);
+end;
+
+function TClient.AuthenticatedPost(const AURL: TString; AParams, AHeaders: TStrings; AContent: TString; ATokens: TTokenStorage): IResponse;
+var
+  Request: IRequest;
+begin
+  Request := TRequest.Create(Concat(FBaseURL, AURL), mtPOST, nil, nil, AContent, ATokens);
+  Result := MakeRequest(Request);
+end;
+
+function TClient.AuthenticatedPut(const AURL: TString; AParams, AHeaders: TStrings; AContent: TString; ATokens: TTokenStorage): IResponse;
+var
+  Request: IRequest;
+begin
+  Request := TRequest.Create(Concat(FBaseURL, AURL), mtPUT, nil, nil, AContent, ATokens);
+  Result := MakeRequest(Request);
+end;
+
 function TClient.Get(const AURL: TString; AParams, AHeaders: TStrings): IResponse;
 begin
-  Result := Authenticate(
-    function(ATokens: TTokenStorage): IResponse
-    var
-      Request: IRequest;
-    begin
-      Request := TRequest.Create(Concat(FBaseURL, AURL), mtGET, AParams, AHeaders, EmptyStr, ATokens);
-      Result := MakeRequest(Request);
-    end
-  );
+  Result := Authenticate(AURL, AParams, AHeaders, EmptyStr, AuthenticatedGet);
 end;
 
 function TClient.Post(const AURL, AContent: TString; AHeaders: TStrings): IResponse;
 begin
-  Result := Authenticate(
-    function(ATokens: TTokenStorage): IResponse
-    var
-      Request: IRequest;
-    begin
-      Request := TRequest.Create(Concat(FBaseURL, AURL), mtPOST, nil, nil, AContent, ATokens);
-      Result := MakeRequest(Request);
-    end
-  );
+  Result := Authenticate(AURL, nil, nil, AContent, AuthenticatedPost);
 end;
 
 function TClient.Put(const AURL, AContent: TString; AHeaders: TStrings): IResponse;
 begin
-  Result := Authenticate(
-    function(ATokens: TTokenStorage): IResponse
-    var
-      Request: IRequest;
-    begin
-      Request := TRequest.Create(Concat(FBaseURL, AURL), mtPUT, nil, nil, AContent, ATokens);
-      Result := MakeRequest(Request);
-    end
-  );
+  Result := Authenticate(AURL, nil, nil, AContent, AuthenticatedPut);
 end;
 
 function TClient.MakeRequest(const ARequest: IRequest): IResponse;
