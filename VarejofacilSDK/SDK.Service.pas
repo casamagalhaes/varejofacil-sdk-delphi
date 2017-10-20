@@ -272,11 +272,15 @@ end;
 constructor TBatchRequest.Create;
 begin
   inherited;
-  FItems := TStringList.Create(True);
+  FItems := TStringList.Create;
 end;
 
 destructor TBatchRequest.Destroy;
+var
+  I: Integer;
 begin
+  for I := 0 to FItems.Count - 1 do
+    FItems.Objects[I].Free;
   FreeAndNil(FItems);
   inherited;
 end;

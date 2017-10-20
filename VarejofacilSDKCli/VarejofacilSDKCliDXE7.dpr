@@ -1,4 +1,4 @@
-program VarejofacilSDKCli;
+program VarejofacilSDKCliDXE7;
 
 {$APPTYPE CONSOLE}
 

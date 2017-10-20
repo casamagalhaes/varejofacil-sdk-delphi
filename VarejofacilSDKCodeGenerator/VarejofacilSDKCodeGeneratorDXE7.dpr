@@ -1,4 +1,4 @@
-﻿program VarejofacilSDKCodeGenerator;
+﻿program VarejofacilSDKCodeGeneratorDXE7;
 
 {$APPTYPE CONSOLE}
 

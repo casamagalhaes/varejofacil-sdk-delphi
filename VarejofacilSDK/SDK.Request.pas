@@ -47,7 +47,7 @@ implementation
 
 constructor TRequest.Create(AURL: TString; AMethod: TMethod; AParams, AHeaders: TStrings; AContent: TString; const ATokens: TTokenStorage);
 begin
-  FOwnedObjects := TStringList.Create(True);
+  FOwnedObjects := TStringList.Create;
   SetTokens(ATokens);
   SetURL(AURL);
   SetMethod(AMethod);
@@ -57,7 +57,11 @@ begin
 end;
 
 destructor TRequest.Destroy;
+var
+  I: Integer;
 begin
+  for I := 0 to FOwnedObjects.Count - 1 do
+    FOwnedObjects.Objects[I].Free;
   FOwnedObjects.Free;
   inherited;
 end;

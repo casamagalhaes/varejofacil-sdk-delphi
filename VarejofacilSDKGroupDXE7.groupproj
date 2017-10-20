@@ -1,0 +1,72 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{68D45BAB-25F3-46EB-985C-03BEB60B968C}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="VarejofacilSDK\VarejofacilSDKDXE7.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="VarejofacilSDKCLI\VarejofacilSDKCliDXE7.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="VarejofacilSDKCodeGenerator\VarejofacilSDKCodeGeneratorDXE7.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="VarejofacilSDKTests\VarejofacilSDKTestsDXE7.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="VarejofacilSDKDXE7">
+        <MSBuild Projects="VarejofacilSDK\VarejofacilSDKDXE7.dproj"/>
+    </Target>
+    <Target Name="VarejofacilSDKDXE7:Clean">
+        <MSBuild Projects="VarejofacilSDK\VarejofacilSDKDXE7.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="VarejofacilSDKDXE7:Make">
+        <MSBuild Projects="VarejofacilSDK\VarejofacilSDKDXE7.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="VarejofacilSDKCliDXE7">
+        <MSBuild Projects="VarejofacilSDKCLI\VarejofacilSDKCliDXE7.dproj"/>
+    </Target>
+    <Target Name="VarejofacilSDKCliDXE7:Clean">
+        <MSBuild Projects="VarejofacilSDKCLI\VarejofacilSDKCliDXE7.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="VarejofacilSDKCliDXE7:Make">
+        <MSBuild Projects="VarejofacilSDKCLI\VarejofacilSDKCliDXE7.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="VarejofacilSDKCodeGeneratorDXE7">
+        <MSBuild Projects="VarejofacilSDKCodeGenerator\VarejofacilSDKCodeGeneratorDXE7.dproj"/>
+    </Target>
+    <Target Name="VarejofacilSDKCodeGeneratorDXE7:Clean">
+        <MSBuild Projects="VarejofacilSDKCodeGenerator\VarejofacilSDKCodeGeneratorDXE7.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="VarejofacilSDKCodeGeneratorDXE7:Make">
+        <MSBuild Projects="VarejofacilSDKCodeGenerator\VarejofacilSDKCodeGeneratorDXE7.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="VarejofacilSDKTestsDXE7">
+        <MSBuild Projects="VarejofacilSDKTests\VarejofacilSDKTestsDXE7.dproj"/>
+    </Target>
+    <Target Name="VarejofacilSDKTestsDXE7:Clean">
+        <MSBuild Projects="VarejofacilSDKTests\VarejofacilSDKTestsDXE7.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="VarejofacilSDKTestsDXE7:Make">
+        <MSBuild Projects="VarejofacilSDKTests\VarejofacilSDKTestsDXE7.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="VarejofacilSDKDXE7;VarejofacilSDKCliDXE7;VarejofacilSDKCodeGeneratorDXE7;VarejofacilSDKTestsDXE7"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="VarejofacilSDKDXE7:Clean;VarejofacilSDKCliDXE7:Clean;VarejofacilSDKCodeGeneratorDXE7:Clean;VarejofacilSDKTestsDXE7:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="VarejofacilSDKDXE7:Make;VarejofacilSDKCliDXE7:Make;VarejofacilSDKCodeGeneratorDXE7:Make;VarejofacilSDKTestsDXE7:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

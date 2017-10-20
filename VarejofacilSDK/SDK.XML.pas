@@ -59,15 +59,14 @@ const
 
 class function TXMLHelper.CreateDocument(const AXML: TString): IXMLDocument;
 var
-  Doc: TXMLDocument;
+  Document: TXMLDocument;
 begin
-  Doc := TXMLDocument.Create(nil);
-  Doc.Options := [doNodeAutoCreate, doNodeAutoIndent, doAttrNull,
+  Document := TXMLDocument.Create(nil);
+  Document.Options := [doNodeAutoCreate, doNodeAutoIndent, doAttrNull,
                      doAutoPrefix, doNamespaceDecl];
-  (Doc as TXMLDocument).DOMVendor := GetDOMVendor(DOM_VENDOR);
-  Doc.LoadFromXML(AXML);
-  Doc.Encoding := 'UTF8';
-  Result := Doc;
+  Document.DOMVendor := GetDOMVendor(DOM_VENDOR);
+  Document.LoadFromXML(AXML);
+  Result := Document;
 end;
 
 class function TXMLHelper.XPathSelect(const ANode: IXMLNode;

@@ -1,4 +1,4 @@
-program VarejofacilSDKTests;
+program VarejofacilSDKTestsDXE7;
 {
 
   Delphi DUnit Test Project
