@@ -153,20 +153,6 @@ begin
 end;
 
 function TClient.MakeRequest(const ARequest: IRequest): IResponse;
-
-  function ReadResponse(const AInput: TStream): TString;
-  var
-    Stream: TMemoryStream;
-  begin
-    Stream := TMemoryStream.Create;
-    try
-      Stream.Position := 0;
-      Result := ReadStringAsCharset(Stream, 'utf8');
-    finally
-      FreeAndNil(Stream);
-    end;
-  end;
-
 var
   ResponseContent: TString;
   HTTP: TIdHTTP;
