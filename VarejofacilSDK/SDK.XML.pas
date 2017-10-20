@@ -3,8 +3,11 @@ unit SDK.XML;
 interface
 
 uses
-  SysUtils, Variants, TypInfo, SDK.Types, Classes, adomxmldom, XMLDoc,
-  XMLIntf, xmldom;
+  SysUtils, Variants, TypInfo, SDK.Types, Classes,
+  msxmldom,
+  XMLDoc,
+  XMLIntf,
+  xmldom;
 
 type
 
@@ -50,7 +53,7 @@ uses
   XSBuiltIns, SDK.Enums;
 
 const
-  DOM_VENDOR = adomxmldom.sAdom4XmlVendor;
+  DOM_VENDOR = msxmldom.SMSXML;
 
 { TXMLHelper }
 

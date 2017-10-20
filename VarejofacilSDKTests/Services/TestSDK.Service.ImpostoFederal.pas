@@ -65,7 +65,7 @@ begin
   ImpostoFederalInserted.Id := Id;
 
   //Update
-  Assert(FImpostoFederalService.Update(Id, ImpostoFederalInserted), 'Erro no update do ImpostoFederal.');
+  Assert(FImpostoFederalService.Update(Id, ImpostoFederalInserted).Successful, 'Erro no update do ImpostoFederal.');
   ImpostoFederalUpdated := FImpostoFederalService.Get(Id);
   AssertAllPropertiesAreEqual(ImpostoFederalInserted, ImpostoFederalUpdated, 'ImpostoFederal não alterado corretamente.');
 

@@ -50,7 +50,7 @@ begin
   SecaoInserted.Id := Id;
 
   //Update
-  Assert(FSecaoService.Update(Id, SecaoInserted), 'Erro no update do Secao.');
+  Assert(FSecaoService.Update(Id, SecaoInserted).Successful, 'Erro no update do Secao.');
   SecaoUpdated := FSecaoService.Get(Id);
   AssertAllPropertiesAreEqual(SecaoInserted, SecaoUpdated, 'Secao não alterado corretamente.');
 

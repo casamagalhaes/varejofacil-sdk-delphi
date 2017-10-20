@@ -195,7 +195,7 @@ begin
   ProdutoInserted.Descricao := 'ALTEREI O PRODUTO';
 
   //Update
-  Assert(FProdutoService.Update(ProdutoInserted.Id, ProdutoInserted), 'Erro no update do Produto.');
+  Assert(FProdutoService.Update(ProdutoInserted.Id, ProdutoInserted).Successful, 'Erro no update do Produto.');
   ProdutoUpdated := FProdutoService.Get(Id);
   AssertAllPropertiesAreEqual(ProdutoInserted, ProdutoUpdated, 'Produto não alterado corretamente.');
 end;

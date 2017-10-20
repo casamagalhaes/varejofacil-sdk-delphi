@@ -61,7 +61,7 @@ begin
     GrupoInserted.Id := Id;
 
     //Update
-    Assert(FGrupoService.Update(IdSecao, Id, GrupoInserted), 'Erro no update do Grupo.');
+    Assert(FGrupoService.Update(IdSecao, Id, GrupoInserted).Successful, 'Erro no update do Grupo.');
     GrupoUpdated := FGrupoService.Get(IdSecao, Id);
     AssertAllPropertiesAreEqual(GrupoInserted, GrupoUpdated, 'Grupo não alterado corretamente.');
 

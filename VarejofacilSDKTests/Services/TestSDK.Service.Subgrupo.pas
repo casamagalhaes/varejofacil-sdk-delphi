@@ -72,7 +72,7 @@ begin
     SubgrupoInserted.Id := Id;
 
     //Update
-    Assert(FSubgrupoService.Update(IdSecao, IdGrupo, Id, SubgrupoInserted), 'Erro no update do Subgrupo.');
+    Assert(FSubgrupoService.Update(IdSecao, IdGrupo, Id, SubgrupoInserted).Successful, 'Erro no update do Subgrupo.');
     SubgrupoUpdated := FSubgrupoService.Get(IdSecao, IdGrupo, Id);
     AssertAllPropertiesAreEqual(SubgrupoInserted, SubgrupoUpdated, 'Subgrupo não alterado corretamente.');
 
