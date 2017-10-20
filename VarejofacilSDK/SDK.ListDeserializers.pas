@@ -16,7 +16,7 @@ type
     FDeserializers: TPropertyDeserializerArray;
   public
     constructor Create(const AType: TString = '');
-    destructor Destroy;
+    destructor Destroy; override;
     property Deserializers: TPropertyDeserializerArray read FDeserializers;
     procedure Execute(const AType: TString; ANode: IXMLNode; AModel: TInterfacedModel; APropName: TString); overload;
     procedure Execute(ANode: IXMLNode; AModel: TInterfacedModel; APropName: TString); overload;

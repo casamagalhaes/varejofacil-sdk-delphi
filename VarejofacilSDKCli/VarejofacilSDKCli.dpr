@@ -11,7 +11,41 @@ uses
   SDK.Client,
   SDK.SortParams,
   SDK.XML,
+  SDK.Model.NCM,
+  SDK.Service.NCM,
+  SDK.Model.Secao,
+  SDK.Service.Secao,
   Variants;
+
+type
+
+  TMockClass = class
+  var
+    FClient: IClient;
+    FServiceA: TNCMService;
+    FServiceB: TSecaoService;
+  public
+    constructor Create;
+    destructor Destroy;
+    procedure DoStuff;
+  end;
+
+{ TMockClass }
+
+constructor TMockClass.Create;
+begin
+  //
+end;
+
+destructor TMockClass.Destroy;
+begin
+  //
+end;
+
+procedure TMockClass.DoStuff;
+begin
+  //
+end;
 
 begin
   ReportMemoryLeaksOnShutdown := True;

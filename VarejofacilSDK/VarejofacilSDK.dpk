@@ -180,7 +180,11 @@ contains
   SDK.Service.NCM in 'Services\SDK.Service.NCM.pas',
   SDK.PropertySerializers in 'SDK.PropertySerializers.pas',
   SDK.ListSerializers in 'SDK.ListSerializers.pas',
-  SDK.ListDeserializers in 'SDK.ListDeserializers.pas';
+  SDK.ListDeserializers in 'SDK.ListDeserializers.pas',
+  SDK.Service.UnidadeProduto in 'Services\SDK.Service.UnidadeProduto.pas',
+  SDK.Service.MarcaProduto in 'Services\SDK.Service.MarcaProduto.pas',
+  SDK.Service.Loja in 'Services\SDK.Service.Loja.pas',
+  SDK.Service.Fornecedor in 'Services\SDK.Service.Fornecedor.pas';
 
 end.
 

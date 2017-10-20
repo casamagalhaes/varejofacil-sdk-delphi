@@ -31,11 +31,11 @@ begin
   case AProperty^.PropType^.Kind of
     tkClass:
     begin
-      ListAddr := GetOrdProp(AInstance.GetReference, AProperty^.Name);
+      ListAddr := GetOrdProp(AInstance.GetReference, TString(AProperty^.Name));
       if ListAddr > 0 then
       begin
         List := TObject(ListAddr);
-        ListSerializer := TListSerializer.Create(AProperty^.PropType^.Name);
+        ListSerializer := TListSerializer.Create(TString(AProperty^.PropType^.Name));
         try
           Result := ListSerializer.Execute(List);
         finally
@@ -52,7 +52,7 @@ end;
 
 function TModelListPropertySerializer.IsCompatible(const AProperty: PPropInfo): Boolean;
 begin
-  Result := (AProperty^.PropType^.Name[1] = 'T') and EndsStr('List', AProperty^.PropType^.Name);
+  Result := (AProperty^.PropType^.Name[1] = 'T') and EndsStr('List', TString(AProperty^.PropType^.Name));
 end;
 
 end.

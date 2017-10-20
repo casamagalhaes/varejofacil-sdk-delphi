@@ -81,8 +81,8 @@
         <DCC_RemoteDebug>true</DCC_RemoteDebug>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
-        <DCC_ExeOutput>.\$(Platform)\$(Config)\_bin</DCC_ExeOutput>
-        <Debugger_RunParams>/varejofacil:http://172.16.13.82:8080 /username:administrador /password:cmmaster</Debugger_RunParams>
+        <DCC_ExeOutput>.\$(Platform)\$(Config)\</DCC_ExeOutput>
+        <Debugger_RunParams>/varejofacil:http://vfcli.varejofacil.com /username:administrador /password:cmmaster</Debugger_RunParams>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <DCC_RemoteDebug>false</DCC_RemoteDebug>
     </PropertyGroup>

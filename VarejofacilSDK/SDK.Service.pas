@@ -93,7 +93,7 @@ type
     FFailReasons: TFailReasonList;
   public
     constructor Create(ASuccessful: Boolean; const AFailReasons: TFailReasonList; const ALocation: TString = '');
-    destructor Destroy;
+    destructor Destroy; override;
     property Location: TString read FLocation;
     property Successful: Boolean read FSuccessful;
     property FailReasons: TFailReasonList read FFailReasons;
@@ -110,10 +110,10 @@ type
     function ToParams(const AQuery: TString; AStart, ACount: Integer; const ASortParams: TStringArray = []): TString;
     function InterpretLocation(const ALocation: TString): TString; virtual;
   public
-    destructor Destroy;
+    destructor Destroy; override;
     constructor Create(const APath: TString; const AClient: IClient); virtual;
-    function Update(const AId: TString; const AModel: IModel): Boolean; overload; virtual;
-    function Update(const AId: TString; const AModel: IModel; const APath: TString): Boolean; overload; virtual;
+    function Update(const AId: TString; const AModel: IModel): TServiceCommandResult; overload; virtual;
+    function Update(const AId: TString; const AModel: IModel; const APath: TString): TServiceCommandResult; overload; virtual;
     function Delete(const AId: TString): Boolean; virtual;
     function DeleteWithPath(const AId: TString; const APath: TString): Boolean; virtual;
     function Insert(const AModel: IModel): TServiceCommandResult; overload; virtual;
@@ -121,9 +121,6 @@ type
   end;
 
 implementation
-
-uses
-  JvPropertyStore;
 
 { TService }
 
@@ -220,15 +217,21 @@ begin
   end;
 end;
 
-function TService.Update(const AId: TString; const AModel: IModel; const APath: TString): Boolean;
+function TService.Update(const AId: TString; const AModel: IModel; const APath: TString): TServiceCommandResult;
 var
   Response: IResponse;
+  FailReasons: TFailReasonList;
 begin
   Response := FClient.Put(Concat(APath, '/', AId), TXMLHelper.Serialize(AModel, True, FSerializers), nil);
-  Result := Response.Status = 200;
+  FailReasons := TFailReasonHelper.FromResponse(Response);
+  try
+    Result := TServiceCommandResult.Create(Response.Status = 200, FailReasons);
+  finally
+    FailReasons.Free;
+  end;
 end;
 
-function TService.Update(const AId: TString; const AModel: IModel): Boolean;
+function TService.Update(const AId: TString; const AModel: IModel): TServiceCommandResult;
 begin
   Result := Update(AId, AModel, FPath);
 end;
@@ -451,8 +454,6 @@ begin
 end;
 
 destructor TServiceCommandResult.Destroy;
-var
-  Idx: Integer;
 begin
   FFailReasons.Free;      
   inherited;

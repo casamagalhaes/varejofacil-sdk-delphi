@@ -16,7 +16,7 @@ type
     function Filter(const AQuery: TString; AStart: Integer = 0; ACount: Integer = 0;
       const ASortParams: TStringArray = []): TSubgrupoListRec;
     function Insert(const AIdSecao, AIdGrupo: TString; const AModel: IModel): TServiceCommandResult;
-    function Update(const AIdSecao, AIdGrupo, AId: TString; const AModel: IModel): Boolean;
+    function Update(const AIdSecao, AIdGrupo, AId: TString; const AModel: IModel): TServiceCommandResult;
     function Delete(const AIdSecao, AIdGrupo, AId: TString): Boolean; reintroduce;
   end;
 
@@ -53,7 +53,7 @@ begin
   Result := inherited Insert(AModel, PathWithDependencies([AIdSecao, AIdGrupo]));
 end;
 
-function TSubgrupoService.Update(const AIdSecao, AIdGrupo, AId: TString; const AModel: IModel): Boolean;
+function TSubgrupoService.Update(const AIdSecao, AIdGrupo, AId: TString; const AModel: IModel): TServiceCommandResult;
 begin
   Result := inherited Update(AId, AModel, PathWithDependencies([AIdSecao, AIdGrupo]));
 end;

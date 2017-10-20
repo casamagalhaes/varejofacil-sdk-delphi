@@ -120,7 +120,7 @@ var
 begin
   if ANode.HasChildNodes then
   begin
-    ListDeserializer := TListDeserializer.Create(AProperty^.PropType^.Name);
+    ListDeserializer := TListDeserializer.Create(TString(AProperty^.PropType^.Name));
     try
       ListDeserializer.Execute(ANode, AInstance.GetReference, TString(AProperty^.Name));
     finally
@@ -137,7 +137,7 @@ end;
 
 function TModelListPropertyDeserializer.IsCompatible(const AProperty: PPropInfo): Boolean;
 begin
-  Result := (AProperty^.PropType^.Name[1] = 'T') and EndsStr('List', AProperty^.PropType^.Name);
+  Result := (AProperty^.PropType^.Name[1] = 'T') and EndsStr('List', TString(AProperty^.PropType^.Name));
 end;
 
 end.

@@ -16,7 +16,7 @@ type
     FSerializers: TPropertySerializerArray;
   public
     constructor Create(const AType: TString = '');
-    destructor Destroy;
+    destructor Destroy; override;
     property Serializers: TPropertySerializerArray read FSerializers;
     function Execute(const AType: TString; AList: TObject): TString; overload;
     function Execute(AList: TObject): TString; overload;
