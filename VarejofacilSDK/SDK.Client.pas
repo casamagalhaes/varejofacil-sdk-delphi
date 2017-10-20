@@ -3,7 +3,7 @@ unit SDK.Client;
 interface
 
 uses
-  SysUtils, Classes, IdHTTP, IdSSLOpenSSL, IdGlobalProtocols, IdStack, SDK.Types, SDK.Request, SDK.Response, SDK.Exceptions;
+  SysUtils, StrUtils, Classes, IdHTTP, IdSSLOpenSSL, IdGlobalProtocols, IdStack, SDK.Types, SDK.Request, SDK.Response, SDK.Exceptions;
 
 type
 
@@ -39,9 +39,6 @@ type
   end;
 
 implementation
-
-uses
-  StrUtils;
 
 { TClient }
 
@@ -179,7 +176,8 @@ begin
     try
       HTTPRequest := TIdHTTPRequest.Create(nil);
       try
-        HTTP.IOHandler := HTTPIOHandler;
+        if StartsText(HTTPS_PROTOCOL, ARequest.URL) then
+          HTTP.IOHandler := HTTPIOHandler;
         HTTP.Request := HTTPRequest;
         if Assigned(ARequest.Headers) then
         begin
@@ -208,7 +206,11 @@ begin
             begin
               RequestContent := TStringStream.Create(ARequest.Content);
               try
+                {$IFDEF UNICODE}
                 ResponseContent := HTTP.Post(ARequest.URL, RequestContent);
+                {$ELSE}
+                ResponseContent := Utf8ToAnsi(HTTP.Post(ARequest.URL, RequestContent));
+                {$ENDIF}
               finally
                 FreeAndNil(RequestContent);
               end;
@@ -217,14 +219,22 @@ begin
             begin
               RequestContent := TStringStream.Create(ARequest.Content);
               try
+                {$IFDEF UNICODE}
                 ResponseContent := HTTP.Put(ARequest.URL, RequestContent);
+                {$ELSE}
+                ResponseContent := Utf8ToAnsi(HTTP.Put(ARequest.URL, RequestContent));
+                {$ENDIF}
               finally
                 FreeAndNil(RequestContent);
               end;
             end;
             mtDELETE:
             begin
+              {$IFDEF UNICODE}
               ResponseContent := HTTP.Delete(ARequest.URL);
+              {$ELSE}
+              ResponseContent := Utf8ToAnsi(HTTP.Delete(ARequest.URL));
+              {$ENDIF}
             end;
           end;
         except

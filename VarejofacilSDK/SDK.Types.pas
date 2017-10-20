@@ -9,6 +9,7 @@ const
   CURRENT_TIMEZONE = -(3 * 3600);
   UTF8_CODEPAGE = 65001;
   LATIN_CODEPAGE = 28591;
+  HTTPS_PROTOCOL = 'https';
 
 type
 
