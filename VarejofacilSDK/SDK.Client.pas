@@ -164,7 +164,7 @@ end;
 function TClient.MakeRequest(const ARequest: IRequest): IResponse;
 var
   ResponseContent: TString;
-  HTTP: TIdCustomHTTP;
+  HTTP: TSDKIdHTTP;
   HTTPRequest: TIdHTTPRequest;
   HTTPIOHandler: TIdSSLIOHandlerSocketOpenSSL;
   RequestContent: TStream;
