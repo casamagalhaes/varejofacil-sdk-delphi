@@ -1,0 +1,64 @@
+package VarejofacilSDKD2007;
+
+{$R *.res}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  xmlrtl,
+  soaprtl,
+  inet,
+  dbrtl,
+  dsnap,
+  vcldb,
+  vcl;
+
+contains
+  SDK.Client in 'SDK.Client.pas',
+  SDK.ConfigProvider in 'SDK.ConfigProvider.pas',
+  SDK.Enums in 'SDK.Enums.pas',
+  SDK.Exceptions in 'SDK.Exceptions.pas',
+  SDK.ListDeserializers in 'SDK.ListDeserializers.pas',
+  SDK.ListSerializers in 'SDK.ListSerializers.pas',
+  SDK.PropertyDeserializers in 'SDK.PropertyDeserializers.pas',
+  SDK.PropertySerializers in 'SDK.PropertySerializers.pas',
+  SDK.Request in 'SDK.Request.pas',
+  SDK.Response in 'SDK.Response.pas',
+  SDK.Service in 'SDK.Service.pas',
+  SDK.SortParams in 'SDK.SortParams.pas',
+  SDK.Types.Models in 'SDK.Types.Models.pas',
+  SDK.Types in 'SDK.Types.pas',
+  SDK.XML in 'SDK.XML.pas',
+  SDK.Service.Genero in 'Services\SDK.Service.Genero.pas',
+  SDK.Service.Grupo in 'Services\SDK.Service.Grupo.pas',
+  SDK.Service.ImpostoFederal in 'Services\SDK.Service.ImpostoFederal.pas',
+  SDK.Service.Loja in 'Services\SDK.Service.Loja.pas',
+  SDK.Service.MarcaProduto in 'Services\SDK.Service.MarcaProduto.pas',
+  SDK.Service.NCM in 'Services\SDK.Service.NCM.pas',
+  SDK.Service.Produto in 'Services\SDK.Service.Produto.pas',
+  SDK.Service.Secao in 'Services\SDK.Service.Secao.pas',
+  SDK.Service.Subgrupo in 'Services\SDK.Service.Subgrupo.pas',
+  SDK.Service.UnidadeProduto in 'Services\SDK.Service.UnidadeProduto.pas';
+
+end.

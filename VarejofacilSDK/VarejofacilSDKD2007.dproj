@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{c40fbbac-5568-4b3b-9934-2dc90132c371}</ProjectGuid>
+    <MainSource>VarejofacilSDKD2007.dpk</MainSource>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
+    <DCC_DependencyCheckOutputName>C:\Users\Public\Documents\RAD Studio\5.0\Bpl\VarejofacilSDKD2007.bpl</DCC_DependencyCheckOutputName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Version>7.0</Version>
+    <DCC_DebugInformation>False</DCC_DebugInformation>
+    <DCC_LocalDebugSymbols>False</DCC_LocalDebugSymbols>
+    <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+    <DCC_Define>RELEASE</DCC_Define>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <Version>7.0</Version>
+  </PropertyGroup>
+  <ProjectExtensions>
+    <Borland.Personality>Delphi.Personality</Borland.Personality>
+    <Borland.ProjectType>Package</Borland.ProjectType>
+    <BorlandProject>
+<BorlandProject><Delphi.Personality><Parameters><Parameters Name="UseLauncher">False</Parameters><Parameters Name="LoadAllSymbols">True</Parameters><Parameters Name="LoadUnspecifiedSymbols">False</Parameters></Parameters><Package_Options><Package_Options Name="ImplicitBuild">True</Package_Options><Package_Options Name="DesigntimeOnly">False</Package_Options><Package_Options Name="RuntimeOnly">False</Package_Options></Package_Options><VersionInfo><VersionInfo Name="IncludeVerInfo">True</VersionInfo><VersionInfo Name="AutoIncBuild">False</VersionInfo><VersionInfo Name="MajorVer">1</VersionInfo><VersionInfo Name="MinorVer">0</VersionInfo><VersionInfo Name="Release">0</VersionInfo><VersionInfo Name="Build">0</VersionInfo><VersionInfo Name="Debug">False</VersionInfo><VersionInfo Name="PreRelease">False</VersionInfo><VersionInfo Name="Special">False</VersionInfo><VersionInfo Name="Private">False</VersionInfo><VersionInfo Name="DLL">False</VersionInfo><VersionInfo Name="Locale">1046</VersionInfo><VersionInfo Name="CodePage">1252</VersionInfo></VersionInfo><VersionInfoKeys><VersionInfoKeys Name="CompanyName"></VersionInfoKeys><VersionInfoKeys Name="FileDescription"></VersionInfoKeys><VersionInfoKeys Name="FileVersion">1.0.0.0</VersionInfoKeys><VersionInfoKeys Name="InternalName"></VersionInfoKeys><VersionInfoKeys Name="LegalCopyright"></VersionInfoKeys><VersionInfoKeys Name="LegalTrademarks"></VersionInfoKeys><VersionInfoKeys Name="OriginalFilename"></VersionInfoKeys><VersionInfoKeys Name="ProductName"></VersionInfoKeys><VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys><VersionInfoKeys Name="Comments"></VersionInfoKeys></VersionInfoKeys><Excluded_Packages>
+      
+      
+      <Excluded_Packages Name="$(BDS)\bin\dcloffice2k100.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
+      <Excluded_Packages Name="$(BDS)\bin\dclofficexp100.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+    </Excluded_Packages><Source><Source Name="MainSource">VarejofacilSDKD2007.dpk</Source></Source></Delphi.Personality></BorlandProject></BorlandProject>
+  </ProjectExtensions>
+  <Import Project="$(MSBuildBinPath)\Borland.Delphi.Targets" />
+  <ItemGroup>
+    <DelphiCompile Include="VarejofacilSDKD2007.dpk">
+      <MainSource>MainSource</MainSource>
+    </DelphiCompile>
+    <DCCReference Include="$(SystemRoot)\system32\dbrtl.dcp" />
+    <DCCReference Include="$(SystemRoot)\system32\dsnap.dcp" />
+    <DCCReference Include="$(SystemRoot)\system32\inet.dcp" />
+    <DCCReference Include="$(SystemRoot)\system32\rtl.dcp" />
+    <DCCReference Include="$(SystemRoot)\system32\soaprtl.dcp" />
+    <DCCReference Include="$(SystemRoot)\system32\vcl.dcp" />
+    <DCCReference Include="$(SystemRoot)\system32\vcldb.dcp" />
+    <DCCReference Include="$(SystemRoot)\system32\xmlrtl.dcp" />
+    <DCCReference Include="Models\SDK.Model.AgenteFinanceiro.pas" />
+    <DCCReference Include="Models\SDK.Model.Aplicacao.pas" />
+    <DCCReference Include="Models\SDK.Model.Caixa.pas" />
+    <DCCReference Include="Models\SDK.Model.CancelamentoDeTituloAReceber.pas" />
+    <DCCReference Include="Models\SDK.Model.Caracteristica.pas" />
+    <DCCReference Include="Models\SDK.Model.CargaProduto.pas" />
+    <DCCReference Include="Models\SDK.Model.CategoriaFinanceira.pas" />
+    <DCCReference Include="Models\SDK.Model.Cest.pas" />
+    <DCCReference Include="Models\SDK.Model.Cfop.pas" />
+    <DCCReference Include="Models\SDK.Model.Cliente.pas" />
+    <DCCReference Include="Models\SDK.Model.CodigoAuxiliar.pas" />
+    <DCCReference Include="Models\SDK.Model.Componente.pas" />
+    <DCCReference Include="Models\SDK.Model.ComprovanteTransacao.pas" />
+    <DCCReference Include="Models\SDK.Model.ConfiguracaoPDV.pas" />
+    <DCCReference Include="Models\SDK.Model.ContaAReceber.pas" />
+    <DCCReference Include="Models\SDK.Model.ContaAReceberRenegociacao.pas" />
+    <DCCReference Include="Models\SDK.Model.ContaCorrente.pas" />
+    <DCCReference Include="Models\SDK.Model.ContaDeEmail.pas" />
+    <DCCReference Include="Models\SDK.Model.Contato.pas" />
+    <DCCReference Include="Models\SDK.Model.CSTEstadual.pas" />
+    <DCCReference Include="Models\SDK.Model.Devolucao.pas" />
+    <DCCReference Include="Models\SDK.Model.DevolucaoDeCupom.pas" />
+    <DCCReference Include="Models\SDK.Model.Endereco.pas" />
+    <DCCReference Include="Models\SDK.Model.EspecieDeDocumento.pas" />
+    <DCCReference Include="Models\SDK.Model.EstoqueDoProduto.pas" />
+    <DCCReference Include="Models\SDK.Model.FiguraFiscal.pas" />
+    <DCCReference Include="Models\SDK.Model.FiltroCaixa.pas" />
+    <DCCReference Include="Models\SDK.Model.Finalizacao.pas" />
+    <DCCReference Include="Models\SDK.Model.Finalizadora.pas" />
+    <DCCReference Include="Models\SDK.Model.FinalizadoraDaPremiacao.pas" />
+    <DCCReference Include="Models\SDK.Model.FormaDePagamento.pas" />
+    <DCCReference Include="Models\SDK.Model.Fornecedor.pas" />
+    <DCCReference Include="Models\SDK.Model.FuncaoDaLoja.pas" />
+    <DCCReference Include="Models\SDK.Model.FuncaoDoPDV.pas" />
+    <DCCReference Include="Models\SDK.Model.Funcionario.pas" />
+    <DCCReference Include="Models\SDK.Model.Genero.pas" />
+    <DCCReference Include="Models\SDK.Model.Grupo.pas" />
+    <DCCReference Include="Models\SDK.Model.HistoricoValidacaoFiscal.pas" />
+    <DCCReference Include="Models\SDK.Model.Holding.pas" />
+    <DCCReference Include="Models\SDK.Model.ImpostoFederal.pas" />
+    <DCCReference Include="Models\SDK.Model.ItemAplicacaoProduto.pas" />
+    <DCCReference Include="Models\SDK.Model.ItemCaracteristicaProduto.pas" />
+    <DCCReference Include="Models\SDK.Model.ItemDaTabelaDeTributacao.pas" />
+    <DCCReference Include="Models\SDK.Model.ItemDevolucao.pas" />
+    <DCCReference Include="Models\SDK.Model.ItemDevolucaoDeCupom.pas" />
+    <DCCReference Include="Models\SDK.Model.ItemImpostoFederal.pas" />
+    <DCCReference Include="Models\SDK.Model.ItemPagamento.pas" />
+    <DCCReference Include="Models\SDK.Model.ItemRecebimento.pas" />
+    <DCCReference Include="Models\SDK.Model.ItemSangria.pas" />
+    <DCCReference Include="Models\SDK.Model.ItemTroca.pas" />
+    <DCCReference Include="Models\SDK.Model.ItemTrocaFormaPagamento.pas" />
+    <DCCReference Include="Models\SDK.Model.ItemVenda.pas" />
+    <DCCReference Include="Models\SDK.Model.LimiteDeCredito.pas" />
+    <DCCReference Include="Models\SDK.Model.LocalDaLoja.pas" />
+    <DCCReference Include="Models\SDK.Model.LocalDeImpressao.pas" />
+    <DCCReference Include="Models\SDK.Model.LocalEstoque.pas" />
+    <DCCReference Include="Models\SDK.Model.Loja.pas" />
+    <DCCReference Include="Models\SDK.Model.LojaDaFormaDePagamento.pas" />
+    <DCCReference Include="Models\SDK.Model.LojaDoFuncionario.pas" />
+    <DCCReference Include="Models\SDK.Model.LojaDoPagamentoPDV.pas" />
+    <DCCReference Include="Models\SDK.Model.LojaView.pas" />
+    <DCCReference Include="Models\SDK.Model.MarcaDoProduto.pas" />
+    <DCCReference Include="Models\SDK.Model.MotivoDaDevolucao.pas" />
+    <DCCReference Include="Models\SDK.Model.NCM.pas" />
+    <DCCReference Include="Models\SDK.Model.NCMAliquota.pas" />
+    <DCCReference Include="Models\SDK.Model.NCMExcecao.pas" />
+    <DCCReference Include="Models\SDK.Model.NCMExcecaoAliquota.pas" />
+    <DCCReference Include="Models\SDK.Model.NivelDeAcesso.pas" />
+    <DCCReference Include="Models\SDK.Model.Ocorrencia.pas" />
+    <DCCReference Include="Models\SDK.Model.OcorrenciaVenda.pas" />
+    <DCCReference Include="Models\SDK.Model.Pagamento.pas" />
+    <DCCReference Include="Models\SDK.Model.PagamentoDeTitulo.pas" />
+    <DCCReference Include="Models\SDK.Model.PagamentoPDV.pas" />
+    <DCCReference Include="Models\SDK.Model.PagueLeve.pas" />
+    <DCCReference Include="Models\SDK.Model.PagueLeveItem.pas" />
+    <DCCReference Include="Models\SDK.Model.PautaDoProduto.pas" />
+    <DCCReference Include="Models\SDK.Model.PreAutorizacaoContaReceber.pas" />
+    <DCCReference Include="Models\SDK.Model.PreAutorizacaoFormaDePagamento.pas" />
+    <DCCReference Include="Models\SDK.Model.PreAutorizacaoLiquidacao.pas" />
+    <DCCReference Include="Models\SDK.Model.PreAutorizacaoTituloReceber.pas" />
+    <DCCReference Include="Models\SDK.Model.Preco.pas" />
+    <DCCReference Include="Models\SDK.Model.Premiacao.pas" />
+    <DCCReference Include="Models\SDK.Model.PremioLoja.pas" />
+    <DCCReference Include="Models\SDK.Model.Produto.pas" />
+    <DCCReference Include="Models\SDK.Model.ProdutoDaPremiacao.pas" />
+    <DCCReference Include="Models\SDK.Model.ProdutoPrincipal.pas" />
+    <DCCReference Include="Models\SDK.Model.ProdutoPromocional.pas" />
+    <DCCReference Include="Models\SDK.Model.Ramo.pas" />
+    <DCCReference Include="Models\SDK.Model.Recebimento.pas" />
+    <DCCReference Include="Models\SDK.Model.Receita.pas" />
+    <DCCReference Include="Models\SDK.Model.Reducao.pas" />
+    <DCCReference Include="Models\SDK.Model.ReducaoComissao.pas" />
+    <DCCReference Include="Models\SDK.Model.Referencia.pas" />
+    <DCCReference Include="Models\SDK.Model.ReferenciaDoFornecedor.pas" />
+    <DCCReference Include="Models\SDK.Model.RegimeEstadualProduto.pas" />
+    <DCCReference Include="Models\SDK.Model.RegimeEstadualTributario.pas" />
+    <DCCReference Include="Models\SDK.Model.SaidaOperador.pas" />
+    <DCCReference Include="Models\SDK.Model.Sangria.pas" />
+    <DCCReference Include="Models\SDK.Model.Secao.pas" />
+    <DCCReference Include="Models\SDK.Model.Setor.pas" />
+    <DCCReference Include="Models\SDK.Model.SituacaoFiscal.pas" />
+    <DCCReference Include="Models\SDK.Model.StatusDoCliente.pas" />
+    <DCCReference Include="Models\SDK.Model.SubGrupo.pas" />
+    <DCCReference Include="Models\SDK.Model.TabelaDeTributacao.pas" />
+    <DCCReference Include="Models\SDK.Model.TipoDeTransacaoDoTitulo.pas" />
+    <DCCReference Include="Models\SDK.Model.TipoDocumento.pas" />
+    <DCCReference Include="Models\SDK.Model.TipoPagamento.pas" />
+    <DCCReference Include="Models\SDK.Model.TituloAReceber.pas" />
+    <DCCReference Include="Models\SDK.Model.TituloAReceberCancelamento.pas" />
+    <DCCReference Include="Models\SDK.Model.TituloAReceberEstorno.pas" />
+    <DCCReference Include="Models\SDK.Model.TituloAReceberLiquidacao.pas" />
+    <DCCReference Include="Models\SDK.Model.TituloNaoLiquidado.pas" />
+    <DCCReference Include="Models\SDK.Model.TituloNaoLiquidadoMap.pas" />
+    <DCCReference Include="Models\SDK.Model.TransacaoConvenio.pas" />
+    <DCCReference Include="Models\SDK.Model.TransacaoItemTef.pas" />
+    <DCCReference Include="Models\SDK.Model.TransacaoTef.pas" />
+    <DCCReference Include="Models\SDK.Model.Tributacao.pas" />
+    <DCCReference Include="Models\SDK.Model.Troca.pas" />
+    <DCCReference Include="Models\SDK.Model.TrocaFormaPagamento.pas" />
+    <DCCReference Include="Models\SDK.Model.UnidadeProduto.pas" />
+    <DCCReference Include="Models\SDK.Model.Usuario.pas" />
+    <DCCReference Include="Models\SDK.Model.Venda.pas" />
+    <DCCReference Include="Models\SDK.Model.VendaCasada.pas" />
+    <DCCReference Include="SDK.Client.pas" />
+    <DCCReference Include="SDK.ConfigProvider.pas" />
+    <DCCReference Include="SDK.Enums.pas" />
+    <DCCReference Include="SDK.Exceptions.pas" />
+    <DCCReference Include="SDK.ListDeserializers.pas" />
+    <DCCReference Include="SDK.ListSerializers.pas" />
+    <DCCReference Include="SDK.PropertyDeserializers.pas" />
+    <DCCReference Include="SDK.PropertySerializers.pas" />
+    <DCCReference Include="SDK.Request.pas" />
+    <DCCReference Include="SDK.Response.pas" />
+    <DCCReference Include="SDK.Service.pas" />
+    <DCCReference Include="SDK.SortParams.pas" />
+    <DCCReference Include="SDK.Types.Models.pas" />
+    <DCCReference Include="SDK.Types.pas" />
+    <DCCReference Include="SDK.XML.pas" />
+    <DCCReference Include="Services\SDK.Service.Fornecedor.pas" />
+    <DCCReference Include="Services\SDK.Service.Genero.pas" />
+    <DCCReference Include="Services\SDK.Service.Grupo.pas" />
+    <DCCReference Include="Services\SDK.Service.ImpostoFederal.pas" />
+    <DCCReference Include="Services\SDK.Service.Loja.pas" />
+    <DCCReference Include="Services\SDK.Service.MarcaProduto.pas" />
+    <DCCReference Include="Services\SDK.Service.NCM.pas" />
+    <DCCReference Include="Services\SDK.Service.Produto.pas" />
+    <DCCReference Include="Services\SDK.Service.Secao.pas" />
+    <DCCReference Include="Services\SDK.Service.Subgrupo.pas" />
+    <DCCReference Include="Services\SDK.Service.UnidadeProduto.pas" />
+  </ItemGroup>
+</Project>
