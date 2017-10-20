@@ -1,6 +1,6 @@
 # Varejofacil Delphi SDK
 
-[![N|Solid](https://www.casamagalhaes.com.br/images/varejofacil_logo_segmento_240x130.png)](https://www.casamagalhaes.com.br/sistemas/varejofacil)
+![Varejofacil](https://www.casamagalhaes.com.br/images/varejofacil_logo_segmento_240x130.png)
 
 Os componentes da SDK permitem a comunicação com a API do varejofacil.
 
