@@ -58,13 +58,16 @@ const
 { TXMLHelper }
 
 class function TXMLHelper.CreateDocument(const AXML: TString): IXMLDocument;
+var
+  Doc: TXMLDocument;
 begin
-  Result := TXMLDocument.Create(nil);
-  Result.Options := [doNodeAutoCreate, doNodeAutoIndent, doAttrNull,
+  Doc := TXMLDocument.Create(nil);
+  Doc.Options := [doNodeAutoCreate, doNodeAutoIndent, doAttrNull,
                      doAutoPrefix, doNamespaceDecl];
-  (Result as TXMLDocument).DOMVendor := GetDOMVendor(DOM_VENDOR);
-  Result.LoadFromXML(AXML);
-  Result.Encoding := 'UTF8';
+  (Doc as TXMLDocument).DOMVendor := GetDOMVendor(DOM_VENDOR);
+  Doc.LoadFromXML(AXML);
+  Doc.Encoding := 'UTF8';
+  Result := Doc;
 end;
 
 class function TXMLHelper.XPathSelect(const ANode: IXMLNode;
@@ -169,7 +172,10 @@ begin
     begin
       ChildNode := ANode.ChildNodes[NodeIdx];
       if SameText(ChildNode.NodeName, AName) then
-        Exit(ChildNode);
+      begin
+        Result := ChildNode;
+        Exit;
+      end;
     end;
   end;
 end;
@@ -188,8 +194,8 @@ class function TXMLHelper.Serialize(const AModel: IModel; ARootTag: Boolean; ASe
   begin
     Result := EmptyStr;
     UpperCaseChars := 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_';
-    for X := Low(AInput) to High(AInput) do
-      for I := Low(UpperCaseChars) to High(UpperCaseChars) do
+    for X := 1 to Length(AInput) do
+      for I := 1 to Length(UpperCaseChars) do
         if AInput[X] = UpperCaseChars[I] then
           Result := Result + AInput[X];
   end;

@@ -16,6 +16,10 @@ type
     FParams: TStrings;
     FURL: TString;
     FTokens: TTokenStorage;
+    procedure SetAuthorizationHeaders;
+  public
+    destructor Destroy; override;
+
     function GetContent: TString;
     function GetHeaders: TStrings;
     function GetMethod: TMethod;
@@ -27,9 +31,7 @@ type
     procedure SetParams(AParams: TStrings);
     procedure SetURL(const AURL: TString);
     procedure SetTokens(const ATokens: TTokenStorage);
-    procedure SetAuthorizationHeaders;
-  public
-    destructor Destroy; override;
+
     property URL: TString read GetURL write SetURL;
     property Method: TMethod read GetMethod write SetMethod;
     property Params: TStrings read GetParams write SetParams;

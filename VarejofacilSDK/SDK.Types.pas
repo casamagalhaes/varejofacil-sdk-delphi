@@ -160,19 +160,25 @@ type
 implementation
 
 uses
-  SDK.XML;
+  SDK.XML, Windows;
+
+function InterlockedIncrement(var Addend: Integer): Integer; stdcall;
+  external kernel32 name 'InterlockedIncrement';
+
+function InterlockedDecrement(var Addend: Integer): Integer; stdcall;
+  external kernel32 name 'InterlockedDecrement';
 
 { TInterfacedModel }
 
 procedure TInterfacedModel.AfterConstruction;
 begin
-  AtomicDecrement(FRefCount);
+  InterlockedDecrement(FRefCount);
 end;
 
 procedure TInterfacedModel.BeforeDestruction;
 begin
   if RefCount <> 0 then
-    Error(reInvalidPtr);
+    System.Error(reInvalidPtr);
 end;
 
 function TInterfacedModel.GetReference: TInterfacedModel;
@@ -196,12 +202,12 @@ end;
 
 function TInterfacedModel._AddRef: Integer;
 begin
-  Result := AtomicIncrement(FRefCount);
+  Result := InterlockedIncrement(FRefCount);
 end;
 
 function TInterfacedModel._Release: Integer;
 begin
-  Result := AtomicDecrement(FRefCount);
+  Result := InterlockedDecrement(FRefCount);
   if Result = 0 then
     Destroy;
 end;
