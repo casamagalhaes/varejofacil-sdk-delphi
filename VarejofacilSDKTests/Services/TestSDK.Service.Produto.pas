@@ -83,6 +83,14 @@ begin
 
   Produto.Id := 9999;
 
+  //Criando seção
+  FSecaoService.Delete('999');
+  Secao := TSecao.Create;
+  Secao.Id := 999;
+  Secao.Descricao := 'SECAO TESTE';
+  FSecaoService.Insert(Secao);
+  Produto.SecaoId := Secao.Id;
+
   //Buscando gênero
   Generos := FGeneroService.GetAll(0, 1, ['+id']);
   Genero := Generos[0];
@@ -109,14 +117,6 @@ begin
   Marca.Descricao := 'MARCA TESTE';
   FMarcaProdutoService.Insert(Marca);
   Produto.MarcaId := Marca.Id;
-
-  //Criando seção
-  FSecaoService.Delete('999');
-  Secao := TSecao.Create;
-  Secao.Id := 999;
-  Secao.Descricao := 'SECAO TESTE';
-  FSecaoService.Insert(Secao);
-  Produto.SecaoId := Secao.Id;
 
   //Criando impostos federais
   FImpostosFederaisService.Delete('91');

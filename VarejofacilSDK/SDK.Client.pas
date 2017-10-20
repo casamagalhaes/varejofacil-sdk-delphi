@@ -7,6 +7,15 @@ uses
 
 type
 
+  // Mantendo a compatibilidade com versões antigas do Indy
+  TSDKIdHTTP = class(TIdCustomHTTP)
+  const
+    DELETE_HTTP_METHOD = 'DELETE';
+  public
+    function Delete(const AURL: TString; AResponseContent: TStream): TString; overload;
+    function Delete(const AURL: TString): TString; overload;
+  end;
+
   TClient = class(TInterfacedObject, IClient)
   strict private
     FBaseURL: TString;
@@ -155,12 +164,12 @@ end;
 function TClient.MakeRequest(const ARequest: IRequest): IResponse;
 var
   ResponseContent: TString;
-  HTTP: TIdHTTP;
+  HTTP: TIdCustomHTTP;
   HTTPRequest: TIdHTTPRequest;
   HTTPIOHandler: TIdSSLIOHandlerSocketOpenSSL;
   RequestContent: TStream;
 begin
-  HTTP := TIdHTTP.Create(nil);
+  HTTP := TSDKIdHTTP.Create(nil);
   try
     HTTPIOHandler := TIdSSLIOHandlerSocketOpenSSL.Create(nil);
     try
@@ -251,6 +260,28 @@ begin
   finally
     FreeAndNil(HTTP);
   end;
+end;
+
+{ TSDKIdHTTP }
+
+function TSDKIdHTTP.Delete(const AURL: TString): TString;
+var
+  Stream: TMemoryStream;
+begin
+  Result := EmptyStr;
+  Stream := TMemoryStream.Create;
+  try
+    DoRequest(DELETE_HTTP_METHOD, AURL, nil, Stream, []);
+    Stream.Position := 0;
+    SetString(Result, PAnsiChar(Stream.Memory^), Stream.Size);
+  finally
+    FreeAndNil(Stream);
+  end;
+end;
+
+function TSDKIdHTTP.Delete(const AURL: TString; AResponseContent: TStream): TString;
+begin
+  DoRequest(DELETE_HTTP_METHOD, AURL, nil, AResponseContent, []);
 end;
 
 end.

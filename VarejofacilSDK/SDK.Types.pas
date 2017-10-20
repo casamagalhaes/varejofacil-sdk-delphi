@@ -12,7 +12,7 @@ const
 
 type
 
-  TString = type AnsiString(UTF8_CODEPAGE);
+  TString = AnsiString;
 
   PString = ^TString;
 
