@@ -98,6 +98,7 @@ begin
     if not Assigned(FHeaders) then
     begin
       FHeaders := TStringList.Create;
+      FHeaders.NameValueSeparator := ':';
       FOwnedObjects.AddObject('Headers', FHeaders);
     end;
     if FHeaders.IndexOf('authorization') = -1 then

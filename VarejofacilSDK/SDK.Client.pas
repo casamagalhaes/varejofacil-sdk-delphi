@@ -40,6 +40,9 @@ type
 
 implementation
 
+uses
+  StrUtils;
+
 { TClient }
 
 function TClient.Authenticate(const AURL: TString; AParams, AHeaders: TStrings; AContent: TString; ARequestFunction: TAuthenticatedRequest): IResponse;
@@ -187,23 +190,19 @@ begin
           if ARequest.Headers.IndexOfName('Accept') > -1 then
             HTTP.Request.Accept := ARequest.Headers.Values['Accept'];
         end;
-        if HTTP.Request.CustomHeaders.IndexOfName('Content-Type') = -1 then
-        begin
+        if not MatchText(HTTP.Request.ContentType, ['application/xml', 'application/json']) then
           HTTP.Request.ContentType := 'application/xml';
-          HTTP.Request.CustomHeaders.Values['Content-Type'] := 'application/xml';
-          HTTP.Request.RawHeaders.Values['Content-Type'] := 'application/xml';
-        end;
-        if HTTP.Request.CustomHeaders.IndexOfName('Accept') = -1 then
-        begin
+        if not MatchText(HTTP.Request.Accept, ['application/xml', 'application/json']) then
           HTTP.Request.Accept := 'application/xml';
-          HTTP.Request.CustomHeaders.Values['Accept'] := 'application/xml';
-          HTTP.Request.RawHeaders.Values['Accept'] := 'application/xml';
-        end;
         try
           case ARequest.Method of
             mtGET:
             begin
+              {$IFDEF UNICODE}
               ResponseContent := HTTP.Get(ARequest.URL);
+              {$ELSE}
+              ResponseContent := Utf8ToAnsi(HTTP.Get(ARequest.URL));
+              {$ENDIF}
             end;
             mtPOST:
             begin
