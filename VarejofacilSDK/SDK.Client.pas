@@ -174,11 +174,15 @@ begin
   try
     HTTPIOHandler := TIdSSLIOHandlerSocketOpenSSL.Create(nil);
     try
+      HTTPIOHandler.SSLOptions.Method := sslvTLSv1;
+      HTTPIOHandler.SSLOptions.Mode := sslmClient;
       HTTPRequest := TIdHTTPRequest.Create(nil);
       try
         if StartsText(HTTPS_PROTOCOL, ARequest.URL) then
           HTTP.IOHandler := HTTPIOHandler;
         HTTP.Request := HTTPRequest;
+        HTTP.ReadTimeout := 60000;
+        HTTP.ConnectTimeout := 60000;
         if Assigned(ARequest.Headers) then
         begin
           HTTP.Request.CustomHeaders.AddStrings(ARequest.Headers);
@@ -192,6 +196,7 @@ begin
           HTTP.Request.ContentType := 'application/xml';
         if not MatchText(HTTP.Request.Accept, ['application/xml', 'application/json']) then
           HTTP.Request.Accept := 'application/xml';
+        HTTP.HandleRedirects := True;
         try
           case ARequest.Method of
             mtGET:
