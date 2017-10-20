@@ -29,9 +29,10 @@ type
     FSuccesses: TStrings;
     FErrors: TStrings;
     FContents: TString;
+  public
     function GetSuccesses: TStrings;
     function GetErrors: TStrings;
-  public
+
     property Errors: TStrings read GetErrors;
     property Successes: TStrings read GetSuccesses;
     constructor Create(const AContents: TString);

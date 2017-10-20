@@ -12,15 +12,17 @@ type
     FStatus: Integer;
     FContent: TString;
     FHeaders: TStrings;
+  public
+    constructor Create(AStatus: Integer; const AHeaders: TStrings; AContent: TString);
+    destructor Destroy; override;
+
     function GetContent: TString;
     function GetHeaders: TStrings;
     function GetStatus: Integer;
     procedure SetContent(const Value: TString);
     procedure SetHeaders(Value: TStrings);
     procedure SetStatus(Value: Integer);
-  public
-    constructor Create(AStatus: Integer; const AHeaders: TStrings; AContent: TString);
-    destructor Destroy; override;
+
     function AsXML: IXMLDocument;
     property Headers: TStrings read GetHeaders write SetHeaders;
     property Content: TString read GetContent write SetContent;

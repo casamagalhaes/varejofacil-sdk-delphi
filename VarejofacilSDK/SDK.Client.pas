@@ -22,13 +22,14 @@ type
     FTokens: TTokenStorage;
     FUsername: string;
     FPassword: string;
+  public
     function Authenticate(const AURL: TString; AParams, AHeaders: TStrings; AContent: TString; ARequestFunction: TAuthenticatedRequest): IResponse;
     function AuthenticatedGet(const AURL: TString; AParams, AHeaders: TStrings; AContent: TString; ATokens: TTokenStorage): IResponse;
     function AuthenticatedPut(const AURL: TString; AParams, AHeaders: TStrings; AContent: TString; ATokens: TTokenStorage): IResponse;
     function AuthenticatedPost(const AURL: TString; AParams, AHeaders: TStrings; AContent: TString; ATokens: TTokenStorage): IResponse;
     function AuthenticatedDelete(const AURL: TString; AParams, AHeaders: TStrings; AContent: TString; ATokens: TTokenStorage): IResponse;
     function MakeRequest(const ARequest: IRequest): IResponse;
-  public
+
     function Get(const AURL: TString; AParams, AHeaders: TStrings): IResponse;
     function Put(const AURL, AContent: TString; AHeaders: TStrings): IResponse;
     function Post(const AURL, AContent: TString; AHeaders: TStrings): IResponse;

@@ -17,9 +17,15 @@ type
     function FormattedText: TString;
     class function From(const AParams: array of TString): PSortParams; static;
     class function FromArrayToString(const AParams: TStringArray): TString; static;
+    {$IFDEF UNICODE}
     class operator Implicit(const ASortParams: TSortParams): TString; static;
     class operator Implicit(const ASortParams: TSortParams): TStringArray; static;
     class operator Implicit(const AArray: TStringArray): TSortParams; static;
+   {$ELSE}
+    class operator Implicit(const ASortParams: TSortParams): TString;
+    class operator Implicit(const ASortParams: TSortParams): TStringArray;
+    class operator Implicit(const AArray: TStringArray): TSortParams;
+   {$ENDIF}
   end;
 
 implementation
@@ -40,7 +46,7 @@ class function TSortParams.From(const AParams: array of TString): PSortParams;
   begin
     Result := True;
     AllowedChars := 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-+';
-    for CharIdx := Low(AParam) to High(AParam) do
+    for CharIdx := 1 to Length(AParam) do
       if Pos(AParam[CharIdx], AllowedChars) = 0 then
       begin
         Result := False;

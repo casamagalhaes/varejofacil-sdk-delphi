@@ -3,7 +3,7 @@ unit SDK.ConfigProvider;
 interface
 
 uses
-  SysUtils, SDK.Types, System.IniFiles;
+  SysUtils, SDK.Types, IniFiles;
 
 type
 

@@ -100,7 +100,6 @@ begin
     ModelClass := TInterfacedModelClass(FindClass(TString(ModelClassName)));
     if Assigned(ModelClass) then
     begin
-      TXMLHelper.Deserialize(ANode, ModelClass, ADeserializers).QueryInterface(AProperty^.PropType^.TypeData^.Guid, ModelInstance);
       ModelInstance := TXMLHelper.Deserialize(ANode, ModelClass, ADeserializers);
       SetInterfaceProp(AInstance.GetReference, TString(AProperty^.Name), ModelInstance);
     end;
