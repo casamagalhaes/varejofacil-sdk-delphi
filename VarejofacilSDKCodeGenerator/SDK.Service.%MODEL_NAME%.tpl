@@ -3,7 +3,7 @@ unit SDK.Service.%MODEL_NAME%;
 interface
 
 uses
-  SDK.Types, SDK.Model.%MODEL_NAME%, SDK.Service, SDK.XML, XMLIntf, SysUtils;
+  SDK.Types, SDK.Model.%MODEL_NAME%, SDK.Service, SDK.XML, XMLIntf, SysUtils, Math;
 
 type
 
@@ -12,9 +12,9 @@ type
     constructor Create(const AClient: IClient); reintroduce; overload;
     function Get(const AId: TString): I%MODEL_NAME%;
     function GetAll(AStart: Integer = 0; ACount: Integer = 0;
-      const ASortParams: TStringArray = []): T%MODEL_NAME%ListRec;
+      const ASortParams: TStringArray = nil): T%MODEL_NAME%ListRec;
     function Filter(const AQuery: TString; AStart: Integer = 0; ACount: Integer = 0;
-      const ASortParams: TStringArray = []): T%MODEL_NAME%ListRec;
+      const ASortParams: TStringArray = nil): T%MODEL_NAME%ListRec;
   end;
 
 implementation
@@ -52,11 +52,15 @@ var
   Nodes: TCustomXMLNodeArray;
   NodeIdx: Integer;
   Document: IXMLDocument;
-  %MODEL_NAME%List: I%MODEL_NAME%List;
+  %MODEL_NAME%List, PaginationList: T%MODEL_NAME%List;
   %MODEL_NAME%: I%MODEL_NAME%;
   URL: TString;
+  ResultNodes: TCustomXMLNodeArray;
+  Start, Count, Total, TotalPack, Position: Integer;
 begin
-  URL := Concat(FPath, '?', ToParams(AQuery, AStart, ACount, ASortParams));
+  Start := AStart;
+  Count := ACount;
+  URL := Concat(FPath, '?', ToParams(AQuery, Start, Count, ASortParams));
   Response := FClient.Get(URL, nil, nil);
   Document := Response.AsXML;
   Nodes := TXMLHelper.XPathSelect(Document, '//ResultList/items/*');
@@ -66,6 +70,28 @@ begin
     TXMLHelper.Deserialize(Nodes[NodeIdx], T%MODEL_NAME%, FDeserializers).QueryInterface(I%MODEL_NAME%, %MODEL_NAME%);
     %MODEL_NAME%List.Add(%MODEL_NAME%);
   end;
+
+  ResultNodes := TXMLHelper.XPathSelect(Document, '//ResultList');
+
+  if Length(ResultNodes) > 0 then
+  begin
+    Start := ResultNodes[0].ChildValues['start'];
+    Count := ResultNodes[0].ChildValues['count'];
+    Total := ResultNodes[0].ChildValues['total'];
+    if ACount = 0 then
+      TotalPack := Total + Start
+    else
+      TotalPack := Min(Total, ACount) + Start;
+    Position := Count + Start;
+
+    if Position < TotalPack then
+    begin
+      PaginationList := Filter(AQuery, Start, TotalPack - Position, ASortParams);
+      for %MODEL_NAME% in PaginationList do
+        %MODEL_NAME%List.Add(%MODEL_NAME%);
+    end;
+  end;
+
   Result := T%MODEL_NAME%ListRec.Create(%MODEL_NAME%List);
 end;
 

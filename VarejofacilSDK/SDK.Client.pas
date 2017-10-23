@@ -288,7 +288,10 @@ begin
   try
     DoRequest(DELETE_HTTP_METHOD, AURL, nil, Stream, []);
     Stream.Position := 0;
-    SetString(Result, PAnsiChar(Stream.Memory^), Stream.Size);
+    if Stream.Size > 0 then
+    begin
+      SetString(Result, PAnsiChar(Stream.Memory^), Stream.Size);
+    end;
   finally
     FreeAndNil(Stream);
   end;

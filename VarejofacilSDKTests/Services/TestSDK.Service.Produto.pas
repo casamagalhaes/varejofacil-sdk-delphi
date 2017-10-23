@@ -59,6 +59,7 @@ end;
 
 procedure TTestProdutoService.TestBasicOperations;
 var
+  ProdutoList: TProdutoList;
   Produto, ProdutoInserted, ProdutoUpdated: IProduto;
   RegimesDoProduto: TRegimeEstadualProdutoList;
   ItensImpostosFederais: TItemImpostoFederalList;
@@ -76,6 +77,8 @@ var
   Id: Variant;
   Result: TServiceCommandResult;
 begin
+  ProdutoList := FProdutoService.GetAll();
+
   Produto := TProduto.Create;
 
   //Preenchendo campos com valores aleatórios

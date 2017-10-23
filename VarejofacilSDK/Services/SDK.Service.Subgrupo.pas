@@ -3,7 +3,7 @@
 interface
 
 uses
-  SDK.Types, SDK.Model.Subgrupo, SDK.Service, SDK.XML, XMLIntf, SysUtils;
+  SDK.Types, SDK.Model.Subgrupo, SDK.Service, SDK.XML, XMLIntf, SysUtils, Math;
 
 type
 
@@ -70,9 +70,11 @@ var
   Nodes: TCustomXMLNodeArray;
   NodeIdx: Integer;
   Document: IXMLDocument;
-  SubgrupoList: ISubgrupoList;
+  SubgrupoList, PaginationList: TSubgrupoList;
   Subgrupo: ISubgrupo;
   URL: TString;
+  ResultNodes: TCustomXMLNodeArray;
+  Start, Count, Total, TotalPack, Position: Integer;
 begin
   URL := Concat(FPath, '?', ToParams(AQuery, AStart, ACount, ASortParams));
   Response := FClient.Get(URL, nil, nil);
@@ -84,6 +86,27 @@ begin
     TXMLHelper.Deserialize(Nodes[NodeIdx], TSubgrupo, FDeserializers).QueryInterface(ISubgrupo, Subgrupo);
     SubgrupoList.Add(Subgrupo);
   end;
+
+
+  if Length(ResultNodes) > 0 then
+  begin
+    Start := ResultNodes[0].ChildValues['start'];
+    Count := ResultNodes[0].ChildValues['count'];
+    Total := ResultNodes[0].ChildValues['total'];
+    if ACount = 0 then
+      TotalPack := Total + Start
+    else
+      TotalPack := Min(Total, ACount) + Start;
+    Position := Count + Start;
+
+    if Position < TotalPack then
+    begin
+      PaginationList := Filter(AQuery, Start, TotalPack - Position, ASortParams);
+      for SubGrupo in PaginationList do
+        SubGrupoList.Add(SubGrupo);
+    end;
+  end;
+
   Result := TSubgrupoListRec.Create(SubgrupoList);
 end;
 

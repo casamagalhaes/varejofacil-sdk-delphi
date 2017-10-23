@@ -22,22 +22,22 @@ type
 
   TStringHolder = class
     private
-      FValue: TString;
+      FValue: string;
     public
-      constructor Create(const AInput: TString);
-      function Value: TString;
+      constructor Create(const AInput: string);
+      function Value: string;
   end;
 
   TEnumerable = class
     private
       FEnums: TStrings;
-      FName: TString;
+      FName: string;
     public
       destructor Destroy; override;
-      constructor Create(const AName: TString); reintroduce; overload;
+      constructor Create(const AName: string); reintroduce; overload;
       property Enums: TStrings read FEnums write FEnums;
-      property Name: TString read FName write FName;
-      procedure Add(const AKey, AValue: TString);
+      property Name: string read FName write FName;
+      procedure Add(const AKey, AValue: string);
   end;
 
 const
@@ -45,13 +45,13 @@ const
   JAVA_IMPORT_KEYWORD = 'import';
 
 var
-  JAVA_PRIMARY_TYPES: array[0..13] of TString = ('byte', 'short', 'int', 'Long', 'float', 'double', 'char', 'String', 'Boolean', 'BigDecimal', 'Date', 'Integer', 'byte[]', 'boolean');
-  DELPHI_PRIMARY_TYPES: array[0..13] of TString = ('Byte', 'SmallInt', 'Integer', 'Int64', 'Double', 'Double', 'Char', 'TString', 'Boolean', 'Double', 'TDateTime', 'Integer', 'TByteArray', 'Boolean');
-  JAVA_MODIFIERS: array[0..7] of TString = ('public', 'private', 'protected', 'static', 'final', 'abstract', 'synchronized', 'volatile');
+  JAVA_PRIMARY_TYPES: array[0..13] of string = ('byte', 'short', 'int', 'Long', 'float', 'double', 'char', 'String', 'Boolean', 'BigDecimal', 'Date', 'Integer', 'byte[]', 'boolean');
+  DELPHI_PRIMARY_TYPES: array[0..13] of string = ('Byte', 'SmallInt', 'Integer', 'Int64', 'Double', 'Double', 'Char', 'string', 'Boolean', 'Double', 'TDateTime', 'Integer', 'TByteArray', 'Boolean');
+  JAVA_MODIFIERS: array[0..7] of string = ('public', 'private', 'protected', 'static', 'final', 'abstract', 'synchronized', 'volatile');
 
-function GetEnums(const APath: TString): TStrings;
+function GetEnums(const APath: string): TStrings;
 var
-  Contents: TString;
+  Contents: string;
   Document: IXMLDocument;
   EnumNodes: TCustomXMLNodeArray;
   EnumNode, EnumKeyValueNode: IXMLNode;
@@ -79,7 +79,7 @@ begin
   end;
 end;
 
-function GetFiles(const APath, AExtension, AFilter: TString): TStrings;
+function GetFiles(const APath, AExtension, AFilter: string): TStrings;
 var
   SR: TSearchRec;
 begin
@@ -96,19 +96,19 @@ begin
   end;
 end;
 
-function GetTemplates(const APath, AFilter: TString): TStrings;
+function GetTemplates(const APath, AFilter: string): TStrings;
 begin
   Result := GetFiles(APath, 'tpl', AFilter);
 end;
 
-function GetFields(const AModelDirectory, AModelFilename: TString): TStrings;
+function GetFields(const AModelDirectory, AModelFilename: string): TStrings;
 
-  function ProperCase(const AInput: TString): TString;
+  function ProperCase(const AInput: string): string;
   begin
     Result := UpperCase(AInput[1]) + Copy(AInput, 2, Length(AInput) - 1);
   end;
 
-  function Split(const AContents, ADelimiter: TString): TStrings;
+  function Split(const AContents, ADelimiter: string): TStrings;
   var
     Tokens: TStringDynArray;
     Idx: Integer;
@@ -121,7 +121,7 @@ function GetFields(const AModelDirectory, AModelFilename: TString): TStrings;
         Result.Add(Tokens[Idx]);
   end;
 
-  function IsPrimaryType(const ASymbol: TString): Boolean;
+  function IsPrimaryType(const ASymbol: string): Boolean;
   var
     Idx: Integer;
   begin
@@ -131,7 +131,7 @@ function GetFields(const AModelDirectory, AModelFilename: TString): TStrings;
         Exit(True);
   end;
 
-  function IsModifier(const ASymbol: TString): Boolean;
+  function IsModifier(const ASymbol: string): Boolean;
   var
     Idx: Integer;
   begin
@@ -141,7 +141,7 @@ function GetFields(const AModelDirectory, AModelFilename: TString): TStrings;
         Exit(True);      
   end;
 
-  function IsReservedWord(const ASymbol: TString): Boolean;
+  function IsReservedWord(const ASymbol: string): Boolean;
   begin
     Result := IsModifier(ASymbol) or IsPrimaryType(ASymbol);
   end;
@@ -158,7 +158,7 @@ function GetFields(const AModelDirectory, AModelFilename: TString): TStrings;
     Result := ASymbols.IndexOf(JAVA_CLASS_KEYWORD) > -1;
   end;
 
-  function GetClassName(const ASymbols: TStrings): TString;
+  function GetClassName(const ASymbols: TStrings): string;
   var
     ClassKeywordPos: Integer;
   begin
@@ -166,25 +166,25 @@ function GetFields(const AModelDirectory, AModelFilename: TString): TStrings;
     Result := ASymbols[ClassKeywordPos + 1];
   end;
 
-  function GetFieldName(const ASymbols: TStrings): TString;
+  function GetFieldName(const ASymbols: TStrings): string;
   begin
     Result := ASymbols[2];
   end;
 
-  function GetFieldType(const ASymbols: TStrings): TString;
+  function GetFieldType(const ASymbols: TStrings): string;
   begin
     Result := ASymbols[1];
   end;
 
-  function IsConstructor(const AClassName: TString; ASymbols: TStrings): Boolean;
+  function IsConstructor(const AClassName: string; ASymbols: TStrings): Boolean;
   begin
     Result := (ASymbols.Count > 1) and (ASymbols[0] = 'public') and (ASymbols[1] = AClassName);
   end;
 
 var
-  Contents, Line: TString;
+  Contents, Line: string;
   Lines, Symbols: TStrings;
-  ClassName: TString;
+  ClassName: string;
 begin
   Result := TStringList.Create(True);
   Contents := TFile.ReadAllText(Concat(AModelDirectory, '\', AModelFilename));
@@ -211,9 +211,9 @@ begin
   end;
 end;
 
-procedure GenerateClass(const ATemplate, AModel, ARoute: TString; AFields: TStrings);
+procedure GenerateClass(const ATemplate, AModel, ARoute: string; AFields: TStrings);
 
-  function GenerateGuid: TString;
+  function GenerateGuid: string;
   var
     Uid: TGuid;
     HndResult: HResult;
@@ -224,12 +224,12 @@ procedure GenerateClass(const ATemplate, AModel, ARoute: TString; AFields: TStri
        Result := GuidToString(Uid);
   end;
 
-  function RemoveExtension(const AFileName: TString): TString;
+  function RemoveExtension(const AFileName: string): string;
   begin
     Result := StringReplace(AFileName, '.tpl', '', [rfReplaceAll, rfIgnoreCase]);
   end;
 
-  function MapToDelphiTypes(const AJavaType: TString): TString;
+  function MapToDelphiTypes(const AJavaType: string): string;
   var
     Idx: Integer;
   begin
@@ -247,7 +247,7 @@ procedure GenerateClass(const ATemplate, AModel, ARoute: TString; AFields: TStri
     end;
   end;
 
-  function Tokenize(const AInput: TString): TStrings;
+  function Tokenize(const AInput: string): TStrings;
   var
     Tokens: TStringDynArray;
     Idx: Integer;
@@ -259,9 +259,9 @@ procedure GenerateClass(const ATemplate, AModel, ARoute: TString; AFields: TStri
       Result.Add(Tokens[Idx]);
   end;
 
-  function Parse(const ATokens: TStrings): TString;
+  function Parse(const ATokens: TStrings): string;
   var
-    UpperToken, Token, Looping: TString;
+    UpperToken, Token, Looping: string;
     Idx, LoopingIdx, LoopingLimit, LoopingCount: Integer;
     ParsedResult: TStrings;
   begin
@@ -344,7 +344,7 @@ procedure GenerateClass(const ATemplate, AModel, ARoute: TString; AFields: TStri
     end;
   end;
 
-  function InterpolateTags(const AInput: TString): TString;
+  function InterpolateTags(const AInput: string): string;
   var
     Tokens: TStrings;
   begin
@@ -357,8 +357,8 @@ procedure GenerateClass(const ATemplate, AModel, ARoute: TString; AFields: TStri
   end;
 
 var
-  OutputDir: TString;
-  NewFileName, TemplateContent, ParsedTemplate: TString;
+  OutputDir: string;
+  NewFileName, TemplateContent, ParsedTemplate: string;
 begin
   OutputDir := Concat(GetCurrentDir, '\output');
   if not DirectoryExists(OutputDir) then
@@ -369,9 +369,9 @@ begin
   TFile.WriteAllText(NewFileName, ParsedTemplate, TEncoding.UTF8);
 end;
 
-procedure GenerateSingleFileMultipleClasses(const ATemplate: TString; AModels: TStrings);
+procedure GenerateSingleFileMultipleClasses(const ATemplate: string; AModels: TStrings);
 
-  function GenerateGuid: TString;
+  function GenerateGuid: string;
   var
     Uid: TGuid;
     HndResult: HResult;
@@ -382,12 +382,12 @@ procedure GenerateSingleFileMultipleClasses(const ATemplate: TString; AModels: T
        Result := GuidToString(Uid);
   end;
 
-  function RemoveExtension(const AFileName: TString): TString;
+  function RemoveExtension(const AFileName: string): string;
   begin
     Result := StringReplace(AFileName, '.tpl', '', [rfReplaceAll, rfIgnoreCase]);
   end;
 
-  function MapToDelphiTypes(const AJavaType: TString): TString;
+  function MapToDelphiTypes(const AJavaType: string): string;
   var
     Idx: Integer;
   begin
@@ -405,7 +405,7 @@ procedure GenerateSingleFileMultipleClasses(const ATemplate: TString; AModels: T
     end;
   end;
 
-  function Tokenize(const AInput: TString): TStrings;
+  function Tokenize(const AInput: string): TStrings;
   var
     Tokens: TStringDynArray;
     Idx: Integer;
@@ -417,9 +417,9 @@ procedure GenerateSingleFileMultipleClasses(const ATemplate: TString; AModels: T
       Result.Add(Tokens[Idx]);
   end;
 
-  function Parse(const ATokens: TStrings): TString;
+  function Parse(const ATokens: TStrings): string;
   var
-    UpperToken, Token, Looping: TString;
+    UpperToken, Token, Looping: string;
     Idx, LoopingIdx, LoopingLimit, LoopingCount: Integer;
     ParsedResult: TStrings;
   begin
@@ -488,7 +488,7 @@ procedure GenerateSingleFileMultipleClasses(const ATemplate: TString; AModels: T
     end;
   end;
 
-  function InterpolateTags(const AInput: TString): TString;
+  function InterpolateTags(const AInput: string): string;
   var
     Tokens: TStrings;
   begin
@@ -501,8 +501,8 @@ procedure GenerateSingleFileMultipleClasses(const ATemplate: TString; AModels: T
   end;
 
 var
-  OutputDir: TString;
-  NewFileName, TemplateContent, ParsedTemplate: TString;
+  OutputDir: string;
+  NewFileName, TemplateContent, ParsedTemplate: string;
 begin
   OutputDir := Concat(GetCurrentDir, '\output');
   if not DirectoryExists(OutputDir) then
@@ -513,14 +513,14 @@ begin
   TFile.WriteAllText(NewFileName, ParsedTemplate, TEncoding.UTF8);
 end;
 
-procedure GenerateEnums(const ATemplate: TString; AEnums: TStrings);
+procedure GenerateEnums(const ATemplate: string; AEnums: TStrings);
 
-  function RemoveExtension(const AFileName: TString): TString;
+  function RemoveExtension(const AFileName: string): string;
   begin
     Result := StringReplace(AFileName, '.tpl', '', [rfReplaceAll, rfIgnoreCase]);
   end;
 
-  function Tokenize(const AInput: TString): TStrings;
+  function Tokenize(const AInput: string): TStrings;
   var
     Tokens: TStringDynArray;
     Idx: Integer;
@@ -532,9 +532,9 @@ procedure GenerateEnums(const ATemplate: TString; AEnums: TStrings);
       Result.Add(Tokens[Idx]);
   end;
 
-  function Parse(const ATokens: TStrings): TString;
+  function Parse(const ATokens: TStrings): string;
   var
-    UpperToken, Token, Looping: TString;
+    UpperToken, Token, Looping: string;
     Idx, LoopingIdx, LoopingLimit, LoopingCount: Integer;
     ParsedResult: TStrings;
     CurrentEnumerable: TEnumerable;
@@ -634,7 +634,7 @@ procedure GenerateEnums(const ATemplate: TString; AEnums: TStrings);
     end;
   end;
 
-  function InterpolateTags(const AInput: TString): TString;
+  function InterpolateTags(const AInput: string): string;
   var
     Tokens: TStrings;
   begin
@@ -647,8 +647,8 @@ procedure GenerateEnums(const ATemplate: TString; AEnums: TStrings);
   end;
 
 var
-  OutputDir: TString;
-  NewFileName, TemplateContent, ParsedTemplate: TString;
+  OutputDir: string;
+  NewFileName, TemplateContent, ParsedTemplate: string;
 begin
   OutputDir := Concat(GetCurrentDir, '\output');
   if not DirectoryExists(OutputDir) then
@@ -659,7 +659,7 @@ begin
   TFile.WriteAllText(NewFileName, ParsedTemplate, TEncoding.UTF8);
 end;
 
-procedure GenerateClasses(const ATemplate: TString);
+procedure GenerateClasses(const ATemplate: string);
 const
   MODEL_SECTION = 'Models';
   ROUTE_SECTION = 'Routes';
@@ -668,7 +668,7 @@ const
 var
   Config: TIniFile;
   Models: TStrings;
-  Model, ModelFilename, Route, Server, ModelDirectory: TString;
+  Model, ModelFilename, Route, Server, ModelDirectory: string;
   Fields: TStrings;
 begin
   Config := TIniFile.Create(Concat(GetCurrentDir, '\Config.ini'));
@@ -698,7 +698,7 @@ begin
   end;
 end;
 
-procedure GenerateSingleFileClasses(const ATemplate: TString);
+procedure GenerateSingleFileClasses(const ATemplate: string);
 const
   MODEL_SECTION = 'Models';
   VAREJOFACIL_SECTION = 'Varejofacil';
@@ -706,7 +706,7 @@ const
 var
   Config: TIniFile;
   Models: TStrings;
-  Model, ModelFilename, Server, ModelDirectory: TString;
+  Model, ModelFilename, Server, ModelDirectory: string;
 begin
   Config := TIniFile.Create(Concat(GetCurrentDir, '\Config.ini'));
   try
@@ -729,7 +729,7 @@ begin
   end;
 end;
 
-procedure GenerateEnumsUsingFile(const ATemplate, AEnumFile: TString);
+procedure GenerateEnumsUsingFile(const ATemplate, AEnumFile: string);
 var
   Enums: TStrings;
 begin
@@ -743,21 +743,21 @@ end;
 
 { TStringHolder }
 
-constructor TStringHolder.Create(const AInput: TString);
+constructor TStringHolder.Create(const AInput: string);
 begin
   FValue := AInput;
 end;
 
-function TStringHolder.Value: TString;
+function TStringHolder.Value: string;
 begin
   Result := FValue;
 end;
 
 { TEnumerable }
 
-procedure TEnumerable.Add(const AKey, AValue: TString);
+procedure TEnumerable.Add(const AKey, AValue: string);
 
-  function GetUpperCaseChars(const AInput: TString): TString;
+  function GetUpperCaseChars(const AInput: string): string;
   var
     UpperCaseChars: string;
     I: Integer;
@@ -773,7 +773,7 @@ begin
   FEnums.AddObject(LowerCase(GetUpperCaseChars(FName)) + AKey, TStringHolder.Create(AKey));
 end;
 
-constructor TEnumerable.Create(const AName: TString);
+constructor TEnumerable.Create(const AName: string);
 begin
   inherited Create;         
   FEnums := TStringList.Create(True);
@@ -790,7 +790,7 @@ end;
 
 var
   Templates: TStrings;
-  Template, Filter, EnumFile: TString;
+  Template, Filter, EnumFile: string;
 
 begin
   try

@@ -3,7 +3,7 @@
 interface
 
 uses
-  SDK.Types, SDK.Model.Produto, SDK.Service, SDK.XML, XMLIntf, SysUtils;
+  SDK.Types, SDK.Model.Produto, SDK.Service, SDK.XML, XMLIntf, SysUtils, Math;
 
 type
 
@@ -52,11 +52,15 @@ var
   Nodes: TCustomXMLNodeArray;
   NodeIdx: Integer;
   Document: IXMLDocument;
-  ProdutoList: IProdutoList;
+  ProdutoList, PaginationList: TProdutoList;
   Produto: IProduto;
   URL: TString;
+  ResultNodes: TCustomXMLNodeArray;
+  Start, Count, Total, TotalPack, Position: Integer;
 begin
-  URL := Concat(FPath, '?', ToParams(AQuery, AStart, ACount, ASortParams));
+  Start := AStart;
+  Count := ACount;
+  URL := Concat(FPath, '?', ToParams(AQuery, Start, Count, ASortParams));
   Response := FClient.Get(URL, nil, nil);
   Document := Response.AsXML;
   Nodes := TXMLHelper.XPathSelect(Document, '//ResultList/items/*');
@@ -66,7 +70,30 @@ begin
     TXMLHelper.Deserialize(Nodes[NodeIdx], TProduto, FDeserializers).QueryInterface(IProduto, Produto);
     ProdutoList.Add(Produto);
   end;
+
+  ResultNodes := TXMLHelper.XPathSelect(Document, '//ResultList');
+
+  if Length(ResultNodes) > 0 then
+  begin
+    Start := ResultNodes[0].ChildValues['start'];
+    Count := ResultNodes[0].ChildValues['count'];
+    Total := ResultNodes[0].ChildValues['total'];
+    if ACount = 0 then
+      TotalPack := Total + Start
+    else
+      TotalPack := Min(Total, ACount) + Start;
+    Position := Count + Start;
+
+    if Position < TotalPack then
+    begin
+      PaginationList := Filter(AQuery, Start, TotalPack - Position, ASortParams);
+      for Produto in PaginationList do
+        ProdutoList.Add(Produto);
+    end;
+  end;
+
   Result := TProdutoListRec.Create(ProdutoList);
 end;
 
 end.
+
