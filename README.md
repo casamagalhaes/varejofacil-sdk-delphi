@@ -38,7 +38,7 @@ var
  Client: IClient;
 
 begin
-   Client := TClient.Create('http://172.16.13.109:8080', 'administrador', '123');
+   Client := TClient.Create('http://suaempresa.varejofacil.com', 'administrador', '123');
    FornecedorService := TFornecedorService.Create(Client);
    try
      Fornecedores := FornecedorService.GetAll;
@@ -61,7 +61,7 @@ var
  Client: IClient;
 
 begin
-   Client := TClient.Create('http://172.16.13.109:8080', 'administrador', '123');
+   Client := TClient.Create('http://suaempresa.varejofacil.com', 'administrador', '123');
    FornecedorService := TFornecedorService.Create(Client);
    try
      Fornecedores := FornecedorService.Filter('id=in=(002,003)', 5, 10, ['+id']);
@@ -83,7 +83,7 @@ var
  Client: IClient;
 
 begin
-   Client := TClient.Create('http://172.16.13.109:8080', 'administrador', '123');
+   Client := TClient.Create('http://suaempresa.varejofacil.com', 'administrador', '123');
    FornecedorService := TFornecedorService.Create(Client);
    try
      Fornecedor := FornecedorService.Get('0001');
@@ -103,7 +103,7 @@ var
  Client: IClient;
 
 begin
-   Client := TClient.Create('http://172.16.13.109:8080', 'administrador', '123');
+   Client := TClient.Create('http://suaempresa.varejofacil.com', 'administrador', '123');
    FornecedorService := TFornecedorService.Create(Client);
    try
      Fornecedor := TFornecedor.Create;
@@ -121,7 +121,7 @@ var
  Client: IClient;
 
 begin
-   Client := TClient.Create('http://172.16.13.109:8080', 'administrador', '123');
+   Client := TClient.Create('http://suaempresa.varejofacil.com', 'administrador', '123');
    FornecedorService := TFornecedorService.Create(Client);
    try
      FornecedorService.Delete('0001');
@@ -131,6 +131,8 @@ begin
 end.
 
 ```
+
+**Observação**: http://suaempresa.varejofacil.com é um endereço fictício que representa a url para a instância do seu varejofacil.
 
 #### Exemplo de uso
 
