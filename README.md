@@ -134,6 +134,7 @@ end.
 
 **Observação**: http://suaempresa.varejofacil.com é um endereço fictício que representa a url para a instância do seu varejofacil.
 
+
 #### Exemplo de uso
 
 Utilizando a SDK para inserir um novo produto
