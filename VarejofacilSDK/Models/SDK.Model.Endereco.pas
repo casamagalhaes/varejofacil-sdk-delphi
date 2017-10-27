@@ -371,5 +371,7 @@ begin
   FRestricoes := ARestricoes;
 end;
 
+initialization
+  RegisterClass(TEndereco);
 
 end.

@@ -70,7 +70,7 @@ var
   Nodes: TCustomXMLNodeArray;
   NodeIdx: Integer;
   Document: IXMLDocument;
-  GrupoList, PaginationList: IGrupoList;
+  GrupoList, PaginationList: TGrupoList;
   Grupo: IGrupo;
   URL: TString;
   ResultNodes: TCustomXMLNodeArray;
