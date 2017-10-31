@@ -7,7 +7,7 @@ uses
   SDK.Model.Produto, XMLIntf, SDK.Types, SDK.TestCase, SDK.Model.ImpostoFederal, SDK.Enums, SDK.Service.ImpostoFederal,
   SDK.Service.Genero, SDK.Service.Secao, SDK.Model.ItemImpostoFederal, SDK.Model.Genero, SDK.Model.Secao,
   SDK.Model.NCM, SDK.Service.NCM, SDK.Model.UnidadeProduto, SDK.Service.UnidadeProduto, SDK.Service.MarcaProduto,
-  SDK.Model.MarcaDoProduto, SDK.Model.Loja, SDK.Service.Loja;
+  SDK.Model.MarcaDoProduto, SDK.Model.Loja, SDK.Service.Loja, SDK.Service.Preco, SDK.Model.Preco;
 
 type
 
@@ -21,6 +21,7 @@ type
     FUnidadeService: TUnidadeProdutoService;
     FMarcaProdutoService: TMarcaProdutoService;
     FLojaService: TLojaService;
+    FPrecoService: TPrecoService;
   public
     procedure SetUp; override;
     procedure TearDown; override;
@@ -43,6 +44,7 @@ begin
   FUnidadeService := TUnidadeProdutoService.Create(GetClient);
   FMarcaProdutoService := TMarcaProdutoService.Create(GetClient);
   FLojaService := TLojaService.Create(GetClient);
+  FPrecoService:= TPrecoService.Create(GetClient);
 end;
 
 procedure TTestProdutoService.TearDown;
@@ -55,6 +57,7 @@ begin
   FreeAndNil(FUnidadeService);
   FreeAndNil(FMarcaProdutoService);
   FreeAndNil(FLojaService);
+  FreeAndNil(FPrecoService);
 end;
 
 procedure TTestProdutoService.TestBasicOperations;
@@ -76,7 +79,9 @@ var
   Lojas: ILojaList;
   Id: Variant;
   Result: TServiceCommandResult;
+  Precos: TPrecoList;
 begin
+  Precos := FPrecoService.GetAll();
   ProdutoList := FProdutoService.GetAll();
 
   Produto := TProduto.Create;
@@ -85,6 +90,8 @@ begin
   FillWithRandomValues(Produto);
 
   Produto.Id := 9999;
+
+  Assert(Precos.Count > 0);
 
   //Buscando gênero
   Generos := FGeneroService.GetAll(0, 1, ['+id']);

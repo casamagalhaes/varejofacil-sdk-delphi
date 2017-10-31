@@ -28,7 +28,8 @@ uses
   TestSDK.Service.Produto in 'Services\TestSDK.Service.Produto.pas',
   TestSDK.Service.Genero in 'Services\TestSDK.Service.Genero.pas',
   TestSDK.Service.ImpostoFederal in 'Services\TestSDK.Service.ImpostoFederal.pas',
-  TestSDK.Service.NCM in 'Services\TestSDK.Service.NCM.pas';
+  TestSDK.Service.NCM in 'Services\TestSDK.Service.NCM.pas',
+  TestSDK.Service.Fornecedor in 'Services\TestSDK.Service.Fornecedor.pas';
 
 {$R *.RES}
 
