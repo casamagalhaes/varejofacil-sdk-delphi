@@ -37,12 +37,6 @@ type
     procedure SetMargemPreco3(const AMargemPreco3: Double);
     function GetQuantidadeMinimaPreco3: Double;
     procedure SetQuantidadeMinimaPreco3(const AQuantidadeMinimaPreco3: Double);
-    function GetPreco1: Double;
-    procedure SetPreco1(const APreco1: Double);
-    function GetPreco2: Double;
-    procedure SetPreco2(const APreco2: Double);
-    function GetPreco3: Double;
-    procedure SetPreco3(const APreco3: Double);
     function GetDescontoMaximo: Double;
     procedure SetDescontoMaximo(const ADescontoMaximo: Double);
     function GetCustoProduto: Double;
@@ -69,9 +63,6 @@ type
     property PrecoOferta3: Double read GetPrecoOferta3 write SetPrecoOferta3;
     property MargemPreco3: Double read GetMargemPreco3 write SetMargemPreco3;
     property QuantidadeMinimaPreco3: Double read GetQuantidadeMinimaPreco3 write SetQuantidadeMinimaPreco3;
-    property Preco1: Double read GetPreco1 write SetPreco1;
-    property Preco2: Double read GetPreco2 write SetPreco2;
-    property Preco3: Double read GetPreco3 write SetPreco3;
     property DescontoMaximo: Double read GetDescontoMaximo write SetDescontoMaximo;
     property CustoProduto: Double read GetCustoProduto write SetCustoProduto;
     property PrecoMedioDeReposicao: Double read GetPrecoMedioDeReposicao write SetPrecoMedioDeReposicao;
@@ -181,12 +172,6 @@ type
     procedure SetMargemPreco3(const AMargemPreco3: Double);
     function GetQuantidadeMinimaPreco3: Double;
     procedure SetQuantidadeMinimaPreco3(const AQuantidadeMinimaPreco3: Double);
-    function GetPreco1: Double;
-    procedure SetPreco1(const APreco1: Double);
-    function GetPreco2: Double;
-    procedure SetPreco2(const APreco2: Double);
-    function GetPreco3: Double;
-    procedure SetPreco3(const APreco3: Double);
     function GetDescontoMaximo: Double;
     procedure SetDescontoMaximo(const ADescontoMaximo: Double);
     function GetCustoProduto: Double;
@@ -214,9 +199,6 @@ type
     property PrecoOferta3: Double read GetPrecoOferta3 write SetPrecoOferta3;
     property MargemPreco3: Double read GetMargemPreco3 write SetMargemPreco3;
     property QuantidadeMinimaPreco3: Double read GetQuantidadeMinimaPreco3 write SetQuantidadeMinimaPreco3;
-    property Preco1: Double read GetPreco1 write SetPreco1;
-    property Preco2: Double read GetPreco2 write SetPreco2;
-    property Preco3: Double read GetPreco3 write SetPreco3;
     property DescontoMaximo: Double read GetDescontoMaximo write SetDescontoMaximo;
     property CustoProduto: Double read GetCustoProduto write SetCustoProduto;
     property PrecoMedioDeReposicao: Double read GetPrecoMedioDeReposicao write SetPrecoMedioDeReposicao;
@@ -449,36 +431,6 @@ end;
 procedure TPreco.SetQuantidadeMinimaPreco3(const AQuantidadeMinimaPreco3: Double);
 begin
   FQuantidadeMinimaPreco3 := AQuantidadeMinimaPreco3;
-end;
-
-function TPreco.GetPreco1: Double;
-begin
-  Result := FPreco1;
-end;
-
-procedure TPreco.SetPreco1(const APreco1: Double);
-begin
-  FPreco1 := APreco1;
-end;
-
-function TPreco.GetPreco2: Double;
-begin
-  Result := FPreco2;
-end;
-
-procedure TPreco.SetPreco2(const APreco2: Double);
-begin
-  FPreco2 := APreco2;
-end;
-
-function TPreco.GetPreco3: Double;
-begin
-  Result := FPreco3;
-end;
-
-procedure TPreco.SetPreco3(const APreco3: Double);
-begin
-  FPreco3 := APreco3;
 end;
 
 function TPreco.GetDescontoMaximo: Double;
