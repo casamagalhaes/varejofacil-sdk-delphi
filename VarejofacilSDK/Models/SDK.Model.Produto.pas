@@ -14,8 +14,8 @@ type
     procedure SetId(const AId: Variant);
     function GetProdutoDestinoId: Variant;
     procedure SetProdutoDestinoId(const AProdutoDestinoId: Variant);
-    function GetSubGrupoId: Variant;
-    procedure SetSubgrupoId(const ASubGrupoId: Variant);
+    function GetSubgrupoId: Variant;
+    procedure SetSubgrupoId(const ASubgrupoId: Variant);
     function GetGrupoId: Variant;
     procedure SetGrupoId(const AGrupoId: Variant);
     function GetSecaoId: Integer;
@@ -200,7 +200,7 @@ type
     procedure SetEstoqueDoProduto(const AEstoqueDoProduto: TEstoqueDoProdutoList);
     property Id: Variant read GetId write SetId;
     property ProdutoDestinoId: Variant read GetProdutoDestinoId write SetProdutoDestinoId;
-    property SubGrupoId: Variant read GetSubgrupoId write SetSubgrupoId;
+    property SubgrupoId: Variant read GetSubgrupoId write SetSubgrupoId;
     property GrupoId: Variant read GetGrupoId write SetGrupoId;
     property SecaoId: Integer read GetSecaoId write SetSecaoId;
     property NaturezaDeImpostoFederalId: Variant read GetNaturezaDeImpostoFederalId write SetNaturezaDeImpostoFederalId;
@@ -346,7 +346,7 @@ type
   private
 	FId: Variant;
 	FProdutoDestinoId: Variant;
-	FSubGrupoId: Variant;
+	FSubgrupoId: Variant;
 	FGrupoId: Variant;
 	FSecaoId: Integer;
 	FNaturezaDeImpostoFederalId: Variant;
@@ -442,8 +442,8 @@ type
     procedure SetId(const AId: Variant);
     function GetProdutoDestinoId: Variant;
     procedure SetProdutoDestinoId(const AProdutoDestinoId: Variant);
-    function GetSubGrupoId: Variant;
-    procedure SetSubgrupoId(const ASubGrupoId: Variant);
+    function GetSubgrupoId: Variant;
+    procedure SetSubgrupoId(const ASubgrupoId: Variant);
     function GetGrupoId: Variant;
     procedure SetGrupoId(const AGrupoId: Variant);
     function GetSecaoId: Integer;
@@ -629,7 +629,7 @@ type
   published
     property Id: Variant read GetId write SetId;
     property ProdutoDestinoId: Variant read GetProdutoDestinoId write SetProdutoDestinoId;
-    property SubGrupoId: Variant read GetSubgrupoId write SetSubgrupoId;
+    property SubgrupoId: Variant read GetSubgrupoId write SetSubgrupoId;
     property GrupoId: Variant read GetGrupoId write SetGrupoId;
     property SecaoId: Integer read GetSecaoId write SetSecaoId;
     property NaturezaDeImpostoFederalId: Variant read GetNaturezaDeImpostoFederalId write SetNaturezaDeImpostoFederalId;
@@ -829,12 +829,12 @@ begin
   FProdutoDestinoId := AProdutoDestinoId;
 end;
 
-function TProduto.GetSubGrupoId: Variant;
+function TProduto.GetSubgrupoId: Variant;
 begin
   Result := FSubgrupoId;
 end;
 
-procedure TProduto.SetSubgrupoId(const ASubGrupoId: Variant);
+procedure TProduto.SetSubgrupoId(const ASubgrupoId: Variant);
 begin
   FSubgrupoId := ASubgrupoId;
 end;
