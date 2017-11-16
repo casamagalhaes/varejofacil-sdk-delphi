@@ -9,13 +9,13 @@ type
 
   INCM = interface(IModel)
     ['{B6E40182-550D-435C-8887-21C19BA1921C}']
-    function GetId: Int64;
-    procedure SetId(const AId: Int64);
+    function GetId: TString;
+    procedure SetId(const AId: TString);
     function GetDescricao: TString;
     procedure SetDescricao(const ADescricao: TString);
     function GetAliquotaIPI: Double;
     procedure SetAliquotaIPI(const AAliquotaIPI: Double);
-    property Id: Int64 read GetId write SetId;
+    property Id: TString read GetId write SetId;
     property Descricao: TString read GetDescricao write SetDescricao;
     property AliquotaIPI: Double read GetAliquotaIPI write SetAliquotaIPI;
   end;
@@ -70,17 +70,17 @@ type
 
   TNCM = class(TInterfacedModel, INCM)
   private
-	FId: Int64;
+	FId: TString;
 	FDescricao: TString;
 	FAliquotaIPI: Double;
-    function GetId: Int64;
-    procedure SetId(const AId: Int64);
+    function GetId: TString;
+    procedure SetId(const AId: TString);
     function GetDescricao: TString;
     procedure SetDescricao(const ADescricao: TString);
     function GetAliquotaIPI: Double;
     procedure SetAliquotaIPI(const AAliquotaIPI: Double);
   published
-    property Id: Int64 read GetId write SetId;
+    property Id: TString read GetId write SetId;
     property Descricao: TString read GetDescricao write SetDescricao;
     property AliquotaIPI: Double read GetAliquotaIPI write SetAliquotaIPI;
   end;
@@ -171,12 +171,12 @@ end;
 
 { TNCM }
 
-function TNCM.GetId: Int64;
+function TNCM.GetId: TString;
 begin
   Result := FId;
 end;
 
-procedure TNCM.SetId(const AId: Int64);
+procedure TNCM.SetId(const AId: TString);
 begin
   FId := AId;
 end;
