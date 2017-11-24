@@ -196,8 +196,8 @@ type
     procedure SetItensImpostosFederais(const AItensImpostosFederais: TItemImpostoFederalList);
     function GetPautasDoProduto: TPautaDoProdutoList;
     procedure SetPautasDoProduto(const APautasDoProduto: TPautaDoProdutoList);
-    function GetEstoqueDoProduto: TEstoqueDoProdutoList;
-    procedure SetEstoqueDoProduto(const AEstoqueDoProduto: TEstoqueDoProdutoList);
+    function GetEstoquesDoProduto: TEstoqueDoProdutoList;
+    procedure SetEstoquesDoProduto(const AEstoquesDoProduto: TEstoqueDoProdutoList);
     property Id: Variant read GetId write SetId;
     property ProdutoDestinoId: Variant read GetProdutoDestinoId write SetProdutoDestinoId;
     property SubgrupoId: Variant read GetSubgrupoId write SetSubgrupoId;
@@ -291,7 +291,7 @@ type
     property RegimesDoProduto: TRegimeEstadualProdutoList read GetRegimesDoProduto write SetRegimesDoProduto;
     property ItensImpostosFederais: TItemImpostoFederalList read GetItensImpostosFederais write SetItensImpostosFederais;
     property PautasDoProduto: TPautaDoProdutoList read GetPautasDoProduto write SetPautasDoProduto;
-    property EstoqueDoProduto: TEstoqueDoProdutoList read GetEstoqueDoProduto write SetEstoqueDoProduto;
+    property EstoquesDoProduto: TEstoqueDoProdutoList read GetEstoquesDoProduto write SetEstoquesDoProduto;
   end;
 
   TProdutoList = class;
@@ -437,7 +437,7 @@ type
 	FRegimesDoProduto: TRegimeEstadualProdutoList;
 	FItensImpostosFederais: TItemImpostoFederalList;
 	FPautasDoProduto: TPautaDoProdutoList;
-	FEstoqueDoProduto: TEstoqueDoProdutoList;
+	FEstoquesDoProduto: TEstoqueDoProdutoList;
     function GetId: Variant;
     procedure SetId(const AId: Variant);
     function GetProdutoDestinoId: Variant;
@@ -624,8 +624,8 @@ type
     procedure SetItensImpostosFederais(const AItensImpostosFederais: TItemImpostoFederalList);
     function GetPautasDoProduto: TPautaDoProdutoList;
     procedure SetPautasDoProduto(const APautasDoProduto: TPautaDoProdutoList);
-    function GetEstoqueDoProduto: TEstoqueDoProdutoList;
-    procedure SetEstoqueDoProduto(const AEstoqueDoProduto: TEstoqueDoProdutoList);
+    function GetEstoquesDoProduto: TEstoqueDoProdutoList;
+    procedure SetEstoquesDoProduto(const AEstoquesDoProduto: TEstoqueDoProdutoList);
   published
     property Id: Variant read GetId write SetId;
     property ProdutoDestinoId: Variant read GetProdutoDestinoId write SetProdutoDestinoId;
@@ -720,7 +720,7 @@ type
     property RegimesDoProduto: TRegimeEstadualProdutoList read GetRegimesDoProduto write SetRegimesDoProduto;
     property ItensImpostosFederais: TItemImpostoFederalList read GetItensImpostosFederais write SetItensImpostosFederais;
     property PautasDoProduto: TPautaDoProdutoList read GetPautasDoProduto write SetPautasDoProduto;
-    property EstoqueDoProduto: TEstoqueDoProdutoList read GetEstoqueDoProduto write SetEstoqueDoProduto;
+    property EstoquesDoProduto: TEstoqueDoProdutoList read GetEstoquesDoProduto write SetEstoquesDoProduto;
   end;
 
 implementation
@@ -1739,14 +1739,14 @@ begin
   FPautasDoProduto := APautasDoProduto;
 end;
 
-function TProduto.GetEstoqueDoProduto: TEstoqueDoProdutoList;
+function TProduto.GetEstoquesDoProduto: TEstoqueDoProdutoList;
 begin
-  Result := FEstoqueDoProduto;
+  Result := FEstoquesDoProduto;
 end;
 
-procedure TProduto.SetEstoqueDoProduto(const AEstoqueDoProduto: TEstoqueDoProdutoList);
+procedure TProduto.SetEstoquesDoProduto(const AEstoquesDoProduto: TEstoqueDoProdutoList);
 begin
-  FEstoqueDoProduto := AEstoqueDoProduto;
+  FEstoquesDoProduto := AEstoquesDoProduto;
 end;
 
 

@@ -9,15 +9,12 @@ type
 
   IEstoqueDoProduto = interface(IModel)
     ['{4D98A359-33BA-4621-826C-F7FBE18CF94C}']
-    function GetId: Int64;
-    procedure SetId(const AId: Int64);
     function GetLojaId: Int64;
     procedure SetLojaId(const ALojaId: Int64);
     function GetEstoqueMinimo: Double;
     procedure SetEstoqueMinimo(const AEstoqueMinimo: Double);
     function GetEstoqueMaximo: Double;
     procedure SetEstoqueMaximo(const AEstoqueMaximo: Double);
-    property Id: Int64 read GetId write SetId;
     property LojaId: Int64 read GetLojaId write SetLojaId;
     property EstoqueMinimo: Double read GetEstoqueMinimo write SetEstoqueMinimo;
     property EstoqueMaximo: Double read GetEstoqueMaximo write SetEstoqueMaximo;
@@ -73,12 +70,9 @@ type
 
   TEstoqueDoProduto = class(TInterfacedModel, IEstoqueDoProduto)
   private
-	FId: Int64;
-	FLojaId: Int64;
-	FEstoqueMinimo: Double;
-	FEstoqueMaximo: Double;
-    function GetId: Int64;
-    procedure SetId(const AId: Int64);
+    FLojaId: Int64;
+    FEstoqueMinimo: Double;
+    FEstoqueMaximo: Double;
     function GetLojaId: Int64;
     procedure SetLojaId(const ALojaId: Int64);
     function GetEstoqueMinimo: Double;
@@ -86,7 +80,6 @@ type
     function GetEstoqueMaximo: Double;
     procedure SetEstoqueMaximo(const AEstoqueMaximo: Double);
   published
-    property Id: Int64 read GetId write SetId;
     property LojaId: Int64 read GetLojaId write SetLojaId;
     property EstoqueMinimo: Double read GetEstoqueMinimo write SetEstoqueMinimo;
     property EstoqueMaximo: Double read GetEstoqueMaximo write SetEstoqueMaximo;
@@ -177,16 +170,6 @@ begin
 end;
 
 { TEstoqueDoProduto }
-
-function TEstoqueDoProduto.GetId: Int64;
-begin
-  Result := FId;
-end;
-
-procedure TEstoqueDoProduto.SetId(const AId: Int64);
-begin
-  FId := AId;
-end;
 
 function TEstoqueDoProduto.GetLojaId: Int64;
 begin
