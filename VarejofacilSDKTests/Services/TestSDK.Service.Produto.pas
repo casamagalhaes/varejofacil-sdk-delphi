@@ -81,17 +81,12 @@ var
   Result: TServiceCommandResult;
   Precos: TPrecoList;
 begin
-  Precos := FPrecoService.GetAll();
-  ProdutoList := FProdutoService.GetAll();
-
   Produto := TProduto.Create;
 
   //Preenchendo campos com valores aleatórios
   FillWithRandomValues(Produto);
 
   Produto.Id := 9999;
-
-  Assert(Precos.Count > 0);
 
   //Buscando gênero
   Generos := FGeneroService.GetAll(0, 1, ['+id']);
@@ -111,7 +106,7 @@ begin
   //Buscando NCM
   NCMs := FNCMService.GetAll(0, 1);
   NCM := NCMs[0];
-  Produto.NomeclaturaMercosulId := IntToStr(NCM.Id);
+  Produto.NomeclaturaMercosulId := NCM.Id;
 
   //Buscando unidades
   Unidades := FUnidadeService.GetAll(0, 2);
