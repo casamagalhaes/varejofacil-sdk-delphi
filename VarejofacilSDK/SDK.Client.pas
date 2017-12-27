@@ -34,7 +34,8 @@ type
     function Put(const AURL, AContent: TString; AHeaders: TStrings): IResponse;
     function Post(const AURL, AContent: TString; AHeaders: TStrings): IResponse;
     function Delete(const AURL: TString; AParams, AHeaders: TStrings): IResponse;
-    constructor Create(const ABaseURL: TString; const AUsername, APassword: string);
+    constructor Create(const ABaseURL: TString; const AUsername, APassword: string); overload;
+    constructor Create(const ABaseURL: TString; const AApiKey: string); overload;
     destructor Destroy; override;
   end;
 
@@ -54,7 +55,7 @@ begin
   if Assigned(FTokens) then
   begin
     Result := ARequestFunction(AURL, AParams, AHeaders, AContent, FTokens);
-    if Result.Status = 401 then
+    if (Result.Status = 401) and (FTokens.ApiKey <> EmptyStr) then
     begin
       RefreshHeaders := TStringList.Create;
       try
@@ -145,6 +146,13 @@ var
 begin
   Request := TRequest.Create(Concat(FBaseURL, AURL), mtPUT, nil, nil, AContent, ATokens);
   Result := MakeRequest(Request);
+end;
+
+constructor TClient.Create(const ABaseURL: TString; const AApiKey: string);
+begin
+  inherited Create;
+  FBaseURL := ABaseURL;
+  FTokens := TTokenStorage.From(AApiKey);
 end;
 
 function TClient.Get(const AURL: TString; AParams, AHeaders: TStrings): IResponse;

@@ -114,10 +114,13 @@ type
   private
     FAccessToken: string;
     FRefreshToken: string;
+    FApiKey: string;
   public
     property AccessToken: string read FAccessToken write FAccessToken;
     property RefreshToken: string read FRefreshToken write FRefreshToken;
-    class function From(const AResponse: IResponse): TTokenStorage;
+    property ApiKey: string read FApiKey write FApiKey;
+    class function From(const AResponse: IResponse): TTokenStorage; overload;
+    class function From(const AApiKey: string): TTokenStorage; overload;
     function Clone: TTokenStorage;
   end;
 
@@ -235,6 +238,7 @@ begin
   Result := TTokenStorage.Create;
   Result.AccessToken := FAccessToken;
   Result.RefreshToken := FRefreshToken;
+  Result.ApiKey := FApiKey;
 end;
 
 class function TTokenStorage.From(const AResponse: IResponse): TTokenStorage;
@@ -250,6 +254,12 @@ begin
     Result.AccessToken := AccessTokenNode[0].Text;
   if Length(RefreshTokenNode) > 0 then
     Result.RefreshToken := RefreshTokenNode[0].Text;
+end;
+
+class function TTokenStorage.From(const AApiKey: string): TTokenStorage;
+begin
+  Result := TTokenStorage.Create;
+  Result.ApiKey := AApiKey;
 end;
 
 { TLongList }

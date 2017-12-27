@@ -101,8 +101,15 @@ begin
       FHeaders.NameValueSeparator := ':';
       FOwnedObjects.AddObject('Headers', FHeaders);
     end;
-    if FHeaders.IndexOf('authorization') = -1 then
-      FHeaders.Values['authorization'] := FTokens.AccessToken;
+    if (FHeaders.IndexOf('x-api-key') = -1) and (FTokens.ApiKey <> EmptyStr) then
+    begin
+      FHeaders.Values['x-api-key'] := FTokens.ApiKey;
+    end
+    else
+    begin
+      if FHeaders.IndexOf('authorization') = -1 then
+        FHeaders.Values['authorization'] := FTokens.AccessToken;
+    end;
   end;
 end;
 
