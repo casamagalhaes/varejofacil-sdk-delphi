@@ -3,7 +3,7 @@
 interface
 
 uses
-  SDK.Types, SDK.Model.MarcaDoProduto, SDK.Service, SDK.XML, XMLIntf, SysUtils, Math;
+  SDK.Types, SDK.Model.MarcaDoProduto, SDK.Service, SDK.Exceptions, SDK.XML, XMLIntf, SysUtils, Math;
 
 type
 
@@ -34,10 +34,19 @@ var
 begin
   Result := nil;
   Response := FClient.Get(Concat(FPath, '/', AId), nil, nil);
-  Document := Response.AsXML;
-  Nodes := TXMLHelper.XPathSelect(Document, '//MarcaProduto');
-  if Length(Nodes) > 0 then
-    TXMLHelper.Deserialize(Nodes[0], TMarcaDoProduto, FDeserializers).QueryInterface(IMarcaDoProduto, Result);
+  case Response.Status of
+    200:
+    begin
+      Document := Response.AsXML;
+      Nodes := TXMLHelper.XPathSelect(Document, '//MarcaProduto');
+      if Length(Nodes) > 0 then
+        TXMLHelper.Deserialize(Nodes[0], TMarcaDoProduto, FDeserializers).QueryInterface(IMarcaDoProduto, Result);
+    end;
+    404:
+      raise SDKNotFoundException.Create(Concat('Marca ', AId, ' não encontrada'));
+    else
+      raise SDKUnknownException.Create(Format('Erro %d - %s', [Response.Status, Response.Content]));
+  end;
 end;
 
 function TMarcaProdutoService.GetAll(AStart, ACount: Integer; const ASortParams: TStringArray): TMarcaDoProdutoListRec;

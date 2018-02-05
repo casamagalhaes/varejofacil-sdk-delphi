@@ -3,7 +3,7 @@
 interface
 
 uses
-  SDK.Types, SDK.Model.Produto, SDK.Service, SDK.XML, XMLIntf, SysUtils, Math;
+  SDK.Types, SDK.Model.Produto, SDK.Service, SDK.Exceptions, SDK.XML, XMLIntf, SysUtils, Math;
 
 type
 
@@ -34,10 +34,23 @@ var
 begin
   Result := nil;
   Response := FClient.Get(Concat(FPath, '/', AId), nil, nil);
-  Document := Response.AsXML;
-  Nodes := TXMLHelper.XPathSelect(Document, '//Produto');
-  if Length(Nodes) > 0 then
-    TXMLHelper.Deserialize(Nodes[0], TProduto, FDeserializers).QueryInterface(IProduto, Result);
+  case Response.Status of
+    200:
+    begin
+      Document := Response.AsXML;
+      Nodes := TXMLHelper.XPathSelect(Document, '//Produto');
+      if Length(Nodes) > 0 then
+        TXMLHelper.Deserialize(Nodes[0], TProduto, FDeserializers).QueryInterface(IProduto, Result);
+    end;
+    404:
+    begin
+      raise SDKNotFoundException.Create(Concat('Produto ', AId, ' não encontrado'));
+    end;
+    else
+    begin
+      raise SDKUnknownException.Create(Format('Erro %d - %s', [Response.Status, Response.Content]));
+    end;
+  end;
 end;
 
 function TProdutoService.GetAll(AStart, ACount: Integer; const ASortParams: TStringArray): TProdutoListRec;

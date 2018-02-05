@@ -3,7 +3,7 @@
 interface
 
 uses
-  SDK.Types, SDK.Model.Subgrupo, SDK.Service, SDK.XML, XMLIntf, SysUtils, Math;
+  SDK.Types, SDK.Model.Subgrupo, SDK.Service, SDK.Exceptions, SDK.XML, XMLIntf, SysUtils, Math;
 
 type
 
@@ -37,10 +37,19 @@ var
 begin
   Result := nil;
   Response := FClient.Get(Concat(PathWithDependencies([AIdSecao, AIdGrupo]), '/', AId), nil, nil);
-  Document := Response.AsXML;
-  Nodes := TXMLHelper.XPathSelect(Document, '//SubGrupo');
-  if Length(Nodes) > 0 then
-    TXMLHelper.Deserialize(Nodes[0], TSubgrupo, FDeserializers).QueryInterface(ISubgrupo, Result);
+  case Response.Status of
+    200:
+    begin
+      Document := Response.AsXML;
+      Nodes := TXMLHelper.XPathSelect(Document, '//SubGrupo');
+      if Length(Nodes) > 0 then
+        TXMLHelper.Deserialize(Nodes[0], TSubgrupo, FDeserializers).QueryInterface(ISubgrupo, Result);
+     end;
+    404:
+      raise SDKNotFoundException.Create(Concat('Subgrupo ', AId, ' com grupo ', AIdGrupo, ' e seção ', AIdSecao, ' não encontrado'));
+    else
+      raise SDKUnknownException.Create(Format('Erro %d - %s', [Response.Status, Response.Content]));
+  end;
 end;
 
 function TSubgrupoService.GetAll(AStart, ACount: Integer; const ASortParams: TStringArray): TSubgrupoListRec;

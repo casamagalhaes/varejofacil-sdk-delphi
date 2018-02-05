@@ -19,6 +19,10 @@ type
 
   SDKInvalidSortParamException = class(Exception);
 
+  SDKNotFoundException = class(Exception);
+
+  SDKUnknownException = class(Exception);
+
 implementation
 
 end.
