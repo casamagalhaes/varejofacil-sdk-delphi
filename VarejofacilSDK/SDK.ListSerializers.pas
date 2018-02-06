@@ -3,7 +3,7 @@ unit SDK.ListSerializers;
 interface
 
 uses
-  SysUtils, Classes, SDK.Types, SDK.XML, Variants, TypInfo, SDK.Model.AgenteFinanceiro, SDK.Model.Aplicacao, SDK.Model.Caixa, SDK.Model.CancelamentoDeTituloAReceber, SDK.Model.Caracteristica, SDK.Model.CargaProduto, SDK.Model.CategoriaFinanceira, SDK.Model.Cest, SDK.Model.Cfop, SDK.Model.Cliente, SDK.Model.CodigoAuxiliar, SDK.Model.Componente, SDK.Model.ComprovanteTransacao, SDK.Model.ConfiguracaoPDV, SDK.Model.ContaAReceber, SDK.Model.ContaAReceberRenegociacao, SDK.Model.ContaCorrente, SDK.Model.ContaDeEmail, SDK.Model.Contato, SDK.Model.CSTEstadual, SDK.Model.Devolucao, SDK.Model.DevolucaoDeCupom, SDK.Model.Endereco, SDK.Model.EspecieDeDocumento, SDK.Model.EstoqueDoProduto, SDK.Model.FiguraFiscal, SDK.Model.FiltroCaixa, SDK.Model.Finalizacao, SDK.Model.Finalizadora, SDK.Model.FinalizadoraDaPremiacao, SDK.Model.FormaDePagamento, SDK.Model.Fornecedor, SDK.Model.FuncaoDaLoja, SDK.Model.FuncaoDoPDV, SDK.Model.Funcionario, SDK.Model.Genero, SDK.Model.Grupo, SDK.Model.HistoricoValidacaoFiscal, SDK.Model.Holding, SDK.Model.ImpostoFederal, SDK.Model.ItemAplicacaoProduto, SDK.Model.ItemCaracteristicaProduto, SDK.Model.ItemDaTabelaDeTributacao, SDK.Model.ItemDevolucao, SDK.Model.ItemDevolucaoDeCupom, SDK.Model.ItemImpostoFederal, SDK.Model.ItemPagamento, SDK.Model.ItemRecebimento, SDK.Model.ItemSangria, SDK.Model.ItemTroca, SDK.Model.ItemTrocaFormaPagamento, SDK.Model.ItemVenda, SDK.Model.LimiteDeCredito, SDK.Model.LocalDaLoja, SDK.Model.LocalDeImpressao, SDK.Model.LocalEstoque, SDK.Model.Loja, SDK.Model.LojaDaFormaDePagamento, SDK.Model.LojaDoFuncionario, SDK.Model.LojaDoPagamentoPDV, SDK.Model.LojaView, SDK.Model.MarcaDoProduto, SDK.Model.MotivoDaDevolucao, SDK.Model.NCM, SDK.Model.NCMAliquota, SDK.Model.NCMExcecao, SDK.Model.NCMExcecaoAliquota, SDK.Model.NivelDeAcesso, SDK.Model.Ocorrencia, SDK.Model.OcorrenciaVenda, SDK.Model.Pagamento, SDK.Model.PagamentoDeTitulo, SDK.Model.PagamentoPDV, SDK.Model.PagueLeve, SDK.Model.PagueLeveItem, SDK.Model.PautaDoProduto, SDK.Model.PreAutorizacaoContaReceber, SDK.Model.PreAutorizacaoFormaDePagamento, SDK.Model.PreAutorizacaoLiquidacao, SDK.Model.PreAutorizacaoTituloReceber, SDK.Model.Preco, SDK.Model.Premiacao, SDK.Model.PremioLoja, SDK.Model.Produto, SDK.Model.ProdutoDaPremiacao, SDK.Model.ProdutoPrincipal, SDK.Model.ProdutoPromocional, SDK.Model.Ramo, SDK.Model.Recebimento, SDK.Model.Receita, SDK.Model.Reducao, SDK.Model.ReducaoComissao, SDK.Model.Referencia, SDK.Model.ReferenciaDoFornecedor, SDK.Model.RegimeEstadualProduto, SDK.Model.RegimeEstadualTributario, SDK.Model.SaidaOperador, SDK.Model.Sangria, SDK.Model.Secao, SDK.Model.Setor, SDK.Model.SituacaoFiscal, SDK.Model.StatusDoCliente, SDK.Model.SubGrupo, SDK.Model.TabelaDeTributacao, SDK.Model.TipoDocumento, SDK.Model.TipoPagamento, SDK.Model.TituloAReceber, SDK.Model.TituloAReceberCancelamento, SDK.Model.TituloAReceberEstorno, SDK.Model.TituloAReceberLiquidacao, SDK.Model.TituloNaoLiquidado, SDK.Model.TituloNaoLiquidadoMap, SDK.Model.TransacaoConvenio, SDK.Model.TransacaoItemTef, SDK.Model.TransacaoTef, SDK.Model.Tributacao, SDK.Model.Troca, SDK.Model.TrocaFormaPagamento, SDK.Model.UnidadeProduto, SDK.Model.Usuario, SDK.Model.Venda, SDK.Model.VendaCasada, SDK.Service;
+  SysUtils, Classes, SDK.Types, SDK.XML, Variants, TypInfo, SDK.Model.AgenteFinanceiro, SDK.Model.Aplicacao, SDK.Model.Caixa, SDK.Model.CancelamentoDeTituloAReceber, SDK.Model.Caracteristica, SDK.Model.CargaProduto, SDK.Model.CategoriaFinanceira, SDK.Model.Cest, SDK.Model.Cfop, SDK.Model.Cliente, SDK.Model.CodigoAuxiliar, SDK.Model.Componente, SDK.Model.ComprovanteTransacao, SDK.Model.ConfiguracaoPDV, SDK.Model.ContaAReceber, SDK.Model.ContaAReceberRenegociacao, SDK.Model.ContaCorrente, SDK.Model.ContaDeEmail, SDK.Model.Contato, SDK.Model.CSTEstadual, SDK.Model.Devolucao, SDK.Model.DevolucaoDeCupom, SDK.Model.Endereco, SDK.Model.EspecieDeDocumento, SDK.Model.EstoqueDoProduto, SDK.Model.FiguraFiscal, SDK.Model.FiltroCaixa, SDK.Model.Finalizacao, SDK.Model.Finalizadora, SDK.Model.FinalizadoraDaPremiacao, SDK.Model.FormaDePagamento, SDK.Model.Fornecedor, SDK.Model.FuncaoDaLoja, SDK.Model.FuncaoDoPDV, SDK.Model.Funcionario, SDK.Model.Genero, SDK.Model.Grupo, SDK.Model.HistoricoValidacaoFiscal, SDK.Model.Holding, SDK.Model.ImpostoFederal, SDK.Model.ItemAplicacaoProduto, SDK.Model.ItemCaracteristicaProduto, SDK.Model.ItemTabelaTributaria, SDK.Model.ItemDevolucao, SDK.Model.ItemDevolucaoDeCupom, SDK.Model.ItemImpostoFederal, SDK.Model.ItemPagamento, SDK.Model.ItemRecebimento, SDK.Model.ItemSangria, SDK.Model.ItemTroca, SDK.Model.ItemTrocaFormaPagamento, SDK.Model.ItemVenda, SDK.Model.LimiteDeCredito, SDK.Model.LocalDaLoja, SDK.Model.LocalDeImpressao, SDK.Model.LocalEstoque, SDK.Model.Loja, SDK.Model.LojaDaFormaDePagamento, SDK.Model.LojaDoFuncionario, SDK.Model.LojaDoPagamentoPDV, SDK.Model.LojaView, SDK.Model.MarcaDoProduto, SDK.Model.MotivoDaDevolucao, SDK.Model.NCM, SDK.Model.NCMAliquota, SDK.Model.NCMExcecao, SDK.Model.NCMExcecaoAliquota, SDK.Model.NivelDeAcesso, SDK.Model.Ocorrencia, SDK.Model.OcorrenciaVenda, SDK.Model.Pagamento, SDK.Model.PagamentoDeTitulo, SDK.Model.PagamentoPDV, SDK.Model.PagueLeve, SDK.Model.PagueLeveItem, SDK.Model.PautaDoProduto, SDK.Model.PreAutorizacaoContaReceber, SDK.Model.PreAutorizacaoFormaDePagamento, SDK.Model.PreAutorizacaoLiquidacao, SDK.Model.PreAutorizacaoTituloReceber, SDK.Model.Preco, SDK.Model.Premiacao, SDK.Model.PremioLoja, SDK.Model.Produto, SDK.Model.ProdutoDaPremiacao, SDK.Model.ProdutoPrincipal, SDK.Model.ProdutoPromocional, SDK.Model.Ramo, SDK.Model.Recebimento, SDK.Model.Receita, SDK.Model.Reducao, SDK.Model.ReducaoComissao, SDK.Model.Referencia, SDK.Model.ReferenciaDoFornecedor, SDK.Model.RegimeEstadualProduto, SDK.Model.RegimeEstadualTributario, SDK.Model.SaidaOperador, SDK.Model.Sangria, SDK.Model.Secao, SDK.Model.Setor, SDK.Model.SituacaoFiscal, SDK.Model.StatusDoCliente, SDK.Model.SubGrupo, SDK.Model.TabelaTributaria, SDK.Model.TipoDocumento, SDK.Model.TipoPagamento, SDK.Model.TituloAReceber, SDK.Model.TituloAReceberCancelamento, SDK.Model.TituloAReceberEstorno, SDK.Model.TituloAReceberLiquidacao, SDK.Model.TituloNaoLiquidado, SDK.Model.TituloNaoLiquidadoMap, SDK.Model.TransacaoConvenio, SDK.Model.TransacaoItemTef, SDK.Model.TransacaoTef, SDK.Model.Tributacao, SDK.Model.Troca, SDK.Model.TrocaFormaPagamento, SDK.Model.UnidadeProduto, SDK.Model.Usuario, SDK.Model.Venda, SDK.Model.VendaCasada, SDK.Service;
 
 type
 
@@ -280,10 +280,10 @@ type
     class function Execute(AList: TItemCaracteristicaProdutoList): TString;
   end;
 
-  TItemDaTabelaDeTributacaoListSerializer = class(TListSerializer)
+  TItemTabelaTributariaListSerializer = class(TListSerializer)
   public
-    function Serialize(AList: TItemDaTabelaDeTributacaoList): TString;
-    class function Execute(AList: TItemDaTabelaDeTributacaoList): TString;
+    function Serialize(AList: TItemTabelaTributariaList): TString;
+    class function Execute(AList: TItemTabelaTributariaList): TString;
   end;
 
   TItemDevolucaoListSerializer = class(TListSerializer)
@@ -646,10 +646,10 @@ type
     class function Execute(AList: TSubGrupoList): TString;
   end;
 
-  TTabelaDeTributacaoListSerializer = class(TListSerializer)
+  TTabelaTributariaListSerializer = class(TListSerializer)
   public
-    function Serialize(AList: TTabelaDeTributacaoList): TString;
-    class function Execute(AList: TTabelaDeTributacaoList): TString;
+    function Serialize(AList: TTabelaTributariaList): TString;
+    class function Execute(AList: TTabelaTributariaList): TString;
   end;
 
   TTipoDocumentoListSerializer = class(TListSerializer)
@@ -827,7 +827,7 @@ begin
   if SameText(AType, 'TImpostoFederalList') then Result := TImpostoFederalListSerializer.Execute(TImpostoFederalList(AList)) else
   if SameText(AType, 'TItemAplicacaoProdutoList') then Result := TItemAplicacaoProdutoListSerializer.Execute(TItemAplicacaoProdutoList(AList)) else
   if SameText(AType, 'TItemCaracteristicaProdutoList') then Result := TItemCaracteristicaProdutoListSerializer.Execute(TItemCaracteristicaProdutoList(AList)) else
-  if SameText(AType, 'TItemDaTabelaDeTributacaoList') then Result := TItemDaTabelaDeTributacaoListSerializer.Execute(TItemDaTabelaDeTributacaoList(AList)) else
+  if SameText(AType, 'TItemTabelaTributariaList') then Result := TItemTabelaTributariaListSerializer.Execute(TItemTabelaTributariaList(AList)) else
   if SameText(AType, 'TItemDevolucaoList') then Result := TItemDevolucaoListSerializer.Execute(TItemDevolucaoList(AList)) else
   if SameText(AType, 'TItemDevolucaoDeCupomList') then Result := TItemDevolucaoDeCupomListSerializer.Execute(TItemDevolucaoDeCupomList(AList)) else
   if SameText(AType, 'TItemImpostoFederalList') then Result := TItemImpostoFederalListSerializer.Execute(TItemImpostoFederalList(AList)) else
@@ -888,7 +888,7 @@ begin
   if SameText(AType, 'TSituacaoFiscalList') then Result := TSituacaoFiscalListSerializer.Execute(TSituacaoFiscalList(AList)) else
   if SameText(AType, 'TStatusDoClienteList') then Result := TStatusDoClienteListSerializer.Execute(TStatusDoClienteList(AList)) else
   if SameText(AType, 'TSubGrupoList') then Result := TSubGrupoListSerializer.Execute(TSubGrupoList(AList)) else
-  if SameText(AType, 'TTabelaDeTributacaoList') then Result := TTabelaDeTributacaoListSerializer.Execute(TTabelaDeTributacaoList(AList)) else
+  if SameText(AType, 'TTabelaTributariaList') then Result := TTabelaTributariaListSerializer.Execute(TTabelaTributariaList(AList)) else
   if SameText(AType, 'TTipoDocumentoList') then Result := TTipoDocumentoListSerializer.Execute(TTipoDocumentoList(AList)) else
   if SameText(AType, 'TTipoPagamentoList') then Result := TTipoPagamentoListSerializer.Execute(TTipoPagamentoList(AList)) else
   if SameText(AType, 'TTituloAReceberList') then Result := TTituloAReceberListSerializer.Execute(TTituloAReceberList(AList)) else
@@ -2157,13 +2157,13 @@ begin
   end;
 end;
 
-{ TItemDaTabelaDeTributacaoListSerializer }
+{ TItemTabelaTributariaListSerializer }
 
-class function TItemDaTabelaDeTributacaoListSerializer.Execute(AList: TItemDaTabelaDeTributacaoList): TString;
+class function TItemTabelaTributariaListSerializer.Execute(AList: TItemTabelaTributariaList): TString;
 var
-  Serializer: TItemDaTabelaDeTributacaoListSerializer;
+  Serializer: TItemTabelaTributariaListSerializer;
 begin
-  Serializer := TItemDaTabelaDeTributacaoListSerializer.Create;
+  Serializer := TItemTabelaTributariaListSerializer.Create;
   try
     Result := Serializer.Serialize(AList);
   finally
@@ -2171,10 +2171,10 @@ begin
   end;
 end;
 
-function TItemDaTabelaDeTributacaoListSerializer.Serialize(AList: TItemDaTabelaDeTributacaoList): TString;
+function TItemTabelaTributariaListSerializer.Serialize(AList: TItemTabelaTributariaList): TString;
 var
   XML: TStrings;
-  Item: IItemDaTabelaDeTributacao;
+  Item: IItemTabelaTributaria;
 begin
   XML := TStringList.Create;
   try
@@ -3926,13 +3926,13 @@ begin
   end;
 end;
 
-{ TTabelaDeTributacaoListSerializer }
+{ TTabelaTributariaListSerializer }
 
-class function TTabelaDeTributacaoListSerializer.Execute(AList: TTabelaDeTributacaoList): TString;
+class function TTabelaTributariaListSerializer.Execute(AList: TTabelaTributariaList): TString;
 var
-  Serializer: TTabelaDeTributacaoListSerializer;
+  Serializer: TTabelaTributariaListSerializer;
 begin
-  Serializer := TTabelaDeTributacaoListSerializer.Create;
+  Serializer := TTabelaTributariaListSerializer.Create;
   try
     Result := Serializer.Serialize(AList);
   finally
@@ -3940,10 +3940,10 @@ begin
   end;
 end;
 
-function TTabelaDeTributacaoListSerializer.Serialize(AList: TTabelaDeTributacaoList): TString;
+function TTabelaTributariaListSerializer.Serialize(AList: TTabelaTributariaList): TString;
 var
   XML: TStrings;
-  Item: ITabelaDeTributacao;
+  Item: ITabelaTributaria;
 begin
   XML := TStringList.Create;
   try

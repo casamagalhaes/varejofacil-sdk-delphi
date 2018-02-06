@@ -1,13 +1,13 @@
-﻿unit SDK.Model.TabelaDeTributacao;
+﻿unit SDK.Model.TabelaTributaria;
 
 interface
 
 uses
-  SysUtils, Classes, SDK.Types, SDK.Enums;
+  SysUtils, Classes, SDK.Types, SDK.Enums, SDK.Model.ItemTabelaTributaria;
 
 type
 
-  ITabelaDeTributacao = interface(IModel)
+  ITabelaTributaria = interface(IModel)
     ['{2AE804E7-6C85-48D7-85AB-CC2839D0DBD6}']
     function GetId: Int64;
     procedure SetId(const AId: Int64);
@@ -27,6 +27,8 @@ type
     procedure SetTipoDeOperacao(const ATipoDeOperacao: TTipoOperacao);
     function GetDecreto: TString;
     procedure SetDecreto(const ADecreto: TString);
+    function GetItens: TItemTabelaTributariaList;
+    procedure SetItens(const AItens: TItemTabelaTributariaList);
     property Id: Int64 read GetId write SetId;
     property RegimeEstadualId: Int64 read GetRegimeEstadualId write SetRegimeEstadualId;
     property SituacaoFiscalId: Integer read GetSituacaoFiscalId write SetSituacaoFiscalId;
@@ -36,57 +38,58 @@ type
     property FinalDaVigencia: TDateTime read GetFinalDaVigencia write SetFinalDaVigencia;
     property TipoDeOperacao: TTipoOperacao read GetTipoDeOperacao write SetTipoDeOperacao;
     property Decreto: TString read GetDecreto write SetDecreto;
+    property Itens: TItemTabelaTributariaList read GetItens write SetItens;
   end;
 
-  TTabelaDeTributacaoList = class;
+  TTabelaTributariaList = class;
 
-  ITabelaDeTributacaoList = interface
+  ITabelaTributariaList = interface
 	['{A6351411-62BC-4977-AF19-6AF84DE285A3}']
-    function GetReference: TTabelaDeTributacaoList;
-    function GetItems(AIndex: Integer): ITabelaDeTributacao;
-    procedure SetItems(AIndex: Integer; const Value: ITabelaDeTributacao);
-    procedure Add(const ATabelaDeTributacao: ITabelaDeTributacao);
+    function GetReference: TTabelaTributariaList;
+    function GetItems(AIndex: Integer): ITabelaTributaria;
+    procedure SetItems(AIndex: Integer; const Value: ITabelaTributaria);
+    procedure Add(const ATabelaTributaria: ITabelaTributaria);
     procedure Clear;
     function Count: Integer;
-    property Items[AIndex: Integer]: ITabelaDeTributacao read GetItems write SetItems; default;
+    property Items[AIndex: Integer]: ITabelaTributaria read GetItems write SetItems; default;
   end;
 
-  TTabelaDeTributacaoListEnumerator = class
+  TTabelaTributariaListEnumerator = class
   private
     FIndex: Integer;
-    FTabelaDeTributacaoList: TTabelaDeTributacaoList;
+    FTabelaTributariaList: TTabelaTributariaList;
   public
-    constructor Create(ATabelaDeTributacaoList: TTabelaDeTributacaoList);
-    function GetCurrent: ITabelaDeTributacao; inline;
+    constructor Create(ATabelaTributariaList: TTabelaTributariaList);
+    function GetCurrent: ITabelaTributaria; inline;
     function MoveNext: Boolean;
-    property Current: ITabelaDeTributacao read GetCurrent;
+    property Current: ITabelaTributaria read GetCurrent;
   end;
 
-  TTabelaDeTributacaoList = class(TInterfacedObject, ITabelaDeTributacaoList)
+  TTabelaTributariaList = class(TInterfacedObject, ITabelaTributariaList)
   private
     FList: TInterfaceList;
-    function GetItems(AIndex: Integer): ITabelaDeTributacao;
-    procedure SetItems(AIndex: Integer; const Value: ITabelaDeTributacao);
+    function GetItems(AIndex: Integer): ITabelaTributaria;
+    procedure SetItems(AIndex: Integer; const Value: ITabelaTributaria);
   public
     constructor Create;
-    procedure Add(const ATabelaDeTributacao: ITabelaDeTributacao);
+    procedure Add(const ATabelaTributaria: ITabelaTributaria);
     destructor Destroy; override;
-    function GetEnumerator: TTabelaDeTributacaoListEnumerator;
+    function GetEnumerator: TTabelaTributariaListEnumerator;
     procedure Clear;
     function Count: Integer;
-    function GetReference: TTabelaDeTributacaoList;
-    property Items[AIndex: Integer]: ITabelaDeTributacao read GetItems write SetItems; default;
+    function GetReference: TTabelaTributariaList;
+    property Items[AIndex: Integer]: ITabelaTributaria read GetItems write SetItems; default;
   end;
 
-  TTabelaDeTributacaoListRec = record
+  TTabelaTributariaListRec = record
   private
-    FList: ITabelaDeTributacaoList;
+    FList: ITabelaTributariaList;
   public
-    class function Create(const AList: ITabelaDeTributacaoList): TTabelaDeTributacaoListRec; static;
-    class operator Implicit(AListRec: TTabelaDeTributacaoListRec): TTabelaDeTributacaoList;
+    class function Create(const AList: ITabelaTributariaList): TTabelaTributariaListRec; static;
+    class operator Implicit(AListRec: TTabelaTributariaListRec): TTabelaTributariaList;
   end;
 
-  TTabelaDeTributacao = class(TInterfacedModel, ITabelaDeTributacao)
+  TTabelaTributaria = class(TInterfacedModel, ITabelaTributaria)
   private
 	FId: Int64;
 	FRegimeEstadualId: Int64;
@@ -97,6 +100,7 @@ type
 	FFinalDaVigencia: TDateTime;
 	FTipoDeOperacao: TTipoOperacao;
 	FDecreto: TString;
+	FItens: TItemTabelaTributariaList;
     function GetId: Int64;
     procedure SetId(const AId: Int64);
     function GetRegimeEstadualId: Int64;
@@ -115,6 +119,8 @@ type
     procedure SetTipoDeOperacao(const ATipoDeOperacao: TTipoOperacao);
     function GetDecreto: TString;
     procedure SetDecreto(const ADecreto: TString);
+    function GetItens: TItemTabelaTributariaList;
+    procedure SetItens(const AItens: TItemTabelaTributariaList);
   published
     property Id: Int64 read GetId write SetId;
     property RegimeEstadualId: Int64 read GetRegimeEstadualId write SetRegimeEstadualId;
@@ -125,183 +131,193 @@ type
     property FinalDaVigencia: TDateTime read GetFinalDaVigencia write SetFinalDaVigencia;
     property TipoDeOperacao: TTipoOperacao read GetTipoDeOperacao write SetTipoDeOperacao;
     property Decreto: TString read GetDecreto write SetDecreto;
+    property Itens: TItemTabelaTributariaList read GetItens write SetItens;
   end;
 
 implementation
 
-{ TTabelaDeTributacaoList }
+{ TTabelaTributariaList }
 
-procedure TTabelaDeTributacaoList.Add(const ATabelaDeTributacao: ITabelaDeTributacao);
+procedure TTabelaTributariaList.Add(const ATabelaTributaria: ITabelaTributaria);
 begin
-  FList.Add(ATabelaDeTributacao);
+  FList.Add(ATabelaTributaria);
 end;
 
-procedure TTabelaDeTributacaoList.Clear;
+procedure TTabelaTributariaList.Clear;
 begin
   FList.Clear;
 end;
 
-function TTabelaDeTributacaoList.Count: Integer;
+function TTabelaTributariaList.Count: Integer;
 begin
   Result := FList.Count;
 end;
 
-constructor TTabelaDeTributacaoList.Create;
+constructor TTabelaTributariaList.Create;
 begin
   FList := TInterfaceList.Create;
 end;
 
-destructor TTabelaDeTributacaoList.Destroy;
+destructor TTabelaTributariaList.Destroy;
 begin
   FreeAndNil(FList);
   inherited;
 end;
 
-function TTabelaDeTributacaoList.GetEnumerator: TTabelaDeTributacaoListEnumerator;
+function TTabelaTributariaList.GetEnumerator: TTabelaTributariaListEnumerator;
 begin
-  Result := TTabelaDeTributacaoListEnumerator.Create(Self);
+  Result := TTabelaTributariaListEnumerator.Create(Self);
 end;
 
-function TTabelaDeTributacaoList.GetItems(AIndex: Integer): ITabelaDeTributacao;
+function TTabelaTributariaList.GetItems(AIndex: Integer): ITabelaTributaria;
 begin
-  Result := FList[AIndex] as ITabelaDeTributacao;
+  Result := FList[AIndex] as ITabelaTributaria;
 end;
 
-function TTabelaDeTributacaoList.GetReference: TTabelaDeTributacaoList;
+function TTabelaTributariaList.GetReference: TTabelaTributariaList;
 begin
   Result := Self;
 end;
 
-procedure TTabelaDeTributacaoList.SetItems(AIndex: Integer; const Value: ITabelaDeTributacao);
+procedure TTabelaTributariaList.SetItems(AIndex: Integer; const Value: ITabelaTributaria);
 begin
   FList[AIndex] := Value;
 end;
 
-{ TTabelaDeTributacaoListEnumerator }
+{ TTabelaTributariaListEnumerator }
 
-constructor TTabelaDeTributacaoListEnumerator.Create(ATabelaDeTributacaoList: TTabelaDeTributacaoList);
+constructor TTabelaTributariaListEnumerator.Create(ATabelaTributariaList: TTabelaTributariaList);
 begin
   inherited Create;
   FIndex := -1;
-  FTabelaDeTributacaoList := ATabelaDeTributacaoList;
+  FTabelaTributariaList := ATabelaTributariaList;
 end;
 
-function TTabelaDeTributacaoListEnumerator.GetCurrent: ITabelaDeTributacao;
+function TTabelaTributariaListEnumerator.GetCurrent: ITabelaTributaria;
 begin
-  Result := FTabelaDeTributacaoList[FIndex];
+  Result := FTabelaTributariaList[FIndex];
 end;
 
-function TTabelaDeTributacaoListEnumerator.MoveNext: Boolean;
+function TTabelaTributariaListEnumerator.MoveNext: Boolean;
 begin
-  Result := FIndex < FTabelaDeTributacaoList.Count - 1;
+  Result := FIndex < FTabelaTributariaList.Count - 1;
   if Result then
     Inc(FIndex);
 end;
 
-{ TTabelaDeTributacaoListRec }
+{ TTabelaTributariaListRec }
 
-class function TTabelaDeTributacaoListRec.Create(const AList: ITabelaDeTributacaoList): TTabelaDeTributacaoListRec;
+class function TTabelaTributariaListRec.Create(const AList: ITabelaTributariaList): TTabelaTributariaListRec;
 begin
-  FillChar(Result, SizeOf(TTabelaDeTributacaoListRec), 0);
+  FillChar(Result, SizeOf(TTabelaTributariaListRec), 0);
   Result.FList := AList;
 end;
 
-class operator TTabelaDeTributacaoListRec.Implicit(AListRec: TTabelaDeTributacaoListRec): TTabelaDeTributacaoList;
+class operator TTabelaTributariaListRec.Implicit(AListRec: TTabelaTributariaListRec): TTabelaTributariaList;
 begin
   Result := AListRec.FList.GetReference;
 end;
 
-{ TTabelaDeTributacao }
+{ TTabelaTributaria }
 
-function TTabelaDeTributacao.GetId: Int64;
+function TTabelaTributaria.GetId: Int64;
 begin
   Result := FId;
 end;
 
-procedure TTabelaDeTributacao.SetId(const AId: Int64);
+procedure TTabelaTributaria.SetId(const AId: Int64);
 begin
   FId := AId;
 end;
 
-function TTabelaDeTributacao.GetRegimeEstadualId: Int64;
+function TTabelaTributaria.GetRegimeEstadualId: Int64;
 begin
   Result := FRegimeEstadualId;
 end;
 
-procedure TTabelaDeTributacao.SetRegimeEstadualId(const ARegimeEstadualId: Int64);
+procedure TTabelaTributaria.SetRegimeEstadualId(const ARegimeEstadualId: Int64);
 begin
   FRegimeEstadualId := ARegimeEstadualId;
 end;
 
-function TTabelaDeTributacao.GetSituacaoFiscalId: Integer;
+function TTabelaTributaria.GetSituacaoFiscalId: Integer;
 begin
   Result := FSituacaoFiscalId;
 end;
 
-procedure TTabelaDeTributacao.SetSituacaoFiscalId(const ASituacaoFiscalId: Integer);
+procedure TTabelaTributaria.SetSituacaoFiscalId(const ASituacaoFiscalId: Integer);
 begin
   FSituacaoFiscalId := ASituacaoFiscalId;
 end;
 
-function TTabelaDeTributacao.GetFiguraFiscalId: Integer;
+function TTabelaTributaria.GetFiguraFiscalId: Integer;
 begin
   Result := FFiguraFiscalId;
 end;
 
-procedure TTabelaDeTributacao.SetFiguraFiscalId(const AFiguraFiscalId: Integer);
+procedure TTabelaTributaria.SetFiguraFiscalId(const AFiguraFiscalId: Integer);
 begin
   FFiguraFiscalId := AFiguraFiscalId;
 end;
 
-function TTabelaDeTributacao.GetUf: TString;
+function TTabelaTributaria.GetUf: TString;
 begin
   Result := FUf;
 end;
 
-procedure TTabelaDeTributacao.SetUf(const AUf: TString);
+procedure TTabelaTributaria.SetUf(const AUf: TString);
 begin
   FUf := AUf;
 end;
 
-function TTabelaDeTributacao.GetInicioDaVigencia: TDateTime;
+function TTabelaTributaria.GetInicioDaVigencia: TDateTime;
 begin
   Result := FInicioDaVigencia;
 end;
 
-procedure TTabelaDeTributacao.SetInicioDaVigencia(const AInicioDaVigencia: TDateTime);
+procedure TTabelaTributaria.SetInicioDaVigencia(const AInicioDaVigencia: TDateTime);
 begin
   FInicioDaVigencia := AInicioDaVigencia;
 end;
 
-function TTabelaDeTributacao.GetFinalDaVigencia: TDateTime;
+function TTabelaTributaria.GetFinalDaVigencia: TDateTime;
 begin
   Result := FFinalDaVigencia;
 end;
 
-procedure TTabelaDeTributacao.SetFinalDaVigencia(const AFinalDaVigencia: TDateTime);
+procedure TTabelaTributaria.SetFinalDaVigencia(const AFinalDaVigencia: TDateTime);
 begin
   FFinalDaVigencia := AFinalDaVigencia;
 end;
 
-function TTabelaDeTributacao.GetTipoDeOperacao: TTipoOperacao;
+function TTabelaTributaria.GetTipoDeOperacao: TTipoOperacao;
 begin
   Result := FTipoDeOperacao;
 end;
 
-procedure TTabelaDeTributacao.SetTipoDeOperacao(const ATipoDeOperacao: TTipoOperacao);
+procedure TTabelaTributaria.SetTipoDeOperacao(const ATipoDeOperacao: TTipoOperacao);
 begin
   FTipoDeOperacao := ATipoDeOperacao;
 end;
 
-function TTabelaDeTributacao.GetDecreto: TString;
+function TTabelaTributaria.GetDecreto: TString;
 begin
   Result := FDecreto;
 end;
 
-procedure TTabelaDeTributacao.SetDecreto(const ADecreto: TString);
+procedure TTabelaTributaria.SetDecreto(const ADecreto: TString);
 begin
   FDecreto := ADecreto;
 end;
 
+function TTabelaTributaria.GetItens: TItemTabelaTributariaList;
+begin
+  Result := FItens;
+end;
+
+procedure TTabelaTributaria.SetItens(const AItens: TItemTabelaTributariaList);
+begin
+  FItens := AItens;
+end;
 
 end.

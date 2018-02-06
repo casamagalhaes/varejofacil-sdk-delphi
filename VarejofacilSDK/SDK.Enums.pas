@@ -20,6 +20,7 @@ type
     procedure Register(const AEnumName: TString; AConverterStrToEnum: TConverterStrToEnum; AConverterEnumToStr: TConverterEnumToStr = nil);
     function Execute(const AEnumName, AValue: TString): Integer; overload;
     function Execute(const AEnumName: TString; AValue: Integer): TString; overload;
+    function IndexOfName(const Name: string): Integer; override;
   end;
 
 var
@@ -35,7 +36,7 @@ type
 
   TClassificacaoCategoria = (ccDESPESA, ccRECEITA);
 
-  TClassificacaoPessoa = (cpSAIDA_PARA_NAO_CONTRIBUINTE, cpSAIDA_PARA_CONTRIBUINTE, cpSAIDA_PARA_TRANSFERENCIA, cpENTRADA_DE_TRANSFERENCIA, cpENTRADA_DE_MICROEMPRESA, cpENTRADA_DE_VAREJO, cpENTRADA_DE_INDUSTRIA, cpENTRADA_DE_DISTRIBUIDOR);
+  TClassificacaoDePessoa = (cpSAIDA_PARA_NAO_CONTRIBUINTE, cpSAIDA_PARA_CONTRIBUINTE, cpSAIDA_PARA_TRANSFERENCIA, cpENTRADA_DE_TRANSFERENCIA, cpENTRADA_DE_MICROEMPRESA, cpENTRADA_DE_VAREJO, cpENTRADA_DE_INDUSTRIA, cpENTRADA_DE_DISTRIBUIDOR);
 
   TComposicao = (cCOMPOSTO, cKIT, cRENDIMENTO, cNORMAL);
 
@@ -157,13 +158,13 @@ implementation
 function Converter_Associacao_StrToEnum(const AValue: TString): Integer;
 begin
   if SameText(AValue, 'NORMAL') then Result := Integer(aNORMAL) else
-  raise EnumException.CreateFmt('Valor $s incorreto para Associacao.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para Associacao.', [AValue]);
 end;
 
 function Converter_Associacao_EnumToStr(const AValue: Integer): TString; overload;
 begin
   if Integer(aNORMAL) = AValue then Result := 'NORMAL' else
-  raise EnumException.CreateFmt('Valor $d incorreto para Associacao.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para Associacao.', [AValue]);
 end;
 
 { TAtividadeEconomica }
@@ -174,7 +175,7 @@ begin
   if SameText(AValue, 'COMERCIO') then Result := Integer(aeCOMERCIO) else
   if SameText(AValue, 'OUTROS') then Result := Integer(aeOUTROS) else
   if SameText(AValue, 'INDUSTRIA') then Result := Integer(aeINDUSTRIA) else
-  raise EnumException.CreateFmt('Valor $s incorreto para AtividadeEconomica.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para AtividadeEconomica.', [AValue]);
 end;
 
 function Converter_AtividadeEconomica_EnumToStr(const AValue: Integer): TString; overload;
@@ -183,7 +184,7 @@ begin
   if Integer(aeCOMERCIO) = AValue then Result := 'COMERCIO' else
   if Integer(aeOUTROS) = AValue then Result := 'OUTROS' else
   if Integer(aeINDUSTRIA) = AValue then Result := 'INDUSTRIA' else
-  raise EnumException.CreateFmt('Valor $d incorreto para AtividadeEconomica.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para AtividadeEconomica.', [AValue]);
 end;
 
 { TCSOSN }
@@ -200,7 +201,7 @@ begin
   if SameText(AValue, 'ICMS_COBRADO_ANTERIORMENTE_POR_SUBSTITUICAO_TRIBUTARIA') then Result := Integer(csosnICMS_COBRADO_ANTERIORMENTE_POR_SUBSTITUICAO_TRIBUTARIA) else
   if SameText(AValue, 'TRIBUTACAO_SEM_PERMISSAO_DE_CREDITO_102') then Result := Integer(csosnTRIBUTACAO_SEM_PERMISSAO_DE_CREDITO_102) else
   if SameText(AValue, 'ISENCAO_DO_ICMS') then Result := Integer(csosnISENCAO_DO_ICMS) else
-  raise EnumException.CreateFmt('Valor $s incorreto para CSOSN.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para CSOSN.', [AValue]);
 end;
 
 function Converter_CSOSN_EnumToStr(const AValue: Integer): TString; overload;
@@ -215,7 +216,7 @@ begin
   if Integer(csosnICMS_COBRADO_ANTERIORMENTE_POR_SUBSTITUICAO_TRIBUTARIA) = AValue then Result := 'ICMS_COBRADO_ANTERIORMENTE_POR_SUBSTITUICAO_TRIBUTARIA' else
   if Integer(csosnTRIBUTACAO_SEM_PERMISSAO_DE_CREDITO_102) = AValue then Result := 'TRIBUTACAO_SEM_PERMISSAO_DE_CREDITO_102' else
   if Integer(csosnISENCAO_DO_ICMS) = AValue then Result := 'ISENCAO_DO_ICMS' else
-  raise EnumException.CreateFmt('Valor $d incorreto para CSOSN.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para CSOSN.', [AValue]);
 end;
 
 { TClassificacaoCategoria }
@@ -224,19 +225,19 @@ function Converter_ClassificacaoCategoria_StrToEnum(const AValue: TString): Inte
 begin
   if SameText(AValue, 'DESPESA') then Result := Integer(ccDESPESA) else
   if SameText(AValue, 'RECEITA') then Result := Integer(ccRECEITA) else
-  raise EnumException.CreateFmt('Valor $s incorreto para ClassificacaoCategoria.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para ClassificacaoCategoria.', [AValue]);
 end;
 
 function Converter_ClassificacaoCategoria_EnumToStr(const AValue: Integer): TString; overload;
 begin
   if Integer(ccDESPESA) = AValue then Result := 'DESPESA' else
   if Integer(ccRECEITA) = AValue then Result := 'RECEITA' else
-  raise EnumException.CreateFmt('Valor $d incorreto para ClassificacaoCategoria.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para ClassificacaoCategoria.', [AValue]);
 end;
 
-{ TClassificacaoPessoa }
+{ TClassificacaoDePessoa }
 
-function Converter_ClassificacaoPessoa_StrToEnum(const AValue: TString): Integer;
+function Converter_ClassificacaoDePessoa_StrToEnum(const AValue: TString): Integer;
 begin
   if SameText(AValue, 'SAIDA_PARA_NAO_CONTRIBUINTE') then Result := Integer(cpSAIDA_PARA_NAO_CONTRIBUINTE) else
   if SameText(AValue, 'SAIDA_PARA_CONTRIBUINTE') then Result := Integer(cpSAIDA_PARA_CONTRIBUINTE) else
@@ -246,10 +247,10 @@ begin
   if SameText(AValue, 'ENTRADA_DE_VAREJO') then Result := Integer(cpENTRADA_DE_VAREJO) else
   if SameText(AValue, 'ENTRADA_DE_INDUSTRIA') then Result := Integer(cpENTRADA_DE_INDUSTRIA) else
   if SameText(AValue, 'ENTRADA_DE_DISTRIBUIDOR') then Result := Integer(cpENTRADA_DE_DISTRIBUIDOR) else
-  raise EnumException.CreateFmt('Valor $s incorreto para ClassificacaoPessoa.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para ClassificacaoDePessoa.', [AValue]);
 end;
 
-function Converter_ClassificacaoPessoa_EnumToStr(const AValue: Integer): TString; overload;
+function Converter_ClassificacaoDePessoa_EnumToStr(const AValue: Integer): TString; overload;
 begin
   if Integer(cpSAIDA_PARA_NAO_CONTRIBUINTE) = AValue then Result := 'SAIDA_PARA_NAO_CONTRIBUINTE' else
   if Integer(cpSAIDA_PARA_CONTRIBUINTE) = AValue then Result := 'SAIDA_PARA_CONTRIBUINTE' else
@@ -259,7 +260,7 @@ begin
   if Integer(cpENTRADA_DE_VAREJO) = AValue then Result := 'ENTRADA_DE_VAREJO' else
   if Integer(cpENTRADA_DE_INDUSTRIA) = AValue then Result := 'ENTRADA_DE_INDUSTRIA' else
   if Integer(cpENTRADA_DE_DISTRIBUIDOR) = AValue then Result := 'ENTRADA_DE_DISTRIBUIDOR' else
-  raise EnumException.CreateFmt('Valor $d incorreto para ClassificacaoPessoa.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para ClassificacaoDePessoa.', [AValue]);
 end;
 
 { TComposicao }
@@ -270,7 +271,7 @@ begin
   if SameText(AValue, 'KIT') then Result := Integer(cKIT) else
   if SameText(AValue, 'RENDIMENTO') then Result := Integer(cRENDIMENTO) else
   if SameText(AValue, 'NORMAL') then Result := Integer(cNORMAL) else
-  raise EnumException.CreateFmt('Valor $s incorreto para Composicao.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para Composicao.', [AValue]);
 end;
 
 function Converter_Composicao_EnumToStr(const AValue: Integer): TString; overload;
@@ -279,7 +280,7 @@ begin
   if Integer(cKIT) = AValue then Result := 'KIT' else
   if Integer(cRENDIMENTO) = AValue then Result := 'RENDIMENTO' else
   if Integer(cNORMAL) = AValue then Result := 'NORMAL' else
-  raise EnumException.CreateFmt('Valor $d incorreto para Composicao.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para Composicao.', [AValue]);
 end;
 
 { TConciliadora }
@@ -287,13 +288,13 @@ end;
 function Converter_Conciliadora_StrToEnum(const AValue: TString): Integer;
 begin
   if SameText(AValue, 'BRCONSULTING') then Result := Integer(cBRCONSULTING) else
-  raise EnumException.CreateFmt('Valor $s incorreto para Conciliadora.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para Conciliadora.', [AValue]);
 end;
 
 function Converter_Conciliadora_EnumToStr(const AValue: Integer): TString; overload;
 begin
   if Integer(cBRCONSULTING) = AValue then Result := 'BRCONSULTING' else
-  raise EnumException.CreateFmt('Valor $d incorreto para Conciliadora.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para Conciliadora.', [AValue]);
 end;
 
 { TCondicaoPagamento }
@@ -304,7 +305,7 @@ begin
   if SameText(AValue, 'NAO_INFORMADO') then Result := Integer(cpNAO_INFORMADO) else
   if SameText(AValue, 'A_PRAZO') then Result := Integer(cpA_PRAZO) else
   if SameText(AValue, 'OUTROS') then Result := Integer(cpOUTROS) else
-  raise EnumException.CreateFmt('Valor $s incorreto para CondicaoPagamento.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para CondicaoPagamento.', [AValue]);
 end;
 
 function Converter_CondicaoPagamento_EnumToStr(const AValue: Integer): TString; overload;
@@ -313,7 +314,7 @@ begin
   if Integer(cpNAO_INFORMADO) = AValue then Result := 'NAO_INFORMADO' else
   if Integer(cpA_PRAZO) = AValue then Result := 'A_PRAZO' else
   if Integer(cpOUTROS) = AValue then Result := 'OUTROS' else
-  raise EnumException.CreateFmt('Valor $d incorreto para CondicaoPagamento.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para CondicaoPagamento.', [AValue]);
 end;
 
 { TEstadoCivil }
@@ -325,7 +326,7 @@ begin
   if SameText(AValue, 'CASADO') then Result := Integer(ecCASADO) else
   if SameText(AValue, 'SOLTEIRO') then Result := Integer(ecSOLTEIRO) else
   if SameText(AValue, 'OUTROS') then Result := Integer(ecOUTROS) else
-  raise EnumException.CreateFmt('Valor $s incorreto para EstadoCivil.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para EstadoCivil.', [AValue]);
 end;
 
 function Converter_EstadoCivil_EnumToStr(const AValue: Integer): TString; overload;
@@ -335,7 +336,7 @@ begin
   if Integer(ecCASADO) = AValue then Result := 'CASADO' else
   if Integer(ecSOLTEIRO) = AValue then Result := 'SOLTEIRO' else
   if Integer(ecOUTROS) = AValue then Result := 'OUTROS' else
-  raise EnumException.CreateFmt('Valor $d incorreto para EstadoCivil.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para EstadoCivil.', [AValue]);
 end;
 
 { TFinalidade }
@@ -344,14 +345,14 @@ function Converter_Finalidade_StrToEnum(const AValue: TString): Integer;
 begin
   if SameText(AValue, 'DEVOLUCAO') then Result := Integer(fDEVOLUCAO) else
   if SameText(AValue, 'TROCA') then Result := Integer(fTROCA) else
-  raise EnumException.CreateFmt('Valor $s incorreto para Finalidade.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para Finalidade.', [AValue]);
 end;
 
 function Converter_Finalidade_EnumToStr(const AValue: Integer): TString; overload;
 begin
   if Integer(fDEVOLUCAO) = AValue then Result := 'DEVOLUCAO' else
   if Integer(fTROCA) = AValue then Result := 'TROCA' else
-  raise EnumException.CreateFmt('Valor $d incorreto para Finalidade.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para Finalidade.', [AValue]);
 end;
 
 { TFinalidadeProduto }
@@ -364,7 +365,7 @@ begin
   if SameText(AValue, 'MATERIA_PRIMA') then Result := Integer(fpMATERIA_PRIMA) else
   if SameText(AValue, 'OUTROS') then Result := Integer(fpOUTROS) else
   if SameText(AValue, 'IMOBILIZADO') then Result := Integer(fpIMOBILIZADO) else
-  raise EnumException.CreateFmt('Valor $s incorreto para FinalidadeProduto.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para FinalidadeProduto.', [AValue]);
 end;
 
 function Converter_FinalidadeProduto_EnumToStr(const AValue: Integer): TString; overload;
@@ -375,7 +376,7 @@ begin
   if Integer(fpMATERIA_PRIMA) = AValue then Result := 'MATERIA_PRIMA' else
   if Integer(fpOUTROS) = AValue then Result := 'OUTROS' else
   if Integer(fpIMOBILIZADO) = AValue then Result := 'IMOBILIZADO' else
-  raise EnumException.CreateFmt('Valor $d incorreto para FinalidadeProduto.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para FinalidadeProduto.', [AValue]);
 end;
 
 { TGeneroEspecieDocumento }
@@ -384,14 +385,14 @@ function Converter_GeneroEspecieDocumento_StrToEnum(const AValue: TString): Inte
 begin
   if SameText(AValue, 'PAGAR') then Result := Integer(gedPAGAR) else
   if SameText(AValue, 'RECEBER') then Result := Integer(gedRECEBER) else
-  raise EnumException.CreateFmt('Valor $s incorreto para GeneroEspecieDocumento.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para GeneroEspecieDocumento.', [AValue]);
 end;
 
 function Converter_GeneroEspecieDocumento_EnumToStr(const AValue: Integer): TString; overload;
 begin
   if Integer(gedPAGAR) = AValue then Result := 'PAGAR' else
   if Integer(gedRECEBER) = AValue then Result := 'RECEBER' else
-  raise EnumException.CreateFmt('Valor $d incorreto para GeneroEspecieDocumento.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para GeneroEspecieDocumento.', [AValue]);
 end;
 
 { TIncidenciaIPI }
@@ -401,7 +402,7 @@ begin
   if SameText(AValue, 'VENDA') then Result := Integer(iipiVENDA) else
   if SameText(AValue, 'COMPRA') then Result := Integer(iipiCOMPRA) else
   if SameText(AValue, 'AMBOS') then Result := Integer(iipiAMBOS) else
-  raise EnumException.CreateFmt('Valor $s incorreto para IncidenciaIPI.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para IncidenciaIPI.', [AValue]);
 end;
 
 function Converter_IncidenciaIPI_EnumToStr(const AValue: Integer): TString; overload;
@@ -409,7 +410,7 @@ begin
   if Integer(iipiVENDA) = AValue then Result := 'VENDA' else
   if Integer(iipiCOMPRA) = AValue then Result := 'COMPRA' else
   if Integer(iipiAMBOS) = AValue then Result := 'AMBOS' else
-  raise EnumException.CreateFmt('Valor $d incorreto para IncidenciaIPI.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para IncidenciaIPI.', [AValue]);
 end;
 
 { TIndiceAT }
@@ -418,14 +419,14 @@ function Converter_IndiceAT_StrToEnum(const AValue: TString): Integer;
 begin
   if SameText(AValue, 'TRUNCA') then Result := Integer(iatTRUNCA) else
   if SameText(AValue, 'ARREDONDA') then Result := Integer(iatARREDONDA) else
-  raise EnumException.CreateFmt('Valor $s incorreto para IndiceAT.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para IndiceAT.', [AValue]);
 end;
 
 function Converter_IndiceAT_EnumToStr(const AValue: Integer): TString; overload;
 begin
   if Integer(iatTRUNCA) = AValue then Result := 'TRUNCA' else
   if Integer(iatARREDONDA) = AValue then Result := 'ARREDONDA' else
-  raise EnumException.CreateFmt('Valor $d incorreto para IndiceAT.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para IndiceAT.', [AValue]);
 end;
 
 { TMarcaImpressora }
@@ -454,7 +455,7 @@ begin
   if SameText(AValue, 'DARUMA_AUTOMACAO') then Result := Integer(miDARUMA_AUTOMACAO) else
   if SameText(AValue, 'ICASH') then Result := Integer(miICASH) else
   if SameText(AValue, 'NFCe') then Result := Integer(miNFCe) else
-  raise EnumException.CreateFmt('Valor $s incorreto para MarcaImpressora.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para MarcaImpressora.', [AValue]);
 end;
 
 function Converter_MarcaImpressora_EnumToStr(const AValue: Integer): TString; overload;
@@ -481,7 +482,7 @@ begin
   if Integer(miDARUMA_AUTOMACAO) = AValue then Result := 'DARUMA_AUTOMACAO' else
   if Integer(miICASH) = AValue then Result := 'ICASH' else
   if Integer(miNFCe) = AValue then Result := 'NFCe' else
-  raise EnumException.CreateFmt('Valor $d incorreto para MarcaImpressora.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para MarcaImpressora.', [AValue]);
 end;
 
 { TMetodoPagamentoEcommerce }
@@ -494,7 +495,7 @@ begin
   if SameText(AValue, 'BOLETO') then Result := Integer(mpeBOLETO) else
   if SameText(AValue, 'MUNDIPAGG') then Result := Integer(mpeMUNDIPAGG) else
   if SameText(AValue, 'DINHEIRO_OU_CHEQUE') then Result := Integer(mpeDINHEIRO_OU_CHEQUE) else
-  raise EnumException.CreateFmt('Valor $s incorreto para MetodoPagamentoEcommerce.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para MetodoPagamentoEcommerce.', [AValue]);
 end;
 
 function Converter_MetodoPagamentoEcommerce_EnumToStr(const AValue: Integer): TString; overload;
@@ -505,7 +506,7 @@ begin
   if Integer(mpeBOLETO) = AValue then Result := 'BOLETO' else
   if Integer(mpeMUNDIPAGG) = AValue then Result := 'MUNDIPAGG' else
   if Integer(mpeDINHEIRO_OU_CHEQUE) = AValue then Result := 'DINHEIRO_OU_CHEQUE' else
-  raise EnumException.CreateFmt('Valor $d incorreto para MetodoPagamentoEcommerce.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para MetodoPagamentoEcommerce.', [AValue]);
 end;
 
 { TModalidadeEspeciePagamento }
@@ -514,14 +515,14 @@ function Converter_ModalidadeEspeciePagamento_StrToEnum(const AValue: TString): 
 begin
   if SameText(AValue, 'COMPOSTO') then Result := Integer(mepCOMPOSTO) else
   if SameText(AValue, 'SIMPLES') then Result := Integer(mepSIMPLES) else
-  raise EnumException.CreateFmt('Valor $s incorreto para ModalidadeEspeciePagamento.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para ModalidadeEspeciePagamento.', [AValue]);
 end;
 
 function Converter_ModalidadeEspeciePagamento_EnumToStr(const AValue: Integer): TString; overload;
 begin
   if Integer(mepCOMPOSTO) = AValue then Result := 'COMPOSTO' else
   if Integer(mepSIMPLES) = AValue then Result := 'SIMPLES' else
-  raise EnumException.CreateFmt('Valor $d incorreto para ModalidadeEspeciePagamento.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para ModalidadeEspeciePagamento.', [AValue]);
 end;
 
 { TModeloImpressora }
@@ -577,7 +578,7 @@ begin
   if SameText(AValue, 'ECF098') then Result := Integer(miECF098) else
   if SameText(AValue, 'ECF097') then Result := Integer(miECF097) else
   if SameText(AValue, 'ECF019') then Result := Integer(miECF019) else
-  raise EnumException.CreateFmt('Valor $s incorreto para ModeloImpressora.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para ModeloImpressora.', [AValue]);
 end;
 
 function Converter_ModeloImpressora_EnumToStr(const AValue: Integer): TString; overload;
@@ -631,7 +632,7 @@ begin
   if Integer(miECF098) = AValue then Result := 'ECF098' else
   if Integer(miECF097) = AValue then Result := 'ECF097' else
   if Integer(miECF019) = AValue then Result := 'ECF019' else
-  raise EnumException.CreateFmt('Valor $d incorreto para ModeloImpressora.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para ModeloImpressora.', [AValue]);
 end;
 
 { TNivelFornecedor }
@@ -640,14 +641,14 @@ function Converter_NivelFornecedor_StrToEnum(const AValue: TString): Integer;
 begin
   if SameText(AValue, 'PRINCIPAL') then Result := Integer(nfPRINCIPAL) else
   if SameText(AValue, 'SECUNDARIO') then Result := Integer(nfSECUNDARIO) else
-  raise EnumException.CreateFmt('Valor $s incorreto para NivelFornecedor.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para NivelFornecedor.', [AValue]);
 end;
 
 function Converter_NivelFornecedor_EnumToStr(const AValue: Integer): TString; overload;
 begin
   if Integer(nfPRINCIPAL) = AValue then Result := 'PRINCIPAL' else
   if Integer(nfSECUNDARIO) = AValue then Result := 'SECUNDARIO' else
-  raise EnumException.CreateFmt('Valor $d incorreto para NivelFornecedor.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para NivelFornecedor.', [AValue]);
 end;
 
 { TPerfilFiscal }
@@ -657,7 +658,7 @@ begin
   if SameText(AValue, 'A') then Result := Integer(pfA) else
   if SameText(AValue, 'B') then Result := Integer(pfB) else
   if SameText(AValue, 'C') then Result := Integer(pfC) else
-  raise EnumException.CreateFmt('Valor $s incorreto para PerfilFiscal.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para PerfilFiscal.', [AValue]);
 end;
 
 function Converter_PerfilFiscal_EnumToStr(const AValue: Integer): TString; overload;
@@ -665,7 +666,7 @@ begin
   if Integer(pfA) = AValue then Result := 'A' else
   if Integer(pfB) = AValue then Result := 'B' else
   if Integer(pfC) = AValue then Result := 'C' else
-  raise EnumException.CreateFmt('Valor $d incorreto para PerfilFiscal.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para PerfilFiscal.', [AValue]);
 end;
 
 { TPesoVariavel }
@@ -677,7 +678,7 @@ begin
   if SameText(AValue, 'PESO') then Result := Integer(pvPESO) else
   if SameText(AValue, 'SIM') then Result := Integer(pvSIM) else
   if SameText(AValue, 'NAO') then Result := Integer(pvNAO) else
-  raise EnumException.CreateFmt('Valor $s incorreto para PesoVariavel.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para PesoVariavel.', [AValue]);
 end;
 
 function Converter_PesoVariavel_EnumToStr(const AValue: Integer): TString; overload;
@@ -687,7 +688,7 @@ begin
   if Integer(pvPESO) = AValue then Result := 'PESO' else
   if Integer(pvSIM) = AValue then Result := 'SIM' else
   if Integer(pvNAO) = AValue then Result := 'NAO' else
-  raise EnumException.CreateFmt('Valor $d incorreto para PesoVariavel.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para PesoVariavel.', [AValue]);
 end;
 
 { TProducao }
@@ -696,14 +697,14 @@ function Converter_Producao_StrToEnum(const AValue: TString): Integer;
 begin
   if SameText(AValue, 'TERCEIROS') then Result := Integer(pTERCEIROS) else
   if SameText(AValue, 'PROPRIO') then Result := Integer(pPROPRIO) else
-  raise EnumException.CreateFmt('Valor $s incorreto para Producao.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para Producao.', [AValue]);
 end;
 
 function Converter_Producao_EnumToStr(const AValue: Integer): TString; overload;
 begin
   if Integer(pTERCEIROS) = AValue then Result := 'TERCEIROS' else
   if Integer(pPROPRIO) = AValue then Result := 'PROPRIO' else
-  raise EnumException.CreateFmt('Valor $d incorreto para Producao.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para Producao.', [AValue]);
 end;
 
 { TResponsavelValidacao }
@@ -712,14 +713,14 @@ function Converter_ResponsavelValidacao_StrToEnum(const AValue: TString): Intege
 begin
   if SameText(AValue, 'MIX_FISCAL') then Result := Integer(rvMIX_FISCAL) else
   if SameText(AValue, 'USUARIO') then Result := Integer(rvUSUARIO) else
-  raise EnumException.CreateFmt('Valor $s incorreto para ResponsavelValidacao.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para ResponsavelValidacao.', [AValue]);
 end;
 
 function Converter_ResponsavelValidacao_EnumToStr(const AValue: Integer): TString; overload;
 begin
   if Integer(rvMIX_FISCAL) = AValue then Result := 'MIX_FISCAL' else
   if Integer(rvUSUARIO) = AValue then Result := 'USUARIO' else
-  raise EnumException.CreateFmt('Valor $d incorreto para ResponsavelValidacao.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para ResponsavelValidacao.', [AValue]);
 end;
 
 { TSexo }
@@ -728,14 +729,14 @@ function Converter_Sexo_StrToEnum(const AValue: TString): Integer;
 begin
   if SameText(AValue, 'MASCULINO') then Result := Integer(sMASCULINO) else
   if SameText(AValue, 'FEMININO') then Result := Integer(sFEMININO) else
-  raise EnumException.CreateFmt('Valor $s incorreto para Sexo.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para Sexo.', [AValue]);
 end;
 
 function Converter_Sexo_EnumToStr(const AValue: Integer): TString; overload;
 begin
   if Integer(sMASCULINO) = AValue then Result := 'MASCULINO' else
   if Integer(sFEMININO) = AValue then Result := 'FEMININO' else
-  raise EnumException.CreateFmt('Valor $d incorreto para Sexo.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para Sexo.', [AValue]);
 end;
 
 { TSituacaoAprovacao }
@@ -745,7 +746,7 @@ begin
   if SameText(AValue, 'PENDENTE') then Result := Integer(saPENDENTE) else
   if SameText(AValue, 'SIM') then Result := Integer(saSIM) else
   if SameText(AValue, 'NAO') then Result := Integer(saNAO) else
-  raise EnumException.CreateFmt('Valor $s incorreto para SituacaoAprovacao.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para SituacaoAprovacao.', [AValue]);
 end;
 
 function Converter_SituacaoAprovacao_EnumToStr(const AValue: Integer): TString; overload;
@@ -753,7 +754,7 @@ begin
   if Integer(saPENDENTE) = AValue then Result := 'PENDENTE' else
   if Integer(saSIM) = AValue then Result := 'SIM' else
   if Integer(saNAO) = AValue then Result := 'NAO' else
-  raise EnumException.CreateFmt('Valor $d incorreto para SituacaoAprovacao.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para SituacaoAprovacao.', [AValue]);
 end;
 
 { TSituacaoLimiteCliente }
@@ -769,7 +770,7 @@ function Converter_SituacaoLimiteCliente_EnumToStr(const AValue: Integer): TStri
 begin
   if Integer(slcLIBERADO) = AValue then Result := 'LIBERADO' else
   if Integer(slcBLOQUEADO) = AValue then Result := 'BLOQUEADO' else
-  raise EnumException.CreateFmt('Valor $d incorreto para SituacaoLimiteCliente.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para SituacaoLimiteCliente.', [AValue]);
 end;
 
 { TSituacaoSetor }
@@ -778,14 +779,14 @@ function Converter_SituacaoSetor_StrToEnum(const AValue: TString): Integer;
 begin
   if SameText(AValue, 'ATIVO') then Result := Integer(ssATIVO) else
   if SameText(AValue, 'INATIVO') then Result := Integer(ssINATIVO) else
-  raise EnumException.CreateFmt('Valor $s incorreto para SituacaoSetor.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para SituacaoSetor.', [AValue]);
 end;
 
 function Converter_SituacaoSetor_EnumToStr(const AValue: Integer): TString; overload;
 begin
   if Integer(ssATIVO) = AValue then Result := 'ATIVO' else
   if Integer(ssINATIVO) = AValue then Result := 'INATIVO' else
-  raise EnumException.CreateFmt('Valor $d incorreto para SituacaoSetor.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para SituacaoSetor.', [AValue]);
 end;
 
 { TStatusBloqueioCliente }
@@ -796,7 +797,7 @@ begin
   if SameText(AValue, 'NAO_BLOQUEADO') then Result := Integer(sbcNAO_BLOQUEADO) else
   if SameText(AValue, 'BLOQUEADO_COM_AVISO') then Result := Integer(sbcBLOQUEADO_COM_AVISO) else
   if SameText(AValue, 'BLOQUEADO_COM_AUTORIZACAO') then Result := Integer(sbcBLOQUEADO_COM_AUTORIZACAO) else
-  raise EnumException.CreateFmt('Valor $s incorreto para StatusBloqueioCliente.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para StatusBloqueioCliente.', [AValue]);
 end;
 
 function Converter_StatusBloqueioCliente_EnumToStr(const AValue: Integer): TString; overload;
@@ -805,7 +806,7 @@ begin
   if Integer(sbcNAO_BLOQUEADO) = AValue then Result := 'NAO_BLOQUEADO' else
   if Integer(sbcBLOQUEADO_COM_AVISO) = AValue then Result := 'BLOQUEADO_COM_AVISO' else
   if Integer(sbcBLOQUEADO_COM_AUTORIZACAO) = AValue then Result := 'BLOQUEADO_COM_AUTORIZACAO' else
-  raise EnumException.CreateFmt('Valor $d incorreto para StatusBloqueioCliente.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para StatusBloqueioCliente.', [AValue]);
 end;
 
 { TStatusDaPromocao }
@@ -839,7 +840,7 @@ begin
   if SameText(AValue, 'LIQUIDADO_E_PENDENTE') then Result := Integer(sdtLIQUIDADO_E_PENDENTE) else
   if SameText(AValue, 'ANTECIPADO') then Result := Integer(sdtANTECIPADO) else
   if SameText(AValue, 'PARCIALMENTE_LIQUIDADO') then Result := Integer(sdtPARCIALMENTE_LIQUIDADO) else
-  raise EnumException.CreateFmt('Valor $s incorreto para StatusDoTitulo.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para StatusDoTitulo.', [AValue]);
 end;
 
 function Converter_StatusDoTitulo_EnumToStr(const AValue: Integer): TString; overload;
@@ -853,7 +854,7 @@ begin
   if Integer(sdtLIQUIDADO_E_PENDENTE) = AValue then Result := 'LIQUIDADO_E_PENDENTE' else
   if Integer(sdtANTECIPADO) = AValue then Result := 'ANTECIPADO' else
   if Integer(sdtPARCIALMENTE_LIQUIDADO) = AValue then Result := 'PARCIALMENTE_LIQUIDADO' else
-  raise EnumException.CreateFmt('Valor $d incorreto para StatusDoTitulo.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para StatusDoTitulo.', [AValue]);
 end;
 
 { TStatusTitulo }
@@ -869,7 +870,7 @@ begin
   if SameText(AValue, 'LIQUIDADO_E_PENDENTE') then Result := Integer(stLIQUIDADO_E_PENDENTE) else
   if SameText(AValue, 'ANTECIPADO') then Result := Integer(stANTECIPADO) else
   if SameText(AValue, 'PARCIALMENTE_LIQUIDADO') then Result := Integer(stPARCIALMENTE_LIQUIDADO) else
-  raise EnumException.CreateFmt('Valor $s incorreto para StatusTitulo.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para StatusTitulo.', [AValue]);
 end;
 
 function Converter_StatusTitulo_EnumToStr(const AValue: Integer): TString; overload;
@@ -883,7 +884,7 @@ begin
   if Integer(stLIQUIDADO_E_PENDENTE) = AValue then Result := 'LIQUIDADO_E_PENDENTE' else
   if Integer(stANTECIPADO) = AValue then Result := 'ANTECIPADO' else
   if Integer(stPARCIALMENTE_LIQUIDADO) = AValue then Result := 'PARCIALMENTE_LIQUIDADO' else
-  raise EnumException.CreateFmt('Valor $d incorreto para StatusTitulo.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para StatusTitulo.', [AValue]);
 end;
 
 { TStatusXmlNotaPDV }
@@ -894,7 +895,7 @@ begin
   if SameText(AValue, 'AUTORIZADA') then Result := Integer(sxnpdvAUTORIZADA) else
   if SameText(AValue, 'CANCELADA') then Result := Integer(sxnpdvCANCELADA) else
   if SameText(AValue, 'PENDENTE_CANCELAMENTO') then Result := Integer(sxnpdvPENDENTE_CANCELAMENTO) else
-  raise EnumException.CreateFmt('Valor $s incorreto para StatusXmlNotaPDV.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para StatusXmlNotaPDV.', [AValue]);
 end;
 
 function Converter_StatusXmlNotaPDV_EnumToStr(const AValue: Integer): TString; overload;
@@ -903,7 +904,7 @@ begin
   if Integer(sxnpdvAUTORIZADA) = AValue then Result := 'AUTORIZADA' else
   if Integer(sxnpdvCANCELADA) = AValue then Result := 'CANCELADA' else
   if Integer(sxnpdvPENDENTE_CANCELAMENTO) = AValue then Result := 'PENDENTE_CANCELAMENTO' else
-  raise EnumException.CreateFmt('Valor $d incorreto para StatusXmlNotaPDV.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para StatusXmlNotaPDV.', [AValue]);
 end;
 
 { TTabelaA }
@@ -919,7 +920,7 @@ begin
   if SameText(AValue, 'MERCADORIA_CONTENDO_IMPORTACAO_SUPERIOR_40') then Result := Integer(taMERCADORIA_CONTENDO_IMPORTACAO_SUPERIOR_40) else
   if SameText(AValue, 'ADQUIRIDO_DO_MERCADO_INTERNO_SEM_SIMILAR_NACIONAL') then Result := Integer(taADQUIRIDO_DO_MERCADO_INTERNO_SEM_SIMILAR_NACIONAL) else
   if SameText(AValue, 'IMPORTACAO_DIRETA') then Result := Integer(taIMPORTACAO_DIRETA) else
-  raise EnumException.CreateFmt('Valor $s incorreto para TabelaA.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para TabelaA.', [AValue]);
 end;
 
 function Converter_TabelaA_EnumToStr(const AValue: Integer): TString; overload;
@@ -933,7 +934,7 @@ begin
   if Integer(taMERCADORIA_CONTENDO_IMPORTACAO_SUPERIOR_40) = AValue then Result := 'MERCADORIA_CONTENDO_IMPORTACAO_SUPERIOR_40' else
   if Integer(taADQUIRIDO_DO_MERCADO_INTERNO_SEM_SIMILAR_NACIONAL) = AValue then Result := 'ADQUIRIDO_DO_MERCADO_INTERNO_SEM_SIMILAR_NACIONAL' else
   if Integer(taIMPORTACAO_DIRETA) = AValue then Result := 'IMPORTACAO_DIRETA' else
-  raise EnumException.CreateFmt('Valor $d incorreto para TabelaA.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para TabelaA.', [AValue]);
 end;
 
 { TTabelaPrazo }
@@ -947,7 +948,7 @@ begin
   if SameText(AValue, 'PRZ') then Result := Integer(tpPRZ) else
   if SameText(AValue, 'DFM') then Result := Integer(tpDFM) else
   if SameText(AValue, 'DFQ') then Result := Integer(tpDFQ) else
-  raise EnumException.CreateFmt('Valor $s incorreto para TabelaPrazo.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para TabelaPrazo.', [AValue]);
 end;
 
 function Converter_TabelaPrazo_EnumToStr(const AValue: Integer): TString; overload;
@@ -959,7 +960,7 @@ begin
   if Integer(tpPRZ) = AValue then Result := 'PRZ' else
   if Integer(tpDFM) = AValue then Result := 'DFM' else
   if Integer(tpDFQ) = AValue then Result := 'DFQ' else
-  raise EnumException.CreateFmt('Valor $d incorreto para TabelaPrazo.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para TabelaPrazo.', [AValue]);
 end;
 
 { TTipoAgregacao }
@@ -968,14 +969,14 @@ function Converter_TipoAgregacao_StrToEnum(const AValue: TString): Integer;
 begin
   if SameText(AValue, 'PAUTA') then Result := Integer(taPAUTA) else
   if SameText(AValue, 'MARGEM') then Result := Integer(taMARGEM) else
-  raise EnumException.CreateFmt('Valor $s incorreto para TipoAgregacao.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para TipoAgregacao.', [AValue]);
 end;
 
 function Converter_TipoAgregacao_EnumToStr(const AValue: Integer): TString; overload;
 begin
   if Integer(taPAUTA) = AValue then Result := 'PAUTA' else
   if Integer(taMARGEM) = AValue then Result := 'MARGEM' else
-  raise EnumException.CreateFmt('Valor $d incorreto para TipoAgregacao.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para TipoAgregacao.', [AValue]);
 end;
 
 { TTipoBonificacao }
@@ -985,7 +986,7 @@ begin
   if SameText(AValue, 'NAO_GERA_PONTOS') then Result := Integer(tbNAO_GERA_PONTOS) else
   if SameText(AValue, 'GERA_PONTOS_POR_QUANTIDADE') then Result := Integer(tbGERA_PONTOS_POR_QUANTIDADE) else
   if SameText(AValue, 'GERA_PONTOS_POR_PRECO') then Result := Integer(tbGERA_PONTOS_POR_PRECO) else
-  raise EnumException.CreateFmt('Valor $s incorreto para TipoBonificacao.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para TipoBonificacao.', [AValue]);
 end;
 
 function Converter_TipoBonificacao_EnumToStr(const AValue: Integer): TString; overload;
@@ -993,7 +994,7 @@ begin
   if Integer(tbNAO_GERA_PONTOS) = AValue then Result := 'NAO_GERA_PONTOS' else
   if Integer(tbGERA_PONTOS_POR_QUANTIDADE) = AValue then Result := 'GERA_PONTOS_POR_QUANTIDADE' else
   if Integer(tbGERA_PONTOS_POR_PRECO) = AValue then Result := 'GERA_PONTOS_POR_PRECO' else
-  raise EnumException.CreateFmt('Valor $d incorreto para TipoBonificacao.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para TipoBonificacao.', [AValue]);
 end;
 
 { TTipoCategoria }
@@ -1002,14 +1003,14 @@ function Converter_TipoCategoria_StrToEnum(const AValue: TString): Integer;
 begin
   if SameText(AValue, 'ANALITICA') then Result := Integer(tcANALITICA) else
   if SameText(AValue, 'SINTETICA') then Result := Integer(tcSINTETICA) else
-  raise EnumException.CreateFmt('Valor $s incorreto para TipoCategoria.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para TipoCategoria.', [AValue]);
 end;
 
 function Converter_TipoCategoria_EnumToStr(const AValue: Integer): TString; overload;
 begin
   if Integer(tcANALITICA) = AValue then Result := 'ANALITICA' else
   if Integer(tcSINTETICA) = AValue then Result := 'SINTETICA' else
-  raise EnumException.CreateFmt('Valor $d incorreto para TipoCategoria.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para TipoCategoria.', [AValue]);
 end;
 
 { TTipoCliente }
@@ -1018,14 +1019,14 @@ function Converter_TipoCliente_StrToEnum(const AValue: TString): Integer;
 begin
   if SameText(AValue, 'TITULAR') then Result := Integer(tcTITULAR) else
   if SameText(AValue, 'DEPENDENTE') then Result := Integer(tcDEPENDENTE) else
-  raise EnumException.CreateFmt('Valor $s incorreto para TipoCliente.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para TipoCliente.', [AValue]);
 end;
 
 function Converter_TipoCliente_EnumToStr(const AValue: Integer): TString; overload;
 begin
   if Integer(tcTITULAR) = AValue then Result := 'TITULAR' else
   if Integer(tcDEPENDENTE) = AValue then Result := 'DEPENDENTE' else
-  raise EnumException.CreateFmt('Valor $d incorreto para TipoCliente.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para TipoCliente.', [AValue]);
 end;
 
 { TTipoContaCorrente }
@@ -1034,14 +1035,14 @@ function Converter_TipoContaCorrente_StrToEnum(const AValue: TString): Integer;
 begin
   if SameText(AValue, 'BANCARIA') then Result := Integer(tccBANCARIA) else
   if SameText(AValue, 'CAIXA') then Result := Integer(tccCAIXA) else
-  raise EnumException.CreateFmt('Valor $s incorreto para TipoContaCorrente.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para TipoContaCorrente.', [AValue]);
 end;
 
 function Converter_TipoContaCorrente_EnumToStr(const AValue: Integer): TString; overload;
 begin
   if Integer(tccBANCARIA) = AValue then Result := 'BANCARIA' else
   if Integer(tccCAIXA) = AValue then Result := 'CAIXA' else
-  raise EnumException.CreateFmt('Valor $d incorreto para TipoContaCorrente.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para TipoContaCorrente.', [AValue]);
 end;
 
 { TTipoControleDocumento }
@@ -1050,14 +1051,14 @@ function Converter_TipoControleDocumento_StrToEnum(const AValue: TString): Integ
 begin
   if SameText(AValue, 'CONVENIO') then Result := Integer(tcdCONVENIO) else
   if SameText(AValue, 'AVULSO') then Result := Integer(tcdAVULSO) else
-  raise EnumException.CreateFmt('Valor $s incorreto para TipoControleDocumento.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para TipoControleDocumento.', [AValue]);
 end;
 
 function Converter_TipoControleDocumento_EnumToStr(const AValue: Integer): TString; overload;
 begin
   if Integer(tcdCONVENIO) = AValue then Result := 'CONVENIO' else
   if Integer(tcdAVULSO) = AValue then Result := 'AVULSO' else
-  raise EnumException.CreateFmt('Valor $d incorreto para TipoControleDocumento.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para TipoControleDocumento.', [AValue]);
 end;
 
 { TTipoDaPessoa }
@@ -1072,7 +1073,7 @@ begin
   if SameText(AValue, 'CLIENTE') then Result := Integer(tdpCLIENTE) else
   if SameText(AValue, 'FORNECEDOR') then Result := Integer(tdpFORNECEDOR) else
   if SameText(AValue, 'PROMOTOR_DE_VENDA') then Result := Integer(tdpPROMOTOR_DE_VENDA) else
-  raise EnumException.CreateFmt('Valor $s incorreto para TipoDaPessoa.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para TipoDaPessoa.', [AValue]);
 end;
 
 function Converter_TipoDaPessoa_EnumToStr(const AValue: Integer): TString; overload;
@@ -1085,7 +1086,7 @@ begin
   if Integer(tdpCLIENTE) = AValue then Result := 'CLIENTE' else
   if Integer(tdpFORNECEDOR) = AValue then Result := 'FORNECEDOR' else
   if Integer(tdpPROMOTOR_DE_VENDA) = AValue then Result := 'PROMOTOR_DE_VENDA' else
-  raise EnumException.CreateFmt('Valor $d incorreto para TipoDaPessoa.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para TipoDaPessoa.', [AValue]);
 end;
 
 { TTipoEndereco }
@@ -1094,14 +1095,14 @@ function Converter_TipoEndereco_StrToEnum(const AValue: TString): Integer;
 begin
   if SameText(AValue, 'PRINCIPAL') then Result := Integer(tePRINCIPAL) else
   if SameText(AValue, 'COBRANCA') then Result := Integer(teCOBRANCA) else
-  raise EnumException.CreateFmt('Valor $s incorreto para TipoEndereco.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para TipoEndereco.', [AValue]);
 end;
 
 function Converter_TipoEndereco_EnumToStr(const AValue: Integer): TString; overload;
 begin
   if Integer(tePRINCIPAL) = AValue then Result := 'PRINCIPAL' else
   if Integer(teCOBRANCA) = AValue then Result := 'COBRANCA' else
-  raise EnumException.CreateFmt('Valor $d incorreto para TipoEndereco.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para TipoEndereco.', [AValue]);
 end;
 
 { TTipoEntrada }
@@ -1110,14 +1111,14 @@ function Converter_TipoEntrada_StrToEnum(const AValue: TString): Integer;
 begin
   if SameText(AValue, 'PERCENTUAL') then Result := Integer(tePERCENTUAL) else
   if SameText(AValue, 'VALOR') then Result := Integer(teVALOR) else
-  raise EnumException.CreateFmt('Valor $s incorreto para TipoEntrada.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para TipoEntrada.', [AValue]);
 end;
 
 function Converter_TipoEntrada_EnumToStr(const AValue: Integer): TString; overload;
 begin
   if Integer(tePERCENTUAL) = AValue then Result := 'PERCENTUAL' else
   if Integer(teVALOR) = AValue then Result := 'VALOR' else
-  raise EnumException.CreateFmt('Valor $d incorreto para TipoEntrada.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para TipoEntrada.', [AValue]);
 end;
 
 { TTipoEstoque }
@@ -1126,14 +1127,14 @@ function Converter_TipoEstoque_StrToEnum(const AValue: TString): Integer;
 begin
   if SameText(AValue, 'TERCEIROS') then Result := Integer(teTERCEIROS) else
   if SameText(AValue, 'PROPRIO') then Result := Integer(tePROPRIO) else
-  raise EnumException.CreateFmt('Valor $s incorreto para TipoEstoque.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para TipoEstoque.', [AValue]);
 end;
 
 function Converter_TipoEstoque_EnumToStr(const AValue: Integer): TString; overload;
 begin
   if Integer(teTERCEIROS) = AValue then Result := 'TERCEIROS' else
   if Integer(tePROPRIO) = AValue then Result := 'PROPRIO' else
-  raise EnumException.CreateFmt('Valor $d incorreto para TipoEstoque.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para TipoEstoque.', [AValue]);
 end;
 
 { TTipoFator }
@@ -1142,14 +1143,14 @@ function Converter_TipoFator_StrToEnum(const AValue: TString): Integer;
 begin
   if SameText(AValue, 'PRECO') then Result := Integer(tfPRECO) else
   if SameText(AValue, 'FATOR') then Result := Integer(tfFATOR) else
-  raise EnumException.CreateFmt('Valor $s incorreto para TipoFator.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para TipoFator.', [AValue]);
 end;
 
 function Converter_TipoFator_EnumToStr(const AValue: Integer): TString; overload;
 begin
   if Integer(tfPRECO) = AValue then Result := 'PRECO' else
   if Integer(tfFATOR) = AValue then Result := 'FATOR' else
-  raise EnumException.CreateFmt('Valor $d incorreto para TipoFator.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para TipoFator.', [AValue]);
 end;
 
 { TTipoFinalizadoraPremiacao }
@@ -1158,14 +1159,14 @@ function Converter_TipoFinalizadoraPremiacao_StrToEnum(const AValue: TString): I
 begin
   if SameText(AValue, 'PERCENTUAL') then Result := Integer(tfpPERCENTUAL) else
   if SameText(AValue, 'VALOR') then Result := Integer(tfpVALOR) else
-  raise EnumException.CreateFmt('Valor $s incorreto para TipoFinalizadoraPremiacao.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para TipoFinalizadoraPremiacao.', [AValue]);
 end;
 
 function Converter_TipoFinalizadoraPremiacao_EnumToStr(const AValue: Integer): TString; overload;
 begin
   if Integer(tfpPERCENTUAL) = AValue then Result := 'PERCENTUAL' else
   if Integer(tfpVALOR) = AValue then Result := 'VALOR' else
-  raise EnumException.CreateFmt('Valor $d incorreto para TipoFinalizadoraPremiacao.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para TipoFinalizadoraPremiacao.', [AValue]);
 end;
 
 { TTipoFormaPagamentoCartao }
@@ -1174,14 +1175,14 @@ function Converter_TipoFormaPagamentoCartao_StrToEnum(const AValue: TString): In
 begin
   if SameText(AValue, 'DEBITO') then Result := Integer(tfpcDEBITO) else
   if SameText(AValue, 'CREDITO') then Result := Integer(tfpcCREDITO) else
-  raise EnumException.CreateFmt('Valor $s incorreto para TipoFormaPagamentoCartao.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para TipoFormaPagamentoCartao.', [AValue]);
 end;
 
 function Converter_TipoFormaPagamentoCartao_EnumToStr(const AValue: Integer): TString; overload;
 begin
   if Integer(tfpcDEBITO) = AValue then Result := 'DEBITO' else
   if Integer(tfpcCREDITO) = AValue then Result := 'CREDITO' else
-  raise EnumException.CreateFmt('Valor $d incorreto para TipoFormaPagamentoCartao.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para TipoFormaPagamentoCartao.', [AValue]);
 end;
 
 { TTipoFornecedor }
@@ -1193,7 +1194,7 @@ begin
   if SameText(AValue, 'VAREJO') then Result := Integer(tfVAREJO) else
   if SameText(AValue, 'OUTROS') then Result := Integer(tfOUTROS) else
   if SameText(AValue, 'INDUSTRIA') then Result := Integer(tfINDUSTRIA) else
-  raise EnumException.CreateFmt('Valor $s incorreto para TipoFornecedor.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para TipoFornecedor.', [AValue]);
 end;
 
 function Converter_TipoFornecedor_EnumToStr(const AValue: Integer): TString; overload;
@@ -1203,7 +1204,7 @@ begin
   if Integer(tfVAREJO) = AValue then Result := 'VAREJO' else
   if Integer(tfOUTROS) = AValue then Result := 'OUTROS' else
   if Integer(tfINDUSTRIA) = AValue then Result := 'INDUSTRIA' else
-  raise EnumException.CreateFmt('Valor $d incorreto para TipoFornecedor.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para TipoFornecedor.', [AValue]);
 end;
 
 { TTipoFrenteLoja }
@@ -1212,14 +1213,14 @@ function Converter_TipoFrenteLoja_StrToEnum(const AValue: TString): Integer;
 begin
   if SameText(AValue, 'EASY_ASSIST') then Result := Integer(tflEASY_ASSIST) else
   if SameText(AValue, 'SYSPDV') then Result := Integer(tflSYSPDV) else
-  raise EnumException.CreateFmt('Valor $s incorreto para TipoFrenteLoja.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para TipoFrenteLoja.', [AValue]);
 end;
 
 function Converter_TipoFrenteLoja_EnumToStr(const AValue: Integer): TString; overload;
 begin
   if Integer(tflEASY_ASSIST) = AValue then Result := 'EASY_ASSIST' else
   if Integer(tflSYSPDV) = AValue then Result := 'SYSPDV' else
-  raise EnumException.CreateFmt('Valor $d incorreto para TipoFrenteLoja.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para TipoFrenteLoja.', [AValue]);
 end;
 
 { TTipoFreteNota }
@@ -1230,7 +1231,7 @@ begin
   if SameText(AValue, 'DESTINATARIO') then Result := Integer(tfnDESTINATARIO) else
   if SameText(AValue, 'TERCEIRO') then Result := Integer(tfnTERCEIRO) else
   if SameText(AValue, 'EMITENTE') then Result := Integer(tfnEMITENTE) else
-  raise EnumException.CreateFmt('Valor $s incorreto para TipoFreteNota.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para TipoFreteNota.', [AValue]);
 end;
 
 function Converter_TipoFreteNota_EnumToStr(const AValue: Integer): TString; overload;
@@ -1239,7 +1240,7 @@ begin
   if Integer(tfnDESTINATARIO) = AValue then Result := 'DESTINATARIO' else
   if Integer(tfnTERCEIRO) = AValue then Result := 'TERCEIRO' else
   if Integer(tfnEMITENTE) = AValue then Result := 'EMITENTE' else
-  raise EnumException.CreateFmt('Valor $d incorreto para TipoFreteNota.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para TipoFreteNota.', [AValue]);
 end;
 
 { TTipoIPI }
@@ -1248,14 +1249,14 @@ function Converter_TipoIPI_StrToEnum(const AValue: TString): Integer;
 begin
   if SameText(AValue, 'PERCENTUAL') then Result := Integer(tipiPERCENTUAL) else
   if SameText(AValue, 'VALOR') then Result := Integer(tipiVALOR) else
-  raise EnumException.CreateFmt('Valor $s incorreto para TipoIPI.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para TipoIPI.', [AValue]);
 end;
 
 function Converter_TipoIPI_EnumToStr(const AValue: Integer): TString; overload;
 begin
   if Integer(tipiPERCENTUAL) = AValue then Result := 'PERCENTUAL' else
   if Integer(tipiVALOR) = AValue then Result := 'VALOR' else
-  raise EnumException.CreateFmt('Valor $d incorreto para TipoIPI.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para TipoIPI.', [AValue]);
 end;
 
 { TTipoImposto }
@@ -1265,7 +1266,7 @@ begin
   if SameText(AValue, 'COFINS') then Result := Integer(tiCOFINS) else
   if SameText(AValue, 'PIS') then Result := Integer(tiPIS) else
   if SameText(AValue, 'OUTROS') then Result := Integer(tiOUTROS) else
-  raise EnumException.CreateFmt('Valor $s incorreto para TipoImposto.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para TipoImposto.', [AValue]);
 end;
 
 function Converter_TipoImposto_EnumToStr(const AValue: Integer): TString; overload;
@@ -1273,7 +1274,7 @@ begin
   if Integer(tiCOFINS) = AValue then Result := 'COFINS' else
   if Integer(tiPIS) = AValue then Result := 'PIS' else
   if Integer(tiOUTROS) = AValue then Result := 'OUTROS' else
-  raise EnumException.CreateFmt('Valor $d incorreto para TipoImposto.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para TipoImposto.', [AValue]);
 end;
 
 { TTipoIncidencia }
@@ -1283,7 +1284,7 @@ begin
   if SameText(AValue, 'SAIDA') then Result := Integer(tiSAIDA) else
   if SameText(AValue, 'ENTRADA') then Result := Integer(tiENTRADA) else
   if SameText(AValue, 'AMBOS') then Result := Integer(tiAMBOS) else
-  raise EnumException.CreateFmt('Valor $s incorreto para TipoIncidencia.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para TipoIncidencia.', [AValue]);
 end;
 
 function Converter_TipoIncidencia_EnumToStr(const AValue: Integer): TString; overload;
@@ -1291,7 +1292,7 @@ begin
   if Integer(tiSAIDA) = AValue then Result := 'SAIDA' else
   if Integer(tiENTRADA) = AValue then Result := 'ENTRADA' else
   if Integer(tiAMBOS) = AValue then Result := 'AMBOS' else
-  raise EnumException.CreateFmt('Valor $d incorreto para TipoIncidencia.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para TipoIncidencia.', [AValue]);
 end;
 
 { TTipoOperacao }
@@ -1300,14 +1301,14 @@ function Converter_TipoOperacao_StrToEnum(const AValue: TString): Integer;
 begin
   if SameText(AValue, 'SAIDA') then Result := Integer(toSAIDA) else
   if SameText(AValue, 'ENTRADA') then Result := Integer(toENTRADA) else
-  raise EnumException.CreateFmt('Valor $s incorreto para TipoOperacao.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para TipoOperacao.', [AValue]);
 end;
 
 function Converter_TipoOperacao_EnumToStr(const AValue: Integer): TString; overload;
 begin
   if Integer(toSAIDA) = AValue then Result := 'SAIDA' else
   if Integer(toENTRADA) = AValue then Result := 'ENTRADA' else
-  raise EnumException.CreateFmt('Valor $d incorreto para TipoOperacao.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para TipoOperacao.', [AValue]);
 end;
 
 { TTipoPauta }
@@ -1316,14 +1317,14 @@ function Converter_TipoPauta_StrToEnum(const AValue: TString): Integer;
 begin
   if SameText(AValue, 'MINIMA') then Result := Integer(tpMINIMA) else
   if SameText(AValue, 'FIXA') then Result := Integer(tpFIXA) else
-  raise EnumException.CreateFmt('Valor $s incorreto para TipoPauta.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para TipoPauta.', [AValue]);
 end;
 
 function Converter_TipoPauta_EnumToStr(const AValue: Integer): TString; overload;
 begin
   if Integer(tpMINIMA) = AValue then Result := 'MINIMA' else
   if Integer(tpFIXA) = AValue then Result := 'FIXA' else
-  raise EnumException.CreateFmt('Valor $d incorreto para TipoPauta.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para TipoPauta.', [AValue]);
 end;
 
 { TTipoPessoa }
@@ -1333,7 +1334,7 @@ begin
   if SameText(AValue, 'FISICA') then Result := Integer(tpFISICA) else
   if SameText(AValue, 'JURIDICA') then Result := Integer(tpJURIDICA) else
   if SameText(AValue, 'ESTRANGEIRO') then Result := Integer(tpESTRANGEIRO) else
-  raise EnumException.CreateFmt('Valor $s incorreto para TipoPessoa.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para TipoPessoa.', [AValue]);
 end;
 
 function Converter_TipoPessoa_EnumToStr(const AValue: Integer): TString; overload;
@@ -1341,7 +1342,7 @@ begin
   if Integer(tpFISICA) = AValue then Result := 'FISICA' else
   if Integer(tpJURIDICA) = AValue then Result := 'JURIDICA' else
   if Integer(tpESTRANGEIRO) = AValue then Result := 'ESTRANGEIRO' else
-  raise EnumException.CreateFmt('Valor $d incorreto para TipoPessoa.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para TipoPessoa.', [AValue]);
 end;
 
 { TTipoProdutoAuxiliar }
@@ -1350,14 +1351,14 @@ function Converter_TipoProdutoAuxiliar_StrToEnum(const AValue: TString): Integer
 begin
   if SameText(AValue, 'EAN') then Result := Integer(tpaEAN) else
   if SameText(AValue, 'LITERAL') then Result := Integer(tpaLITERAL) else
-  raise EnumException.CreateFmt('Valor $s incorreto para TipoProdutoAuxiliar.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para TipoProdutoAuxiliar.', [AValue]);
 end;
 
 function Converter_TipoProdutoAuxiliar_EnumToStr(const AValue: Integer): TString; overload;
 begin
   if Integer(tpaEAN) = AValue then Result := 'EAN' else
   if Integer(tpaLITERAL) = AValue then Result := 'LITERAL' else
-  raise EnumException.CreateFmt('Valor $d incorreto para TipoProdutoAuxiliar.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para TipoProdutoAuxiliar.', [AValue]);
 end;
 
 { TTipoPromocao }
@@ -1372,7 +1373,7 @@ begin
   if SameText(AValue, 'QUANTIDADE_DE_PRODUTO') then Result := Integer(tpQUANTIDADE_DE_PRODUTO) else
   if SameText(AValue, 'VALOR_DO_CUPOM_ITENS') then Result := Integer(tpVALOR_DO_CUPOM_ITENS) else
   if SameText(AValue, 'VALOR_DO_PRODUTO') then Result := Integer(tpVALOR_DO_PRODUTO) else
-  raise EnumException.CreateFmt('Valor $s incorreto para TipoPromocao.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para TipoPromocao.', [AValue]);
 end;
 
 function Converter_TipoPromocao_EnumToStr(const AValue: Integer): TString; overload;
@@ -1385,7 +1386,7 @@ begin
   if Integer(tpQUANTIDADE_DE_PRODUTO) = AValue then Result := 'QUANTIDADE_DE_PRODUTO' else
   if Integer(tpVALOR_DO_CUPOM_ITENS) = AValue then Result := 'VALOR_DO_CUPOM_ITENS' else
   if Integer(tpVALOR_DO_PRODUTO) = AValue then Result := 'VALOR_DO_PRODUTO' else
-  raise EnumException.CreateFmt('Valor $d incorreto para TipoPromocao.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para TipoPromocao.', [AValue]);
 end;
 
 { TTipoReferencia }
@@ -1399,7 +1400,7 @@ begin
   if SameText(AValue, 'PESSOAL') then Result := Integer(trPESSOAL) else
   if SameText(AValue, 'OUTROS') then Result := Integer(trOUTROS) else
   if SameText(AValue, 'PROFISSIONAL') then Result := Integer(trPROFISSIONAL) else
-  raise EnumException.CreateFmt('Valor $s incorreto para TipoReferencia.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para TipoReferencia.', [AValue]);
 end;
 
 function Converter_TipoReferencia_EnumToStr(const AValue: Integer): TString; overload;
@@ -1411,7 +1412,7 @@ begin
   if Integer(trPESSOAL) = AValue then Result := 'PESSOAL' else
   if Integer(trOUTROS) = AValue then Result := 'OUTROS' else
   if Integer(trPROFISSIONAL) = AValue then Result := 'PROFISSIONAL' else
-  raise EnumException.CreateFmt('Valor $d incorreto para TipoReferencia.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para TipoReferencia.', [AValue]);
 end;
 
 { TTipoResidencia }
@@ -1423,7 +1424,7 @@ begin
   if SameText(AValue, 'FINANCIADA') then Result := Integer(trFINANCIADA) else
   if SameText(AValue, 'DE_PARENTE') then Result := Integer(trDE_PARENTE) else
   if SameText(AValue, 'PROPRIA') then Result := Integer(trPROPRIA) else
-  raise EnumException.CreateFmt('Valor $s incorreto para TipoResidencia.', [AValue]);
+  raise EnumException.CreateFmt('Valor %s incorreto para TipoResidencia.', [AValue]);
 end;
 
 function Converter_TipoResidencia_EnumToStr(const AValue: Integer): TString; overload;
@@ -1433,7 +1434,7 @@ begin
   if Integer(trFINANCIADA) = AValue then Result := 'FINANCIADA' else
   if Integer(trDE_PARENTE) = AValue then Result := 'DE_PARENTE' else
   if Integer(trPROPRIA) = AValue then Result := 'PROPRIA' else
-  raise EnumException.CreateFmt('Valor $d incorreto para TipoResidencia.', [AValue]);
+  raise EnumException.CreateFmt('Valor %d incorreto para TipoResidencia.', [AValue]);
 end;
 
 { TEnumConversors }
@@ -1454,6 +1455,15 @@ begin
   Result := Converter(AValue);
 end;
 
+function TEnumConverters.IndexOfName(const Name: string): Integer;
+begin
+  Result := inherited IndexOfName(Name);
+  if Result = -1 then
+    Result := inherited IndexOfName(Name + STR_TO_ENUM);
+  if Result = -1 then
+    Result := inherited IndexOfName(Name + ENUM_TO_STR);
+end;
+
 procedure TEnumConverters.Register(const AEnumName: TString;
   AConverterStrToEnum: TConverterStrToEnum; AConverterEnumToStr: TConverterEnumToStr);
 begin
@@ -1467,7 +1477,7 @@ initialization
   EnumConverters.Register('TAtividadeEconomica', @Converter_AtividadeEconomica_StrToEnum, @Converter_AtividadeEconomica_EnumToStr);
   EnumConverters.Register('TCSOSN', @Converter_CSOSN_StrToEnum, @Converter_CSOSN_EnumToStr);
   EnumConverters.Register('TClassificacaoCategoria', @Converter_ClassificacaoCategoria_StrToEnum, @Converter_ClassificacaoCategoria_EnumToStr);
-  EnumConverters.Register('TClassificacaoPessoa', @Converter_ClassificacaoPessoa_StrToEnum, @Converter_ClassificacaoPessoa_EnumToStr);
+  EnumConverters.Register('TClassificacaoDePessoa', @Converter_ClassificacaoDePessoa_StrToEnum, @Converter_ClassificacaoDePessoa_EnumToStr);
   EnumConverters.Register('TComposicao', @Converter_Composicao_StrToEnum, @Converter_Composicao_EnumToStr);
   EnumConverters.Register('TConciliadora', @Converter_Conciliadora_StrToEnum, @Converter_Conciliadora_EnumToStr);
   EnumConverters.Register('TCondicaoPagamento', @Converter_CondicaoPagamento_StrToEnum, @Converter_CondicaoPagamento_EnumToStr);

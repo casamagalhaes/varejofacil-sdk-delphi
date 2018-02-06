@@ -26,8 +26,6 @@ package VarejofacilSDKDXE7;
 {$DEFINE RELEASE}
 {$ENDIF IMPLICITBUILDING}
 {$IMPLICITBUILD ON}
-{$WARN IMPLICIT_STRING_CAST OFF}
-{$WARN IMPLICIT_STRING_CAST_LOSS OFF}
 
 requires
   rtl,
@@ -93,7 +91,7 @@ contains
   SDK.Model.ImpostoFederal in 'Models\SDK.Model.ImpostoFederal.pas',
   SDK.Model.ItemAplicacaoProduto in 'Models\SDK.Model.ItemAplicacaoProduto.pas',
   SDK.Model.ItemCaracteristicaProduto in 'Models\SDK.Model.ItemCaracteristicaProduto.pas',
-  SDK.Model.ItemDaTabelaDeTributacao in 'Models\SDK.Model.ItemDaTabelaDeTributacao.pas',
+  SDK.Model.ItemTabelaTributaria in 'Models\SDK.Model.ItemTabelaTributaria.pas',
   SDK.Model.ItemDevolucao in 'Models\SDK.Model.ItemDevolucao.pas',
   SDK.Model.ItemDevolucaoDeCupom in 'Models\SDK.Model.ItemDevolucaoDeCupom.pas',
   SDK.Model.ItemImpostoFederal in 'Models\SDK.Model.ItemImpostoFederal.pas',
@@ -154,7 +152,6 @@ contains
   SDK.Model.SituacaoFiscal in 'Models\SDK.Model.SituacaoFiscal.pas',
   SDK.Model.StatusDoCliente in 'Models\SDK.Model.StatusDoCliente.pas',
   SDK.Model.SubGrupo in 'Models\SDK.Model.SubGrupo.pas',
-  SDK.Model.TabelaDeTributacao in 'Models\SDK.Model.TabelaDeTributacao.pas',
   SDK.Model.TipoDocumento in 'Models\SDK.Model.TipoDocumento.pas',
   SDK.Model.TipoPagamento in 'Models\SDK.Model.TipoPagamento.pas',
   SDK.Model.TituloAReceber in 'Models\SDK.Model.TituloAReceber.pas',
@@ -186,7 +183,12 @@ contains
   SDK.Service.UnidadeProduto in 'Services\SDK.Service.UnidadeProduto.pas',
   SDK.Service.MarcaProduto in 'Services\SDK.Service.MarcaProduto.pas',
   SDK.Service.Loja in 'Services\SDK.Service.Loja.pas',
-  SDK.Service.Fornecedor in 'Services\SDK.Service.Fornecedor.pas';
+  SDK.Service.Fornecedor in 'Services\SDK.Service.Fornecedor.pas',
+  SDK.Service.RegimeEstadualTributario in 'Services\SDK.Service.RegimeEstadualTributario.pas',
+  SDK.Service.TabelaTributaria in 'Services\SDK.Service.TabelaTributaria.pas',
+  SDK.Model.TabelaTributaria in 'Models\SDK.Model.TabelaTributaria.pas',
+  SDK.Service.SituacaoFiscal in 'Services\SDK.Service.SituacaoFiscal.pas',
+  SDK.Service.FiguraFiscal in 'Services\SDK.Service.FiguraFiscal.pas';
 
 end.
 

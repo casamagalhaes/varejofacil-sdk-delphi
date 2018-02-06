@@ -1,4 +1,4 @@
-﻿unit SDK.Model.ItemDaTabelaDeTributacao;
+﻿unit SDK.Model.ItemTabelaTributaria;
 
 interface
 
@@ -7,12 +7,14 @@ uses
 
 type
 
-  IItemDaTabelaDeTributacao = interface(IModel)
+  IItemTabelaTributaria = interface(IModel)
     ['{9C62A73B-ADE3-4DC9-A1AB-C866D7DD011B}']
+    function GetId: Variant;
+    procedure SetId(const AId: Variant);
     function GetUf: TString;
     procedure SetUf(const AUf: TString);
-    function GetClassificacaoDePessoa: TClassificacaoPessoa;
-    procedure SetClassificacaoDePessoa(const AClassificacaoDePessoa: TClassificacaoPessoa);
+    function GetClassificacaoDePessoa: TClassificacaoDePessoa;
+    procedure SetClassificacaoDePessoa(const AClassificacaoDePessoa: TClassificacaoDePessoa);
     function GetTributadoNF: Double;
     procedure SetTributadoNF(const ATributadoNF: Double);
     function GetIsentoNF: Double;
@@ -43,12 +45,12 @@ type
     procedure SetCsosnDocumentoFiscal(const ACsosnDocumentoFiscal: TCSOSN);
     function GetTributacao: TString;
     procedure SetTributacao(const ATributacao: TString);
-    function GetCfopId: Int64;
-    procedure SetCfopId(const ACfopId: Int64);
-    function GetCfopCuponsFiscaisId: Int64;
-    procedure SetCfopCuponsFiscaisId(const ACfopCuponsFiscaisId: Int64);
+    function GetCfopId: Variant;
+    procedure SetCfopId(const ACfopId: Variant);
+    function GetCfopCuponsFiscaisId: Variant;
+    procedure SetCfopCuponsFiscaisId(const ACfopCuponsFiscaisId: Variant);
     property Uf: TString read GetUf write SetUf;
-    property ClassificacaoDePessoa: TClassificacaoPessoa read GetClassificacaoDePessoa write SetClassificacaoDePessoa;
+    property ClassificacaoDePessoa: TClassificacaoDePessoa read GetClassificacaoDePessoa write SetClassificacaoDePessoa;
     property TributadoNF: Double read GetTributadoNF write SetTributadoNF;
     property IsentoNF: Double read GetIsentoNF write SetIsentoNF;
     property OutrosNF: Double read GetOutrosNF write SetOutrosNF;
@@ -64,62 +66,63 @@ type
     property Csosn: TCSOSN read GetCsosn write SetCsosn;
     property CsosnDocumentoFiscal: TCSOSN read GetCsosnDocumentoFiscal write SetCsosnDocumentoFiscal;
     property Tributacao: TString read GetTributacao write SetTributacao;
-    property CfopId: Int64 read GetCfopId write SetCfopId;
-    property CfopCuponsFiscaisId: Int64 read GetCfopCuponsFiscaisId write SetCfopCuponsFiscaisId;
+    property CfopId: Variant read GetCfopId write SetCfopId;
+    property CfopCuponsFiscaisId: Variant read GetCfopCuponsFiscaisId write SetCfopCuponsFiscaisId;
   end;
 
-  TItemDaTabelaDeTributacaoList = class;
+  TItemTabelaTributariaList = class;
 
-  IItemDaTabelaDeTributacaoList = interface
+  IItemTabelaTributariaList = interface
 	['{F5364F44-87D7-4022-99A4-48A620C904FB}']
-    function GetReference: TItemDaTabelaDeTributacaoList;
-    function GetItems(AIndex: Integer): IItemDaTabelaDeTributacao;
-    procedure SetItems(AIndex: Integer; const Value: IItemDaTabelaDeTributacao);
-    procedure Add(const AItemDaTabelaDeTributacao: IItemDaTabelaDeTributacao);
+    function GetReference: TItemTabelaTributariaList;
+    function GetItems(AIndex: Integer): IItemTabelaTributaria;
+    procedure SetItems(AIndex: Integer; const Value: IItemTabelaTributaria);
+    procedure Add(const AItemTabelaTributaria: IItemTabelaTributaria);
     procedure Clear;
     function Count: Integer;
-    property Items[AIndex: Integer]: IItemDaTabelaDeTributacao read GetItems write SetItems; default;
+    property Items[AIndex: Integer]: IItemTabelaTributaria read GetItems write SetItems; default;
   end;
 
-  TItemDaTabelaDeTributacaoListEnumerator = class
+  TItemTabelaTributariaListEnumerator = class
   private
     FIndex: Integer;
-    FItemDaTabelaDeTributacaoList: TItemDaTabelaDeTributacaoList;
+    FItemTabelaTributariaList: TItemTabelaTributariaList;
   public
-    constructor Create(AItemDaTabelaDeTributacaoList: TItemDaTabelaDeTributacaoList);
-    function GetCurrent: IItemDaTabelaDeTributacao; inline;
+    constructor Create(AItemTabelaTributariaList: TItemTabelaTributariaList);
+    function GetCurrent: IItemTabelaTributaria; inline;
     function MoveNext: Boolean;
-    property Current: IItemDaTabelaDeTributacao read GetCurrent;
+    property Current: IItemTabelaTributaria read GetCurrent;
   end;
 
-  TItemDaTabelaDeTributacaoList = class(TInterfacedObject, IItemDaTabelaDeTributacaoList)
+  TItemTabelaTributariaList = class(TInterfacedObject, IItemTabelaTributariaList)
   private
     FList: TInterfaceList;
-    function GetItems(AIndex: Integer): IItemDaTabelaDeTributacao;
-    procedure SetItems(AIndex: Integer; const Value: IItemDaTabelaDeTributacao);
+    function GetItems(AIndex: Integer): IItemTabelaTributaria;
+    procedure SetItems(AIndex: Integer; const Value: IItemTabelaTributaria);
   public
     constructor Create;
-    procedure Add(const AItemDaTabelaDeTributacao: IItemDaTabelaDeTributacao);
+    procedure Add(const AItemTabelaTributaria: IItemTabelaTributaria);
     destructor Destroy; override;
-    function GetEnumerator: TItemDaTabelaDeTributacaoListEnumerator;
+    function GetEnumerator: TItemTabelaTributariaListEnumerator;
     procedure Clear;
     function Count: Integer;
-    function GetReference: TItemDaTabelaDeTributacaoList;
-    property Items[AIndex: Integer]: IItemDaTabelaDeTributacao read GetItems write SetItems; default;
+    function GetReference: TItemTabelaTributariaList;
+    property Items[AIndex: Integer]: IItemTabelaTributaria read GetItems write SetItems; default;
   end;
 
-  TItemDaTabelaDeTributacaoListRec = record
+  TItemTabelaTributariaListRec = record
   private
-    FList: IItemDaTabelaDeTributacaoList;
+    FList: IItemTabelaTributariaList;
   public
-    class function Create(const AList: IItemDaTabelaDeTributacaoList): TItemDaTabelaDeTributacaoListRec; static;
-    class operator Implicit(AListRec: TItemDaTabelaDeTributacaoListRec): TItemDaTabelaDeTributacaoList;
+    class function Create(const AList: IItemTabelaTributariaList): TItemTabelaTributariaListRec; static;
+    class operator Implicit(AListRec: TItemTabelaTributariaListRec): TItemTabelaTributariaList;
   end;
 
-  TItemDaTabelaDeTributacao = class(TInterfacedModel, IItemDaTabelaDeTributacao)
+  TItemTabelaTributaria = class(TInterfacedModel, IItemTabelaTributaria)
   private
+  FId: Variant;
 	FUf: TString;
-	FClassificacaoDePessoa: TClassificacaoPessoa;
+	FClassificacaoDePessoa: TClassificacaoDePessoa;
 	FTributadoNF: Double;
 	FIsentoNF: Double;
 	FOutrosNF: Double;
@@ -135,12 +138,14 @@ type
 	FCsosn: TCSOSN;
 	FCsosnDocumentoFiscal: TCSOSN;
 	FTributacao: TString;
-	FCfopId: Int64;
-	FCfopCuponsFiscaisId: Int64;
+	FCfopId: Variant;
+	FCfopCuponsFiscaisId: Variant;
+    function GetId: Variant;
+    procedure SetId(const AId: Variant);
     function GetUf: TString;
     procedure SetUf(const AUf: TString);
-    function GetClassificacaoDePessoa: TClassificacaoPessoa;
-    procedure SetClassificacaoDePessoa(const AClassificacaoDePessoa: TClassificacaoPessoa);
+    function GetClassificacaoDePessoa: TClassificacaoDePessoa;
+    procedure SetClassificacaoDePessoa(const AClassificacaoDePessoa: TClassificacaoDePessoa);
     function GetTributadoNF: Double;
     procedure SetTributadoNF(const ATributadoNF: Double);
     function GetIsentoNF: Double;
@@ -171,13 +176,14 @@ type
     procedure SetCsosnDocumentoFiscal(const ACsosnDocumentoFiscal: TCSOSN);
     function GetTributacao: TString;
     procedure SetTributacao(const ATributacao: TString);
-    function GetCfopId: Int64;
-    procedure SetCfopId(const ACfopId: Int64);
-    function GetCfopCuponsFiscaisId: Int64;
-    procedure SetCfopCuponsFiscaisId(const ACfopCuponsFiscaisId: Int64);
+    function GetCfopId: Variant;
+    procedure SetCfopId(const ACfopId: Variant);
+    function GetCfopCuponsFiscaisId: Variant;
+    procedure SetCfopCuponsFiscaisId(const ACfopCuponsFiscaisId: Variant);
   published
+    property Id: Variant read GetId write SetId;
     property Uf: TString read GetUf write SetUf;
-    property ClassificacaoDePessoa: TClassificacaoPessoa read GetClassificacaoDePessoa write SetClassificacaoDePessoa;
+    property ClassificacaoDePessoa: TClassificacaoDePessoa read GetClassificacaoDePessoa write SetClassificacaoDePessoa;
     property TributadoNF: Double read GetTributadoNF write SetTributadoNF;
     property IsentoNF: Double read GetIsentoNF write SetIsentoNF;
     property OutrosNF: Double read GetOutrosNF write SetOutrosNF;
@@ -193,282 +199,292 @@ type
     property Csosn: TCSOSN read GetCsosn write SetCsosn;
     property CsosnDocumentoFiscal: TCSOSN read GetCsosnDocumentoFiscal write SetCsosnDocumentoFiscal;
     property Tributacao: TString read GetTributacao write SetTributacao;
-    property CfopId: Int64 read GetCfopId write SetCfopId;
-    property CfopCuponsFiscaisId: Int64 read GetCfopCuponsFiscaisId write SetCfopCuponsFiscaisId;
+    property CfopId: Variant read GetCfopId write SetCfopId;
+    property CfopCuponsFiscaisId: Variant read GetCfopCuponsFiscaisId write SetCfopCuponsFiscaisId;
   end;
 
 implementation
 
-{ TItemDaTabelaDeTributacaoList }
+{ TItemTabelaTributariaList }
 
-procedure TItemDaTabelaDeTributacaoList.Add(const AItemDaTabelaDeTributacao: IItemDaTabelaDeTributacao);
+procedure TItemTabelaTributariaList.Add(const AItemTabelaTributaria: IItemTabelaTributaria);
 begin
-  FList.Add(AItemDaTabelaDeTributacao);
+  FList.Add(AItemTabelaTributaria);
 end;
 
-procedure TItemDaTabelaDeTributacaoList.Clear;
+procedure TItemTabelaTributariaList.Clear;
 begin
   FList.Clear;
 end;
 
-function TItemDaTabelaDeTributacaoList.Count: Integer;
+function TItemTabelaTributariaList.Count: Integer;
 begin
   Result := FList.Count;
 end;
 
-constructor TItemDaTabelaDeTributacaoList.Create;
+constructor TItemTabelaTributariaList.Create;
 begin
   FList := TInterfaceList.Create;
 end;
 
-destructor TItemDaTabelaDeTributacaoList.Destroy;
+destructor TItemTabelaTributariaList.Destroy;
 begin
   FreeAndNil(FList);
   inherited;
 end;
 
-function TItemDaTabelaDeTributacaoList.GetEnumerator: TItemDaTabelaDeTributacaoListEnumerator;
+function TItemTabelaTributariaList.GetEnumerator: TItemTabelaTributariaListEnumerator;
 begin
-  Result := TItemDaTabelaDeTributacaoListEnumerator.Create(Self);
+  Result := TItemTabelaTributariaListEnumerator.Create(Self);
 end;
 
-function TItemDaTabelaDeTributacaoList.GetItems(AIndex: Integer): IItemDaTabelaDeTributacao;
+function TItemTabelaTributariaList.GetItems(AIndex: Integer): IItemTabelaTributaria;
 begin
-  Result := FList[AIndex] as IItemDaTabelaDeTributacao;
+  Result := FList[AIndex] as IItemTabelaTributaria;
 end;
 
-function TItemDaTabelaDeTributacaoList.GetReference: TItemDaTabelaDeTributacaoList;
+function TItemTabelaTributariaList.GetReference: TItemTabelaTributariaList;
 begin
   Result := Self;
 end;
 
-procedure TItemDaTabelaDeTributacaoList.SetItems(AIndex: Integer; const Value: IItemDaTabelaDeTributacao);
+procedure TItemTabelaTributariaList.SetItems(AIndex: Integer; const Value: IItemTabelaTributaria);
 begin
   FList[AIndex] := Value;
 end;
 
-{ TItemDaTabelaDeTributacaoListEnumerator }
+{ TItemTabelaTributariaListEnumerator }
 
-constructor TItemDaTabelaDeTributacaoListEnumerator.Create(AItemDaTabelaDeTributacaoList: TItemDaTabelaDeTributacaoList);
+constructor TItemTabelaTributariaListEnumerator.Create(AItemTabelaTributariaList: TItemTabelaTributariaList);
 begin
   inherited Create;
   FIndex := -1;
-  FItemDaTabelaDeTributacaoList := AItemDaTabelaDeTributacaoList;
+  FItemTabelaTributariaList := AItemTabelaTributariaList;
 end;
 
-function TItemDaTabelaDeTributacaoListEnumerator.GetCurrent: IItemDaTabelaDeTributacao;
+function TItemTabelaTributariaListEnumerator.GetCurrent: IItemTabelaTributaria;
 begin
-  Result := FItemDaTabelaDeTributacaoList[FIndex];
+  Result := FItemTabelaTributariaList[FIndex];
 end;
 
-function TItemDaTabelaDeTributacaoListEnumerator.MoveNext: Boolean;
+function TItemTabelaTributariaListEnumerator.MoveNext: Boolean;
 begin
-  Result := FIndex < FItemDaTabelaDeTributacaoList.Count - 1;
+  Result := FIndex < FItemTabelaTributariaList.Count - 1;
   if Result then
     Inc(FIndex);
 end;
 
-{ TItemDaTabelaDeTributacaoListRec }
+{ TItemTabelaTributariaListRec }
 
-class function TItemDaTabelaDeTributacaoListRec.Create(const AList: IItemDaTabelaDeTributacaoList): TItemDaTabelaDeTributacaoListRec;
+class function TItemTabelaTributariaListRec.Create(const AList: IItemTabelaTributariaList): TItemTabelaTributariaListRec;
 begin
-  FillChar(Result, SizeOf(TItemDaTabelaDeTributacaoListRec), 0);
+  FillChar(Result, SizeOf(TItemTabelaTributariaListRec), 0);
   Result.FList := AList;
 end;
 
-class operator TItemDaTabelaDeTributacaoListRec.Implicit(AListRec: TItemDaTabelaDeTributacaoListRec): TItemDaTabelaDeTributacaoList;
+class operator TItemTabelaTributariaListRec.Implicit(AListRec: TItemTabelaTributariaListRec): TItemTabelaTributariaList;
 begin
   Result := AListRec.FList.GetReference;
 end;
 
-{ TItemDaTabelaDeTributacao }
+{ TItemTabelaTributaria }
 
-function TItemDaTabelaDeTributacao.GetUf: TString;
+function TItemTabelaTributaria.GetUf: TString;
 begin
   Result := FUf;
 end;
 
-procedure TItemDaTabelaDeTributacao.SetUf(const AUf: TString);
+procedure TItemTabelaTributaria.SetUf(const AUf: TString);
 begin
   FUf := AUf;
 end;
 
-function TItemDaTabelaDeTributacao.GetClassificacaoDePessoa: TClassificacaoPessoa;
+function TItemTabelaTributaria.GetClassificacaoDePessoa: TClassificacaoDePessoa;
 begin
   Result := FClassificacaoDePessoa;
 end;
 
-procedure TItemDaTabelaDeTributacao.SetClassificacaoDePessoa(const AClassificacaoDePessoa: TClassificacaoPessoa);
+procedure TItemTabelaTributaria.SetClassificacaoDePessoa(const AClassificacaoDePessoa: TClassificacaoDePessoa);
 begin
   FClassificacaoDePessoa := AClassificacaoDePessoa;
 end;
 
-function TItemDaTabelaDeTributacao.GetTributadoNF: Double;
+function TItemTabelaTributaria.GetTributadoNF: Double;
 begin
   Result := FTributadoNF;
 end;
 
-procedure TItemDaTabelaDeTributacao.SetTributadoNF(const ATributadoNF: Double);
+procedure TItemTabelaTributaria.SetTributadoNF(const ATributadoNF: Double);
 begin
   FTributadoNF := ATributadoNF;
 end;
 
-function TItemDaTabelaDeTributacao.GetIsentoNF: Double;
+function TItemTabelaTributaria.GetId: Variant;
+begin
+  Result := FId;
+end;
+
+procedure TItemTabelaTributaria.SetId(const AId: Variant);
+begin
+  FId := AId;
+end;
+
+function TItemTabelaTributaria.GetIsentoNF: Double;
 begin
   Result := FIsentoNF;
 end;
 
-procedure TItemDaTabelaDeTributacao.SetIsentoNF(const AIsentoNF: Double);
+procedure TItemTabelaTributaria.SetIsentoNF(const AIsentoNF: Double);
 begin
   FIsentoNF := AIsentoNF;
 end;
 
-function TItemDaTabelaDeTributacao.GetOutrosNF: Double;
+function TItemTabelaTributaria.GetOutrosNF: Double;
 begin
   Result := FOutrosNF;
 end;
 
-procedure TItemDaTabelaDeTributacao.SetOutrosNF(const AOutrosNF: Double);
+procedure TItemTabelaTributaria.SetOutrosNF(const AOutrosNF: Double);
 begin
   FOutrosNF := AOutrosNF;
 end;
 
-function TItemDaTabelaDeTributacao.GetAliquota: Double;
+function TItemTabelaTributaria.GetAliquota: Double;
 begin
   Result := FAliquota;
 end;
 
-procedure TItemDaTabelaDeTributacao.SetAliquota(const AAliquota: Double);
+procedure TItemTabelaTributaria.SetAliquota(const AAliquota: Double);
 begin
   FAliquota := AAliquota;
 end;
 
-function TItemDaTabelaDeTributacao.GetAgregado: Double;
+function TItemTabelaTributaria.GetAgregado: Double;
 begin
   Result := FAgregado;
 end;
 
-procedure TItemDaTabelaDeTributacao.SetAgregado(const AAgregado: Double);
+procedure TItemTabelaTributaria.SetAgregado(const AAgregado: Double);
 begin
   FAgregado := AAgregado;
 end;
 
-function TItemDaTabelaDeTributacao.GetTributadoICMS: Double;
+function TItemTabelaTributaria.GetTributadoICMS: Double;
 begin
   Result := FTributadoICMS;
 end;
 
-procedure TItemDaTabelaDeTributacao.SetTributadoICMS(const ATributadoICMS: Double);
+procedure TItemTabelaTributaria.SetTributadoICMS(const ATributadoICMS: Double);
 begin
   FTributadoICMS := ATributadoICMS;
 end;
 
-function TItemDaTabelaDeTributacao.GetCargaLiquida: Double;
+function TItemTabelaTributaria.GetCargaLiquida: Double;
 begin
   Result := FCargaLiquida;
 end;
 
-procedure TItemDaTabelaDeTributacao.SetCargaLiquida(const ACargaLiquida: Double);
+procedure TItemTabelaTributaria.SetCargaLiquida(const ACargaLiquida: Double);
 begin
   FCargaLiquida := ACargaLiquida;
 end;
 
-function TItemDaTabelaDeTributacao.GetAliquotaInterna: Double;
+function TItemTabelaTributaria.GetAliquotaInterna: Double;
 begin
   Result := FAliquotaInterna;
 end;
 
-procedure TItemDaTabelaDeTributacao.SetAliquotaInterna(const AAliquotaInterna: Double);
+procedure TItemTabelaTributaria.SetAliquotaInterna(const AAliquotaInterna: Double);
 begin
   FAliquotaInterna := AAliquotaInterna;
 end;
 
-function TItemDaTabelaDeTributacao.GetFecop: Double;
+function TItemTabelaTributaria.GetFecop: Double;
 begin
   Result := FFecop;
 end;
 
-procedure TItemDaTabelaDeTributacao.SetFecop(const AFecop: Double);
+procedure TItemTabelaTributaria.SetFecop(const AFecop: Double);
 begin
   FFecop := AFecop;
 end;
 
-function TItemDaTabelaDeTributacao.GetCstId: Integer;
+function TItemTabelaTributaria.GetCstId: Integer;
 begin
   Result := FCstId;
 end;
 
-procedure TItemDaTabelaDeTributacao.SetCstId(const ACstId: Integer);
+procedure TItemTabelaTributaria.SetCstId(const ACstId: Integer);
 begin
   FCstId := ACstId;
 end;
 
-function TItemDaTabelaDeTributacao.GetCstDocumentoFiscalId: Integer;
+function TItemTabelaTributaria.GetCstDocumentoFiscalId: Integer;
 begin
   Result := FCstDocumentoFiscalId;
 end;
 
-procedure TItemDaTabelaDeTributacao.SetCstDocumentoFiscalId(const ACstDocumentoFiscalId: Integer);
+procedure TItemTabelaTributaria.SetCstDocumentoFiscalId(const ACstDocumentoFiscalId: Integer);
 begin
   FCstDocumentoFiscalId := ACstDocumentoFiscalId;
 end;
 
-function TItemDaTabelaDeTributacao.GetCstCuponsFiscaisId: Integer;
+function TItemTabelaTributaria.GetCstCuponsFiscaisId: Integer;
 begin
   Result := FCstCuponsFiscaisId;
 end;
 
-procedure TItemDaTabelaDeTributacao.SetCstCuponsFiscaisId(const ACstCuponsFiscaisId: Integer);
+procedure TItemTabelaTributaria.SetCstCuponsFiscaisId(const ACstCuponsFiscaisId: Integer);
 begin
   FCstCuponsFiscaisId := ACstCuponsFiscaisId;
 end;
 
-function TItemDaTabelaDeTributacao.GetCsosn: TCSOSN;
+function TItemTabelaTributaria.GetCsosn: TCSOSN;
 begin
   Result := FCsosn;
 end;
 
-procedure TItemDaTabelaDeTributacao.SetCsosn(const ACsosn: TCSOSN);
+procedure TItemTabelaTributaria.SetCsosn(const ACsosn: TCSOSN);
 begin
   FCsosn := ACsosn;
 end;
 
-function TItemDaTabelaDeTributacao.GetCsosnDocumentoFiscal: TCSOSN;
+function TItemTabelaTributaria.GetCsosnDocumentoFiscal: TCSOSN;
 begin
   Result := FCsosnDocumentoFiscal;
 end;
 
-procedure TItemDaTabelaDeTributacao.SetCsosnDocumentoFiscal(const ACsosnDocumentoFiscal: TCSOSN);
+procedure TItemTabelaTributaria.SetCsosnDocumentoFiscal(const ACsosnDocumentoFiscal: TCSOSN);
 begin
   FCsosnDocumentoFiscal := ACsosnDocumentoFiscal;
 end;
 
-function TItemDaTabelaDeTributacao.GetTributacao: TString;
+function TItemTabelaTributaria.GetTributacao: TString;
 begin
   Result := FTributacao;
 end;
 
-procedure TItemDaTabelaDeTributacao.SetTributacao(const ATributacao: TString);
+procedure TItemTabelaTributaria.SetTributacao(const ATributacao: TString);
 begin
   FTributacao := ATributacao;
 end;
 
-function TItemDaTabelaDeTributacao.GetCfopId: Int64;
+function TItemTabelaTributaria.GetCfopId: Variant;
 begin
   Result := FCfopId;
 end;
 
-procedure TItemDaTabelaDeTributacao.SetCfopId(const ACfopId: Int64);
+procedure TItemTabelaTributaria.SetCfopId(const ACfopId: Variant);
 begin
   FCfopId := ACfopId;
 end;
 
-function TItemDaTabelaDeTributacao.GetCfopCuponsFiscaisId: Int64;
+function TItemTabelaTributaria.GetCfopCuponsFiscaisId: Variant;
 begin
   Result := FCfopCuponsFiscaisId;
 end;
 
-procedure TItemDaTabelaDeTributacao.SetCfopCuponsFiscaisId(const ACfopCuponsFiscaisId: Int64);
+procedure TItemTabelaTributaria.SetCfopCuponsFiscaisId(const ACfopCuponsFiscaisId: Variant);
 begin
   FCfopCuponsFiscaisId := ACfopCuponsFiscaisId;
 end;
