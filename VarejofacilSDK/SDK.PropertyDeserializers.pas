@@ -36,24 +36,12 @@ type
 implementation
 
 uses
-  XSBuiltIns, SDK.ListDeserializers;
+  SDK.ListDeserializers;
 
 { TDateTimePropertyDeserializer }
 
 procedure TDateTimePropertyDeserializer.Execute(const ANode: IXMLNode; const AInstance: IModel;
   const AProperty: PPropInfo; ADeserializers: TPropertyDeserializerArray);
-
-  function ISO8601ToDateTime(const AInput: TString): TDateTime;
-  begin
-    with TXSDateTime.Create() do
-    try
-      XSToNative(AInput);
-      Result := AsDateTime;
-    finally
-      Free;
-    end;
-  end;
-
 begin
   SetPropValue(
     AInstance.GetReference,

@@ -3,7 +3,7 @@ unit SDK.Types;
 interface
 
 uses
-  SysUtils, Classes, XMLDoc, XMLIntf, TypInfo;
+  SysUtils, Classes, XMLDoc, XMLIntf, TypInfo, DateUtils, XSBuiltIns;
 
 const
   CURRENT_TIMEZONE = -(3 * 3600);
@@ -162,6 +162,10 @@ type
   TInterfacedModelClass = class of TInterfacedModel;
 
   function IndexOf(const AItem: TString; AArray: TStringArray): Integer;
+
+  function DateTimeToISO8601(const AInput: TDateTime): TString;
+
+  function ISO8601ToDateTime(const AInput: TString): TDateTime;
 
 implementation
 
@@ -343,6 +347,24 @@ end;
 class operator TLongListRec.Implicit(AListRec: TLongListRec): TLongList;
 begin
   Result := AListRec.FList.GetReference;
+end;
+
+function DateTimeToISO8601(const AInput: TDateTime): TString;
+var
+  Date: TXSDateTime;
+begin
+  Date := TXSDateTime.Create();
+  try
+    Date.AsDateTime := AInput;
+    Result := DateToISO8601(TTimeZone.Local.ToLocalTime(Date.AsUTCDateTime));
+  finally
+    Date.Free;
+  end;
+end;
+
+function ISO8601ToDateTime(const AInput: TString): TDateTime;
+begin
+  Result := ISO8601ToDate(AInput, True);
 end;
 
 end.

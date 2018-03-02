@@ -38,7 +38,7 @@ begin
     200:
     begin
       Document := Response.AsXML;
-      Nodes := TXMLHelper.XPathSelect(Document, '//MarcaProduto');
+      Nodes := TXMLHelper.XPathSelect(Document, '//MarcaDoProduto');
       if Length(Nodes) > 0 then
         TXMLHelper.Deserialize(Nodes[0], TMarcaDoProduto, FDeserializers).QueryInterface(IMarcaDoProduto, Result);
     end;

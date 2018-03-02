@@ -205,17 +205,6 @@ class function TXMLHelper.Serialize(const AModel: IModel; ARootTag: Boolean; ASe
           Result := Result + AInput[X];
   end;
 
-  function DateTimeToISO8601(const AInput: TDateTime): TString;
-  begin
-    with TXSDateTime.Create() do
-    try
-      AsDateTime := AInput;
-      Result := NativeToXS;
-    finally
-      Free;
-    end;
-  end;
-
 var
   PropertiesSize, SerializerIdx: Integer;
   Properties: PPropList;
