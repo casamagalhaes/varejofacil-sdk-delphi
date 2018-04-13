@@ -364,7 +364,7 @@ end;
 
 function ISO8601ToDateTime(const AInput: TString): TDateTime;
 begin
-  Result := ISO8601ToDate(AInput, True);
+  Result := ISO8601ToDate(Copy(AInput, 1, Pos('+', AInput) - 1), False);
 end;
 
 end.
