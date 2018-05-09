@@ -3,7 +3,7 @@
 interface
 
 uses
-  SDK.Types, SDK.Model.Subgrupo, SDK.Service, SDK.Exceptions, SDK.XML, XMLIntf, SysUtils, Math;
+  SDK.Types, SDK.Model.Subgrupo, SDK.Service, SDK.Exceptions, SDK.XML, XMLIntf, SysUtils, Math, Variants;
 
 type
 
@@ -11,9 +11,9 @@ type
   public
     constructor Create(const AClient: IClient); reintroduce; overload;
     function Get(const AIdSecao, AIdGrupo, AId: TString): ISubgrupo;
-    function GetAll(AStart: Integer = 0; ACount: Integer = 0;
+    function GetAll(const AIdSecao, AIdGrupo: Variant; AStart: Integer = 0; ACount: Integer = 0;
       const ASortParams: TStringArray = nil): TSubgrupoListRec;
-    function Filter(const AQuery: TString; AStart: Integer = 0; ACount: Integer = 0;
+    function Filter(const AIdSecao, AIdGrupo: Variant; const AQuery: TString; AStart: Integer = 0; ACount: Integer = 0;
       const ASortParams: TStringArray = nil): TSubgrupoListRec;
     function Insert(const AIdSecao, AIdGrupo: TString; const AModel: IModel): TServiceCommandResult;
     function Update(const AIdSecao, AIdGrupo, AId: TString; const AModel: IModel): TServiceCommandResult;
@@ -52,9 +52,9 @@ begin
   end;
 end;
 
-function TSubgrupoService.GetAll(AStart, ACount: Integer; const ASortParams: TStringArray): TSubgrupoListRec;
+function TSubgrupoService.GetAll(const AIdSecao, AIdGrupo: Variant; AStart, ACount: Integer; const ASortParams: TStringArray): TSubgrupoListRec;
 begin
-  Result := Filter(EmptyStr, AStart, ACount, ASortParams);
+  Result := Filter(AIdSecao, AIdGrupo, EmptyStr, AStart, ACount, ASortParams);
 end;
 
 function TSubgrupoService.Insert(const AIdSecao, AIdGrupo: TString; const AModel: IModel): TServiceCommandResult;
@@ -72,7 +72,7 @@ begin
   Result := inherited DeleteWithPath(AId, PathWithDependencies([AIdSecao, AIdGrupo]));
 end;
 
-function TSubgrupoService.Filter(const AQuery: TString; AStart: Integer;
+function TSubgrupoService.Filter(const AIdSecao, AIdGrupo: Variant; const AQuery: TString; AStart: Integer;
   ACount: Integer; const ASortParams: TStringArray): TSubgrupoListRec;
 var
   Response: IResponse;
@@ -85,7 +85,7 @@ var
   ResultNodes: TCustomXMLNodeArray;
   Start, Count, Total, TotalPack, Position: Integer;
 begin
-  URL := Concat(FPath, '?', ToParams(AQuery, AStart, ACount, ASortParams));
+  URL := Concat(PathWithDependencies([VarToStr(AIdSecao), VarToStr(AIdGrupo)]), '?', ToParams(AQuery, AStart, ACount, ASortParams));
   Response := FClient.Get(URL, nil, nil);
   Document := Response.AsXML;
   Nodes := TXMLHelper.XPathSelect(Document, '//ResultList/items/*');
@@ -110,7 +110,7 @@ begin
 
     if Position < TotalPack then
     begin
-      PaginationList := Filter(AQuery, Start, TotalPack - Position, ASortParams);
+      PaginationList := Filter(AIdSecao, AIdGrupo, AQuery, Start, TotalPack - Position, ASortParams);
       for SubGrupo in PaginationList do
         SubGrupoList.Add(SubGrupo);
     end;

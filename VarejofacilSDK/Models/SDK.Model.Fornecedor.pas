@@ -9,8 +9,8 @@ type
 
   IFornecedor = interface(IModel)
     ['{AA61516C-0D8E-4771-80A0-7E33B185A76D}']
-    function GetId: Int64;
-    procedure SetId(const AId: Int64);
+    function GetId: Variant;
+    procedure SetId(const AId: Variant);
     function GetContato: TString;
     procedure SetContato(const AContato: TString);
     function GetObservacao: TString;
@@ -31,8 +31,8 @@ type
     procedure SetTransportadora(const ATransportadora: Boolean);
     function GetServico: Boolean;
     procedure SetServico(const AServico: Boolean);
-    function GetRegimeEstadualTributarioId: Int64;
-    procedure SetRegimeEstadualTributarioId(const ARegimeEstadualTributarioId: Int64);
+    function GetRegimeEstadualTributarioId: Variant;
+    procedure SetRegimeEstadualTributarioId(const ARegimeEstadualTributarioId: Variant);
     function GetProdutorRural: Boolean;
     procedure SetProdutorRural(const AProdutorRural: Boolean);
     function GetInscricaoEstadual: TString;
@@ -75,7 +75,7 @@ type
     procedure SetTipoDePessoa(const ATipoDePessoa: TTipoPessoa);
     function GetHoldingId: Integer;
     procedure SetHoldingId(const AHoldingId: Integer);
-    property Id: Int64 read GetId write SetId;
+    property Id: Variant read GetId write SetId;
     property Contato: TString read GetContato write SetContato;
     property Observacao: TString read GetObservacao write SetObservacao;
     property TabelaPrazo: TTabelaPrazo read GetTabelaPrazo write SetTabelaPrazo;
@@ -86,7 +86,7 @@ type
     property TipoDeFrete: TTipoFreteNota read GetTipoDeFrete write SetTipoDeFrete;
     property Transportadora: Boolean read GetTransportadora write SetTransportadora;
     property Servico: Boolean read GetServico write SetServico;
-    property RegimeEstadualTributarioId: Int64 read GetRegimeEstadualTributarioId write SetRegimeEstadualTributarioId;
+    property RegimeEstadualTributarioId: Variant read GetRegimeEstadualTributarioId write SetRegimeEstadualTributarioId;
     property ProdutorRural: Boolean read GetProdutorRural write SetProdutorRural;
     property InscricaoEstadual: TString read GetInscricaoEstadual write SetInscricaoEstadual;
     property NumeroDoDocumento: TString read GetNumeroDoDocumento write SetNumeroDoDocumento;
@@ -160,7 +160,7 @@ type
 
   TFornecedor = class(TInterfacedModel, IFornecedor)
   private
-	FId: Int64;
+	FId: Variant;
 	FContato: TString;
 	FObservacao: TString;
 	FTabelaPrazo: TTabelaPrazo;
@@ -171,7 +171,7 @@ type
 	FTipoDeFrete: TTipoFreteNota;
 	FTransportadora: Boolean;
 	FServico: Boolean;
-	FRegimeEstadualTributarioId: Int64;
+	FRegimeEstadualTributarioId: Variant;
 	FProdutorRural: Boolean;
 	FInscricaoEstadual: TString;
 	FNumeroDoDocumento: TString;
@@ -193,8 +193,8 @@ type
 	FEndereco: IEndereco;
 	FTipoDePessoa: TTipoPessoa;
 	FHoldingId: Integer;
-    function GetId: Int64;
-    procedure SetId(const AId: Int64);
+    function GetId: Variant;
+    procedure SetId(const AId: Variant);
     function GetContato: TString;
     procedure SetContato(const AContato: TString);
     function GetObservacao: TString;
@@ -215,8 +215,8 @@ type
     procedure SetTransportadora(const ATransportadora: Boolean);
     function GetServico: Boolean;
     procedure SetServico(const AServico: Boolean);
-    function GetRegimeEstadualTributarioId: Int64;
-    procedure SetRegimeEstadualTributarioId(const ARegimeEstadualTributarioId: Int64);
+    function GetRegimeEstadualTributarioId: Variant;
+    procedure SetRegimeEstadualTributarioId(const ARegimeEstadualTributarioId: Variant);
     function GetProdutorRural: Boolean;
     procedure SetProdutorRural(const AProdutorRural: Boolean);
     function GetInscricaoEstadual: TString;
@@ -260,7 +260,7 @@ type
     function GetHoldingId: Integer;
     procedure SetHoldingId(const AHoldingId: Integer);
   published
-    property Id: Int64 read GetId write SetId;
+    property Id: Variant read GetId write SetId;
     property Contato: TString read GetContato write SetContato;
     property Observacao: TString read GetObservacao write SetObservacao;
     property TabelaPrazo: TTabelaPrazo read GetTabelaPrazo write SetTabelaPrazo;
@@ -271,7 +271,7 @@ type
     property TipoDeFrete: TTipoFreteNota read GetTipoDeFrete write SetTipoDeFrete;
     property Transportadora: Boolean read GetTransportadora write SetTransportadora;
     property Servico: Boolean read GetServico write SetServico;
-    property RegimeEstadualTributarioId: Int64 read GetRegimeEstadualTributarioId write SetRegimeEstadualTributarioId;
+    property RegimeEstadualTributarioId: Variant read GetRegimeEstadualTributarioId write SetRegimeEstadualTributarioId;
     property ProdutorRural: Boolean read GetProdutorRural write SetProdutorRural;
     property InscricaoEstadual: TString read GetInscricaoEstadual write SetInscricaoEstadual;
     property NumeroDoDocumento: TString read GetNumeroDoDocumento write SetNumeroDoDocumento;
@@ -381,12 +381,12 @@ end;
 
 { TFornecedor }
 
-function TFornecedor.GetId: Int64;
+function TFornecedor.GetId: Variant;
 begin
   Result := FId;
 end;
 
-procedure TFornecedor.SetId(const AId: Int64);
+procedure TFornecedor.SetId(const AId: Variant);
 begin
   FId := AId;
 end;
@@ -491,12 +491,12 @@ begin
   FServico := AServico;
 end;
 
-function TFornecedor.GetRegimeEstadualTributarioId: Int64;
+function TFornecedor.GetRegimeEstadualTributarioId: Variant;
 begin
   Result := FRegimeEstadualTributarioId;
 end;
 
-procedure TFornecedor.SetRegimeEstadualTributarioId(const ARegimeEstadualTributarioId: Int64);
+procedure TFornecedor.SetRegimeEstadualTributarioId(const ARegimeEstadualTributarioId: Variant);
 begin
   FRegimeEstadualTributarioId := ARegimeEstadualTributarioId;
 end;

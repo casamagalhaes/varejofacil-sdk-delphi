@@ -15,12 +15,12 @@ type
     procedure SetTipo(const ATipo: TTipoProdutoAuxiliar);
     function GetFator: Double;
     procedure SetFator(const AFator: Double);
-    function GetProdutoId: Int64;
-    procedure SetProdutoId(const AProdutoId: Int64);
+    function GetProdutoId: Variant;
+    procedure SetProdutoId(const AProdutoId: Variant);
     property Id: TString read GetId write SetId;
     property Tipo: TTipoProdutoAuxiliar read GetTipo write SetTipo;
     property Fator: Double read GetFator write SetFator;
-    property ProdutoId: Int64 read GetProdutoId write SetProdutoId;
+    property ProdutoId: Variant read GetProdutoId write SetProdutoId;
   end;
 
   TCodigoAuxiliarList = class;
@@ -76,20 +76,20 @@ type
 	FId: TString;
 	FTipo: TTipoProdutoAuxiliar;
 	FFator: Double;
-	FProdutoId: Int64;
+	FProdutoId: Variant;
     function GetId: TString;
     procedure SetId(const AId: TString);
     function GetTipo: TTipoProdutoAuxiliar;
     procedure SetTipo(const ATipo: TTipoProdutoAuxiliar);
     function GetFator: Double;
     procedure SetFator(const AFator: Double);
-    function GetProdutoId: Int64;
-    procedure SetProdutoId(const AProdutoId: Int64);
+    function GetProdutoId: Variant;
+    procedure SetProdutoId(const AProdutoId: Variant);
   published
     property Id: TString read GetId write SetId;
     property Tipo: TTipoProdutoAuxiliar read GetTipo write SetTipo;
     property Fator: Double read GetFator write SetFator;
-    property ProdutoId: Int64 read GetProdutoId write SetProdutoId;
+    property ProdutoId: Variant read GetProdutoId write SetProdutoId;
   end;
 
 implementation
@@ -208,12 +208,12 @@ begin
   FFator := AFator;
 end;
 
-function TCodigoAuxiliar.GetProdutoId: Int64;
+function TCodigoAuxiliar.GetProdutoId: Variant;
 begin
   Result := FProdutoId;
 end;
 
-procedure TCodigoAuxiliar.SetProdutoId(const AProdutoId: Int64);
+procedure TCodigoAuxiliar.SetProdutoId(const AProdutoId: Variant);
 begin
   FProdutoId := AProdutoId;
 end;

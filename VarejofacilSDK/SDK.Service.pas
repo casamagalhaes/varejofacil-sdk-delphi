@@ -20,7 +20,7 @@ type
 
   IBatchRequest = interface
     ['{790482D9-F262-44CB-90F9-0F7CE0BE236B}']
-    procedure Add(const AItem: TBatchItem);
+    procedure Add(const AModel: IModel);
     function AsString: TString;
   end;
 
@@ -32,7 +32,6 @@ type
   public
     function GetSuccesses: TStrings;
     function GetErrors: TStrings;
-
     property Errors: TStrings read GetErrors;
     property Successes: TStrings read GetSuccesses;
     constructor Create(const AContents: TString);
@@ -52,7 +51,7 @@ type
     FItems: TStrings;
   public
     constructor Create;
-    procedure Add(const AItem: TBatchItem);
+    procedure Add(const AModel: IModel);
     function AsString: TString;
     destructor Destroy; override;
   end;
@@ -119,6 +118,15 @@ type
     function DeleteWithPath(const AId: TString; const APath: TString): Boolean; virtual;
     function Insert(const AModel: IModel): TServiceCommandResult; overload; virtual;
     function Insert(const AModel: IModel; const APath: TString): TServiceCommandResult; overload; virtual;
+  end;
+
+  TBatchService = class(TService)
+  public
+    function CreateBatchRequest: TBatchRequest;
+    function Insert(ARequest: IBatchRequest; const APath: string): IBatchResponse; reintroduce; overload;
+    function Insert(ARequest: IBatchRequest): IBatchResponse; reintroduce; overload;
+    function Update(const APath: string; ARequest: IBatchRequest): IBatchResponse; reintroduce;
+    function Delete(const APath: string; ARequest: IBatchRequest): IBatchResponse; reintroduce;
   end;
 
 implementation
@@ -230,9 +238,12 @@ end;
 
 { TBatchRequest }
 
-procedure TBatchRequest.Add(const AItem: TBatchItem);
+procedure TBatchRequest.Add(const AModel: IModel);
+var
+  Item: TBatchItem;
 begin
-  FItems.AddObject(IntToStr(FItems.Count), AItem);
+  Item := TBatchItem.Create(AModel);
+  FItems.AddObject(IntToStr(FItems.Count), Item);
 end;
 
 function TBatchRequest.AsString: TString;
@@ -243,18 +254,19 @@ begin
   Xml := TStringList.Create;
   try
     Xml.LineBreak := EmptyStr;
-    Xml.Add('<batch>');
+    Xml.Add('<paramlist>');
     Xml.Add('<items>');
     for Idx := 0 to FItems.Count - 1 do
     begin
-      Xml.Add(Format('<item locator="%s">', [FItems[Idx]]));
+      Xml.Add('<item>');
+      Xml.Add(Format('<locator>%s</locator>', [FItems[Idx]]));
       Xml.Add('<entity>');
       Xml.Add(TBatchItem(FItems.Objects[Idx]).AsString);
       Xml.Add('</entity>');
       Xml.Add('</item>');
     end;
     Xml.Add('</items>');
-    Xml.Add('</batch>');
+    Xml.Add('</paramlist>');
     Result := Xml.Text;
   finally
     Xml.Free;
@@ -264,15 +276,11 @@ end;
 constructor TBatchRequest.Create;
 begin
   inherited;
-  FItems := TStringList.Create;
+  FItems := TStringList.Create(True);
 end;
 
 destructor TBatchRequest.Destroy;
-var
-  I: Integer;
 begin
-  for I := 0 to FItems.Count - 1 do
-    FItems.Objects[I].Free;
   FreeAndNil(FItems);
   inherited;
 end;
@@ -349,8 +357,9 @@ function TBatchResponse.GetSuccesses: TStrings;
 var
   Document: IXMLDocument;
   SuccessNodes: TCustomXMLNodeArray;
-  SuccessNode: IXMLNode;
+  SuccessNode, LocationNode: IXMLNode;
   Idx: Integer;
+  Locator, Location: string;
 begin
   Result := TStringList.Create;
   Document := TXMLHelper.CreateDocument(FContents);
@@ -359,7 +368,12 @@ begin
   begin
     SuccessNode := SuccessNodes[Idx];
     if SuccessNode.HasChildNodes then
-      Result.Values[SuccessNode.ChildNodes.FindNode('locator').Text] := SuccessNode.ChildNodes.FindNode('location').Text;
+    begin
+      Locator := IntToStr(Idx);
+      LocationNode := SuccessNode.ChildNodes.FindNode('location');
+      Location := LocationNode.Text;
+      Result.Values[Locator] := Location;
+    end;
   end;
 end;
 
@@ -504,6 +518,41 @@ begin
   begin
     Result.Add(MessageNodes[0].Text);
   end;
+end;
+
+{ TBatchService }
+
+function TBatchService.CreateBatchRequest: TBatchRequest;
+begin
+  Result := TBatchRequest.Create;
+end;
+
+function TBatchService.Delete(const APath: string; ARequest: IBatchRequest): IBatchResponse;
+begin
+   //
+end;
+
+function TBatchService.Insert(ARequest: IBatchRequest): IBatchResponse;
+begin
+  Result := Insert(ARequest, FPath);
+end;
+
+function TBatchService.Insert(ARequest: IBatchRequest; const APath: string): IBatchResponse;
+var
+  Response: IResponse;
+  FailReasons: TFailReasonList;
+begin
+  Result := nil;
+  Response := FClient.Post(APath, ARequest.AsString, nil);
+  if Assigned(Response) then
+  begin
+    Result := TBatchResponse.Create(Response.Content);
+  end;
+end;
+
+function TBatchService.Update(const APath: string; ARequest: IBatchRequest): IBatchResponse;
+begin
+   //
 end;
 
 end.

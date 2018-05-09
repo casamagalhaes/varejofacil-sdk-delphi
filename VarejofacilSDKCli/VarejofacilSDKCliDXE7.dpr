@@ -28,7 +28,7 @@ uses
 var
   Client: IClient;
   ProdutoService: TProdutoService;
-
+  Produtos: TProdutoList;
   Produto, ProdutoInserido: IProduto;
   Res: TServiceCommandResult;
   Impostos: TItemImpostoFederalList;
@@ -48,7 +48,9 @@ begin
       Client := TClient.Create('https://cadastrafacil.varejofacil.com', 'admin', 'admin');
       ProdutoService := TProdutoService.Create(Client);
 
-      Produto := ProdutoService.Get('986');
+      Produtos := ProdutoService.Filter('descricao==*CULAS*');
+
+      Produto := ProdutoService.Get('429');
 
       Estoques := TEstoqueDoProdutoList.Create;
       EstoqueItem := TEstoqueDoProduto.Create;
