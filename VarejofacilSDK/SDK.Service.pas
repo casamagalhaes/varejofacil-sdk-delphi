@@ -125,8 +125,6 @@ type
     function CreateBatchRequest: TBatchRequest;
     function Insert(ARequest: IBatchRequest; const APath: string): IBatchResponse; reintroduce; overload;
     function Insert(ARequest: IBatchRequest): IBatchResponse; reintroduce; overload;
-    function Update(const APath: string; ARequest: IBatchRequest): IBatchResponse; reintroduce;
-    function Delete(const APath: string; ARequest: IBatchRequest): IBatchResponse; reintroduce;
   end;
 
 implementation
@@ -321,13 +319,28 @@ begin
 end;
 
 function TBatchResponse.GetErrors: TStrings;
+
+  function GetReasons(Document: IXMLDocument): TStrings;
+  var
+    ReasonIdx: Integer;
+    ReasonNodes: TCustomXMLNodeArray;
+    ReasonNode: IXMLNode;
+  begin
+    Result := TStringList.Create;
+    ReasonNodes := TXMLHelper.XPathSelect(Document, '//reasons/*');
+    for ReasonIdx := Low(ReasonNodes) to High(ReasonNodes) do
+    begin
+      ReasonNode := ReasonNodes[ReasonIdx];
+      Result.Add(ReasonNode.Text);
+    end;
+  end;
+
 var
   Document: IXMLDocument;
-  ErrorNodes, ReasonNodes: TCustomXMLNodeArray;
-  ErrorNode, ReasonNode: IXMLNode;
+  ErrorNodes, ErrorResponseNodes: TCustomXMLNodeArray;
+  ErrorNode, ErrorResponseNode: IXMLNode;
   Reason: TStrings;
   Idx: Integer;
-  ReasonIdx: Integer;
 begin
   Result := TStringList.Create;
   Document := TXMLHelper.CreateDocument(FContents);
@@ -337,17 +350,28 @@ begin
     ErrorNode := ErrorNodes[Idx];
     if ErrorNode.HasChildNodes then
     begin
-      Reason := TStringList.Create;
+      Reason := GetReasons(Document);
       try
-        ReasonNodes := TXMLHelper.XPathSelect(Document, '/reasons');
-        for ReasonIdx := Low(ReasonNodes) to High(ReasonNodes) do
-        begin
-          ReasonNode := ReasonNodes[ReasonIdx];
-          Reason.Add(ReasonNode.Text);
-        end;
         Result.Values[ErrorNode.ChildNodes.FindNode('locator').Text] := Reason.Text;
       finally
         Reason.Free;
+      end;
+    end;
+  end;
+  if Result.Count = 0 then
+  begin
+    ErrorResponseNodes := TXMLHelper.XPathSelect(Document, '//ErrorResponse');
+    if Length(ErrorResponseNodes) > 0 then
+    begin
+      ErrorResponseNode := ErrorResponseNodes[0];
+      if ErrorResponseNode.HasChildNodes then
+      begin
+        Reason := GetReasons(Document);
+        try
+          Result.Text := Reason.Text;
+        finally
+          Reason.Free;
+        end;
       end;
     end;
   end;
@@ -527,11 +551,6 @@ begin
   Result := TBatchRequest.Create;
 end;
 
-function TBatchService.Delete(const APath: string; ARequest: IBatchRequest): IBatchResponse;
-begin
-   //
-end;
-
 function TBatchService.Insert(ARequest: IBatchRequest): IBatchResponse;
 begin
   Result := Insert(ARequest, FPath);
@@ -548,11 +567,6 @@ begin
   begin
     Result := TBatchResponse.Create(Response.Content);
   end;
-end;
-
-function TBatchService.Update(const APath: string; ARequest: IBatchRequest): IBatchResponse;
-begin
-   //
 end;
 
 end.

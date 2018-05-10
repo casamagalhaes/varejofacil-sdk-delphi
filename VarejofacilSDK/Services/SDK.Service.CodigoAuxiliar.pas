@@ -16,6 +16,8 @@ type
     function Filter(const AProdutoId: Variant; const AQuery: TString; AStart: Integer = 0; ACount: Integer = 0;
       const ASortParams: TStringArray = nil): TCodigoAuxiliarListRec;
     function Insert(const AIdProduto: Variant; ARequest: IBatchRequest): IBatchResponse;
+    function Update(const AIdProduto, AId: TString; const AModel: IModel): TServiceCommandResult;
+    function Delete(const AIdProduto, AId: Variant): Boolean; reintroduce;
   end;
 
 implementation
@@ -49,6 +51,17 @@ end;
 function TCodigoAuxiliarService.Insert(const AIdProduto: Variant; ARequest: IBatchRequest): IBatchResponse;
 begin
   Result := inherited Insert(ARequest, PathWithDependencies([VarToStr(AIdProduto)]));
+end;
+
+function TCodigoAuxiliarService.Delete(const AIdProduto, AId: Variant): Boolean;
+begin
+  Result := inherited DeleteWithPath(VarToStr(AId), PathWithDependencies([VarToStr(AIdProduto)]));
+end;
+
+function TCodigoAuxiliarService.Update(const AIdProduto, AId: TString;
+  const AModel: IModel): TServiceCommandResult;
+begin
+  Result := inherited Update(AId, AModel, PathWithDependencies([AIdProduto]));
 end;
 
 function TCodigoAuxiliarService.Filter(const AProdutoId: Variant; const AQuery: TString; AStart: Integer;
