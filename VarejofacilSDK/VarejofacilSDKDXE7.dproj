@@ -165,7 +165,7 @@
         <DCCReference Include="Models\SDK.Model.Reducao.pas"/>
         <DCCReference Include="Models\SDK.Model.ReducaoComissao.pas"/>
         <DCCReference Include="Models\SDK.Model.Referencia.pas"/>
-        <DCCReference Include="Models\SDK.Model.ReferenciaDoFornecedor.pas"/>
+        <DCCReference Include="Models\SDK.Model.ReferenciaFornecedor.pas"/>
         <DCCReference Include="Models\SDK.Model.RegimeEstadualProduto.pas"/>
         <DCCReference Include="Models\SDK.Model.RegimeEstadualTributario.pas"/>
         <DCCReference Include="Models\SDK.Model.SaidaOperador.pas"/>
@@ -212,6 +212,8 @@
         <DCCReference Include="Models\SDK.Model.TabelaTributaria.pas"/>
         <DCCReference Include="Services\SDK.Service.SituacaoFiscal.pas"/>
         <DCCReference Include="Services\SDK.Service.FiguraFiscal.pas"/>
+        <DCCReference Include="Services\SDK.Service.CodigoAuxiliar.pas"/>
+        <DCCReference Include="Services\SDK.Service.ProdutoFornecedor.pas"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

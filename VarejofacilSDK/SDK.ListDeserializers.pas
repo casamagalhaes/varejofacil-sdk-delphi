@@ -3,7 +3,7 @@
 interface
 
 uses
-  SysUtils, Classes, SDK.Types, SDK.XML, Variants, TypInfo, SDK.Model.AgenteFinanceiro, SDK.Model.Aplicacao, SDK.Model.Caixa, SDK.Model.CancelamentoDeTituloAReceber, SDK.Model.Caracteristica, SDK.Model.CargaProduto, SDK.Model.CategoriaFinanceira, SDK.Model.Cest, SDK.Model.Cfop, SDK.Model.Cliente, SDK.Model.CodigoAuxiliar, SDK.Model.Componente, SDK.Model.ComprovanteTransacao, SDK.Model.ConfiguracaoPDV, SDK.Model.ContaAReceber, SDK.Model.ContaAReceberRenegociacao, SDK.Model.ContaCorrente, SDK.Model.ContaDeEmail, SDK.Model.Contato, SDK.Model.CSTEstadual, SDK.Model.Devolucao, SDK.Model.DevolucaoDeCupom, SDK.Model.Endereco, SDK.Model.EspecieDeDocumento, SDK.Model.EstoqueDoProduto, SDK.Model.FiguraFiscal, SDK.Model.FiltroCaixa, SDK.Model.Finalizacao, SDK.Model.Finalizadora, SDK.Model.FinalizadoraDaPremiacao, SDK.Model.FormaDePagamento, SDK.Model.Fornecedor, SDK.Model.FuncaoDaLoja, SDK.Model.FuncaoDoPDV, SDK.Model.Funcionario, SDK.Model.Genero, SDK.Model.Grupo, SDK.Model.HistoricoValidacaoFiscal, SDK.Model.Holding, SDK.Model.ImpostoFederal, SDK.Model.ItemAplicacaoProduto, SDK.Model.ItemCaracteristicaProduto, SDK.Model.ItemTabelaTributaria, SDK.Model.ItemDevolucao, SDK.Model.ItemDevolucaoDeCupom, SDK.Model.ItemImpostoFederal, SDK.Model.ItemPagamento, SDK.Model.ItemRecebimento, SDK.Model.ItemSangria, SDK.Model.ItemTroca, SDK.Model.ItemTrocaFormaPagamento, SDK.Model.ItemVenda, SDK.Model.LimiteDeCredito, SDK.Model.LocalDaLoja, SDK.Model.LocalDeImpressao, SDK.Model.LocalEstoque, SDK.Model.Loja, SDK.Model.LojaDaFormaDePagamento, SDK.Model.LojaDoFuncionario, SDK.Model.LojaDoPagamentoPDV, SDK.Model.LojaView, SDK.Model.MarcaDoProduto, SDK.Model.MotivoDaDevolucao, SDK.Model.NCM, SDK.Model.NCMAliquota, SDK.Model.NCMExcecao, SDK.Model.NCMExcecaoAliquota, SDK.Model.NivelDeAcesso, SDK.Model.Ocorrencia, SDK.Model.OcorrenciaVenda, SDK.Model.Pagamento, SDK.Model.PagamentoDeTitulo, SDK.Model.PagamentoPDV, SDK.Model.PagueLeve, SDK.Model.PagueLeveItem, SDK.Model.PautaDoProduto, SDK.Model.PreAutorizacaoContaReceber, SDK.Model.PreAutorizacaoFormaDePagamento, SDK.Model.PreAutorizacaoLiquidacao, SDK.Model.PreAutorizacaoTituloReceber, SDK.Model.Preco, SDK.Model.Premiacao, SDK.Model.PremioLoja, SDK.Model.Produto, SDK.Model.ProdutoDaPremiacao, SDK.Model.ProdutoPrincipal, SDK.Model.ProdutoPromocional, SDK.Model.Ramo, SDK.Model.Recebimento, SDK.Model.Receita, SDK.Model.Reducao, SDK.Model.ReducaoComissao, SDK.Model.Referencia, SDK.Model.ReferenciaDoFornecedor, SDK.Model.RegimeEstadualProduto, SDK.Model.RegimeEstadualTributario, SDK.Model.SaidaOperador, SDK.Model.Sangria, SDK.Model.Secao, SDK.Model.Setor, SDK.Model.SituacaoFiscal, SDK.Model.StatusDoCliente, SDK.Model.SubGrupo, SDK.Model.TabelaTributaria, SDK.Model.TipoDocumento, SDK.Model.TipoPagamento, SDK.Model.TituloAReceber, SDK.Model.TituloAReceberCancelamento, SDK.Model.TituloAReceberEstorno, SDK.Model.TituloAReceberLiquidacao, SDK.Model.TituloNaoLiquidado, SDK.Model.TituloNaoLiquidadoMap, SDK.Model.TransacaoConvenio, SDK.Model.TransacaoItemTef, SDK.Model.TransacaoTef, SDK.Model.Tributacao, SDK.Model.Troca, SDK.Model.TrocaFormaPagamento, SDK.Model.UnidadeProduto, SDK.Model.Usuario, SDK.Model.Venda, SDK.Model.VendaCasada, SDK.Service, XMLIntf;
+  SysUtils, Classes, SDK.Types, SDK.XML, Variants, TypInfo, SDK.Model.AgenteFinanceiro, SDK.Model.Aplicacao, SDK.Model.Caixa, SDK.Model.CancelamentoDeTituloAReceber, SDK.Model.Caracteristica, SDK.Model.CargaProduto, SDK.Model.CategoriaFinanceira, SDK.Model.Cest, SDK.Model.Cfop, SDK.Model.Cliente, SDK.Model.CodigoAuxiliar, SDK.Model.Componente, SDK.Model.ComprovanteTransacao, SDK.Model.ConfiguracaoPDV, SDK.Model.ContaAReceber, SDK.Model.ContaAReceberRenegociacao, SDK.Model.ContaCorrente, SDK.Model.ContaDeEmail, SDK.Model.Contato, SDK.Model.CSTEstadual, SDK.Model.Devolucao, SDK.Model.DevolucaoDeCupom, SDK.Model.Endereco, SDK.Model.EspecieDeDocumento, SDK.Model.EstoqueDoProduto, SDK.Model.FiguraFiscal, SDK.Model.FiltroCaixa, SDK.Model.Finalizacao, SDK.Model.Finalizadora, SDK.Model.FinalizadoraDaPremiacao, SDK.Model.FormaDePagamento, SDK.Model.Fornecedor, SDK.Model.FuncaoDaLoja, SDK.Model.FuncaoDoPDV, SDK.Model.Funcionario, SDK.Model.Genero, SDK.Model.Grupo, SDK.Model.HistoricoValidacaoFiscal, SDK.Model.Holding, SDK.Model.ImpostoFederal, SDK.Model.ItemAplicacaoProduto, SDK.Model.ItemCaracteristicaProduto, SDK.Model.ItemTabelaTributaria, SDK.Model.ItemDevolucao, SDK.Model.ItemDevolucaoDeCupom, SDK.Model.ItemImpostoFederal, SDK.Model.ItemPagamento, SDK.Model.ItemRecebimento, SDK.Model.ItemSangria, SDK.Model.ItemTroca, SDK.Model.ItemTrocaFormaPagamento, SDK.Model.ItemVenda, SDK.Model.LimiteDeCredito, SDK.Model.LocalDaLoja, SDK.Model.LocalDeImpressao, SDK.Model.LocalEstoque, SDK.Model.Loja, SDK.Model.LojaDaFormaDePagamento, SDK.Model.LojaDoFuncionario, SDK.Model.LojaDoPagamentoPDV, SDK.Model.LojaView, SDK.Model.MarcaDoProduto, SDK.Model.MotivoDaDevolucao, SDK.Model.NCM, SDK.Model.NCMAliquota, SDK.Model.NCMExcecao, SDK.Model.NCMExcecaoAliquota, SDK.Model.NivelDeAcesso, SDK.Model.Ocorrencia, SDK.Model.OcorrenciaVenda, SDK.Model.Pagamento, SDK.Model.PagamentoDeTitulo, SDK.Model.PagamentoPDV, SDK.Model.PagueLeve, SDK.Model.PagueLeveItem, SDK.Model.PautaDoProduto, SDK.Model.PreAutorizacaoContaReceber, SDK.Model.PreAutorizacaoFormaDePagamento, SDK.Model.PreAutorizacaoLiquidacao, SDK.Model.PreAutorizacaoTituloReceber, SDK.Model.Preco, SDK.Model.Premiacao, SDK.Model.PremioLoja, SDK.Model.Produto, SDK.Model.ProdutoDaPremiacao, SDK.Model.ProdutoPrincipal, SDK.Model.ProdutoPromocional, SDK.Model.Ramo, SDK.Model.Recebimento, SDK.Model.Receita, SDK.Model.Reducao, SDK.Model.ReducaoComissao, SDK.Model.Referencia, SDK.Model.ReferenciaFornecedor, SDK.Model.RegimeEstadualProduto, SDK.Model.RegimeEstadualTributario, SDK.Model.SaidaOperador, SDK.Model.Sangria, SDK.Model.Secao, SDK.Model.Setor, SDK.Model.SituacaoFiscal, SDK.Model.StatusDoCliente, SDK.Model.SubGrupo, SDK.Model.TabelaTributaria, SDK.Model.TipoDocumento, SDK.Model.TipoPagamento, SDK.Model.TituloAReceber, SDK.Model.TituloAReceberCancelamento, SDK.Model.TituloAReceberEstorno, SDK.Model.TituloAReceberLiquidacao, SDK.Model.TituloNaoLiquidado, SDK.Model.TituloNaoLiquidadoMap, SDK.Model.TransacaoConvenio, SDK.Model.TransacaoItemTef, SDK.Model.TransacaoTef, SDK.Model.Tributacao, SDK.Model.Troca, SDK.Model.TrocaFormaPagamento, SDK.Model.UnidadeProduto, SDK.Model.Usuario, SDK.Model.Venda, SDK.Model.VendaCasada, SDK.Service, XMLIntf;
 
 type
 
@@ -586,7 +586,7 @@ type
     class function Execute(ANode: IXMLNode; AModel: TInterfacedModel; APropName: TString): TString;
   end;
 
-  TReferenciaDoFornecedorListDeserializer = class(TListDeserializer)
+  TReferenciaFornecedorListDeserializer = class(TListDeserializer)
   public
     function Deserialize(ANode: IXMLNode; AModel: TInterfacedModel; APropName: TString): TString;
     class function Execute(ANode: IXMLNode; AModel: TInterfacedModel; APropName: TString): TString;
@@ -873,7 +873,7 @@ begin
   if SameText(AType, 'TReducaoList') then TReducaoListDeserializer.Execute(ANode, AModel, APropName) else
   if SameText(AType, 'TReducaoComissaoList') then TReducaoComissaoListDeserializer.Execute(ANode, AModel, APropName) else
   if SameText(AType, 'TReferenciaList') then TReferenciaListDeserializer.Execute(ANode, AModel, APropName) else
-  if SameText(AType, 'TReferenciaDoFornecedorList') then TReferenciaDoFornecedorListDeserializer.Execute(ANode, AModel, APropName) else
+  if SameText(AType, 'TReferenciaFornecedorList') then TReferenciaFornecedorListDeserializer.Execute(ANode, AModel, APropName) else
   if SameText(AType, 'TRegimeEstadualProdutoList') then TRegimeEstadualProdutoListDeserializer.Execute(ANode, AModel, APropName) else
   if SameText(AType, 'TRegimeEstadualTributarioList') then TRegimeEstadualTributarioListDeserializer.Execute(ANode, AModel, APropName) else
   if SameText(AType, 'TSaidaOperadorList') then TSaidaOperadorListDeserializer.Execute(ANode, AModel, APropName) else
@@ -4201,11 +4201,11 @@ end;
 
 { TReferenciaDoFornecedorListDeserializer }
 
-class function TReferenciaDoFornecedorListDeserializer.Execute(ANode: IXMLNode; AModel: TInterfacedModel; APropName: TString): TString;
+class function TReferenciaFornecedorListDeserializer.Execute(ANode: IXMLNode; AModel: TInterfacedModel; APropName: TString): TString;
 var
-  Deserializer: TReferenciaDoFornecedorListDeserializer;
+  Deserializer: TReferenciaFornecedorListDeserializer;
 begin
-  Deserializer := TReferenciaDoFornecedorListDeserializer.Create;
+  Deserializer := TReferenciaFornecedorListDeserializer.Create;
   try
     Result := Deserializer.Deserialize(ANode, AModel, APropName);
   finally
@@ -4213,21 +4213,21 @@ begin
   end;
 end;
 
-function TReferenciaDoFornecedorListDeserializer.Deserialize(ANode: IXMLNode; AModel: TInterfacedModel; APropName: TString): TString;
+function TReferenciaFornecedorListDeserializer.Deserialize(ANode: IXMLNode; AModel: TInterfacedModel; APropName: TString): TString;
 var
-  List: TReferenciaDoFornecedorList;
-  Item: IReferenciaDoFornecedor;
+  List: TReferenciaFornecedorList;
+  Item: IReferenciaFornecedor;
   ChildNode: IXMLNode;
   NodeIdx: Integer;
 begin
-  List := TReferenciaDoFornecedorList.Create;
+  List := TReferenciaFornecedorList.Create;
   if ANode.HasChildNodes then
   begin
     for NodeIdx := 0 to ANode.ChildNodes.Count - 1 do
     begin
       ChildNode := ANode.ChildNodes[NodeIdx];
-      Item := TReferenciaDoFornecedor.Create;
-      TXMLHelper.Deserialize(ChildNode, TReferenciaDoFornecedor, Deserializers).QueryInterface(GetTypeData(TypeInfo(IReferenciaDoFornecedor))^.Guid, Item);
+      Item := TReferenciaFornecedor.Create;
+      TXMLHelper.Deserialize(ChildNode, TReferenciaFornecedor, Deserializers).QueryInterface(GetTypeData(TypeInfo(IReferenciaFornecedor))^.Guid, Item);
       List.Add(Item);
     end;
   end;

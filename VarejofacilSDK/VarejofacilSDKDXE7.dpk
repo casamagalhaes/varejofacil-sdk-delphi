@@ -142,7 +142,7 @@ contains
   SDK.Model.Reducao in 'Models\SDK.Model.Reducao.pas',
   SDK.Model.ReducaoComissao in 'Models\SDK.Model.ReducaoComissao.pas',
   SDK.Model.Referencia in 'Models\SDK.Model.Referencia.pas',
-  SDK.Model.ReferenciaDoFornecedor in 'Models\SDK.Model.ReferenciaDoFornecedor.pas',
+  SDK.Model.ReferenciaFornecedor in 'Models\SDK.Model.ReferenciaFornecedor.pas',
   SDK.Model.RegimeEstadualProduto in 'Models\SDK.Model.RegimeEstadualProduto.pas',
   SDK.Model.RegimeEstadualTributario in 'Models\SDK.Model.RegimeEstadualTributario.pas',
   SDK.Model.SaidaOperador in 'Models\SDK.Model.SaidaOperador.pas',
@@ -188,7 +188,9 @@ contains
   SDK.Service.TabelaTributaria in 'Services\SDK.Service.TabelaTributaria.pas',
   SDK.Model.TabelaTributaria in 'Models\SDK.Model.TabelaTributaria.pas',
   SDK.Service.SituacaoFiscal in 'Services\SDK.Service.SituacaoFiscal.pas',
-  SDK.Service.FiguraFiscal in 'Services\SDK.Service.FiguraFiscal.pas';
+  SDK.Service.FiguraFiscal in 'Services\SDK.Service.FiguraFiscal.pas',
+  SDK.Service.CodigoAuxiliar in 'Services\SDK.Service.CodigoAuxiliar.pas',
+  SDK.Service.ProdutoFornecedor in 'Services\SDK.Service.ProdutoFornecedor.pas';
 
 end.
 
