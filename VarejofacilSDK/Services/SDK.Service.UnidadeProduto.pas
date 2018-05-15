@@ -95,7 +95,7 @@ begin
 
     if Position < TotalPack then
     begin
-      PaginationList := Filter(AQuery, Start, TotalPack - Position, ASortParams);
+      PaginationList := Filter(AQuery, Position, TotalPack - Position, ASortParams);
       for UnidadeProduto in PaginationList do
         UnidadeProdutoList.Add(UnidadeProduto);
     end;

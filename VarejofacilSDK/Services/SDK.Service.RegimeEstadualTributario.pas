@@ -86,7 +86,7 @@ begin
 
     if Position < TotalPack then
     begin
-      PaginationList := Filter(AQuery, Start, TotalPack - Position, ASortParams);
+      PaginationList := Filter(AQuery, Position, TotalPack - Position, ASortParams);
       for RegimeEstadualTributario in PaginationList do
         RegimeEstadualTributarioList.Add(RegimeEstadualTributario);
     end;

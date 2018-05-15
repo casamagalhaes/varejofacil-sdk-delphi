@@ -99,7 +99,7 @@ begin
 
     if Position < TotalPack then
     begin
-      PaginationList := Filter(AQuery, Start, TotalPack - Position, ASortParams);
+      PaginationList := Filter(AQuery, Position, TotalPack - Position, ASortParams);
       for SituacaoFiscal in PaginationList do
         SituacaoFiscalList.Add(SituacaoFiscal);
     end;
