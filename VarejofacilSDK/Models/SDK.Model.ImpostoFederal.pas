@@ -3,7 +3,7 @@
 interface
 
 uses
-  SysUtils, Classes, SDK.Types, SDK.Enums;
+  SysUtils, Classes, SDK.Types, SDK.Enums, SDK.Model.ImpostoFederalGeral;
 
 type
 
@@ -17,46 +17,16 @@ type
     procedure SetRetencao(const ARetencao: Double);
     function GetObservacao: TString;
     procedure SetObservacao(const AObservacao: TString);
-    function GetTipoIncidencia: TTipoIncidencia;
-    procedure SetTipoIncidencia(const ATipoIncidencia: TTipoIncidencia);
     function GetTipoImposto: TTipoImposto;
     procedure SetTipoImposto(const ATipoImposto: TTipoImposto);
-    function GetCstEntrada: Integer;
-    procedure SetCstEntrada(const ACstEntrada: Integer);
-    function GetCstSaida: Integer;
-    procedure SetCstSaida(const ACstSaida: Integer);
-    function GetAliquotaEntrada: Double;
-    procedure SetAliquotaEntrada(const AAliquotaEntrada: Double);
-    function GetAliquotaSaida: Double;
-    procedure SetAliquotaSaida(const AAliquotaSaida: Double);
-    function GetCstEntradaPresumido: Variant;
-    procedure SetCstEntradaPresumido(const ACstEntradaPresumido: Variant);
-    function GetCstSaidaPresumido: Variant;
-    procedure SetCstSaidaPresumido(const ACstSaidaPresumido: Variant);
-    function GetAliquotaEntradaPresumido: Double;
-    procedure SetAliquotaEntradaPresumido(const AAliquotaEntradaPresumido: Double);
-    function GetAliquotaSaidaPresumido: Double;
-    procedure SetAliquotaSaidaPresumido(const AAliquotaSaidaPresumido: Double);
-    function GetCstEntradaSimples: Variant;
-    procedure SetCstEntradaSimples(const ACstEntradaSimples: Variant);
-    function GetCstSaidaSimples: Variant;
-    procedure SetCstSaidaSimples(const ACstSaidaSimples: Variant);
+    function GetImpostoFederalGeral: IImpostoFederalGeral;
+    procedure SetImpostoFederalGeral(const AImpostoFederalGeral: IImpostoFederalGeral);
     property Id: TString read GetId write SetId;
     property Descricao: TString read GetDescricao write SetDescricao;
     property Retencao: Double read GetRetencao write SetRetencao;
     property Observacao: TString read GetObservacao write SetObservacao;
-    property TipoIncidencia: TTipoIncidencia read GetTipoIncidencia write SetTipoIncidencia;
     property TipoImposto: TTipoImposto read GetTipoImposto write SetTipoImposto;
-    property CstEntrada: Integer read GetCstEntrada write SetCstEntrada;
-    property CstSaida: Integer read GetCstSaida write SetCstSaida;
-    property AliquotaEntrada: Double read GetAliquotaEntrada write SetAliquotaEntrada;
-    property AliquotaSaida: Double read GetAliquotaSaida write SetAliquotaSaida;
-    property CstEntradaPresumido: Variant read GetCstEntradaPresumido write SetCstEntradaPresumido;
-    property CstSaidaPresumido: Variant read GetCstSaidaPresumido write SetCstSaidaPresumido;
-    property AliquotaEntradaPresumido: Double read GetAliquotaEntradaPresumido write SetAliquotaEntradaPresumido;
-    property AliquotaSaidaPresumido: Double read GetAliquotaSaidaPresumido write SetAliquotaSaidaPresumido;
-    property CstEntradaSimples: Variant read GetCstEntradaSimples write SetCstEntradaSimples;
-    property CstSaidaSimples: Variant read GetCstSaidaSimples write SetCstSaidaSimples;
+    property ImpostoFederalGeral: IImpostoFederalGeral read GetImpostoFederalGeral write SetImpostoFederalGeral;
   end;
 
   TImpostoFederalList = class;
@@ -109,22 +79,12 @@ type
 
   TImpostoFederal = class(TInterfacedModel, IImpostoFederal)
   private
-	FId: TString;
-	FDescricao: TString;
-	FRetencao: Double;
-	FObservacao: TString;
-	FTipoIncidencia: TTipoIncidencia;
-	FTipoImposto: TTipoImposto;
-	FCstEntrada: Integer;
-	FCstSaida: Integer;
-	FAliquotaEntrada: Double;
-	FAliquotaSaida: Double;
-	FCstEntradaPresumido: Variant;
-	FCstSaidaPresumido: Variant;
-	FAliquotaEntradaPresumido: Double;
-	FAliquotaSaidaPresumido: Double;
-	FCstEntradaSimples: Variant;
-	FCstSaidaSimples: Variant;
+    FId: TString;
+    FDescricao: TString;
+    FRetencao: Double;
+    FObservacao: TString;
+    FTipoImposto: TTipoImposto;
+    FImpostoFederalGeral: IImpostoFederalGeral;
     function GetId: TString;
     procedure SetId(const AId: TString);
     function GetDescricao: TString;
@@ -133,47 +93,17 @@ type
     procedure SetRetencao(const ARetencao: Double);
     function GetObservacao: TString;
     procedure SetObservacao(const AObservacao: TString);
-    function GetTipoIncidencia: TTipoIncidencia;
-    procedure SetTipoIncidencia(const ATipoIncidencia: TTipoIncidencia);
     function GetTipoImposto: TTipoImposto;
     procedure SetTipoImposto(const ATipoImposto: TTipoImposto);
-    function GetCstEntrada: Integer;
-    procedure SetCstEntrada(const ACstEntrada: Integer);
-    function GetCstSaida: Integer;
-    procedure SetCstSaida(const ACstSaida: Integer);
-    function GetAliquotaEntrada: Double;
-    procedure SetAliquotaEntrada(const AAliquotaEntrada: Double);
-    function GetAliquotaSaida: Double;
-    procedure SetAliquotaSaida(const AAliquotaSaida: Double);
-    function GetCstEntradaPresumido: Variant;
-    procedure SetCstEntradaPresumido(const ACstEntradaPresumido: Variant);
-    function GetCstSaidaPresumido: Variant;
-    procedure SetCstSaidaPresumido(const ACstSaidaPresumido: Variant);
-    function GetAliquotaEntradaPresumido: Double;
-    procedure SetAliquotaEntradaPresumido(const AAliquotaEntradaPresumido: Double);
-    function GetAliquotaSaidaPresumido: Double;
-    procedure SetAliquotaSaidaPresumido(const AAliquotaSaidaPresumido: Double);
-    function GetCstEntradaSimples: Variant;
-    procedure SetCstEntradaSimples(const ACstEntradaSimples: Variant);
-    function GetCstSaidaSimples: Variant;
-    procedure SetCstSaidaSimples(const ACstSaidaSimples: Variant);
+    function GetImpostoFederalGeral: IImpostoFederalGeral;
+    procedure SetImpostoFederalGeral(const AImpostoFederalGeral: IImpostoFederalGeral);
   published
     property Id: TString read GetId write SetId;
     property Descricao: TString read GetDescricao write SetDescricao;
     property Retencao: Double read GetRetencao write SetRetencao;
     property Observacao: TString read GetObservacao write SetObservacao;
-    property TipoIncidencia: TTipoIncidencia read GetTipoIncidencia write SetTipoIncidencia;
     property TipoImposto: TTipoImposto read GetTipoImposto write SetTipoImposto;
-    property CstEntrada: Integer read GetCstEntrada write SetCstEntrada;
-    property CstSaida: Integer read GetCstSaida write SetCstSaida;
-    property AliquotaEntrada: Double read GetAliquotaEntrada write SetAliquotaEntrada;
-    property AliquotaSaida: Double read GetAliquotaSaida write SetAliquotaSaida;
-    property CstEntradaPresumido: Variant read GetCstEntradaPresumido write SetCstEntradaPresumido;
-    property CstSaidaPresumido: Variant read GetCstSaidaPresumido write SetCstSaidaPresumido;
-    property AliquotaEntradaPresumido: Double read GetAliquotaEntradaPresumido write SetAliquotaEntradaPresumido;
-    property AliquotaSaidaPresumido: Double read GetAliquotaSaidaPresumido write SetAliquotaSaidaPresumido;
-    property CstEntradaSimples: Variant read GetCstEntradaSimples write SetCstEntradaSimples;
-    property CstSaidaSimples: Variant read GetCstSaidaSimples write SetCstSaidaSimples;
+    property ImpostoFederalGeral: IImpostoFederalGeral read GetImpostoFederalGeral write SetImpostoFederalGeral;
   end;
 
 implementation
@@ -302,16 +232,6 @@ begin
   FObservacao := AObservacao;
 end;
 
-function TImpostoFederal.GetTipoIncidencia: TTipoIncidencia;
-begin
-  Result := FTipoIncidencia;
-end;
-
-procedure TImpostoFederal.SetTipoIncidencia(const ATipoIncidencia: TTipoIncidencia);
-begin
-  FTipoIncidencia := ATipoIncidencia;
-end;
-
 function TImpostoFederal.GetTipoImposto: TTipoImposto;
 begin
   Result := FTipoImposto;
@@ -322,105 +242,14 @@ begin
   FTipoImposto := ATipoImposto;
 end;
 
-function TImpostoFederal.GetCstEntrada: Integer;
+function TImpostoFederal.GetImpostoFederalGeral: IImpostoFederalGeral;
 begin
-  Result := FCstEntrada;
+  Result := FImpostoFederalGeral;
 end;
 
-procedure TImpostoFederal.SetCstEntrada(const ACstEntrada: Integer);
+procedure TImpostoFederal.SetImpostoFederalGeral(const AImpostoFederalGeral: IImpostoFederalGeral);
 begin
-  FCstEntrada := ACstEntrada;
+  FImpostoFederalGeral := AImpostoFederalGeral;
 end;
-
-function TImpostoFederal.GetCstSaida: Integer;
-begin
-  Result := FCstSaida;
-end;
-
-procedure TImpostoFederal.SetCstSaida(const ACstSaida: Integer);
-begin
-  FCstSaida := ACstSaida;
-end;
-
-function TImpostoFederal.GetAliquotaEntrada: Double;
-begin
-  Result := FAliquotaEntrada;
-end;
-
-procedure TImpostoFederal.SetAliquotaEntrada(const AAliquotaEntrada: Double);
-begin
-  FAliquotaEntrada := AAliquotaEntrada;
-end;
-
-function TImpostoFederal.GetAliquotaSaida: Double;
-begin
-  Result := FAliquotaSaida;
-end;
-
-procedure TImpostoFederal.SetAliquotaSaida(const AAliquotaSaida: Double);
-begin
-  FAliquotaSaida := AAliquotaSaida;
-end;
-
-function TImpostoFederal.GetCstEntradaPresumido: Variant;
-begin
-  Result := FCstEntradaPresumido;
-end;
-
-procedure TImpostoFederal.SetCstEntradaPresumido(const ACstEntradaPresumido: Variant);
-begin
-  FCstEntradaPresumido := ACstEntradaPresumido;
-end;
-
-function TImpostoFederal.GetCstSaidaPresumido: Variant;
-begin
-  Result := FCstSaidaPresumido;
-end;
-
-procedure TImpostoFederal.SetCstSaidaPresumido(const ACstSaidaPresumido: Variant);
-begin
-  FCstSaidaPresumido := ACstSaidaPresumido;
-end;
-
-function TImpostoFederal.GetAliquotaEntradaPresumido: Double;
-begin
-  Result := FAliquotaEntradaPresumido;
-end;
-
-procedure TImpostoFederal.SetAliquotaEntradaPresumido(const AAliquotaEntradaPresumido: Double);
-begin
-  FAliquotaEntradaPresumido := AAliquotaEntradaPresumido;
-end;
-
-function TImpostoFederal.GetAliquotaSaidaPresumido: Double;
-begin
-  Result := FAliquotaSaidaPresumido;
-end;
-
-procedure TImpostoFederal.SetAliquotaSaidaPresumido(const AAliquotaSaidaPresumido: Double);
-begin
-  FAliquotaSaidaPresumido := AAliquotaSaidaPresumido;
-end;
-
-function TImpostoFederal.GetCstEntradaSimples: Variant;
-begin
-  Result := FCstEntradaSimples;
-end;
-
-procedure TImpostoFederal.SetCstEntradaSimples(const ACstEntradaSimples: Variant);
-begin
-  FCstEntradaSimples := ACstEntradaSimples;
-end;
-
-function TImpostoFederal.GetCstSaidaSimples: Variant;
-begin
-  Result := FCstSaidaSimples;
-end;
-
-procedure TImpostoFederal.SetCstSaidaSimples(const ACstSaidaSimples: Variant);
-begin
-  FCstSaidaSimples := ACstSaidaSimples;
-end;
-
 
 end.
