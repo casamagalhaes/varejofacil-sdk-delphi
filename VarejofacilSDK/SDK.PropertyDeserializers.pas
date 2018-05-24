@@ -80,7 +80,8 @@ procedure TModelPropertyDeserializer.Execute(const ANode: IXMLNode; const AInsta
 var
   ModelClass: TInterfacedModelClass;
   ModelClassName: TString;
-  ModelInstance: IModel;
+  ModelInstance: TInterfacedModel;
+  Intf: IModel;
 begin
   if ANode.HasChildNodes then
   begin
@@ -89,7 +90,9 @@ begin
     if Assigned(ModelClass) then
     begin
       ModelInstance := TXMLHelper.Deserialize(ANode, ModelClass, ADeserializers);
-      SetInterfaceProp(AInstance.GetReference, TString(AProperty^.Name), ModelInstance);
+      if not ModelInstance.GetInterface(IModel, Intf) then
+        raise Exception.Create('Erro no GetInterface da instäncia do modelo.');
+      AInstance.GetReference.Assign(AProperty^.Name, Intf);
     end;
   end;
 end;

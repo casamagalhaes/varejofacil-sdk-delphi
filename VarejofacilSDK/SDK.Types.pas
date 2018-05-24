@@ -157,6 +157,7 @@ type
     class function NewInstance: TObject; override;
     function GetReference: TInterfacedModel;
     property RefCount: Integer read FRefCount;
+    procedure Assign(const APropName: string; const AValue: IInterface); virtual;
   end;
 
   TInterfacedModelClass = class of TInterfacedModel;
@@ -170,7 +171,7 @@ type
 implementation
 
 uses
-  SDK.XML, Windows;
+  SDK.XML, Windows, TypInfo;
 
 function InterlockedIncrement(var Addend: Integer): Integer; stdcall;
   external kernel32 name 'InterlockedIncrement';
@@ -183,6 +184,12 @@ function InterlockedDecrement(var Addend: Integer): Integer; stdcall;
 procedure TInterfacedModel.AfterConstruction;
 begin
   InterlockedDecrement(FRefCount);
+end;
+
+procedure TInterfacedModel.Assign(const APropName: string;
+  const AValue: IInterface);
+begin
+  SetInterfaceProp(Self, APropName, AValue);
 end;
 
 procedure TInterfacedModel.BeforeDestruction;

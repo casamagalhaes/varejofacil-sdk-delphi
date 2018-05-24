@@ -20,7 +20,7 @@ type
     function GetTipoImposto: TTipoImposto;
     procedure SetTipoImposto(const ATipoImposto: TTipoImposto);
     function GetImpostoFederalGeral: IImpostoFederalGeral;
-    procedure SetImpostoFederalGeral(const AImpostoFederalGeral: IImpostoFederalGeral);
+    procedure SetImpostoFederalGeral(ImpostoFederalGeral: IImpostoFederalGeral);
     property Id: TString read GetId write SetId;
     property Descricao: TString read GetDescricao write SetDescricao;
     property Retencao: Double read GetRetencao write SetRetencao;
@@ -96,7 +96,10 @@ type
     function GetTipoImposto: TTipoImposto;
     procedure SetTipoImposto(const ATipoImposto: TTipoImposto);
     function GetImpostoFederalGeral: IImpostoFederalGeral;
-    procedure SetImpostoFederalGeral(const AImpostoFederalGeral: IImpostoFederalGeral);
+    procedure SetImpostoFederalGeral(ImpostoFederalGeral: IImpostoFederalGeral);
+  public
+    procedure Assign(const APropName: string; const AValue: IInterface);
+      override;
   published
     property Id: TString read GetId write SetId;
     property Descricao: TString read GetDescricao write SetDescricao;
@@ -202,6 +205,21 @@ begin
   FId := AId;
 end;
 
+procedure TImpostoFederal.SetImpostoFederalGeral(
+  ImpostoFederalGeral: IImpostoFederalGeral);
+begin
+  FImpostoFederalGeral := ImpostoFederalGeral;
+end;
+
+procedure TImpostoFederal.Assign(const APropName: string;
+  const AValue: IInterface);
+begin
+  if SameText(APropName, 'ImpostoFederalGeral') then
+    AValue.QueryInterface(IImpostoFederalGeral, FImpostoFederalGeral)
+  else
+    inherited;
+end;
+
 function TImpostoFederal.GetDescricao: TString;
 begin
   Result := FDescricao;
@@ -247,9 +265,5 @@ begin
   Result := FImpostoFederalGeral;
 end;
 
-procedure TImpostoFederal.SetImpostoFederalGeral(const AImpostoFederalGeral: IImpostoFederalGeral);
-begin
-  FImpostoFederalGeral := AImpostoFederalGeral;
-end;
 
 end.

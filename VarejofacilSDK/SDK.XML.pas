@@ -39,7 +39,7 @@ type
       class function Serialize(const AModel: IModel; ARootTag: Boolean = True;
         ASerializers: TPropertySerializerArray = nil; ACamelCase: Boolean = False): TString;
       class function Deserialize(const ANode: IXMLNode; AClass: TInterfacedModelClass;
-        ADeserializers: TPropertyDeserializerArray = nil): IModel;
+        ADeserializers: TPropertyDeserializerArray = nil): TInterfacedModel;
       class function XPathSelect(const ANode: IXMLNode;
         const XPath: TString): TCustomXMLNodeArray; overload;
       class function XPathSelect(const ADocument: IXMLDocument;
@@ -103,7 +103,7 @@ begin
 end;
 
 class function TXMLHelper.Deserialize(const ANode: IXMLNode;
-  AClass: TInterfacedModelClass; ADeserializers: TPropertyDeserializerArray): IModel;
+  AClass: TInterfacedModelClass; ADeserializers: TPropertyDeserializerArray): TInterfacedModel;
 var
   Properties: PPropList;
   PropertiesSize: Integer;
