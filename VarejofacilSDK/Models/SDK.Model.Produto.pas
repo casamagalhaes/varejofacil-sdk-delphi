@@ -156,8 +156,6 @@ type
     procedure SetDataInclusao(const ADataInclusao: TDateTime);
     function GetDataSaida: TDateTime;
     procedure SetDataSaida(const ADataSaida: TDateTime);
-    function GetTipoFatorKit: TTipoFator;
-    procedure SetTipoFatorKit(const ATipoFatorKit: TTipoFator);
     function GetBaixaNaVendaComposto: Boolean;
     procedure SetBaixaNaVendaComposto(const ABaixaNaVendaComposto: Boolean);
     function GetQuantidadeComposto: Variant;
@@ -271,7 +269,6 @@ type
     property IncidenciaIPI: TIncidenciaIPI read GetIncidenciaIPI write SetIncidenciaIPI;
     property DataInclusao: TDateTime read GetDataInclusao write SetDataInclusao;
     property DataSaida: TDateTime read GetDataSaida write SetDataSaida;
-    property TipoFatorKit: TTipoFator read GetTipoFatorKit write SetTipoFatorKit;
     property BaixaNaVendaComposto: Boolean read GetBaixaNaVendaComposto write SetBaixaNaVendaComposto;
     property QuantidadeComposto: Variant read GetQuantidadeComposto write SetQuantidadeComposto;
     property ComissaoCapitacao: Double read GetComissaoCapitacao write SetComissaoCapitacao;
@@ -417,7 +414,6 @@ type
 	FIncidenciaIPI: TIncidenciaIPI;
 	FDataInclusao: TDateTime;
 	FDataSaida: TDateTime;
-	FTipoFatorKit: TTipoFator;
 	FBaixaNaVendaComposto: Boolean;
 	FQuantidadeComposto: Variant;
 	FComissaoCapitacao: Double;
@@ -584,8 +580,6 @@ type
     procedure SetDataInclusao(const ADataInclusao: TDateTime);
     function GetDataSaida: TDateTime;
     procedure SetDataSaida(const ADataSaida: TDateTime);
-    function GetTipoFatorKit: TTipoFator;
-    procedure SetTipoFatorKit(const ATipoFatorKit: TTipoFator);
     function GetBaixaNaVendaComposto: Boolean;
     procedure SetBaixaNaVendaComposto(const ABaixaNaVendaComposto: Boolean);
     function GetQuantidadeComposto: Variant;
@@ -700,7 +694,6 @@ type
     property IncidenciaIPI: TIncidenciaIPI read GetIncidenciaIPI write SetIncidenciaIPI;
     property DataInclusao: TDateTime read GetDataInclusao write SetDataInclusao;
     property DataSaida: TDateTime read GetDataSaida write SetDataSaida;
-    property TipoFatorKit: TTipoFator read GetTipoFatorKit write SetTipoFatorKit;
     property BaixaNaVendaComposto: Boolean read GetBaixaNaVendaComposto write SetBaixaNaVendaComposto;
     property QuantidadeComposto: Variant read GetQuantidadeComposto write SetQuantidadeComposto;
     property ComissaoCapitacao: Double read GetComissaoCapitacao write SetComissaoCapitacao;
@@ -1537,16 +1530,6 @@ end;
 procedure TProduto.SetDataSaida(const ADataSaida: TDateTime);
 begin
   FDataSaida := ADataSaida;
-end;
-
-function TProduto.GetTipoFatorKit: TTipoFator;
-begin
-  Result := FTipoFatorKit;
-end;
-
-procedure TProduto.SetTipoFatorKit(const ATipoFatorKit: TTipoFator);
-begin
-  FTipoFatorKit := ATipoFatorKit;
 end;
 
 function TProduto.GetBaixaNaVendaComposto: Boolean;
