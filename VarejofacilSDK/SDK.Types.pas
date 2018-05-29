@@ -171,7 +171,7 @@ type
 implementation
 
 uses
-  SDK.XML, Windows, TypInfo;
+  SDK.XML, Windows;
 
 function InterlockedIncrement(var Addend: Integer): Integer; stdcall;
   external kernel32 name 'InterlockedIncrement';
@@ -371,7 +371,10 @@ end;
 
 function ISO8601ToDateTime(const AInput: TString): TDateTime;
 begin
-  Result := ISO8601ToDate(Copy(AInput, 1, Pos('+', AInput) - 1), False);
+  if Pos('+', AInput) > 0 then  
+    Result := ISO8601ToDate(Copy(AInput, 1, Pos('+', AInput) - 1), False)
+  else
+    Result := ISO8601ToDate(AInput, True);
 end;
 
 end.
