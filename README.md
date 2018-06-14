@@ -182,7 +182,7 @@ begin
   Produto.UnidadeDeReferencia := EmptyStr;
   Produto.UnidadeDeTransferencia := EmptyStr;
 
-  //Buscando marcas
+  //Criando marcas
   FMarcaProdutoService.Delete('99');
   Marca := TMarcaDoProduto.Create;
   Marca.Id := 99;
