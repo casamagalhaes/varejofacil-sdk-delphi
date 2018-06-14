@@ -81,7 +81,22 @@ var
   Result: TServiceCommandResult;
   Precos: TPrecoList;
 begin
+  Produto := FProdutoService.Get('48');
+  Produto.IncidenciaIPI := iipiNENHUM;
+  Produto.Descricao := Produto.Descricao + '.';
+  FProdutoService.Update('48', Produto);
+
+
   Produto := TProduto.Create;
+
+  Produto.Descricao := 'SKOL 350ML';
+  Produto.SecaoId := 1;
+  Produto.GrupoId := 1;
+  Produto.SubgrupoId := 1;
+  Produto.CodigoInterno := '123456';
+  Produto.DescricaoReduzida := Produto.Descricao;
+  Produto.TributacaoId := 'T17';
+  Produto.TributacaoId := 'T17';
 
   //Preenchendo campos com valores aleatórios
   FillWithRandomValues(Produto);
@@ -130,13 +145,13 @@ begin
   PIS.Descricao := 'Teste';
   PIS.Retencao := 100;
   PIS.Observacao := 'Obs';
-  PIS.TipoIncidencia := tiSAIDA;
-  PIS.TipoImposto := tiPIS;
-  PIS.CstEntrada := 99;
-  PIS.CstSaida := 7;
-  PIS.AliquotaEntrada := 99.99;
-  PIS.AliquotaSaida := 88.88;
-  PIS.CstEntradaPresumido := 99;
+//  PIS.TipoIncidencia := tiSAIDA;
+//  PIS.TipoImposto := tiPIS;
+//  PIS.CstEntrada := 99;
+//  PIS.CstSaida := 7;
+//  PIS.AliquotaEntrada := 99.99;
+//  PIS.AliquotaSaida := 88.88;
+//  PIS.CstEntradaPresumido := 99;
 
   FImpostosFederaisService.Delete('92');
   COFINS := TImpostoFederal.Create;
@@ -144,13 +159,13 @@ begin
   COFINS.Descricao := 'Teste';
   COFINS.Retencao := 100;
   COFINS.Observacao := 'Obs';
-  COFINS.TipoIncidencia := tiSAIDA;
-  COFINS.TipoImposto := tiCOFINS;
-  COFINS.CstEntrada := 99;
-  COFINS.CstSaida := 7;
-  COFINS.AliquotaEntrada := 99.99;
-  COFINS.AliquotaSaida := 88.88;
-  COFINS.CstEntradaPresumido := 99;
+//  COFINS.TipoIncidencia := tiSAIDA;
+//  COFINS.TipoImposto := tiCOFINS;
+//  COFINS.CstEntrada := 99;
+//  COFINS.CstSaida := 7;
+//  COFINS.AliquotaEntrada := 99.99;
+//  COFINS.AliquotaSaida := 88.88;
+//  COFINS.CstEntradaPresumido := 99;
 
   FImpostosFederaisService.Insert(PIS);
   FImpostosFederaisService.Insert(COFINS);
@@ -187,6 +202,8 @@ begin
   Produto.TextoDaReceita := EmptyStr;
   Produto.IncentivoZonaFranca := EmptyStr;
   Produto.ForaDeLinha := 'N';
+  Produto.IncidenciaIPI := iipiNENHUM;
+
 
   //Inserindo o produto
   Result := FProdutoService.Insert(Produto);

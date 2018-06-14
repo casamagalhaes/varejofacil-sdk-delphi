@@ -14,6 +14,14 @@ type
     function IsCompatible(const AProperty: PPropInfo): Boolean;
   end;
 
+  TPropertyTipoIncidenciaIPISerializer = class(TInterfacedObject, IPropertySerializer)
+  public
+    function Execute(const AInstance: IModel;
+      const AProperty: PPropInfo; ASerializers: TPropertySerializerArray): TString;
+    function IsCompatible(const AProperty: PPropInfo): Boolean;
+  end;
+
+
 implementation
 
 uses
@@ -44,15 +52,33 @@ begin
       end;
     end
     else
-    begin
       Result := EmptyStr;
-    end;
   end;
 end;
 
 function TModelListPropertySerializer.IsCompatible(const AProperty: PPropInfo): Boolean;
 begin
   Result := (AProperty^.PropType^.Name[1] = 'T') and EndsStr('List', TString(AProperty^.PropType^.Name));
+end;
+
+{ TPropertyTipoIncidenciaIPISerializer }
+
+function TPropertyTipoIncidenciaIPISerializer.Execute(const AInstance: IModel;
+  const AProperty: PPropInfo; ASerializers: TPropertySerializerArray): TString;
+var
+  Tipo: TIncidenciaIPI;
+begin
+  Tipo := TIncidenciaIPI(GetOrdProp(AInstance.GetReference, TString(AProperty^.Name)));
+  if Tipo = iipiNENHUM then
+    Result := EmptyStr
+  else
+    Result := EnumConverters.Execute(TString(AProperty^.PropType^.Name), (Integer(Tipo)));
+end;
+
+function TPropertyTipoIncidenciaIPISerializer.IsCompatible(
+  const AProperty: PPropInfo): Boolean;
+begin
+  Result := (AProperty^.PropType^.Kind = tkEnumeration) and SameText(AProperty^.Name, 'IncidenciaIPI')
 end;
 
 end.

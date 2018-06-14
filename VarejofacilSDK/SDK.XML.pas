@@ -4,10 +4,7 @@ interface
 
 uses
   SysUtils, Variants, TypInfo, SDK.Types, Classes,
-  msxmldom,
-  XMLDoc,
-  XMLIntf,
-  xmldom;
+  msxmldom, XMLDoc, XMLIntf, xmldom;
 
 type
 
@@ -262,7 +259,7 @@ begin
             end;
             tkFloat:
             begin
-              if SameText(TString(Prop^.PropType^.Name), 'TDateTime') then
+              if Prop^.PropType = TypeInfo(TDateTime) then
               begin
                 PropValue := StrToFloat(VarToStr(GetPropValue(AModel.GetReference, TString(Prop^.Name))));
                 if PropValue > 0 then
@@ -279,7 +276,7 @@ begin
             end;
             tkEnumeration:
             begin
-              if SameText(TString(Prop^.PropType^.Name), 'Boolean') then
+              if GetTypeData(Prop^.PropType^)^.BaseType^ = TypeInfo(Boolean) then
                 Value := VarToStr(GetPropValue(AModel.GetReference, TString(Prop^.Name)))
               else
                 Value := RemoveLowerCase(VarToStr(GetPropValue(AModel.GetReference, TString(Prop^.Name))));

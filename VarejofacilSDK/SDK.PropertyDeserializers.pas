@@ -52,7 +52,7 @@ end;
 
 function TDateTimePropertyDeserializer.IsCompatible(const AProperty: PPropInfo): Boolean;
 begin
-  Result := SameText('TDateTime', TString(AProperty^.PropType^.Name));
+  Result := AProperty^.PropType = TypeInfo(TDateTime);
 end;
 
 { TEnumPropertyDeserializer }

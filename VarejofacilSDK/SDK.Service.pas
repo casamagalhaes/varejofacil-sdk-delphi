@@ -411,11 +411,8 @@ begin
 end;
 
 procedure TServiceMarshalling.AddDateTimeDeserializer;
-var
-  DateTimeDeserializer: IPropertyDeserializer;
 begin
-  DateTimeDeserializer := TDateTimePropertyDeserializer.Create;
-  AddDeserializer(DateTimeDeserializer);
+  AddDeserializer(TDateTimePropertyDeserializer.Create);
 end;
 
 procedure TServiceMarshalling.AddDeserializer(const ADeserializer: IPropertyDeserializer);
@@ -425,11 +422,8 @@ begin
 end;
 
 procedure TServiceMarshalling.AddEnumDeserializer;
-var
-  EnumDeserializer: IPropertyDeserializer;
 begin
-  EnumDeserializer := TEnumPropertyDeserializer.Create;
-  AddDeserializer(EnumDeserializer);
+  AddDeserializer(TEnumPropertyDeserializer.Create);
 end;
 
 procedure TServiceMarshalling.AddModelDeserializer;
@@ -441,19 +435,14 @@ begin
 end;
 
 procedure TServiceMarshalling.AddModelListDeserializer;
-var
-  ModelListDeserializer: IPropertyDeserializer;
 begin
-  ModelListDeserializer := TModelListPropertyDeserializer.Create;
-  AddDeserializer(ModelListDeserializer);
+  AddDeserializer(TModelListPropertyDeserializer.Create);
 end;
 
 procedure TServiceMarshalling.AddModelListSerializer;
-var
-  ModelListSerializer: IPropertySerializer;
 begin
-  ModelListSerializer := TModelListPropertySerializer.Create;
-  AddSerializer(ModelListSerializer);
+  AddSerializer(TModelListPropertySerializer.Create);
+  AddSerializer(TPropertyTipoIncidenciaIPISerializer.Create);
 end;
 
 procedure TServiceMarshalling.AddSerializer(const ASerializer: IPropertySerializer);
@@ -564,9 +553,7 @@ begin
   Result := nil;
   Response := FClient.Post(APath, ARequest.AsString, nil);
   if Assigned(Response) then
-  begin
     Result := TBatchResponse.Create(Response.Content);
-  end;
 end;
 
 end.
