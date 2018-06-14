@@ -38,7 +38,7 @@ var
  Client: IClient;
 
 begin
-   Client := TClient.Create('http://suaempresa.varejofacil.com', 'administrador', '123');
+   Client := TClient.Create('https://suaempresa.varejofacil.com', 'administrador', '123');
    FornecedorService := TFornecedorService.Create(Client);
    try
      Fornecedores := FornecedorService.GetAll;
