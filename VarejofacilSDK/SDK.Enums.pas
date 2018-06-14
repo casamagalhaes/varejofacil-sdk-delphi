@@ -52,7 +52,7 @@ type
 
   TGeneroEspecieDocumento = (gedPAGAR, gedRECEBER);
 
-  TIncidenciaIPI = (iipiVENDA, iipiCOMPRA, iipiAMBOS);
+  TIncidenciaIPI = (iipiNENHUM, iipiVENDA, iipiCOMPRA, iipiAMBOS);
 
   TIndiceAT = (iatTRUNCA, iatARREDONDA);
 
@@ -402,7 +402,7 @@ begin
   if SameText(AValue, 'VENDA') then Result := Integer(iipiVENDA) else
   if SameText(AValue, 'COMPRA') then Result := Integer(iipiCOMPRA) else
   if SameText(AValue, 'AMBOS') then Result := Integer(iipiAMBOS) else
-  raise EnumException.CreateFmt('Valor %s incorreto para IncidenciaIPI.', [AValue]);
+    Result := Integer(iipiNENHUM)
 end;
 
 function Converter_IncidenciaIPI_EnumToStr(const AValue: Integer): TString; overload;
@@ -410,7 +410,7 @@ begin
   if Integer(iipiVENDA) = AValue then Result := 'VENDA' else
   if Integer(iipiCOMPRA) = AValue then Result := 'COMPRA' else
   if Integer(iipiAMBOS) = AValue then Result := 'AMBOS' else
-  raise EnumException.CreateFmt('Valor %d incorreto para IncidenciaIPI.', [AValue]);
+    Result := 'NENHUM'
 end;
 
 { TIndiceAT }
