@@ -112,7 +112,7 @@ begin
       TotalPack := Min(Total, ACount) + Start;
     Position := Count + Start;
 
-    if Position < TotalPack then
+    if Position < Min(TotalPack, Total) then
     begin
       PaginationList := Filter(AIdProduto, AQuery, Start, TotalPack - Position, ASortParams);
       for Fornecedor in PaginationList do

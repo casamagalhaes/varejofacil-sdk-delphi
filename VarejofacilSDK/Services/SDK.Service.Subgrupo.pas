@@ -108,7 +108,7 @@ begin
       TotalPack := Min(Total, ACount) + Start;
     Position := Count + Start;
 
-    if Position < TotalPack then
+    if Position < Min(TotalPack, Total) then
     begin
       PaginationList := Filter(AIdSecao, AIdGrupo, AQuery, Start, TotalPack - Position, ASortParams);
       for SubGrupo in PaginationList do

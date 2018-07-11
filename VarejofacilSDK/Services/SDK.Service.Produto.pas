@@ -97,7 +97,7 @@ begin
       TotalPack := Min(Total, ACount) + Start;
     Position := Count + Start;
 
-    if Position < TotalPack then
+    if Position < Min(TotalPack, Total) then
     begin
       PaginationList := Filter(AQuery, Position, TotalPack - Position, ASortParams);
       for Produto in PaginationList do

@@ -103,7 +103,7 @@ begin
       TotalPack := Min(Total, ACount) + Start;
     Position := Count + Start;
 
-    if Position < TotalPack then
+    if Position < Min(TotalPack, Total) then
     begin
       PaginationList := Filter(AProdutoId, AQuery, Start, TotalPack - Position, ASortParams);
       for CodigoAuxiliar in PaginationList do
