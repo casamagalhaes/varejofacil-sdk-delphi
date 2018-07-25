@@ -59,6 +59,8 @@ contains
   SDK.Service.Produto in 'Services\SDK.Service.Produto.pas',
   SDK.Service.Secao in 'Services\SDK.Service.Secao.pas',
   SDK.Service.Subgrupo in 'Services\SDK.Service.Subgrupo.pas',
-  SDK.Service.UnidadeProduto in 'Services\SDK.Service.UnidadeProduto.pas';
+  SDK.Service.UnidadeProduto in 'Services\SDK.Service.UnidadeProduto.pas',
+  SDK.Service.Funcionario in 'Services\SDK.Service.Funcionario.pas',
+  SDK.Service.CodigoAuxiliar in 'Services\SDK.Service.CodigoAuxiliar.pas';
 
 end.
