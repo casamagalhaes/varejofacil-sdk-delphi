@@ -363,7 +363,11 @@ begin
   Date := TXSDateTime.Create();
   try
     Date.AsDateTime := AInput;
+    {$IFDEF VER185}
+    Result := ''; // implementar posteriormente
+    {$ELSE}
     Result := DateToISO8601(TTimeZone.Local.ToLocalTime(Date.AsUTCDateTime));
+    {$ENDIF}
   finally
     Date.Free;
   end;
@@ -371,10 +375,16 @@ end;
 
 function ISO8601ToDateTime(const AInput: TString): TDateTime;
 begin
-  if Pos('+', AInput) > 0 then  
+  {$IFDEF VER185}
+  Result := 0;
+  {$ELSE}
+  if Pos('+', AInput) > 0 then
     Result := ISO8601ToDate(Copy(AInput, 1, Pos('+', AInput) - 1), False)
   else
     Result := ISO8601ToDate(AInput, True);
+  {$ENDIF}
+
+
 end;
 
 end.
