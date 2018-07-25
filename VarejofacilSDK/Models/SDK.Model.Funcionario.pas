@@ -69,8 +69,8 @@ type
     procedure SetComunicadorDeMensagensInstantaneas(const AComunicadorDeMensagensInstantaneas: TString);
     function GetSuframa: TString;
     procedure SetSuframa(const ASuframa: TString);
-    function GetEndereco: TEndereco;
-    procedure SetEndereco(const AEndereco: TEndereco);
+    function GetEndereco: IEndereco;
+    procedure SetEndereco(const AEndereco: IEndereco);
     function GetTipo: TTipoPessoa;
     procedure SetTipo(const ATipo: TTipoPessoa);
     function GetHoldingId: Integer;
@@ -105,7 +105,7 @@ type
     property Twitter: TString read GetTwitter write SetTwitter;
     property ComunicadorDeMensagensInstantaneas: TString read GetComunicadorDeMensagensInstantaneas write SetComunicadorDeMensagensInstantaneas;
     property Suframa: TString read GetSuframa write SetSuframa;
-    property Endereco: TEndereco read GetEndereco write SetEndereco;
+    property Endereco: IEndereco read GetEndereco write SetEndereco;
     property Tipo: TTipoPessoa read GetTipo write SetTipo;
     property HoldingId: Integer read GetHoldingId write SetHoldingId;
   end;
@@ -190,7 +190,7 @@ type
 	FTwitter: TString;
 	FComunicadorDeMensagensInstantaneas: TString;
 	FSuframa: TString;
-	FEndereco: TEndereco;
+	FEndereco: IEndereco;
 	FTipo: TTipoPessoa;
 	FHoldingId: Integer;
     function GetId: Int64;
@@ -253,8 +253,8 @@ type
     procedure SetComunicadorDeMensagensInstantaneas(const AComunicadorDeMensagensInstantaneas: TString);
     function GetSuframa: TString;
     procedure SetSuframa(const ASuframa: TString);
-    function GetEndereco: TEndereco;
-    procedure SetEndereco(const AEndereco: TEndereco);
+    function GetEndereco: IEndereco;
+    procedure SetEndereco(const AEndereco: IEndereco);
     function GetTipo: TTipoPessoa;
     procedure SetTipo(const ATipo: TTipoPessoa);
     function GetHoldingId: Integer;
@@ -290,7 +290,7 @@ type
     property Twitter: TString read GetTwitter write SetTwitter;
     property ComunicadorDeMensagensInstantaneas: TString read GetComunicadorDeMensagensInstantaneas write SetComunicadorDeMensagensInstantaneas;
     property Suframa: TString read GetSuframa write SetSuframa;
-    property Endereco: TEndereco read GetEndereco write SetEndereco;
+    property Endereco: IEndereco read GetEndereco write SetEndereco;
     property Tipo: TTipoPessoa read GetTipo write SetTipo;
     property HoldingId: Integer read GetHoldingId write SetHoldingId;
   end;
@@ -681,12 +681,12 @@ begin
   FSuframa := ASuframa;
 end;
 
-function TFuncionario.GetEndereco: TEndereco;
+function TFuncionario.GetEndereco: IEndereco;
 begin
   Result := FEndereco;
 end;
 
-procedure TFuncionario.SetEndereco(const AEndereco: TEndereco);
+procedure TFuncionario.SetEndereco(const AEndereco: IEndereco);
 begin
   FEndereco := AEndereco;
 end;
