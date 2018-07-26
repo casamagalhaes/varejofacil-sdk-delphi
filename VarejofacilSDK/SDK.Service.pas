@@ -106,8 +106,6 @@ type
     FMarshalling: TServiceMarshalling;
     FDeserializers: TPropertyDeserializerArray;
     FSerializers: TPropertySerializerArray;
-    function PathWithDependencies(const ADependencies: array of TVarRec): TString;
-    function ToParams(const AQuery: TString; AStart, ACount: Integer; const ASortParams: TStringArray = nil): TString;
     function InterpretLocation(const ALocation: TString): TString; virtual;
   public
     destructor Destroy; override;
@@ -118,6 +116,11 @@ type
     function DeleteWithPath(const AId: TString; const APath: TString): Boolean; virtual;
     function Insert(const AModel: IModel): TServiceCommandResult; overload; virtual;
     function Insert(const AModel: IModel; const APath: TString): TServiceCommandResult; overload; virtual;
+    function PathWithDependencies(const ADependencies: array of TVarRec): TString;
+    function ToParams(const AQuery: TString; AStart, ACount: Integer; const ASortParams: TStringArray = nil): TString;
+    property Path: TString read FPath;
+    property Deserializers: TPropertyDeserializerArray read FDeserializers;
+    property Client: IClient read FClient;
   end;
 
   TBatchService = class(TService)

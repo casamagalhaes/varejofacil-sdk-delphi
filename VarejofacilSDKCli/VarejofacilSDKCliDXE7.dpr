@@ -7,6 +7,7 @@ program VarejofacilSDKCliDXE7;
 uses
   System.SysUtils,
   SDK.Types,
+  System.DateUtils,
   SDK.Enums,
   SDK.Client,
   SDK.SortParams,
@@ -25,12 +26,15 @@ uses
   SDK.Model.EstoqueDoProduto,
   SDK.Model.ImpostoFederal,
   SDK.Model.ImpostoFederalGeral,
+  SDK.Model.Apuracao,
+  SDK.Service.Apuracao,
   ActiveX,
   Variants;
 
 var
   Client: IClient;
   ProdutoService: TProdutoService;
+  ApuracaoService: TApuracaoService;
   ImpostosFederaisService: TImpostoFederalService;
   Produtos: TProdutoList;
   Produto, ProdutoInserido: IProduto;
@@ -43,29 +47,34 @@ var
   Estoques: TEstoqueDoProdutoList;
   EstoqueItem: TEstoqueDoProduto;
   PISs: TImpostoFederalList;
+  ApuracaoList: TApuracaoList;
+  Apuracao: IApuracao;
   PIS: IImpostoFederal;
   IG: IImpostoFederalGeral;
   TIG: TImpostoFederalGeral;
   Query: string;
-
+  I: Integer;
 
 begin
   CoInitialize(nil);
   TRY
     ReportMemoryLeaksOnShutdown := False;
     try
-      Client := TClient.Create('http://172.16.13.148:8080', 'dc4aec617b40a62366313f5b35fc8494');
-      ImpostosFederaisService := TImpostoFederalService.Create(Client);
-      Query := Format('tipoImposto==%s;impostoFederalGeral.cstEntrada==%d;impostoFederalGeral.cstSaida==%s;impostoFederalGeral.aliquotaEntrada==%f;impostoFederalGeral.aliquotaSaida==%f', [
-         'PIS',
-         50,
-         '01',
-         1.65,
-         1.65
-      ], TFormatSettings.Create('en-us'));
-      PISs := ImpostosFederaisService.Filter(Query);
-      PIS := PISs[0];
-      WriteLn(PIS.ImpostoFederalGeral.Id);
+      Client := TClient.Create('https://mercado.varejofacil.com', '57a3cce4dece0974e96a460fb88a3390');
+      ApuracaoService := TApuracaoService.Create(Client);
+      ApuracaoList := ApuracaoService.Get(TImpostoApuracao.iapICMS, TOperacaoApuracao.tapCREDITO, ['1'], StartOfTheYear(Now), EndOfTheMonth(Now));
+      for I := 0 to ApuracaoList.Count - 1  do
+      begin
+        Apuracao := ApuracaoList[I];
+        WriteLn(Format('codigoLoja: %d, cfop: %d, cst: %s, aliquota: %s, baseCalculo: %s, valor: %s', [
+          Apuracao.CodigoLoja,
+          Apuracao.CFOP,
+          Apuracao.CST,
+          FloatToStr(Apuracao.Aliquota),
+          FloatToStr(Apuracao.BaseDeCalculo),
+          FloatToStr(Apuracao.Valor)
+        ]));
+      end;
     except
       on E: Exception do
         Writeln(E.ClassName, ': ', E.Message);

@@ -148,10 +148,11 @@ type
 
   TTipoResidencia = (trOUTRAS, trALUGADA, trFINANCIADA, trDE_PARENTE, trPROPRIA);
 
+  TOperacaoApuracao = (tapCREDITO, tapDEBITO);
+
+  TImpostoApuracao = (iapICMS, iapPIS, iapCOFINS);
 
 implementation
-
-
 
 { TAssociacao }
 
@@ -1437,6 +1438,40 @@ begin
   raise EnumException.CreateFmt('Valor %d incorreto para TipoResidencia.', [AValue]);
 end;
 
+{ TOperacaoApuracao }
+
+function Converter_OperacaoApuracao_StrToEnum(const AValue: TString): Integer;
+begin
+  if SameText(AValue, 'CREDITO') then Result := Integer(tapCREDITO) else
+  if SameText(AValue, 'DEBITO') then Result := Integer(tapDEBITO) else
+  raise EnumException.CreateFmt('Valor %s incorreto para OperacaoApuracao.', [AValue]);
+end;
+
+function Converter_OperacaoApuracao_EnumToStr(const AValue: Integer): TString; overload;
+begin
+  if Integer(tapCREDITO) = AValue then Result := 'CREDITO' else
+  if Integer(tapDEBITO) = AValue then Result := 'DEBITO' else
+  raise EnumException.CreateFmt('Valor %d incorreto para OperacaoApuracao.', [AValue]);
+end;
+
+{ TImpostoApuracao }
+
+function Converter_ImpostoApuracao_StrToEnum(const AValue: TString): Integer;
+begin
+  if SameText(AValue, 'ICMS') then Result := Integer(iapICMS) else
+  if SameText(AValue, 'PIS') then Result := Integer(iapPIS) else
+  if SameText(AValue, 'COFINS') then Result := Integer(iapCOFINS) else
+  raise EnumException.CreateFmt('Valor %s incorreto para ImpostoApuracao.', [AValue]);
+end;
+
+function Converter_ImpostoApuracao_EnumToStr(const AValue: Integer): TString; overload;
+begin
+  if Integer(iapICMS) = AValue then Result := 'ICMS' else
+  if Integer(iapPIS) = AValue then Result := 'PIS' else
+  if Integer(iapCOFINS) = AValue then Result := 'COFINS' else
+  raise EnumException.CreateFmt('Valor %d incorreto para ImpostoApuracao.', [AValue]);
+end;
+
 { TEnumConversors }
 
 function TEnumConverters.Execute(const AEnumName, AValue: TString): Integer;
@@ -1533,6 +1568,8 @@ initialization
   EnumConverters.Register('TTipoPromocao', @Converter_TipoPromocao_StrToEnum, @Converter_TipoPromocao_EnumToStr);
   EnumConverters.Register('TTipoReferencia', @Converter_TipoReferencia_StrToEnum, @Converter_TipoReferencia_EnumToStr);
   EnumConverters.Register('TTipoResidencia', @Converter_TipoResidencia_StrToEnum, @Converter_TipoResidencia_EnumToStr);
+  EnumConverters.Register('TOperacaoApuracao', @Converter_OperacaoApuracao_StrToEnum, @Converter_OperacaoApuracao_EnumToStr);
+  EnumConverters.Register('TImpostoApuracao', @Converter_ImpostoApuracao_StrToEnum, @Converter_ImpostoApuracao_EnumToStr);
 
 finalization
   FreeAndNil(EnumConverters);
