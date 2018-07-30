@@ -8,6 +8,8 @@ uses
 type
 
   TCodigoAuxiliarService = class(TBatchService)
+  private
+    FSecondaryPath: string;
   public
     constructor Create(const AClient: IClient); reintroduce; overload;
     function Get(const AId: TString): ICodigoAuxiliar;
@@ -28,7 +30,8 @@ implementation
 
 constructor TCodigoAuxiliarService.Create(const AClient: IClient);
 begin
-  inherited Create('/api/v1/produto/codigos-auxiliares', AClient);
+  inherited Create('/api/v1/produto/produtos/%s/codigos-auxiliares', AClient);
+  FSecondaryPath := '/api/v1/produto/codigos-auxiliares'
 end;
 
 function TCodigoAuxiliarService.Get(const AId: TString): ICodigoAuxiliar;
@@ -48,7 +51,7 @@ end;
 function TCodigoAuxiliarService.GetAll(AStart, ACount: Integer;
   const ASortParams: TStringArray): TCodigoAuxiliarListRec;
 begin
-  Result := Filter(0, EmptyStr, AStart, ACount, ASortParams);
+  Result := Filter(null, EmptyStr, AStart, ACount, ASortParams);
 end;
 
 function TCodigoAuxiliarService.GetAll(const AProdutoId: Variant; AStart, ACount: Integer; const ASortParams: TStringArray): TCodigoAuxiliarListRec;
@@ -87,8 +90,11 @@ var
 begin
   Start := AStart;
   Count := ACount;
-//  URL := Concat(PathWithDependencies([VarToStr(AProdutoId)]), '?', ToParams(AQuery, Start, Count, ASortParams));
-  URL := Concat(FPath, '?', ToParams(AQuery, Start, Count, ASortParams));
+  if AProdutoId = null then
+    URL := Concat(FSecondaryPath, '?', ToParams(AQuery, Start, Count, ASortParams))
+  else
+    URL := Concat(PathWithDependencies([VarToStr(AProdutoId)]), '?', ToParams(AQuery, Start, Count, ASortParams));
+
   Response := FClient.Get(URL, nil, nil);
   Document := Response.AsXML;
   Nodes := TXMLHelper.XPathSelect(Document, '//ResultList/items/*');
