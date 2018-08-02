@@ -22,9 +22,13 @@ type
     function Insert(const AIdProduto: Variant; ARequest: IBatchRequest): IBatchResponse;
     function Update(const AIdProduto, AId: TString; const AModel: IModel): TServiceCommandResult;
     function Delete(const AIdProduto, AId: Variant): Boolean; reintroduce;
+    function GetChanges(const ALojaId, ADataAlteracao: TString): TCodigoAuxiliarListChanges;
   end;
 
 implementation
+
+uses
+  SDK.Service.Carga;
 
 { TCodigoAuxiliarService }
 
@@ -52,6 +56,39 @@ function TCodigoAuxiliarService.GetAll(AStart, ACount: Integer;
   const ASortParams: TStringArray): TCodigoAuxiliarListRec;
 begin
   Result := Filter(null, EmptyStr, AStart, ACount, ASortParams);
+end;
+
+function TCodigoAuxiliarService.GetChanges(const ALojaId,
+  ADataAlteracao: TString): TCodigoAuxiliarListChanges;
+var
+  Nodes: TCustomXMLNodeArray;
+  Document: IXMLDocument;
+  NodeIdx: Integer;
+  CodigoAuxiliar: ICodigoAuxiliar;
+  CodigoAuxiliarListChanges: TCodigoAuxiliarListChanges;
+begin
+  Document := TCargaService.GetChanges(ALojaId, ADataAlteracao, 'CODIGO_AUXILIAR', FClient);
+  Nodes := TXMLHelper.XPathSelect(Document, '//Carga/alterados/*');
+  CodigoAuxiliarListChanges := TCodigoAuxiliarListChanges.Create;
+    for NodeIdx := 0 to Length(Nodes) - 1 do
+  begin
+    if Nodes[NodeIdx].NodeName = 'codigo_auxiliares' then
+    begin
+      TXMLHelper.Deserialize(Nodes[NodeIdx], TCodigoAuxiliar, FDeserializers).QueryInterface(ICodigoAuxiliar, CodigoAuxiliar);
+      CodigoAuxiliarListChanges.ListAlterados.Add(CodigoAuxiliar);
+    end;
+  end;
+
+  Nodes := TXMLHelper.XPathSelect(Document, '//Carga/removidos/*');
+  for NodeIdx := 0 to Length(Nodes) - 1 do
+  begin
+    if Nodes[NodeIdx].NodeName = 'codigo_auxiliares' then
+    begin
+      CodigoAuxiliarListChanges.ListIdRemovidos.Add(Nodes[NodeIdx].NodeValue);
+    end;
+  end;
+
+  Result := CodigoAuxiliarListChanges;
 end;
 
 function TCodigoAuxiliarService.GetAll(const AProdutoId: Variant; AStart, ACount: Integer; const ASortParams: TStringArray): TCodigoAuxiliarListRec;

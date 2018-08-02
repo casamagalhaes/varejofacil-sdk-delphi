@@ -63,6 +63,22 @@ type
     property Items[AIndex: Integer]: ICodigoAuxiliar read GetItems write SetItems; default;
   end;
 
+  TCodigoAuxiliarListChanges = class
+  private
+    FListAlterados: TCodigoAuxiliarList;
+    FListIdRemovidos: TStrings;
+    function GetListAlterados: TCodigoAuxiliarList;
+    function GetListIdRemovidos: TStrings;
+    procedure SetListAlterados(const Value: TCodigoAuxiliarList);
+    procedure SetListIdRemovidos(const Value: TStrings);
+  public
+    destructor Destroy; override;
+    constructor Create;
+    property ListAlterados: TCodigoAuxiliarList read GetListAlterados write SetListAlterados;
+    property ListIdRemovidos: TStrings read GetListIdRemovidos write SetListIdRemovidos;
+  end;
+
+
   TCodigoAuxiliarListRec = record
   private
     FList: ICodigoAuxiliarList;
@@ -218,5 +234,41 @@ begin
   FProdutoId := AProdutoId;
 end;
 
+
+{ TCodigoAuxiliarListChanges }
+
+constructor TCodigoAuxiliarListChanges.Create;
+begin
+  FListAlterados := TCodigoAuxiliarList.Create;
+  FListIdRemovidos := TStringList.Create;
+end;
+
+destructor TCodigoAuxiliarListChanges.Destroy;
+begin
+  FreeAndNil(FListAlterados);
+  FreeAndNil(FListIdRemovidos);
+  inherited;
+end;
+
+function TCodigoAuxiliarListChanges.GetListAlterados: TCodigoAuxiliarList;
+begin
+  Result := FListAlterados;
+end;
+
+function TCodigoAuxiliarListChanges.GetListIdRemovidos: TStrings;
+begin
+  Result := FListIdRemovidos;
+end;
+
+procedure TCodigoAuxiliarListChanges.SetListAlterados(
+  const Value: TCodigoAuxiliarList);
+begin
+  FListAlterados := Value;
+end;
+
+procedure TCodigoAuxiliarListChanges.SetListIdRemovidos(const Value: TStrings);
+begin
+  FListIdRemovidos := Value;
+end;
 
 end.

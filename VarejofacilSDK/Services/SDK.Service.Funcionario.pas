@@ -13,10 +13,13 @@ type
      ASortParams: TStringArray = nil): TFuncionarioListRec;
     function Filter(const AQuery: TString; AStart: Integer = 0;
       ACount: Integer = 0; const ASortParams: TStringArray = nil): TFuncionarioListRec;
-
+    function GetChanges(const ALojaId, ADataAlteracao: TString): TFuncionarioListChanges;
   end;
 
 implementation
+
+uses
+  SDK.Service.Carga;
 
 { TFuncionarioService }
 
@@ -105,6 +108,39 @@ function TFuncionarioService.GetAll(AStart, ACount: Integer;
   ASortParams: TStringArray): TFuncionarioListRec;
 begin
    Result := Filter(EmptyStr, AStart, ACount, ASortParams);
+end;
+
+function TFuncionarioService.GetChanges(const ALojaId,
+  ADataAlteracao: TString): TFuncionarioListChanges;
+var
+  Nodes: TCustomXMLNodeArray;
+  Document: IXMLDocument;
+  NodeIdx: Integer;
+  Funcionario: IFuncionario;
+  FuncionarioListChange: TFuncionarioListChanges;
+begin
+  Document := TCargaService.GetChanges(ALojaId, ADataAlteracao, 'FUNCIONARIO', FClient);
+  Nodes := TXMLHelper.XPathSelect(Document, '//Carga/alterados/*');
+  FuncionarioListChange := TFuncionarioListChanges.Create;
+    for NodeIdx := 0 to Length(Nodes) - 1 do
+  begin
+    if Nodes[NodeIdx].NodeName = 'funcionarios' then
+    begin
+      TXMLHelper.Deserialize(Nodes[NodeIdx], TFuncionario, FDeserializers).QueryInterface(IFuncionario, Funcionario);
+      FuncionarioListChange.ListAlterados.Add(Funcionario);
+    end;
+  end;
+
+  Nodes := TXMLHelper.XPathSelect(Document, '//Carga/removidos/*');
+  for NodeIdx := 0 to Length(Nodes) - 1 do
+  begin
+    if Nodes[NodeIdx].NodeName = 'funcionarios' then
+    begin
+      FuncionarioListChange.ListIdRemovidos.Add(Nodes[NodeIdx].NodeValue);
+    end;
+  end;
+
+  Result := FuncionarioListChange;
 end;
 
 end.

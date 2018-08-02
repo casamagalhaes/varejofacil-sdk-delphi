@@ -150,6 +150,21 @@ type
     property Items[AIndex: Integer]: IFuncionario read GetItems write SetItems; default;
   end;
 
+  TFuncionarioListChanges = class
+  private
+    FListAlterados: TFuncionarioList;
+    FListIdRemovidos: TStrings;
+    function GetListAlterados: TFuncionarioList;
+    function GetListIdRemovidos: TStrings;
+    procedure SetListAlterados(const Value: TFuncionarioList);
+    procedure SetListIdRemovidos(const Value: TStrings);
+  public
+    destructor Destroy; override;
+    constructor Create;
+    property ListAlterados: TFuncionarioList read GetListAlterados write SetListAlterados;
+    property ListIdRemovidos: TStrings read GetListIdRemovidos write SetListIdRemovidos;
+  end;
+
   TFuncionarioListRec = record
   private
     FList: IFuncionarioList;
@@ -711,5 +726,40 @@ begin
   FHoldingId := AHoldingId;
 end;
 
+
+{ TFuncionarioListChanges }
+
+constructor TFuncionarioListChanges.Create;
+begin
+  FListAlterados := TFuncionarioList.Create;
+  FListIdRemovidos := TStringList.Create;
+end;
+
+destructor TFuncionarioListChanges.Destroy;
+begin
+  FreeAndNil(FListAlterados);
+  FreeAndNil(FListIdRemovidos);  
+  inherited;
+end;
+
+function TFuncionarioListChanges.GetListAlterados: TFuncionarioList;
+begin
+  Result := FListAlterados;
+end;
+
+function TFuncionarioListChanges.GetListIdRemovidos: TStrings;
+begin
+  Result := FListIdRemovidos;
+end;
+
+procedure TFuncionarioListChanges.SetListAlterados(const Value: TFuncionarioList);
+begin
+  FListAlterados := Value;
+end;
+
+procedure TFuncionarioListChanges.SetListIdRemovidos(const Value: TStrings);
+begin
+  FListIdRemovidos := Value;
+end;
 
 end.

@@ -15,9 +15,14 @@ type
       const ASortParams: TStringArray = nil): TLojaListRec;
     function Filter(const AQuery: TString; AStart: Integer = 0; ACount: Integer = 0;
       const ASortParams: TStringArray = nil): TLojaListRec;
+    function GetChanges(const ALojaId, ADataAlteracao: TString): TLojaListChanges;
+
   end;
 
 implementation
+
+uses
+  SDK.Service.Carga;
 
 { TLojaService }
 
@@ -52,6 +57,39 @@ end;
 function TLojaService.GetAll(AStart, ACount: Integer; const ASortParams: TStringArray): TLojaListRec;
 begin
   Result := Filter(EmptyStr, AStart, ACount, ASortParams);
+end;
+
+function TLojaService.GetChanges(const ALojaId,
+  ADataAlteracao: TString): TLojaListChanges;
+var
+  Nodes: TCustomXMLNodeArray;
+  Document: IXMLDocument;
+  NodeIdx: Integer;
+  Loja: ILoja;
+  LojaListChanges: TLojaListChanges;
+begin
+  Document := TCargaService.GetChanges(ALojaId, ADataAlteracao, 'LOJA', FClient);
+  Nodes := TXMLHelper.XPathSelect(Document, '//Carga/alterados/*');
+  LojaListChanges := TLojaListChanges.Create;
+    for NodeIdx := 0 to Length(Nodes) - 1 do
+  begin
+    if Nodes[NodeIdx].NodeName = 'lojas' then
+    begin
+      TXMLHelper.Deserialize(Nodes[NodeIdx], TLoja, FDeserializers).QueryInterface(ILoja, Loja);
+      LojaListChanges.ListAlterados.Add(Loja);
+    end;
+  end;
+
+  Nodes := TXMLHelper.XPathSelect(Document, '//Carga/removidos/*');
+  for NodeIdx := 0 to Length(Nodes) - 1 do
+  begin
+    if Nodes[NodeIdx].NodeName = 'lojas' then
+    begin
+      LojaListChanges.ListIdRemovidos.Add(Nodes[NodeIdx].NodeValue);
+    end;
+  end;
+
+  Result := LojaListChanges;
 end;
 
 function TLojaService.Filter(const AQuery: TString; AStart: Integer;
