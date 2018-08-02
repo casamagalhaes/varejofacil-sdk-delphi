@@ -15,9 +15,14 @@ type
       const ASortParams: TStringArray = nil): TProdutoListRec;
     function Filter(const AQuery: TString; AStart: Integer = 0; ACount: Integer = 0;
       const ASortParams: TStringArray = nil): TProdutoListRec;
+//    function GetChanges(const ALojaId, ADataAlteracao, AEntidade: TString ): TProdutoListRec;
+    function GetChanges(const ALojaId, ADataAlteracao, AEntidade: TString ): TProdutoListChanges;
   end;
 
 implementation
+
+uses
+  Classes, SDK.Service.Carga;
 
 { TProdutoService }
 
@@ -57,6 +62,91 @@ function TProdutoService.GetAll(AStart, ACount: Integer; const ASortParams: TStr
 begin
   Result := Filter(EmptyStr, AStart, ACount, ASortParams);
 end;
+
+function TProdutoService.GetChanges(const ALojaId, ADataAlteracao,
+  AEntidade: TString): TProdutoListChanges;
+
+var
+  Nodes: TCustomXMLNodeArray;
+  Document: IXMLDocument;
+  NodeIdx: Integer;
+  Produto: IProduto;
+  ProdutoListChange: TProdutoListChanges;
+begin
+  Document := TCargaService.GetChanges(ALojaId, ADataAlteracao, AEntidade, FClient);
+  Nodes := TXMLHelper.XPathSelect(Document, '//Carga/alterados/*');
+  ProdutoListChange := TProdutoListChanges.Create;
+    for NodeIdx := 0 to Length(Nodes) - 1 do
+  begin
+    if Nodes[NodeIdx].NodeName = 'produtos' then
+    begin
+      TXMLHelper.Deserialize(Nodes[NodeIdx], TProduto, FDeserializers).QueryInterface(IProduto, Produto);
+      ProdutoListChange.ListAlterados.Add(Produto);
+    end;
+  end;
+
+  Nodes := TXMLHelper.XPathSelect(Document, '//Carga/removidos/*');
+  for NodeIdx := 0 to Length(Nodes) - 1 do
+  begin
+    if Nodes[NodeIdx].NodeName = 'produtos' then
+    begin
+      ProdutoListChange.ListIdRemovidos.Add(Nodes[NodeIdx].NodeValue);
+    end;
+  end;
+
+  Result := ProdutoListChange;
+
+end;
+
+//function TProdutoService.GetChanges(const ALojaId, ADataAlteracao,
+//  AEntidade: TString): TProdutoListRec;
+//  function ContentType(const ADataAlteracao: string; const AEntidade: string): string;
+//  begin
+//    Result :=
+//     '<ParamCarga>' +
+//       '<dataUltimaAlteracao>'+ADataAlteracao+'</dataUltimaAlteracao>' +
+//       '<entidades>' +
+//         '<values>'+AEntidade+'</values>' +
+//       '</entidades>' +
+//     '</ParamCarga>';
+//  end;
+//var
+//  Response: IResponse;
+//  NodesAlterados,
+//  NodesRemovidos: TCustomXMLNodeArray;
+//  Document: IXMLDocument;
+//  NodeIdx: Integer;
+//  Produto: IProduto;
+//  ProdutoList: TProdutoList;
+//begin
+//  Response := FClient.Post('/api/v1/pessoa/lojas/'+ALojaId+'/cargas',  ContentType(ADataAlteracao, AEntidade), nil);
+//
+//  ProdutoList := TProdutoList.Create;
+//  case Response.Status of
+//    200:
+//    begin
+//      Document := Response.AsXML;
+//      Nodes := TXMLHelper.XPathSelect(Document, '//Carga/alterados/*');
+//      for NodeIdx := 0 to Length(Nodes) - 1 do
+//      begin
+//        if Nodes[NodeIdx].NodeName = 'produtos' then
+//        begin
+//          TXMLHelper.Deserialize(Nodes[NodeIdx], TProduto, FDeserializers).QueryInterface(IProduto, Produto);
+//          ProdutoList.Add(Produto);
+//        end;
+//      end;
+//    end;
+//    404:
+//    begin
+//      raise SDKNotFoundException.Create('Entidade Produto não encontrado');
+//    end;
+//    else
+//    begin
+//      raise SDKUnknownException.Create(Format('Erro %d - %s', [Response.Status, Response.Content]));
+//    end;
+//  end;
+//  Result := TProdutoListRec.Create(ProdutoList)
+//end;
 
 function TProdutoService.Filter(const AQuery: TString; AStart: Integer;
   ACount: Integer; const ASortParams: TStringArray): TProdutoListRec;
@@ -109,4 +199,5 @@ begin
 end;
 
 end.
+
 
