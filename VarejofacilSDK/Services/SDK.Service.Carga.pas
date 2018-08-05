@@ -3,15 +3,15 @@ unit SDK.Service.Carga;
 interface
 
 uses
-  SDK.Types, SDK.Service, XMLIntf;
+  SDK.Types, SDK.Service, XMLIntf, SDK.XML;
 
 type
   TCargaService = class
   const
       FPath = '/api/v1/pessoa/lojas/%s/cargas';
   public
-    class function GetChanges(const ALojaId, ADataAlteracao,
-     AEntidade: TString; AClient: IClient): IXMLDocument;
+    class function GetChanges(const ALojaId: TString; ADataAlteracao: TDateTime;
+      AEntidade: TString; AClient: IClient): IXMLDocument;
   end;
 
 
@@ -25,13 +25,13 @@ uses
 
 { TCargaService }
 
-class function TCargaService.GetChanges(const ALojaId, ADataAlteracao,
-  AEntidade: TString; AClient: IClient): IXMLDocument;
-  function ContentType(const ADataAlteracao: string; const AEntidade: string): string;
+class function TCargaService.GetChanges(const ALojaId: TString; ADataAlteracao: TDateTime;
+      AEntidade: TString; AClient: IClient): IXMLDocument;
+  function ContentType(const ADataAlteracao: TDateTime; const AEntidade: string): string;
   begin
     Result :=
      '<ParamCarga>' +
-       '<dataUltimaAlteracao>'+ADataAlteracao+'</dataUltimaAlteracao>' +
+       '<dataUltimaAlteracao>'+DateTimeToISO8601(ADataAlteracao)+'</dataUltimaAlteracao>' +
        '<entidades>' +
          '<values>'+AEntidade+'</values>' +
        '</entidades>' +

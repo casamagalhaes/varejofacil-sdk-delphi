@@ -15,7 +15,7 @@ type
       const ASortParams: TStringArray = nil): TLojaListRec;
     function Filter(const AQuery: TString; AStart: Integer = 0; ACount: Integer = 0;
       const ASortParams: TStringArray = nil): TLojaListRec;
-    function GetChanges(const ALojaId, ADataAlteracao: TString): TLojaListChanges;
+  function GetChanges(const ALojaId: TString; ADataAlteracao: TDateTime): TLojaListChanges;
 
   end;
 
@@ -59,8 +59,8 @@ begin
   Result := Filter(EmptyStr, AStart, ACount, ASortParams);
 end;
 
-function TLojaService.GetChanges(const ALojaId,
-  ADataAlteracao: TString): TLojaListChanges;
+function TLojaService.GetChanges(const ALojaId: TString;
+  ADataAlteracao: TDateTime): TLojaListChanges;
 var
   Nodes: TCustomXMLNodeArray;
   Document: IXMLDocument;

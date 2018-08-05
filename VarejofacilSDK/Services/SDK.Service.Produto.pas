@@ -15,8 +15,7 @@ type
       const ASortParams: TStringArray = nil): TProdutoListRec;
     function Filter(const AQuery: TString; AStart: Integer = 0; ACount: Integer = 0;
       const ASortParams: TStringArray = nil): TProdutoListRec;
-//    function GetChanges(const ALojaId, ADataAlteracao, AEntidade: TString ): TProdutoListRec;
-    function GetChanges(const ALojaId, ADataAlteracao: TString ): TProdutoListChanges;
+    function GetChanges(const ALojaId: TString; ADataAlteracao: TDateTime): TProdutoListChanges;
   end;
 
 implementation
@@ -63,8 +62,8 @@ begin
   Result := Filter(EmptyStr, AStart, ACount, ASortParams);
 end;
 
-function TProdutoService.GetChanges(const ALojaId,
- ADataAlteracao: TString): TProdutoListChanges;
+function TProdutoService.GetChanges(const ALojaId: TString;
+ ADataAlteracao: TDateTime): TProdutoListChanges;
 var
   Nodes: TCustomXMLNodeArray;
   Document: IXMLDocument;

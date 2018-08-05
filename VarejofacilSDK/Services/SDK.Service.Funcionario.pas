@@ -13,7 +13,8 @@ type
      ASortParams: TStringArray = nil): TFuncionarioListRec;
     function Filter(const AQuery: TString; AStart: Integer = 0;
       ACount: Integer = 0; const ASortParams: TStringArray = nil): TFuncionarioListRec;
-    function GetChanges(const ALojaId, ADataAlteracao: TString): TFuncionarioListChanges;
+    function GetChanges(const ALojaId: TString; ADataAlteracao: TDateTime): TFuncionarioListChanges;
+
   end;
 
 implementation
@@ -110,8 +111,8 @@ begin
    Result := Filter(EmptyStr, AStart, ACount, ASortParams);
 end;
 
-function TFuncionarioService.GetChanges(const ALojaId,
-  ADataAlteracao: TString): TFuncionarioListChanges;
+function TFuncionarioService.GetChanges(const ALojaId: TString;
+  ADataAlteracao: TDateTime): TFuncionarioListChanges;
 var
   Nodes: TCustomXMLNodeArray;
   Document: IXMLDocument;

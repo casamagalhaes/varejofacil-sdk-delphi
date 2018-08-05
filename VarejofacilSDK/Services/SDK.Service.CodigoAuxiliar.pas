@@ -22,7 +22,7 @@ type
     function Insert(const AIdProduto: Variant; ARequest: IBatchRequest): IBatchResponse;
     function Update(const AIdProduto, AId: TString; const AModel: IModel): TServiceCommandResult;
     function Delete(const AIdProduto, AId: Variant): Boolean; reintroduce;
-    function GetChanges(const ALojaId, ADataAlteracao: TString): TCodigoAuxiliarListChanges;
+    function GetChanges(const ALojaId: TString; ADataAlteracao: TDateTime): TCodigoAuxiliarListChanges;
   end;
 
 implementation
@@ -58,8 +58,8 @@ begin
   Result := Filter(null, EmptyStr, AStart, ACount, ASortParams);
 end;
 
-function TCodigoAuxiliarService.GetChanges(const ALojaId,
-  ADataAlteracao: TString): TCodigoAuxiliarListChanges;
+function TCodigoAuxiliarService.GetChanges(const ALojaId: TString;
+  ADataAlteracao: TDateTime): TCodigoAuxiliarListChanges;
 var
   Nodes: TCustomXMLNodeArray;
   Document: IXMLDocument;
