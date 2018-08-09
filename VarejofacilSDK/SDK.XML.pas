@@ -259,7 +259,7 @@ begin
             end;
             tkFloat:
             begin
-              if Prop^.PropType = TypeInfo(TDateTime) then
+              if Prop^.PropType^.Name = 'TDateTime' then
               begin
                 PropValue := StrToFloat(VarToStr(GetPropValue(AModel.GetReference, TString(Prop^.Name))));
                 if PropValue > 0 then
