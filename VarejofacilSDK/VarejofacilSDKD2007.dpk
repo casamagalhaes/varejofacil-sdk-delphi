@@ -61,6 +61,10 @@ contains
   SDK.Service.Subgrupo in 'Services\SDK.Service.Subgrupo.pas',
   SDK.Service.UnidadeProduto in 'Services\SDK.Service.UnidadeProduto.pas',
   SDK.Service.Funcionario in 'Services\SDK.Service.Funcionario.pas',
-  SDK.Service.CodigoAuxiliar in 'Services\SDK.Service.CodigoAuxiliar.pas';
+  SDK.Service.CodigoAuxiliar in 'Services\SDK.Service.CodigoAuxiliar.pas',
+  SDK.Model.ItemInventario in 'Models\SDK.Model.ItemInventario.pas',
+  SDK.Service.ItemInventario in 'Services\SDK.Service.ItemInventario.pas',
+  SDK.Model.Inventario in 'Models\SDK.Model.Inventario.pas',
+  SDK.Service.Inventario in 'Services\SDK.Service.Inventario.pas';
 
 end.

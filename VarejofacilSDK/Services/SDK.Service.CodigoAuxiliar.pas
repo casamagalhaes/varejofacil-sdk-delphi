@@ -70,7 +70,12 @@ begin
   Document := TCargaService.GetChanges(ALojaId, ADataAlteracao, 'CODIGO_AUXILIAR', FClient);
   Nodes := TXMLHelper.XPathSelect(Document, '//Carga/alterados/*');
   CodigoAuxiliarListChanges := TCodigoAuxiliarListChanges.Create;
-    for NodeIdx := 0 to Length(Nodes) - 1 do
+
+  Nodes := TXMLHelper.XPathSelect(Document, '//Carga/*');
+  if Trim(Nodes[0].NodeValue) <> '' then
+    CodigoAuxiliarListChanges.DataAlteracao := ISO8601ToDateTime(Nodes[0].NodeValue);
+
+  for NodeIdx := 0 to Length(Nodes) - 1 do
   begin
     if Nodes[NodeIdx].NodeName = 'codigo_auxiliares' then
     begin
@@ -157,12 +162,14 @@ begin
 
     if Position < Min(TotalPack, Total) then
     begin
-      PaginationList := Filter(0, AQuery, Start, TotalPack - Position, ASortParams);
+      if AProdutoId = null then
+        PaginationList := Filter(0, AQuery, Start, TotalPack - Position, ASortParams)
+      else
+        PaginationList := Filter(AProdutoId, AQuery, Start, TotalPack - Position, ASortParams);
       for CodigoAuxiliar in PaginationList do
         CodigoAuxiliarList.Add(CodigoAuxiliar);
     end;
   end;
-
   Result := TCodigoAuxiliarListRec.Create(CodigoAuxiliarList);
 end;
 

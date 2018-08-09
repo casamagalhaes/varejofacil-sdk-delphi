@@ -67,15 +67,19 @@ type
   private
     FListAlterados: TCodigoAuxiliarList;
     FListIdRemovidos: TStrings;
+    FDataAlteracao: TDateTime;
     function GetListAlterados: TCodigoAuxiliarList;
     function GetListIdRemovidos: TStrings;
     procedure SetListAlterados(const Value: TCodigoAuxiliarList);
     procedure SetListIdRemovidos(const Value: TStrings);
+    function GetDataAlteracao: TDateTime;
+    procedure SetDataAlteracao(const Value: TDateTime);
   public
     destructor Destroy; override;
     constructor Create;
     property ListAlterados: TCodigoAuxiliarList read GetListAlterados write SetListAlterados;
     property ListIdRemovidos: TStrings read GetListIdRemovidos write SetListIdRemovidos;
+    property DataAlteracao: TDateTime read GetDataAlteracao write SetDataAlteracao;
   end;
 
 
@@ -250,6 +254,11 @@ begin
   inherited;
 end;
 
+function TCodigoAuxiliarListChanges.GetDataAlteracao: TDateTime;
+begin
+  Result := FDataAlteracao; 
+end;
+
 function TCodigoAuxiliarListChanges.GetListAlterados: TCodigoAuxiliarList;
 begin
   Result := FListAlterados;
@@ -258,6 +267,11 @@ end;
 function TCodigoAuxiliarListChanges.GetListIdRemovidos: TStrings;
 begin
   Result := FListIdRemovidos;
+end;
+
+procedure TCodigoAuxiliarListChanges.SetDataAlteracao(const Value: TDateTime);
+begin
+  FDataAlteracao := Value;
 end;
 
 procedure TCodigoAuxiliarListChanges.SetListAlterados(

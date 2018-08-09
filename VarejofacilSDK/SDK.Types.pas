@@ -363,7 +363,7 @@ end;
 {$IFDEF VER185}
 function DateTimeToISO8601(const AInput: TDateTime): TString;
 begin
-  Result := FormatDateTime('yyyy-mm-dd', AInput) + 'T' + FormatDateTime('hh:nn:ss', AInput) + '-03:00';
+  Result := FormatDateTime('yyyy-mm-dd', AInput) + 'T' + FormatDateTime('hh:nn:ss', AInput) + '+0000';
 end;
 
 function ISO8601ToDateTime(const AInput: TString): TDateTime;

@@ -335,15 +335,19 @@ type
   private
     FListAlterados: TProdutoList;
     FListIdRemovidos: TStrings;
+    FDataAlteracao: TDateTime;
     function GetListAlterados: TProdutoList;
     function GetListIdRemovidos: TStrings;
     procedure SetListAlterados(const Value: TProdutoList);
     procedure SetListIdRemovidos(const Value: TStrings);
+    function GetDataAlteracao: TDateTime;
+    procedure SetDataAlteracao(const Value: TDateTime);
   public
     destructor Destroy; override;
     constructor Create;
     property ListAlterados: TProdutoList read GetListAlterados write SetListAlterados;
     property ListIdRemovidos: TStrings read GetListIdRemovidos write SetListIdRemovidos;
+    property DataAlteracao: TDateTime read GetDataAlteracao write SetDataAlteracao;
   end;
 
 
@@ -1764,6 +1768,11 @@ begin
   inherited;
 end;
 
+function TProdutoListChanges.GetDataAlteracao: TDateTime;
+begin
+  Result := FDataAlteracao
+end;
+
 function TProdutoListChanges.GetListAlterados: TProdutoList;
 begin
   Result := FListAlterados;
@@ -1772,6 +1781,11 @@ end;
 function TProdutoListChanges.GetListIdRemovidos: TStrings;
 begin
   Result := FListIdRemovidos;
+end;
+
+procedure TProdutoListChanges.SetDataAlteracao(const Value: TDateTime);
+begin
+  FDataAlteracao := Value;
 end;
 
 procedure TProdutoListChanges.SetListAlterados(const Value: TProdutoList);
