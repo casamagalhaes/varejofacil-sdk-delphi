@@ -5,8 +5,6 @@ interface
 uses
   SysUtils, Classes, SDK.Types, SDK.Enums;
 
-implementation
-
 type
   IInventario = interface(IModel)
   ['{EB19E648-48A5-4A97-8EAE-5CAA8BC2C1FE}']
@@ -66,7 +64,7 @@ type
     function GetReference: TInventarioList;
     property Items[AIndex: Integer]: IInventario read GetItems write SetItems; default;
   end;
-
+                             
   TInventarioListRec = record
   private
     FList: IInventarioList;
@@ -74,7 +72,6 @@ type
     class function Create(const AList: IInventarioList): TInventarioListRec; static;
     class operator Implicit(AListRec: TInventarioListRec): TInventarioList;
   end;
-
 
   TInventario = class(TInterfacedModel, IInventario)
   private
@@ -103,6 +100,7 @@ type
   end;
 
 { TInventario }
+implementation
 
 function TInventario.GetDataAbertura: TDateTime;
 begin
@@ -131,7 +129,7 @@ end;
 
 procedure TInventario.SetDataAbertura(const Value: TDateTime);
 begin
-  FDataAbertura := Value; 
+  FDataAbertura := Value;
 end;
 
 procedure TInventario.SetDescricao(const Value: TString);

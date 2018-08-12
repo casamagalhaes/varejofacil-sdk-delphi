@@ -14,10 +14,14 @@ type
       const ASortParams: TStringArray = nil): TItemInventarioListRec;
     function Filter(const AInventarioId: TString; const AQuery: TString; AStart: Integer = 0; ACount: Integer = 0;
       const ASortParams: TStringArray = nil): TItemInventarioListRec;
-    function Update(const AInventarioID: Int64; const AListItemInventario: IItemInventarioList): TServiceCommandResult;
+    function Update(const AInventarioID: TString;
+     const AListItemInventario: TItemInventarioList): TServiceCommandResult;
   end;
 
 implementation
+
+uses
+  Classes;
 
 { TItemInventarioService }
 
@@ -83,10 +87,39 @@ begin
   Result := Filter(AInventarioId, EmptyStr, AStart, ACount, ASortParams);
 end;
 
-function TItemInventarioService.Update(const AInventarioID: Int64;
-  const AListItemInventario: IItemInventarioList): TServiceCommandResult;
+function TItemInventarioService.Update(const AInventarioID: TString;
+  const AListItemInventario: TItemInventarioList): TServiceCommandResult;
+var
+  ListSerializada: TStrings;
+  ItemInventario: IItemInventario;
+  Response: IResponse;
+  FailReasons: TFailReasonList;  
 begin
-  Result := nil;
+  Response := nil;
+  if AListItemInventario.Count > 50 then
+    raise Exception.Create('Ultrapassou o limite de 50 registros ');
+
+  ListSerializada := TStringList.Create;
+  try
+    for ItemInventario in AListItemInventario do
+      ListSerializada.Add(TXMLHelper.Serialize(ItemInventario, True, FSerializers));
+
+    Response := FClient.Put(PathWithDependencies([AInventarioID]), ListSerializada.Text , nil);
+  finally
+    FreeAndNil(ListSerializada);
+  end;
+
+  if Assigned(Response) then
+  begin
+    FailReasons := TFailReasonHelper.FromResponse(Response);
+    try
+      Result := TServiceCommandResult.Create(Response.Status = 201, FailReasons, InterpretLocation(Response.Headers.Values['Location']));
+    finally
+      FailReasons.Free;
+    end;
+  end;
+
 end;
 
 end.
+

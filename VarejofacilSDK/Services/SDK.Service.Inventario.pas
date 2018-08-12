@@ -3,19 +3,20 @@ unit SDK.Service.Inventario;
 interface
 
 uses
-  SDK.Types, SDK.Service, SDK.Exceptions, SDK.XML,
-  XMLIntf, SysUtils, Math, SDK.Model.Inventario;
+  SDK.Model.Inventario, SDK.Types, SDK.Exceptions, SDK.XML,
+  XMLIntf, SysUtils, Math, SDK.Service;
 
 type
 
   TInventarioService = class(TService)
+
   public
     constructor Create(const AClient: IClient); reintroduce; overload;
     function GetAll(AStart: Integer = 0; ACount: Integer = 0;
       const ASortParams: TStringArray = nil): TInventarioListRec;
     function Filter(const AQuery: TString; AStart: Integer = 0; ACount: Integer = 0;
       const ASortParams: TStringArray = nil): TInventarioListRec;
-    function Update(const AId: Int64; const AModel: IModel): TServiceCommandResult;
+    function Update(const AId: TString; const AModel: IModel): TServiceCommandResult;
   end;
 
 implementation
@@ -84,10 +85,10 @@ begin
   Result := Filter(EmptyStr, AStart, ACount, ASortParams);
 end;
 
-function TInventarioService.Update(const AId: Int64;
+function TInventarioService.Update(const AId: TString;
   const AModel: IModel): TServiceCommandResult;
 begin
-
+  Result := inherited Update(AId, AModel, PathWithDependencies([AId]));
 end;
 
 end.

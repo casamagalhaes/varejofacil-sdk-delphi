@@ -163,7 +163,7 @@ begin
     if Position < Min(TotalPack, Total) then
     begin
       if AProdutoId = null then
-        PaginationList := Filter(0, AQuery, Start, TotalPack - Position, ASortParams)
+        PaginationList := Filter(null, AQuery, Start, TotalPack - Position, ASortParams)
       else
         PaginationList := Filter(AProdutoId, AQuery, Start, TotalPack - Position, ASortParams);
       for CodigoAuxiliar in PaginationList do
