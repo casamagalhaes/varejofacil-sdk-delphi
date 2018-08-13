@@ -92,7 +92,7 @@ type
     procedure SetInventarioId(const Value: Int64);
     procedure SetPrimeiraDigitacao(const Value: Double);
     procedure SetProdutoId(const Value: Int64);
-  public
+  published
     property Id: Int64 read GetId write SetId;
     property InventarioId: Int64 read GetInventarioId write SetInventarioId;
     property ProdutoId: Int64 read GetProdutoId write SetProdutoId;

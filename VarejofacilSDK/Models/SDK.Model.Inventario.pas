@@ -12,17 +12,17 @@ type
     function GetDescricao: TString;
     function GetLocalId: Int64;
     function GetLojaId: Int64;
-    function GetDataAbertura: TDateTime;
-    procedure SetID(const Value: Int64);
-    procedure SetDescricao(const Value: TString);
-    procedure SetLocalId(const Value: Int64);
-    procedure SetLojaId(const Value: Int64);
-    procedure SetDataAbertura(const Value: TDateTime);
+    function GetData: TDateTime;
+    procedure SetID(const AId: Int64);
+    procedure SetDescricao(const ADescricao: TString);
+    procedure SetLocalId(const ALocalId: Int64);
+    procedure SetLojaId(const ALojaId: Int64);
+    procedure SetData(const AData: TDateTime);
     property Id: Int64 read GetId write SetID;
     property Descricao: TString read GetDescricao write SetDescricao;
     property LocalId: Int64 read GetLocalId write SetLocalId;
     property LojaId: Int64 read GetLojaId write SetLojaId;
-    property DataAbertura: TDateTime read GetDataAbertura write SetDataAbertura;
+    property Data: TDateTime read GetData write SetData;
   end;
   
   TInventarioList = class;
@@ -79,32 +79,31 @@ type
     FDescricao: TString;
     FLocalId: Int64;
     FLojaId: Int64;
-    FDataAbertura: TDateTime;
-    function GetDataAbertura: TDateTime;
+    FData: TDateTime;
+    function GetData: TDateTime;
     function GetDescricao: TString;
     function GetId: Int64;
     function GetLocalId: Int64;
     function GetLojaId: Int64;
-    procedure SetDataAbertura(const Value: TDateTime);
-    procedure SetDescricao(const Value: TString);
-    procedure SetID(const Value: Int64);
-    procedure SetLocalId(const Value: Int64);
-    procedure SetLojaId(const Value: Int64);
-  public
+    procedure SetID(const AId: Int64);
+    procedure SetDescricao(const ADescricao: TString);
+    procedure SetLocalId(const ALocalId: Int64);
+    procedure SetLojaId(const ALojaId: Int64);
+    procedure SetData(const AData: TDateTime);
+  published
     property Id: Int64 read GetId write SetID;
     property Descricao: TString read GetDescricao write SetDescricao;
     property LocalId: Int64 read GetLocalId write SetLocalId;
     property LojaId: Int64 read GetLojaId write SetLojaId;
-    property DataAbertura: TDateTime read GetDataAbertura write SetDataAbertura;
-
+    property Data: TDateTime read GetData write SetData;
   end;
 
 { TInventario }
 implementation
 
-function TInventario.GetDataAbertura: TDateTime;
+function TInventario.GetData: TDateTime;
 begin
-  Result := FDataAbertura;
+  Result := FData;
 end;
 
 function TInventario.GetDescricao: TString;
@@ -127,29 +126,29 @@ begin
   Result := FLojaId;
 end;
 
-procedure TInventario.SetDataAbertura(const Value: TDateTime);
+procedure TInventario.SetData(const AData: TDateTime);
 begin
-  FDataAbertura := Value;
+  FData := AData;
 end;
 
-procedure TInventario.SetDescricao(const Value: TString);
+procedure TInventario.SetDescricao(const ADescricao: TString);
 begin
-  FDescricao := Value;
+  FDescricao := ADescricao;
 end;
 
-procedure TInventario.SetID(const Value: Int64);
+procedure TInventario.SetID(const AId: Int64);
 begin
-  FId := Value;
+  FId := AId;
 end;
 
-procedure TInventario.SetLocalId(const Value: Int64);
+procedure TInventario.SetLocalId(const ALocalId: Int64);
 begin
-  FLocalId := Value;
+  FLocalId := ALocalId;
 end;
 
-procedure TInventario.SetLojaId(const Value: Int64);
+procedure TInventario.SetLojaId(const ALojaId: Int64);
 begin
-  FLojaId := Value;
+  FLojaId := ALojaId;
 end;
 
 { TInventarioListEnumerator }
