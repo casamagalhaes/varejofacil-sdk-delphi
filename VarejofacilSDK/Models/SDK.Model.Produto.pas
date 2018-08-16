@@ -4,7 +4,7 @@ interface
 
 uses
   SysUtils, Classes, SDK.Types, SDK.Enums, SDK.Model.RegimeEstadualProduto, SDK.Model.ItemImpostoFederal,
-  SDK.Model.PautaDoProduto, SDK.Model.EstoqueDoProduto;
+  SDK.Model.PautaDoProduto, SDK.Model.EstoqueDoProduto, SDK.Model.CodigoAuxiliar;
 
 type
 
@@ -196,6 +196,8 @@ type
     procedure SetPautasDoProduto(const APautasDoProduto: TPautaDoProdutoList);
     function GetEstoquesDoProduto: TEstoqueDoProdutoList;
     procedure SetEstoquesDoProduto(const AEstoquesDoProduto: TEstoqueDoProdutoList);
+    function GetCodigosAuxiliares: TCodigoAuxiliarList;
+    procedure SetCodigosAuxiliares(const ACodigosAuxiliares: TCodigoAuxiliarList);
     property Id: Variant read GetId write SetId;
     property ProdutoDestinoId: Variant read GetProdutoDestinoId write SetProdutoDestinoId;
     property SubgrupoId: Variant read GetSubgrupoId write SetSubgrupoId;
@@ -289,6 +291,7 @@ type
     property ItensImpostosFederais: TItemImpostoFederalList read GetItensImpostosFederais write SetItensImpostosFederais;
     property PautasDoProduto: TPautaDoProdutoList read GetPautasDoProduto write SetPautasDoProduto;
     property EstoquesDoProduto: TEstoqueDoProdutoList read GetEstoquesDoProduto write SetEstoquesDoProduto;
+    property CodigosAuxiliares: TCodigoAuxiliarList read GetCodigosAuxiliares write SetCodigosAuxiliares;
   end;
 
   TProdutoList = class;
@@ -434,6 +437,7 @@ type
 	FItensImpostosFederais: TItemImpostoFederalList;
 	FPautasDoProduto: TPautaDoProdutoList;
 	FEstoquesDoProduto: TEstoqueDoProdutoList;
+	FCodigosAuxiliares: TCodigoAuxiliarList;
     function GetId: Variant;
     procedure SetId(const AId: Variant);
     function GetProdutoDestinoId: Variant;
@@ -620,6 +624,8 @@ type
     procedure SetPautasDoProduto(const APautasDoProduto: TPautaDoProdutoList);
     function GetEstoquesDoProduto: TEstoqueDoProdutoList;
     procedure SetEstoquesDoProduto(const AEstoquesDoProduto: TEstoqueDoProdutoList);
+    function GetCodigosAuxiliares: TCodigoAuxiliarList;
+    procedure SetCodigosAuxiliares(const ACodigosAuxiliares: TCodigoAuxiliarList);
   published
     property Id: Variant read GetId write SetId;
     property ProdutoDestinoId: Variant read GetProdutoDestinoId write SetProdutoDestinoId;
@@ -714,6 +720,7 @@ type
     property ItensImpostosFederais: TItemImpostoFederalList read GetItensImpostosFederais write SetItensImpostosFederais;
     property PautasDoProduto: TPautaDoProdutoList read GetPautasDoProduto write SetPautasDoProduto;
     property EstoquesDoProduto: TEstoqueDoProdutoList read GetEstoquesDoProduto write SetEstoquesDoProduto;
+    property CodigosAuxiliares: TCodigoAuxiliarList read GetCodigosAuxiliares write SetCodigosAuxiliares;
   end;
 
 implementation
@@ -1667,9 +1674,20 @@ begin
   Result := FLocalDeImpressaoId;
 end;
 
+function TProduto.GetCodigosAuxiliares: TCodigoAuxiliarList;
+begin
+  Result := FCodigosAuxiliares;
+end;
+
 procedure TProduto.SetLocalDeImpressaoId(const ALocalDeImpressaoId: Variant);
 begin
   FLocalDeImpressaoId := ALocalDeImpressaoId;
+end;
+
+procedure TProduto.SetCodigosAuxiliares(
+  const ACodigosAuxiliares: TCodigoAuxiliarList);
+begin
+  FCodigosAuxiliares := ACodigosAuxiliares;
 end;
 
 function TProduto.GetAplicacoesIds: TLongList;
