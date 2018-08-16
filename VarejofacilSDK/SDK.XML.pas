@@ -202,6 +202,16 @@ class function TXMLHelper.Serialize(const AModel: IModel; ARootTag: Boolean; ASe
           Result := Result + AInput[X];
   end;
 
+  function Sanitize(const AInput: TString): TString;
+  begin
+    Result := AInput;
+    Result := StringReplace(Result, '<', '&lt;', [rfReplaceAll]);
+    Result := StringReplace(Result, '>', '&gt;', [rfReplaceAll]);
+    Result := StringReplace(Result, '"', '&quot;', [rfReplaceAll]);
+    Result := StringReplace(Result, '''', '&apos;', [rfReplaceAll]);
+    Result := StringReplace(Result, '&', '&amp;', [rfReplaceAll]);
+  end;
+
 var
   PropertiesSize, SerializerIdx: Integer;
   Properties: PPropList;
@@ -282,7 +292,7 @@ begin
                 Value := RemoveLowerCase(VarToStr(GetPropValue(AModel.GetReference, TString(Prop^.Name))));
             end;
             else
-              Value := VarToStr(GetPropValue(AModel.GetReference, TString(Prop^.Name)));
+              Value := Sanitize(VarToStr(GetPropValue(AModel.GetReference, TString(Prop^.Name))));
           end;
         end;
         if Value <> EmptyStr then
