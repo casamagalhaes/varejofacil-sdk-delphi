@@ -34,10 +34,19 @@ var
 begin
   Result := nil;
   Response := FClient.Get(Concat(FPath, '/', AId), nil, nil);
-  Document := Response.AsXML;
-  Nodes := TXMLHelper.XPathSelect(Document, '//Preco');
-  if Length(Nodes) > 0 then
-    TXMLHelper.Deserialize(Nodes[0], TPreco, FDeserializers).QueryInterface(IPreco, Result);
+  case Response.Status of
+    200:
+    begin
+      Document := Response.AsXML;
+      Nodes := TXMLHelper.XPathSelect(Document, '//Preco');
+      if Length(Nodes) > 0 then
+        TXMLHelper.Deserialize(Nodes[0], TPreco, FDeserializers).QueryInterface(IPreco, Result);
+    end;
+    404:
+      raise SDKNotFoundException.Create(Concat('Preço ', AId, ' não encontrado'));
+    else
+      raise SDKUnknownException.Create(Format('Erro %d - %s', [Response.Status, Response.Content]));
+  end;
 end;
 
 function TPrecoService.GetAll(AStart, ACount: Integer; const ASortParams: TStringArray): TPrecoListRec;
