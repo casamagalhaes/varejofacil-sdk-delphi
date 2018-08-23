@@ -4,7 +4,7 @@ interface
 
 uses
   SysUtils, Classes, SDK.Types, SDK.Enums, SDK.Model.RegimeEstadualProduto, SDK.Model.ItemImpostoFederal,
-  SDK.Model.PautaDoProduto, SDK.Model.EstoqueDoProduto, SDK.Model.CodigoAuxiliar;
+  SDK.Model.PautaDoProduto, SDK.Model.EstoqueDoProduto, SDK.Model.CodigoAuxiliar, SDK.Model.Componente;
 
 type
 
@@ -198,6 +198,8 @@ type
     procedure SetEstoquesDoProduto(const AEstoquesDoProduto: TEstoqueDoProdutoList);
     function GetCodigosAuxiliares: TCodigoAuxiliarList;
     procedure SetCodigosAuxiliares(const ACodigosAuxiliares: TCodigoAuxiliarList);
+    function GetComponentes: TComponenteList;
+    procedure SetComponentes(const AComponentes: TComponenteList);
     property Id: Variant read GetId write SetId;
     property ProdutoDestinoId: Variant read GetProdutoDestinoId write SetProdutoDestinoId;
     property SubgrupoId: Variant read GetSubgrupoId write SetSubgrupoId;
@@ -292,6 +294,7 @@ type
     property PautasDoProduto: TPautaDoProdutoList read GetPautasDoProduto write SetPautasDoProduto;
     property EstoquesDoProduto: TEstoqueDoProdutoList read GetEstoquesDoProduto write SetEstoquesDoProduto;
     property CodigosAuxiliares: TCodigoAuxiliarList read GetCodigosAuxiliares write SetCodigosAuxiliares;
+    property Componentes: TComponenteList read GetComponentes write SetComponentes;
   end;
 
   TProdutoList = class;
@@ -438,6 +441,7 @@ type
 	FPautasDoProduto: TPautaDoProdutoList;
 	FEstoquesDoProduto: TEstoqueDoProdutoList;
 	FCodigosAuxiliares: TCodigoAuxiliarList;
+  FComponentes: TComponenteList;
     function GetId: Variant;
     procedure SetId(const AId: Variant);
     function GetProdutoDestinoId: Variant;
@@ -626,6 +630,8 @@ type
     procedure SetEstoquesDoProduto(const AEstoquesDoProduto: TEstoqueDoProdutoList);
     function GetCodigosAuxiliares: TCodigoAuxiliarList;
     procedure SetCodigosAuxiliares(const ACodigosAuxiliares: TCodigoAuxiliarList);
+    function GetComponentes: TComponenteList;
+    procedure SetComponentes(const AComponentes: TComponenteList);
   published
     property Id: Variant read GetId write SetId;
     property ProdutoDestinoId: Variant read GetProdutoDestinoId write SetProdutoDestinoId;
@@ -721,6 +727,7 @@ type
     property PautasDoProduto: TPautaDoProdutoList read GetPautasDoProduto write SetPautasDoProduto;
     property EstoquesDoProduto: TEstoqueDoProdutoList read GetEstoquesDoProduto write SetEstoquesDoProduto;
     property CodigosAuxiliares: TCodigoAuxiliarList read GetCodigosAuxiliares write SetCodigosAuxiliares;
+    property Componentes: TComponenteList read GetComponentes write SetComponentes;
   end;
 
 implementation
@@ -1304,9 +1311,19 @@ begin
   Result := FCompoeTotalDaNota;
 end;
 
+function TProduto.GetComponentes: TComponenteList;
+begin
+  Result := FComponentes;
+end;
+
 procedure TProduto.SetCompoeTotalDaNota(const ACompoeTotalDaNota: Boolean);
 begin
   FCompoeTotalDaNota := ACompoeTotalDaNota;
+end;
+
+procedure TProduto.SetComponentes(const AComponentes: TComponenteList);
+begin
+  FComponentes := AComponentes;
 end;
 
 function TProduto.GetAtivoNoEcommerce: Boolean;
