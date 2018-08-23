@@ -3,7 +3,7 @@
 interface
 
 uses
-  SysUtils, Classes, SDK.Types, SDK.Enums, SDK.Model.Endereco;
+  SysUtils, Classes, SDK.Types, SDK.Enums, SDK.Model.Endereco, SDK.Model.LojaDoFuncionario;
 
 type
 
@@ -75,6 +75,8 @@ type
     procedure SetTipo(const ATipo: TTipoPessoa);
     function GetHoldingId: Integer;
     procedure SetHoldingId(const AHoldingId: Integer);
+    function GetLojasDoFuncionario: TLojaDoFuncionarioList;
+    procedure SetLojasDoFuncionario(const ALojasDoFuncionario: TLojaDoFuncionarioList);
     property Id: Int64 read GetId write SetId;
     property Ramal: TString read GetRamal write SetRamal;
     property CargoSysPDVWeb: TString read GetCargoSysPDVWeb write SetCargoSysPDVWeb;
@@ -108,6 +110,7 @@ type
     property Endereco: TEndereco read GetEndereco write SetEndereco;
     property Tipo: TTipoPessoa read GetTipo write SetTipo;
     property HoldingId: Integer read GetHoldingId write SetHoldingId;
+    property LojasDoFuncionario: TLojaDoFuncionarioList read GetLojasDoFuncionario write SetLojasDoFuncionario;
   end;
 
   TFuncionarioList = class;
@@ -193,6 +196,7 @@ type
 	FEndereco: TEndereco;
 	FTipo: TTipoPessoa;
 	FHoldingId: Integer;
+	FLojasDoFuncionario: TLojaDoFuncionarioList;
     function GetId: Int64;
     procedure SetId(const AId: Int64);
     function GetRamal: TString;
@@ -259,6 +263,8 @@ type
     procedure SetTipo(const ATipo: TTipoPessoa);
     function GetHoldingId: Integer;
     procedure SetHoldingId(const AHoldingId: Integer);
+    function GetLojasDoFuncionario: TLojaDoFuncionarioList;
+    procedure SetLojasDoFuncionario(const ALojasDoFuncionario: TLojaDoFuncionarioList);
   published
     property Id: Int64 read GetId write SetId;
     property Ramal: TString read GetRamal write SetRamal;
@@ -293,6 +299,7 @@ type
     property Endereco: TEndereco read GetEndereco write SetEndereco;
     property Tipo: TTipoPessoa read GetTipo write SetTipo;
     property HoldingId: Integer read GetHoldingId write SetHoldingId;
+    property LojasDoFuncionario: TLojaDoFuncionarioList read GetLojasDoFuncionario write SetLojasDoFuncionario;
   end;
 
 implementation
@@ -566,9 +573,20 @@ begin
   Result := FInscricaoMunicipal;
 end;
 
+function TFuncionario.GetLojasDoFuncionario: TLojaDoFuncionarioList;
+begin
+  Result := FLojasDoFuncionario;
+end;
+
 procedure TFuncionario.SetInscricaoMunicipal(const AInscricaoMunicipal: TString);
 begin
   FInscricaoMunicipal := AInscricaoMunicipal;
+end;
+
+procedure TFuncionario.SetLojasDoFuncionario(
+  const ALojasDoFuncionario: TLojaDoFuncionarioList);
+begin
+  FLojasDoFuncionario := ALojasDoFuncionario;
 end;
 
 function TFuncionario.GetNome: TString;
