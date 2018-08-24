@@ -17,19 +17,10 @@ type
     procedure SetCompostoId(const ACompostoId: Int64);
     function GetQuantidade: Double;
     procedure SetQuantidade(const AQuantidade: Double);
-    function GetPreco1: Double;
-    procedure SetPreco1(const APreco1: Double);
-    function GetPreco2: Double;
-    procedure SetPreco2(const APreco2: Double);
-    function GetPreco3: Double;
-    procedure SetPreco3(const APreco3: Double);
     property Id: Int64 read GetId write SetId;
     property ProdutoId: Int64 read GetProdutoId write SetProdutoId;
     property CompostoId: Int64 read GetCompostoId write SetCompostoId;
     property Quantidade: Double read GetQuantidade write SetQuantidade;
-    property Preco1: Double read GetPreco1 write SetPreco1;
-    property Preco2: Double read GetPreco2 write SetPreco2;
-    property Preco3: Double read GetPreco3 write SetPreco3;
   end;
 
   TComponenteList = class;
@@ -86,9 +77,6 @@ type
 	FProdutoId: Int64;
 	FCompostoId: Int64;
 	FQuantidade: Double;
-	FPreco1: Double;
-	FPreco2: Double;
-	FPreco3: Double;
     function GetId: Int64;
     procedure SetId(const AId: Int64);
     function GetProdutoId: Int64;
@@ -97,20 +85,11 @@ type
     procedure SetCompostoId(const ACompostoId: Int64);
     function GetQuantidade: Double;
     procedure SetQuantidade(const AQuantidade: Double);
-    function GetPreco1: Double;
-    procedure SetPreco1(const APreco1: Double);
-    function GetPreco2: Double;
-    procedure SetPreco2(const APreco2: Double);
-    function GetPreco3: Double;
-    procedure SetPreco3(const APreco3: Double);
   published
     property Id: Int64 read GetId write SetId;
     property ProdutoId: Int64 read GetProdutoId write SetProdutoId;
     property CompostoId: Int64 read GetCompostoId write SetCompostoId;
     property Quantidade: Double read GetQuantidade write SetQuantidade;
-    property Preco1: Double read GetPreco1 write SetPreco1;
-    property Preco2: Double read GetPreco2 write SetPreco2;
-    property Preco3: Double read GetPreco3 write SetPreco3;
   end;
 
 implementation
@@ -238,36 +217,5 @@ procedure TComponente.SetQuantidade(const AQuantidade: Double);
 begin
   FQuantidade := AQuantidade;
 end;
-
-function TComponente.GetPreco1: Double;
-begin
-  Result := FPreco1;
-end;
-
-procedure TComponente.SetPreco1(const APreco1: Double);
-begin
-  FPreco1 := APreco1;
-end;
-
-function TComponente.GetPreco2: Double;
-begin
-  Result := FPreco2;
-end;
-
-procedure TComponente.SetPreco2(const APreco2: Double);
-begin
-  FPreco2 := APreco2;
-end;
-
-function TComponente.GetPreco3: Double;
-begin
-  Result := FPreco3;
-end;
-
-procedure TComponente.SetPreco3(const APreco3: Double);
-begin
-  FPreco3 := APreco3;
-end;
-
 
 end.

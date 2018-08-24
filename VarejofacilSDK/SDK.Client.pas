@@ -3,7 +3,7 @@ unit SDK.Client;
 interface
 
 uses
-  SysUtils, StrUtils, Classes, IdHTTP, IdSSLOpenSSL, IdGlobalProtocols, IdStack, SDK.Types, SDK.Request, SDK.Response, SDK.Exceptions;
+  SysUtils, StrUtils, Classes, IdHTTP, IdSSLOpenSSL, IdGlobalProtocols, IdStack, SDK.Types, SDK.Request, SDK.Response, SDK.Exceptions, SDK.Log;
 
 type
 
@@ -171,6 +171,21 @@ begin
 end;
 
 function TClient.MakeRequest(const ARequest: IRequest): IResponse;
+
+  procedure LogRequest;
+  var
+    Verb: TString;
+  begin
+    case ARequest.Method of
+      mtGET: Verb := 'GET';
+      mtPOST: Verb := 'POST';
+      mtPUT: Verb := 'PUT';
+      mtDELETE: Verb := 'DELETE';
+    end;
+    TLog.Debug(Format('Request %s %s', [Verb, ARequest.URL]));
+    TLog.Debug(ARequest.Content);
+  end;
+
 var
   ResponseContent: TString;
   HTTP: TSDKIdHTTP;
@@ -178,6 +193,7 @@ var
   HTTPIOHandler: TIdSSLIOHandlerSocketOpenSSL;
   RequestContent: TStream;
 begin
+  LogRequest;
   HTTP := TSDKIdHTTP.Create(nil);
   try
     HTTPIOHandler := TIdSSLIOHandlerSocketOpenSSL.Create(nil);
