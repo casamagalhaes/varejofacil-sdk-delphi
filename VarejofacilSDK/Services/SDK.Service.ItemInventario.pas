@@ -3,7 +3,8 @@ unit SDK.Service.ItemInventario;
 interface
 
 uses
-  SDK.Types, SDK.Model.ItemInventario, SDK.Service, SDK.Exceptions, SDK.XML, XMLIntf, SysUtils, Math;
+  SDK.Types, SDK.Model.ItemInventario, SDK.Service, SDK.Exceptions, SDK.Service.Carga,
+  SDK.XML, XMLIntf, SysUtils, Math;
 
 type
 
@@ -14,8 +15,7 @@ type
       const ASortParams: TStringArray = nil): TItemInventarioListRec;
     function Filter(const AInventarioId: TString; const AQuery: TString; AStart: Integer = 0; ACount: Integer = 0;
       const ASortParams: TStringArray = nil): TItemInventarioListRec;
-    function Update(const AInventarioID: TString;
-     const AListItemInventario: TItemInventarioList): TServiceCommandResult;
+    function Update(const AInventarioID: TString; const AItemInventario: TItemInventario): TServiceCommandResult;
   end;
 
 implementation
@@ -85,41 +85,12 @@ function TItemInventarioService.GetAll(const AInventarioId: TString;
   AStart, ACount: Integer; const ASortParams: TStringArray): TItemInventarioListRec;
 begin
   Result := Filter(AInventarioId, EmptyStr, AStart, ACount, ASortParams);
-end;
+end;     
 
-function TItemInventarioService.Update(const AInventarioID: TString;
-  const AListItemInventario: TItemInventarioList): TServiceCommandResult;
-var
-  ListSerializada: TStrings;
-  ItemInventario: IItemInventario;
-  Response: IResponse;
-  FailReasons: TFailReasonList;  
+function TItemInventarioService.Update(const AInventarioID: TString; const AItemInventario: TItemInventario): TServiceCommandResult;
 begin
-  Response := nil;
-  if AListItemInventario.Count > 50 then
-    raise Exception.Create('Ultrapassou o limite de 50 registros ');
-
-  ListSerializada := TStringList.Create;
-  try
-    for ItemInventario in AListItemInventario do
-      ListSerializada.Add(TXMLHelper.Serialize(ItemInventario, True, FSerializers));
-
-    Response := FClient.Put(PathWithDependencies([AInventarioID]), ListSerializada.Text , nil);
-  finally
-    FreeAndNil(ListSerializada);
-  end;
-
-  if Assigned(Response) then
-  begin
-    FailReasons := TFailReasonHelper.FromResponse(Response);
-    try
-      Result := TServiceCommandResult.Create(Response.Status = 201, FailReasons, InterpretLocation(Response.Headers.Values['Location']));
-    finally
-      FailReasons.Free;
-    end;
-  end;
-
-end;
+  Result := inherited Update(AInventarioID, AItemInventario, PathWithDependencies([AInventarioID]));
+end;     
 
 end.
 

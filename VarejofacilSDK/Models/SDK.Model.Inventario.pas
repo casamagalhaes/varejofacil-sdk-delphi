@@ -64,7 +64,7 @@ type
     function GetReference: TInventarioList;
     property Items[AIndex: Integer]: IInventario read GetItems write SetItems; default;
   end;
-                             
+
   TInventarioListRec = record
   private
     FList: IInventarioList;

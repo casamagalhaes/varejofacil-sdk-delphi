@@ -4,19 +4,18 @@ interface
 
 uses
   SDK.Model.Inventario, SDK.Types, SDK.Exceptions, SDK.XML,
-  XMLIntf, SysUtils, Math, SDK.Service;
+  XMLIntf, SysUtils, Math, SDK.Service, SDK.Service.Carga;
 
 type
 
   TInventarioService = class(TService)
-
   public
     constructor Create(const AClient: IClient); reintroduce; overload;
     function GetAll(AStart: Integer = 0; ACount: Integer = 0;
       const ASortParams: TStringArray = nil): TInventarioListRec;
     function Filter(const AQuery: TString; AStart: Integer = 0; ACount: Integer = 0;
       const ASortParams: TStringArray = nil): TInventarioListRec;
-    function Update(const AId: TString; const AModel: IModel): TServiceCommandResult;
+    function Update(const AId: TString; const AModel: IModel): TServiceCommandResult; override;
   end;
 
 implementation

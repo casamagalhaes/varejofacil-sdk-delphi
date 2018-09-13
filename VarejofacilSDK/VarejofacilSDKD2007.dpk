@@ -65,6 +65,7 @@ contains
   SDK.Model.ItemInventario in 'Models\SDK.Model.ItemInventario.pas',
   SDK.Service.ItemInventario in 'Services\SDK.Service.ItemInventario.pas',
   SDK.Service.Inventario in 'Services\SDK.Service.Inventario.pas',
-  SDK.Model.Inventario in 'Models\SDK.Model.Inventario.pas';
+  SDK.Model.Inventario in 'Models\SDK.Model.Inventario.pas',
+  SDK.Service.ItemInventarioLote in 'Services\SDK.Service.ItemInventarioLote.pas';
 
 end.

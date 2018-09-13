@@ -13,17 +13,20 @@ type
     function GetInventarioId: Int64;
     function GetProdutoId: Int64;
     function GetCodigoAuxiliar: ICodigoAuxiliar;
-    function GetPrimeiraDigitacao: Double;
+    function GetDigitacao: Double;                
+    function GetFuncionarioId: Int64;
     procedure SetId(const Value: Int64);
     procedure SetInventarioId(const Value: Int64);
     procedure SetProdutoId(const Value: Int64);
     procedure SetCodigoAuxiliar(const Value: ICodigoAuxiliar);
-    procedure SetPrimeiraDigitacao(const Value: Double);
+    procedure SetDigitacao(const Value: Double);
+    procedure SetFuncionarioId(const Value: Int64);
     property Id: Int64 read GetId write SetId;
     property InventarioId: Int64 read GetInventarioId write SetInventarioId;
     property ProdutoId: Int64 read GetProdutoId write SetProdutoId;
     property CodigoAuxiliar: ICodigoAuxiliar read GetCodigoAuxiliar write SetCodigoAuxiliar;
-    property PrimeiraDigitacao: Double read GetPrimeiraDigitacao write SetPrimeiraDigitacao;
+    property Digitacao: Double read GetDigitacao write SetDigitacao;
+    property FuncionarioId: Int64 read GetFuncionarioId write SetFuncionarioId;
   end;
 
   TItemInventarioList = class;
@@ -72,8 +75,7 @@ type
   public
     class function Create(const AList: IItemInventarioList): TItemInventarioListRec; static;
     class operator Implicit(AListRec: TItemInventarioListRec): TItemInventarioList;
-  end;
-
+  end;   
 
   TItemInventario = class(TInterfacedModel, IItemInventario)
   private
@@ -81,26 +83,28 @@ type
     FInventarioId: Int64;
     FProdutoId: Int64;
     FCodigoAuxiliar: ICodigoAuxiliar;
-    FPrimeiraDigitacao: Double;
+    FDigitacao: Double;
+    FFuncionarioId: Int64;
     function GetCodigoAuxiliar: ICodigoAuxiliar;
     function GetId: Int64;
     function GetInventarioId: Int64;
-    function GetPrimeiraDigitacao: Double;
+    function GetDigitacao: Double;
     function GetProdutoId: Int64;
     procedure SetCodigoAuxiliar(const Value: ICodigoAuxiliar);
     procedure SetId(const Value: Int64);
     procedure SetInventarioId(const Value: Int64);
-    procedure SetPrimeiraDigitacao(const Value: Double);
+    procedure SetDigitacao(const Value: Double);
     procedure SetProdutoId(const Value: Int64);
-  published
+    function GetFuncionarioId: Int64;
+    procedure SetFuncionarioId(const Value: Int64);
+  published   
     property Id: Int64 read GetId write SetId;
     property InventarioId: Int64 read GetInventarioId write SetInventarioId;
     property ProdutoId: Int64 read GetProdutoId write SetProdutoId;
     property CodigoAuxiliar: ICodigoAuxiliar read GetCodigoAuxiliar write SetCodigoAuxiliar;
-    property PrimeiraDigitacao: Double read GetPrimeiraDigitacao write SetPrimeiraDigitacao;
-
+    property Digitacao: Double read GetDigitacao write SetDigitacao;      
+    property FuncionarioId: Int64 read GetFuncionarioId write SetFuncionarioId;
   end;
-
 
 implementation
 
@@ -121,9 +125,14 @@ begin
   Result := FInventarioId;
 end;
 
-function TItemInventario.GetPrimeiraDigitacao: Double;
+function TItemInventario.GetDigitacao: Double;
 begin
-  Result := FPrimeiraDigitacao;
+  Result := FDigitacao;
+end;
+
+function TItemInventario.GetFuncionarioId: Int64;
+begin
+  Result := FFuncionarioId;
 end;
 
 function TItemInventario.GetProdutoId: Int64;
@@ -146,9 +155,14 @@ begin
   FInventarioId := Value;
 end;
 
-procedure TItemInventario.SetPrimeiraDigitacao(const Value: Double);
+procedure TItemInventario.SetDigitacao(const Value: Double);
 begin
-  FPrimeiraDigitacao := Value;
+  FDigitacao := Value;
+end;
+
+procedure TItemInventario.SetFuncionarioId(const Value: Int64);
+begin
+  FFuncionarioId := Value;
 end;
 
 procedure TItemInventario.SetProdutoId(const Value: Int64);

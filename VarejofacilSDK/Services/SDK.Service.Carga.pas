@@ -30,8 +30,10 @@ class function TCargaService.GetChanges(const ALojaId: TString; ADataAlteracao: 
   function ContentType(const ADataAlteracao: TDateTime; const AEntidade: string): string;
   begin
     Result :=
-     '<ParamCarga>' +
-       '<dataUltimaAlteracao>'+DateTimeToISO8601(ADataAlteracao)+'</dataUltimaAlteracao>' +
+     '<ParamCarga>';
+     if ADataalteracao > 0 then     
+      Result := Result + '<dataUltimaAlteracao>'+DateTimeToISO8601(ADataAlteracao)+'</dataUltimaAlteracao>';
+    Result := Result +
        '<entidades>' +
          '<values>'+AEntidade+'</values>' +
        '</entidades>' +

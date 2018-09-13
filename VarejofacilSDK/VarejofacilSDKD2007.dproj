@@ -23,8 +23,6 @@
     <Borland.ProjectType>Package</Borland.ProjectType>
     <BorlandProject>
 <BorlandProject><Delphi.Personality><Parameters><Parameters Name="UseLauncher">False</Parameters><Parameters Name="LoadAllSymbols">True</Parameters><Parameters Name="LoadUnspecifiedSymbols">False</Parameters></Parameters><Package_Options><Package_Options Name="ImplicitBuild">True</Package_Options><Package_Options Name="DesigntimeOnly">False</Package_Options><Package_Options Name="RuntimeOnly">False</Package_Options></Package_Options><VersionInfo><VersionInfo Name="IncludeVerInfo">True</VersionInfo><VersionInfo Name="AutoIncBuild">False</VersionInfo><VersionInfo Name="MajorVer">1</VersionInfo><VersionInfo Name="MinorVer">0</VersionInfo><VersionInfo Name="Release">0</VersionInfo><VersionInfo Name="Build">0</VersionInfo><VersionInfo Name="Debug">False</VersionInfo><VersionInfo Name="PreRelease">False</VersionInfo><VersionInfo Name="Special">False</VersionInfo><VersionInfo Name="Private">False</VersionInfo><VersionInfo Name="DLL">False</VersionInfo><VersionInfo Name="Locale">1046</VersionInfo><VersionInfo Name="CodePage">1252</VersionInfo></VersionInfo><VersionInfoKeys><VersionInfoKeys Name="CompanyName"></VersionInfoKeys><VersionInfoKeys Name="FileDescription"></VersionInfoKeys><VersionInfoKeys Name="FileVersion">1.0.0.0</VersionInfoKeys><VersionInfoKeys Name="InternalName"></VersionInfoKeys><VersionInfoKeys Name="LegalCopyright"></VersionInfoKeys><VersionInfoKeys Name="LegalTrademarks"></VersionInfoKeys><VersionInfoKeys Name="OriginalFilename"></VersionInfoKeys><VersionInfoKeys Name="ProductName"></VersionInfoKeys><VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys><VersionInfoKeys Name="Comments"></VersionInfoKeys></VersionInfoKeys><Excluded_Packages>
-      
-      
       <Excluded_Packages Name="$(BDS)\bin\dcloffice2k100.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
       <Excluded_Packages Name="$(BDS)\bin\dclofficexp100.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
     </Excluded_Packages><Source><Source Name="MainSource">VarejofacilSDKD2007.dpk</Source></Source></Delphi.Personality></BorlandProject></BorlandProject>
@@ -82,12 +80,14 @@
     <DCCReference Include="Models\SDK.Model.HistoricoValidacaoFiscal.pas" />
     <DCCReference Include="Models\SDK.Model.Holding.pas" />
     <DCCReference Include="Models\SDK.Model.ImpostoFederal.pas" />
+    <DCCReference Include="Models\SDK.Model.Inventario.pas" />
     <DCCReference Include="Models\SDK.Model.ItemAplicacaoProduto.pas" />
     <DCCReference Include="Models\SDK.Model.ItemCaracteristicaProduto.pas" />
     <DCCReference Include="Models\SDK.Model.ItemDaTabelaDeTributacao.pas" />
     <DCCReference Include="Models\SDK.Model.ItemDevolucao.pas" />
     <DCCReference Include="Models\SDK.Model.ItemDevolucaoDeCupom.pas" />
     <DCCReference Include="Models\SDK.Model.ItemImpostoFederal.pas" />
+    <DCCReference Include="Models\SDK.Model.ItemInventario.pas" />
     <DCCReference Include="Models\SDK.Model.ItemPagamento.pas" />
     <DCCReference Include="Models\SDK.Model.ItemRecebimento.pas" />
     <DCCReference Include="Models\SDK.Model.ItemSangria.pas" />
@@ -180,10 +180,15 @@
     <DCCReference Include="SDK.Types.Models.pas" />
     <DCCReference Include="SDK.Types.pas" />
     <DCCReference Include="SDK.XML.pas" />
+    <DCCReference Include="Services\SDK.Service.CodigoAuxiliar.pas" />
     <DCCReference Include="Services\SDK.Service.Fornecedor.pas" />
+    <DCCReference Include="Services\SDK.Service.Funcionario.pas" />
     <DCCReference Include="Services\SDK.Service.Genero.pas" />
     <DCCReference Include="Services\SDK.Service.Grupo.pas" />
     <DCCReference Include="Services\SDK.Service.ImpostoFederal.pas" />
+    <DCCReference Include="Services\SDK.Service.Inventario.pas" />
+    <DCCReference Include="Services\SDK.Service.ItemInventario.pas" />
+    <DCCReference Include="Services\SDK.Service.ItemInventarioLote.pas" />
     <DCCReference Include="Services\SDK.Service.Loja.pas" />
     <DCCReference Include="Services\SDK.Service.MarcaProduto.pas" />
     <DCCReference Include="Services\SDK.Service.NCM.pas" />

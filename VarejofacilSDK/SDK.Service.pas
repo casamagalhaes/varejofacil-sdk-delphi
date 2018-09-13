@@ -555,7 +555,6 @@ end;
 function TBatchService.Insert(ARequest: IBatchRequest; const APath: string): IBatchResponse;
 var
   Response: IResponse;
-  FailReasons: TFailReasonList;
 begin
   Result := nil;
   Response := FClient.Post(APath, ARequest.AsString, nil);
