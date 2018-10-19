@@ -9,7 +9,7 @@ type
 
   TItemInventarioLoteService = class(TService)
   public
-    constructor Create(const AClient: IClient); reintroduce; overload;
+    constructor Create(const AClient: IClient); reintroduce;
     function Update(const AInventarioID: TString; const AListItemInventario: TItemInventarioList): TServiceCommandResult;
   end;
 

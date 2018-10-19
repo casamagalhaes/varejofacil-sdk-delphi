@@ -10,11 +10,10 @@ type
     constructor Create(const AClient: IClient); reintroduce; overload;
     function Get(const Aid: TString): IFuncionario;
     function GetAll(AStart: Integer = 0; ACount: Integer = 0 ;
-     ASortParams: TStringArray = nil): TFuncionarioListRec;
+     ASortParams: TStringArray = nil): TFuncionarioList;
     function Filter(const AQuery: TString; AStart: Integer = 0;
-      ACount: Integer = 0; const ASortParams: TStringArray = nil): TFuncionarioListRec;
-    function GetChanges(const ALojaId: TString; ADataAlteracao: TDateTime): TFuncionarioListChanges;
-
+      ACount: Integer = 0; const ASortParams: TStringArray = nil): TFuncionarioList;
+    function GetChanges(const ALojaId: TString; ADataAlteracao: TDateTime): TFuncionarioListChanges;   
   end;
 
 implementation
@@ -30,7 +29,7 @@ begin
 end;
 
 function TFuncionarioService.Filter(const AQuery: TString; AStart,
-  ACount: Integer; const ASortParams: TStringArray): TFuncionarioListRec;
+  ACount: Integer; const ASortParams: TStringArray): TFuncionarioList;
 var
   Start,
   Count,
@@ -79,7 +78,7 @@ begin
         FuncionarioList.Add(Funcionario);
     end;
   end;
-  Result := TFuncionarioListRec.Create(FuncionarioList);
+  Result := FuncionarioList;
 end;
 
 function TFuncionarioService.Get(const Aid: TString): IFuncionario;
@@ -106,7 +105,7 @@ begin
 end;
 
 function TFuncionarioService.GetAll(AStart, ACount: Integer;
-  ASortParams: TStringArray): TFuncionarioListRec;
+  ASortParams: TStringArray): TFuncionarioList;
 begin
    Result := Filter(EmptyStr, AStart, ACount, ASortParams);
 end;

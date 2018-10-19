@@ -53,6 +53,7 @@
     <DCCReference Include="Models\SDK.Model.CodigoAuxiliar.pas" />
     <DCCReference Include="Models\SDK.Model.Componente.pas" />
     <DCCReference Include="Models\SDK.Model.ComprovanteTransacao.pas" />
+    <DCCReference Include="Models\SDK.Model.Conferencia.pas" />
     <DCCReference Include="Models\SDK.Model.ConfiguracaoPDV.pas" />
     <DCCReference Include="Models\SDK.Model.ContaAReceber.pas" />
     <DCCReference Include="Models\SDK.Model.ContaAReceberRenegociacao.pas" />
@@ -83,6 +84,7 @@
     <DCCReference Include="Models\SDK.Model.Inventario.pas" />
     <DCCReference Include="Models\SDK.Model.ItemAplicacaoProduto.pas" />
     <DCCReference Include="Models\SDK.Model.ItemCaracteristicaProduto.pas" />
+    <DCCReference Include="Models\SDK.Model.ItemConferencia.pas" />
     <DCCReference Include="Models\SDK.Model.ItemDaTabelaDeTributacao.pas" />
     <DCCReference Include="Models\SDK.Model.ItemDevolucao.pas" />
     <DCCReference Include="Models\SDK.Model.ItemDevolucaoDeCupom.pas" />
@@ -181,12 +183,15 @@
     <DCCReference Include="SDK.Types.pas" />
     <DCCReference Include="SDK.XML.pas" />
     <DCCReference Include="Services\SDK.Service.CodigoAuxiliar.pas" />
+    <DCCReference Include="Services\SDK.Service.Conferencia.pas" />
     <DCCReference Include="Services\SDK.Service.Fornecedor.pas" />
     <DCCReference Include="Services\SDK.Service.Funcionario.pas" />
     <DCCReference Include="Services\SDK.Service.Genero.pas" />
     <DCCReference Include="Services\SDK.Service.Grupo.pas" />
     <DCCReference Include="Services\SDK.Service.ImpostoFederal.pas" />
     <DCCReference Include="Services\SDK.Service.Inventario.pas" />
+    <DCCReference Include="Services\SDK.Service.ItemConferencia.pas" />
+    <DCCReference Include="Services\SDK.Service.ItemConferenciaLote.pas" />
     <DCCReference Include="Services\SDK.Service.ItemInventario.pas" />
     <DCCReference Include="Services\SDK.Service.ItemInventarioLote.pas" />
     <DCCReference Include="Services\SDK.Service.Loja.pas" />
