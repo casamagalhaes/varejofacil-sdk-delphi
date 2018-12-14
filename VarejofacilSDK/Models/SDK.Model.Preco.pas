@@ -111,6 +111,25 @@ type
     property Items[AIndex: Integer]: IPreco read GetItems write SetItems; default;
   end;
 
+  TPrecoListChanges = class
+  private
+    FListAlterados: TPrecoList;
+    FListIdRemovidos: TStrings;
+    FDataAlteracao: TDateTime;
+    function GetListAlterados: TPrecoList;
+    function GetListIdRemovidos: TStrings;
+    procedure SetListAlterados(const Value: TPrecoList);
+    procedure SetListIdRemovidos(const Value: TStrings);
+    function GetDataAlteracao: TDateTime;
+    procedure SetDataAlteracao(const Value: TDateTime);
+  public
+    destructor Destroy; override;
+    constructor Create;
+    property ListAlterados: TPrecoList read GetListAlterados write SetListAlterados;
+    property ListIdRemovidos: TStrings read GetListIdRemovidos write SetListIdRemovidos;
+    property DataAlteracao: TDateTime read GetDataAlteracao write SetDataAlteracao;
+  end;
+
   TPrecoListRec = record
   private
     FList: IPrecoList;
@@ -135,9 +154,6 @@ type
 	FPrecoOferta3: Double;
 	FMargemPreco3: Double;
 	FQuantidadeMinimaPreco3: Double;
-	FPreco1: Double;
-	FPreco2: Double;
-	FPreco3: Double;
 	FDescontoMaximo: Double;
 	FCustoProduto: Double;
 	FPrecoMedioDeReposicao: Double;
@@ -493,5 +509,50 @@ begin
   FIncentivoEmZonaFranca := AIncentivoEmZonaFranca;
 end;
 
+
+{ TPrecoListChanges }
+
+constructor TPrecoListChanges.Create;
+begin
+  FListAlterados := TPrecoList.Create;
+  FListIdRemovidos := TStringList.Create;
+end;
+
+destructor TPrecoListChanges.Destroy;
+begin
+  FreeAndNil(FListAlterados);
+  FreeAndNil(FListIdRemovidos);
+  inherited;
+end;
+
+function TPrecoListChanges.GetDataAlteracao: TDateTime;
+begin
+  Result := FDataAlteracao;
+end;
+
+function TPrecoListChanges.GetListAlterados: TPrecoList;
+begin
+  Result := FListAlterados;
+end;
+
+function TPrecoListChanges.GetListIdRemovidos: TStrings;
+begin
+  Result := FListIdRemovidos;
+end;
+
+procedure TPrecoListChanges.SetDataAlteracao(const Value: TDateTime);
+begin
+  FDataAlteracao := Value;
+end;
+
+procedure TPrecoListChanges.SetListAlterados(const Value: TPrecoList);
+begin
+  FListAlterados := Value;
+end;
+
+procedure TPrecoListChanges.SetListIdRemovidos(const Value: TStrings);
+begin
+  FListIdRemovidos := Value;
+end;
 
 end.

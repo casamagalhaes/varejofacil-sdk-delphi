@@ -337,6 +337,26 @@ type
     property Items[AIndex: Integer]: IProduto read GetItems write SetItems; default;
   end;
 
+  TProdutoListChanges = class
+  private
+    FListAlterados: TProdutoList;
+    FListIdRemovidos: TStrings;
+    FDataAlteracao: TDateTime;
+    function GetListAlterados: TProdutoList;
+    function GetListIdRemovidos: TStrings;
+    procedure SetListAlterados(const Value: TProdutoList);
+    procedure SetListIdRemovidos(const Value: TStrings);
+    function GetDataAlteracao: TDateTime;
+    procedure SetDataAlteracao(const Value: TDateTime);
+  public
+    destructor Destroy; override;
+    constructor Create;
+    property ListAlterados: TProdutoList read GetListAlterados write SetListAlterados;
+    property ListIdRemovidos: TStrings read GetListIdRemovidos write SetListIdRemovidos;
+    property DataAlteracao: TDateTime read GetDataAlteracao write SetDataAlteracao;
+  end;
+
+
   TProdutoListRec = record
   private
     FList: IProdutoList;
@@ -1767,5 +1787,50 @@ begin
   FEstoquesDoProduto := AEstoquesDoProduto;
 end;
 
+
+{ TProdutoListChanges }
+
+constructor TProdutoListChanges.Create;
+begin
+  FListAlterados := TProdutoList.Create;
+  FListIdRemovidos := TStringList.Create;
+end;
+
+destructor TProdutoListChanges.Destroy;
+begin
+  FreeAndNil(FListIdRemovidos);
+  FreeAndNil(FListAlterados);
+  inherited;
+end;
+
+function TProdutoListChanges.GetDataAlteracao: TDateTime;
+begin
+  Result := FDataAlteracao
+end;
+
+function TProdutoListChanges.GetListAlterados: TProdutoList;
+begin
+  Result := FListAlterados;
+end;
+
+function TProdutoListChanges.GetListIdRemovidos: TStrings;
+begin
+  Result := FListIdRemovidos;
+end;
+
+procedure TProdutoListChanges.SetDataAlteracao(const Value: TDateTime);
+begin
+  FDataAlteracao := Value;
+end;
+
+procedure TProdutoListChanges.SetListAlterados(const Value: TProdutoList);
+begin
+  FListAlterados := Value;
+end;
+
+procedure TProdutoListChanges.SetListIdRemovidos(const Value: TStrings);
+begin
+  FListIdRemovidos := Value;
+end;
 
 end.

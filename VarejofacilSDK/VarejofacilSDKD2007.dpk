@@ -59,6 +59,18 @@ contains
   SDK.Service.Produto in 'Services\SDK.Service.Produto.pas',
   SDK.Service.Secao in 'Services\SDK.Service.Secao.pas',
   SDK.Service.Subgrupo in 'Services\SDK.Service.Subgrupo.pas',
-  SDK.Service.UnidadeProduto in 'Services\SDK.Service.UnidadeProduto.pas';
+  SDK.Service.UnidadeProduto in 'Services\SDK.Service.UnidadeProduto.pas',
+  SDK.Service.Funcionario in 'Services\SDK.Service.Funcionario.pas',
+  SDK.Service.CodigoAuxiliar in 'Services\SDK.Service.CodigoAuxiliar.pas',
+  SDK.Model.ItemInventario in 'Models\SDK.Model.ItemInventario.pas',
+  SDK.Service.ItemInventario in 'Services\SDK.Service.ItemInventario.pas',
+  SDK.Service.Inventario in 'Services\SDK.Service.Inventario.pas',
+  SDK.Model.Inventario in 'Models\SDK.Model.Inventario.pas',
+  SDK.Service.ItemInventarioLote in 'Services\SDK.Service.ItemInventarioLote.pas',
+  SDK.Service.Conferencia in 'Services\SDK.Service.Conferencia.pas',
+  SDK.Model.Conferencia in 'Models\SDK.Model.Conferencia.pas',
+  SDK.Service.ItemConferencia in 'Services\SDK.Service.ItemConferencia.pas',
+  SDK.Model.ItemConferencia in 'Models\SDK.Model.ItemConferencia.pas',
+  SDK.Service.ItemConferenciaLote in 'Services\SDK.Service.ItemConferenciaLote.pas';
 
 end.

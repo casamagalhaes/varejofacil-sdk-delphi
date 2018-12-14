@@ -164,9 +164,13 @@ type
 
   function IndexOf(const AItem: TString; AArray: TStringArray): Integer;
 
+  {$IFDEF VER185}
   function DateTimeToISO8601(const AInput: TDateTime): TString;
-
   function ISO8601ToDateTime(const AInput: TString): TDateTime;
+  {$ELSE}
+  function DateTimeToISO8601(const AInput: TDateTime): TString;
+  function ISO8601ToDateTime(const AInput: TString): TDateTime;
+  {$ENDIF}
 
 implementation
 
@@ -356,6 +360,36 @@ begin
   Result := AListRec.FList.GetReference;
 end;
 
+{$IFDEF VER185}
+function DateTimeToISO8601(const AInput: TDateTime): TString;
+begin
+  Result := FormatDateTime('yyyy-mm-dd', AInput) + 'T' + FormatDateTime('hh:nn:ss', AInput) + '+0000';
+end;
+
+function ISO8601ToDateTime(const AInput: TString): TDateTime;
+var
+  Dia, Mes, Ano, Hora, Minuto, Segundo: Word;
+begin
+  if Trim(AInput) = '' then
+    Result := 0
+  else
+    try
+      Ano := StrToInt(Copy(AInput, 1, 4));
+      Mes := StrToInt(Copy(AInput, 6, 2));
+      Dia := StrToInt(Copy(AInput, 9, 2));
+      Hora := StrToIntDef(Copy(AInput, 12, 2), 0);
+      Minuto := StrToIntDef(Copy(AInput, 15, 2), 0);
+      Segundo := StrToIntDef(Copy(AInput, 18, 2), 0);
+      Result := EncodeDate(Ano, Mes, Dia) + EncodeTime(Hora, Minuto, Segundo, 0);
+    except
+      on E: Exception do
+      begin
+        raise e.Create('Falha na conversão de data');
+      end;
+    end;
+end;
+
+{$ELSE}
 function DateTimeToISO8601(const AInput: TDateTime): TString;
 var
   Date: TXSDateTime;
@@ -371,10 +405,14 @@ end;
 
 function ISO8601ToDateTime(const AInput: TString): TDateTime;
 begin
-  if Pos('+', AInput) > 0 then  
+  if Pos('+', AInput) > 0 then
     Result := ISO8601ToDate(Copy(AInput, 1, Pos('+', AInput) - 1), False)
   else
     Result := ISO8601ToDate(AInput, True);
 end;
+{$ENDIF}
+
+
+
 
 end.

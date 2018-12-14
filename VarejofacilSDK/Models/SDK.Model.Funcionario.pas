@@ -69,8 +69,8 @@ type
     procedure SetComunicadorDeMensagensInstantaneas(const AComunicadorDeMensagensInstantaneas: TString);
     function GetSuframa: TString;
     procedure SetSuframa(const ASuframa: TString);
-    function GetEndereco: TEndereco;
-    procedure SetEndereco(const AEndereco: TEndereco);
+    function GetEndereco: IEndereco;
+    procedure SetEndereco(const AEndereco: IEndereco);
     function GetTipo: TTipoPessoa;
     procedure SetTipo(const ATipo: TTipoPessoa);
     function GetHoldingId: Integer;
@@ -107,7 +107,7 @@ type
     property Twitter: TString read GetTwitter write SetTwitter;
     property ComunicadorDeMensagensInstantaneas: TString read GetComunicadorDeMensagensInstantaneas write SetComunicadorDeMensagensInstantaneas;
     property Suframa: TString read GetSuframa write SetSuframa;
-    property Endereco: TEndereco read GetEndereco write SetEndereco;
+    property Endereco: IEndereco read GetEndereco write SetEndereco;
     property Tipo: TTipoPessoa read GetTipo write SetTipo;
     property HoldingId: Integer read GetHoldingId write SetHoldingId;
     property LojasDoFuncionario: TLojaDoFuncionarioList read GetLojasDoFuncionario write SetLojasDoFuncionario;
@@ -153,6 +153,25 @@ type
     property Items[AIndex: Integer]: IFuncionario read GetItems write SetItems; default;
   end;
 
+  TFuncionarioListChanges = class
+  private
+    FListAlterados: TFuncionarioList;
+    FListIdRemovidos: TStrings;
+    FDataAlteracao: TDateTime;
+    function GetListAlterados: TFuncionarioList;
+    function GetDataAlteracao: TDateTime;
+    function GetListIdRemovidos: TStrings;
+    procedure SetListAlterados(const Value: TFuncionarioList);
+    procedure SetListIdRemovidos(const Value: TStrings);
+    procedure SetDataAlteracao(const Value: TDateTime);
+  public
+    destructor Destroy; override;
+    constructor Create;
+    property ListAlterados: TFuncionarioList read GetListAlterados write SetListAlterados;
+    property ListIdRemovidos: TStrings read GetListIdRemovidos write SetListIdRemovidos;
+    property DataAlteracao: TDateTime read GetDataAlteracao write SetDataAlteracao;
+  end;
+
   TFuncionarioListRec = record
   private
     FList: IFuncionarioList;
@@ -193,7 +212,7 @@ type
 	FTwitter: TString;
 	FComunicadorDeMensagensInstantaneas: TString;
 	FSuframa: TString;
-	FEndereco: TEndereco;
+	FEndereco: IEndereco;
 	FTipo: TTipoPessoa;
 	FHoldingId: Integer;
 	FLojasDoFuncionario: TLojaDoFuncionarioList;
@@ -257,8 +276,8 @@ type
     procedure SetComunicadorDeMensagensInstantaneas(const AComunicadorDeMensagensInstantaneas: TString);
     function GetSuframa: TString;
     procedure SetSuframa(const ASuframa: TString);
-    function GetEndereco: TEndereco;
-    procedure SetEndereco(const AEndereco: TEndereco);
+    function GetEndereco: IEndereco;
+    procedure SetEndereco(const AEndereco: IEndereco);
     function GetTipo: TTipoPessoa;
     procedure SetTipo(const ATipo: TTipoPessoa);
     function GetHoldingId: Integer;
@@ -296,7 +315,7 @@ type
     property Twitter: TString read GetTwitter write SetTwitter;
     property ComunicadorDeMensagensInstantaneas: TString read GetComunicadorDeMensagensInstantaneas write SetComunicadorDeMensagensInstantaneas;
     property Suframa: TString read GetSuframa write SetSuframa;
-    property Endereco: TEndereco read GetEndereco write SetEndereco;
+    property Endereco: IEndereco read GetEndereco write SetEndereco;
     property Tipo: TTipoPessoa read GetTipo write SetTipo;
     property HoldingId: Integer read GetHoldingId write SetHoldingId;
     property LojasDoFuncionario: TLojaDoFuncionarioList read GetLojasDoFuncionario write SetLojasDoFuncionario;
@@ -699,12 +718,12 @@ begin
   FSuframa := ASuframa;
 end;
 
-function TFuncionario.GetEndereco: TEndereco;
+function TFuncionario.GetEndereco: IEndereco;
 begin
   Result := FEndereco;
 end;
 
-procedure TFuncionario.SetEndereco(const AEndereco: TEndereco);
+procedure TFuncionario.SetEndereco(const AEndereco: IEndereco);
 begin
   FEndereco := AEndereco;
 end;
@@ -729,5 +748,50 @@ begin
   FHoldingId := AHoldingId;
 end;
 
+
+{ TFuncionarioListChanges }
+
+constructor TFuncionarioListChanges.Create;
+begin
+  FListAlterados := TFuncionarioList.Create;
+  FListIdRemovidos := TStringList.Create;
+end;
+
+destructor TFuncionarioListChanges.Destroy;
+begin
+  FreeAndNil(FListAlterados);
+  FreeAndNil(FListIdRemovidos);  
+  inherited;
+end;
+
+function TFuncionarioListChanges.GetDataAlteracao: TDateTime;
+begin
+  Result := FDataAlteracao;
+end;
+
+function TFuncionarioListChanges.GetListAlterados: TFuncionarioList;
+begin
+  Result := FListAlterados;
+end;
+
+function TFuncionarioListChanges.GetListIdRemovidos: TStrings;
+begin
+  Result := FListIdRemovidos;
+end;
+
+procedure TFuncionarioListChanges.SetDataAlteracao(const Value: TDateTime);
+begin
+  FDataAlteracao := Value
+end;
+
+procedure TFuncionarioListChanges.SetListAlterados(const Value: TFuncionarioList);
+begin
+  FListAlterados := Value;
+end;
+
+procedure TFuncionarioListChanges.SetListIdRemovidos(const Value: TStrings);
+begin
+  FListIdRemovidos := Value;
+end;
 
 end.

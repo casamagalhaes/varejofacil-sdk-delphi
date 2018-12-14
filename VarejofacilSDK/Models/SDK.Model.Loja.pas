@@ -339,6 +339,21 @@ type
     property Items[AIndex: Integer]: ILoja read GetItems write SetItems; default;
   end;
 
+  TLojaListChanges = class
+  private
+    FListAlterados: TLojaList;
+    FListIdRemovidos: TStrings;
+    function GetListAlterados: TLojaList;
+    function GetListIdRemovidos: TStrings;
+    procedure SetListAlterados(const Value: TLojaList);
+    procedure SetListIdRemovidos(const Value: TStrings);
+  public
+    destructor Destroy; override;
+    constructor Create;
+    property ListAlterados: TLojaList read GetListAlterados write SetListAlterados;
+    property ListIdRemovidos: TStrings read GetListIdRemovidos write SetListIdRemovidos;
+  end;
+
   TLojaListRec = record
   private
     FList: ILojaList;
@@ -1782,5 +1797,40 @@ begin
   FDescricaoMunicipio := ADescricaoMunicipio;
 end;
 
+
+{ TLojaListChanges }
+
+constructor TLojaListChanges.Create;
+begin
+  FListAlterados := TLojaList.Create;
+  FListIdRemovidos := TStringList.Create;
+end;
+
+destructor TLojaListChanges.Destroy;
+begin
+  FreeAndNil(FListAlterados);
+  FreeAndNil(FListIdRemovidos);  
+  inherited;
+end;
+
+function TLojaListChanges.GetListAlterados: TLojaList;
+begin
+  Result := FListAlterados;
+end;
+
+function TLojaListChanges.GetListIdRemovidos: TStrings;
+begin
+  Result := FListIdRemovidos;
+end;
+
+procedure TLojaListChanges.SetListAlterados(const Value: TLojaList);
+begin
+  FListAlterados := Value;
+end;
+
+procedure TLojaListChanges.SetListIdRemovidos(const Value: TStrings);
+begin
+  FListIdRemovidos := Value;
+end;
 
 end.

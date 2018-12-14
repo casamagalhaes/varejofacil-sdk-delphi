@@ -3,7 +3,8 @@
 interface
 
 uses
-  SDK.Types, SDK.Model.Preco, SDK.Service, SDK.Exceptions, SDK.XML, XMLIntf, SysUtils, Math;
+  SDK.Types, SDK.Model.Preco, SDK.Service, SDK.Exceptions, SDK.XML, SDK.Service.Carga,
+  XMLIntf, SysUtils, Math;
 
 type
 
@@ -12,9 +13,11 @@ type
     constructor Create(const AClient: IClient); reintroduce; overload;
     function Get(const AId: TString): IPreco;
     function GetAll(AStart: Integer = 0; ACount: Integer = 0;
-      const ASortParams: TStringArray = nil): TPrecoListRec;
+      const ASortParams: TStringArray = nil): TPrecoList;
     function Filter(const AQuery: TString; AStart: Integer = 0; ACount: Integer = 0;
-      const ASortParams: TStringArray = nil): TPrecoListRec;
+      const ASortParams: TStringArray = nil): TPrecoList;
+    function GetChanges(const ALojaId: TString;
+      ADataAlteracao: TDateTime): TPrecoListChanges;
   end;
 
 implementation
@@ -49,13 +52,13 @@ begin
   end;
 end;
 
-function TPrecoService.GetAll(AStart, ACount: Integer; const ASortParams: TStringArray): TPrecoListRec;
+function TPrecoService.GetAll(AStart, ACount: Integer; const ASortParams: TStringArray): TPrecoList;
 begin
   Result := Filter(EmptyStr, AStart, ACount, ASortParams);
 end;
 
 function TPrecoService.Filter(const AQuery: TString; AStart: Integer;
-  ACount: Integer; const ASortParams: TStringArray): TPrecoListRec;
+  ACount: Integer; const ASortParams: TStringArray): TPrecoList;
 var
   Response: IResponse;
   Nodes: TCustomXMLNodeArray;
@@ -101,7 +104,44 @@ begin
     end;
   end;
 
-  Result := TPrecoListRec.Create(PrecoList);
+  Result := PrecoList;
+end;
+
+function TPrecoService.GetChanges(const ALojaId: TString; ADataAlteracao: TDateTime): TPrecoListChanges;
+var
+  Nodes: TCustomXMLNodeArray;
+  Document: IXMLDocument;
+  NodeIdx: Integer;
+  Preco: IPreco;
+  PrecoListChange: TPrecoListChanges;
+begin
+  Document := TCargaService.GetChanges(ALojaId, ADataAlteracao, 'PRECO', FClient);
+  Nodes := TXMLHelper.XPathSelect(Document, '//Carga/alterados/*');
+  PrecoListChange := TPrecoListChanges.Create;
+
+  Nodes := TXMLHelper.XPathSelect(Document, '//Carga/*');
+  if Trim(Nodes[0].NodeValue) <> '' then
+    PrecoListChange.DataAlteracao := ISO8601ToDateTime(Nodes[0].NodeValue);
+
+  for NodeIdx := 0 to Length(Nodes) - 1 do
+  begin
+    if Nodes[NodeIdx].NodeName = 'precos' then
+    begin
+      TXMLHelper.Deserialize(Nodes[NodeIdx], TPreco, FDeserializers).QueryInterface(IPreco, Preco);
+      PrecoListChange.ListAlterados.Add(Preco);
+    end;
+  end;
+
+  Nodes := TXMLHelper.XPathSelect(Document, '//Carga/removidos/*');
+  for NodeIdx := 0 to Length(Nodes) - 1 do
+  begin
+    if Nodes[NodeIdx].NodeName = 'precos' then
+    begin
+      PrecoListChange.ListIdRemovidos.Add(Nodes[NodeIdx].NodeValue);
+    end;
+  end;
+
+  Result := PrecoListChange;
 end;
 
 end.

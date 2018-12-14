@@ -15,9 +15,13 @@ type
       const ASortParams: TStringArray = nil): TProdutoListRec;
     function Filter(const AQuery: TString; AStart: Integer = 0; ACount: Integer = 0;
       const ASortParams: TStringArray = nil): TProdutoListRec;
+    function GetChanges(const ALojaId: TString; ADataAlteracao: TDateTime): TProdutoListChanges;
   end;
 
 implementation
+
+uses
+  Classes, SDK.Service.Carga;
 
 { TProdutoService }
 
@@ -56,6 +60,44 @@ end;
 function TProdutoService.GetAll(AStart, ACount: Integer; const ASortParams: TStringArray): TProdutoListRec;
 begin
   Result := Filter(EmptyStr, AStart, ACount, ASortParams);
+end;
+
+function TProdutoService.GetChanges(const ALojaId: TString;
+ ADataAlteracao: TDateTime): TProdutoListChanges;
+var
+  Nodes: TCustomXMLNodeArray;
+  Document: IXMLDocument;
+  NodeIdx: Integer;
+  Produto: IProduto;
+  ProdutoListChange: TProdutoListChanges;
+begin
+  Document := TCargaService.GetChanges(ALojaId, ADataAlteracao, 'PRODUTO', FClient);
+  ProdutoListChange := TProdutoListChanges.Create;
+
+  Nodes := TXMLHelper.XPathSelect(Document, '//Carga/*');
+  if Trim(Nodes[0].NodeValue) <> '' then
+    ProdutoListChange.DataAlteracao := ISO8601ToDateTime(Nodes[0].NodeValue);
+
+  Nodes := TXMLHelper.XPathSelect(Document, '//Carga/alterados/*');
+  for NodeIdx := 0 to Length(Nodes) - 1 do
+  begin
+    if Nodes[NodeIdx].NodeName = 'produtos' then
+    begin
+      TXMLHelper.Deserialize(Nodes[NodeIdx], TProduto, FDeserializers).QueryInterface(IProduto, Produto);
+      ProdutoListChange.ListAlterados.Add(Produto);
+    end;
+  end;
+
+  Nodes := TXMLHelper.XPathSelect(Document, '//Carga/removidos/*');
+  for NodeIdx := 0 to Length(Nodes) - 1 do
+  begin
+    if Nodes[NodeIdx].NodeName = 'produtos' then
+    begin
+      ProdutoListChange.ListIdRemovidos.Add(Nodes[NodeIdx].NodeValue);
+    end;
+  end;
+
+  Result := ProdutoListChange;
 end;
 
 function TProdutoService.Filter(const AQuery: TString; AStart: Integer;
@@ -109,4 +151,5 @@ begin
 end;
 
 end.
+
 

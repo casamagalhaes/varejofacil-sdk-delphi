@@ -277,7 +277,11 @@ end;
 constructor TBatchRequest.Create;
 begin
   inherited;
+  {$IFDEF VER185}
+  FItems := TStringList.Create;
+  {$ELSE}
   FItems := TStringList.Create(True);
+  {$ENDIF}
 end;
 
 destructor TBatchRequest.Destroy;
@@ -551,7 +555,6 @@ end;
 function TBatchService.Insert(ARequest: IBatchRequest; const APath: string): IBatchResponse;
 var
   Response: IResponse;
-  FailReasons: TFailReasonList;
 begin
   Result := nil;
   Response := FClient.Post(APath, ARequest.AsString, nil);

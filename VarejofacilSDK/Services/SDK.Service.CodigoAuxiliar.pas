@@ -8,25 +8,34 @@ uses
 type
 
   TCodigoAuxiliarService = class(TBatchService)
+  private
+    FSecondaryPath: string;
   public
     constructor Create(const AClient: IClient); reintroduce; overload;
     function Get(const AId: TString): ICodigoAuxiliar;
     function GetAll(const AProdutoId: Variant; AStart: Integer = 0; ACount: Integer = 0;
-      const ASortParams: TStringArray = nil): TCodigoAuxiliarListRec;
+      const ASortParams: TStringArray = nil): TCodigoAuxiliarListRec; overload;
+    function GetAll(AStart: Integer = 0; ACount: Integer = 0;
+      const ASortParams: TStringArray = nil): TCodigoAuxiliarListRec; overload;
     function Filter(const AProdutoId: Variant; const AQuery: TString; AStart: Integer = 0; ACount: Integer = 0;
       const ASortParams: TStringArray = nil): TCodigoAuxiliarListRec;
     function Insert(const AIdProduto: Variant; ARequest: IBatchRequest): IBatchResponse;
     function Update(const AIdProduto, AId: TString; const AModel: IModel): TServiceCommandResult;
     function Delete(const AIdProduto, AId: Variant): Boolean; reintroduce;
+    function GetChanges(const ALojaId: TString; ADataAlteracao: TDateTime): TCodigoAuxiliarListChanges;
   end;
 
 implementation
+
+uses
+  SDK.Service.Carga;
 
 { TCodigoAuxiliarService }
 
 constructor TCodigoAuxiliarService.Create(const AClient: IClient);
 begin
   inherited Create('/api/v1/produto/produtos/%s/codigos-auxiliares', AClient);
+  FSecondaryPath := '/api/v1/produto/codigos-auxiliares'
 end;
 
 function TCodigoAuxiliarService.Get(const AId: TString): ICodigoAuxiliar;
@@ -41,6 +50,50 @@ begin
   Nodes := TXMLHelper.XPathSelect(Document, '//CodigoAuxiliar');
   if Length(Nodes) > 0 then
     TXMLHelper.Deserialize(Nodes[0], TCodigoAuxiliar, FDeserializers).QueryInterface(ICodigoAuxiliar, Result);
+end;
+
+function TCodigoAuxiliarService.GetAll(AStart, ACount: Integer;
+  const ASortParams: TStringArray): TCodigoAuxiliarListRec;
+begin
+  Result := Filter(null, EmptyStr, AStart, ACount, ASortParams);
+end;
+
+function TCodigoAuxiliarService.GetChanges(const ALojaId: TString;
+  ADataAlteracao: TDateTime): TCodigoAuxiliarListChanges;
+var
+  Nodes: TCustomXMLNodeArray;
+  Document: IXMLDocument;
+  NodeIdx: Integer;
+  CodigoAuxiliar: ICodigoAuxiliar;
+  CodigoAuxiliarListChanges: TCodigoAuxiliarListChanges;
+begin
+  Document := TCargaService.GetChanges(ALojaId, ADataAlteracao, 'CODIGO_AUXILIAR', FClient);
+  CodigoAuxiliarListChanges := TCodigoAuxiliarListChanges.Create;
+
+  Nodes := TXMLHelper.XPathSelect(Document, '//Carga/*');
+  if Trim(Nodes[0].NodeValue) <> '' then
+    CodigoAuxiliarListChanges.DataAlteracao := ISO8601ToDateTime(Nodes[0].NodeValue);
+                                
+  Nodes := TXMLHelper.XPathSelect(Document, '//Carga/alterados/*');
+  for NodeIdx := 0 to Length(Nodes) - 1 do
+  begin
+    if Nodes[NodeIdx].NodeName = 'codigosAuxiliares' then
+    begin
+      TXMLHelper.Deserialize(Nodes[NodeIdx], TCodigoAuxiliar, FDeserializers).QueryInterface(ICodigoAuxiliar, CodigoAuxiliar);
+      CodigoAuxiliarListChanges.ListAlterados.Add(CodigoAuxiliar);
+    end;
+  end;
+
+  Nodes := TXMLHelper.XPathSelect(Document, '//Carga/removidos/*');
+  for NodeIdx := 0 to Length(Nodes) - 1 do
+  begin
+    if Nodes[NodeIdx].NodeName = 'codigosAuxiliares' then
+    begin
+      CodigoAuxiliarListChanges.ListIdRemovidos.Add(Nodes[NodeIdx].NodeValue);
+    end;
+  end;
+
+  Result := CodigoAuxiliarListChanges;
 end;
 
 function TCodigoAuxiliarService.GetAll(const AProdutoId: Variant; AStart, ACount: Integer; const ASortParams: TStringArray): TCodigoAuxiliarListRec;
@@ -79,7 +132,11 @@ var
 begin
   Start := AStart;
   Count := ACount;
-  URL := Concat(PathWithDependencies([VarToStr(AProdutoId)]), '?', ToParams(AQuery, Start, Count, ASortParams));
+  if AProdutoId = null then
+    URL := Concat(FSecondaryPath, '?', ToParams(AQuery, Start, Count, ASortParams))
+  else
+    URL := Concat(PathWithDependencies([VarToStr(AProdutoId)]), '?', ToParams(AQuery, Start, Count, ASortParams));
+
   Response := FClient.Get(URL, nil, nil);
   Document := Response.AsXML;
   Nodes := TXMLHelper.XPathSelect(Document, '//ResultList/items/*');
@@ -105,12 +162,14 @@ begin
 
     if Position < Min(TotalPack, Total) then
     begin
-      PaginationList := Filter(AProdutoId, AQuery, Start, TotalPack - Position, ASortParams);
+      if AProdutoId = null then
+        PaginationList := Filter(null, AQuery, Start, TotalPack - Position, ASortParams)
+      else
+        PaginationList := Filter(AProdutoId, AQuery, Start, TotalPack - Position, ASortParams);
       for CodigoAuxiliar in PaginationList do
         CodigoAuxiliarList.Add(CodigoAuxiliar);
     end;
   end;
-
   Result := TCodigoAuxiliarListRec.Create(CodigoAuxiliarList);
 end;
 
