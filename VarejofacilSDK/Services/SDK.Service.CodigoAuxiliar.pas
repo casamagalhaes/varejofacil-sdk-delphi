@@ -68,16 +68,16 @@ var
   CodigoAuxiliarListChanges: TCodigoAuxiliarListChanges;
 begin
   Document := TCargaService.GetChanges(ALojaId, ADataAlteracao, 'CODIGO_AUXILIAR', FClient);
-  Nodes := TXMLHelper.XPathSelect(Document, '//Carga/alterados/*');
   CodigoAuxiliarListChanges := TCodigoAuxiliarListChanges.Create;
 
   Nodes := TXMLHelper.XPathSelect(Document, '//Carga/*');
   if Trim(Nodes[0].NodeValue) <> '' then
     CodigoAuxiliarListChanges.DataAlteracao := ISO8601ToDateTime(Nodes[0].NodeValue);
-
+                                
+  Nodes := TXMLHelper.XPathSelect(Document, '//Carga/alterados/*');
   for NodeIdx := 0 to Length(Nodes) - 1 do
   begin
-    if Nodes[NodeIdx].NodeName = 'codigo_auxiliares' then
+    if Nodes[NodeIdx].NodeName = 'codigosAuxiliares' then
     begin
       TXMLHelper.Deserialize(Nodes[NodeIdx], TCodigoAuxiliar, FDeserializers).QueryInterface(ICodigoAuxiliar, CodigoAuxiliar);
       CodigoAuxiliarListChanges.ListAlterados.Add(CodigoAuxiliar);
@@ -87,7 +87,7 @@ begin
   Nodes := TXMLHelper.XPathSelect(Document, '//Carga/removidos/*');
   for NodeIdx := 0 to Length(Nodes) - 1 do
   begin
-    if Nodes[NodeIdx].NodeName = 'codigo_auxiliares' then
+    if Nodes[NodeIdx].NodeName = 'codigosAuxiliares' then
     begin
       CodigoAuxiliarListChanges.ListIdRemovidos.Add(Nodes[NodeIdx].NodeValue);
     end;

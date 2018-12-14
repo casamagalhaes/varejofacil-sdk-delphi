@@ -38,7 +38,7 @@ class function TCargaService.GetChanges(const ALojaId: TString; ADataAlteracao: 
          '<values>'+AEntidade+'</values>' +
        '</entidades>' +
      '</ParamCarga>';
-  end;  
+  end;
 var
   Response: IResponse;
 begin

@@ -69,7 +69,7 @@ begin
           Result := ARequestFunction(AURL, AParams, AHeaders, AContent, FTokens);
         end
         else
-          raise Exception.CreateFmt('Refresh falhou com código %d', [AuthResponse.Status]);
+          raise Exception.CreateFmt('Refresh falhou com código %d', [RefreshResponse.Status]);
       finally
         RefreshHeaders.Free;
       end;

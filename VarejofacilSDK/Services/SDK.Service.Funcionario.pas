@@ -120,13 +120,12 @@ var
   FuncionarioListChange: TFuncionarioListChanges;
 begin
   Document := TCargaService.GetChanges(ALojaId, ADataAlteracao, 'FUNCIONARIO', FClient);
-  Nodes := TXMLHelper.XPathSelect(Document, '//Carga/alterados/*');
-  FuncionarioListChange := TFuncionarioListChanges.Create;
-
+  FuncionarioListChange := TFuncionarioListChanges.Create;         
   Nodes := TXMLHelper.XPathSelect(Document, '//Carga/*');
   if Trim(Nodes[0].NodeValue) <> '' then
     FuncionarioListChange.DataAlteracao := ISO8601ToDateTime(Nodes[0].NodeValue);
 
+  Nodes := TXMLHelper.XPathSelect(Document, '//Carga/alterados/*');
   for NodeIdx := 0 to Length(Nodes) - 1 do
   begin
     if Nodes[NodeIdx].NodeName = 'funcionarios' then
