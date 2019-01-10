@@ -9,11 +9,11 @@ type
 
   ICest = interface(IModel)
     ['{F597B6CF-E638-4C6A-9B20-FDB707A69133}']
-    function GetId: Int64;
-    procedure SetId(const AId: Int64);
+    function GetId: Variant;
+    procedure SetId(const AId: Variant);
     function GetDescricao: TString;
     procedure SetDescricao(const ADescricao: TString);
-    property Id: Int64 read GetId write SetId;
+    property Id: Variant read GetId write SetId;
     property Descricao: TString read GetDescricao write SetDescricao;
   end;
 
@@ -67,14 +67,14 @@ type
 
   TCest = class(TInterfacedModel, ICest)
   private
-	FId: Int64;
+	FId: Variant;
 	FDescricao: TString;
-    function GetId: Int64;
-    procedure SetId(const AId: Int64);
+    function GetId: Variant;
+    procedure SetId(const AId: Variant);
     function GetDescricao: TString;
     procedure SetDescricao(const ADescricao: TString);
   published
-    property Id: Int64 read GetId write SetId;
+    property Id: Variant read GetId write SetId;
     property Descricao: TString read GetDescricao write SetDescricao;
   end;
 
@@ -164,12 +164,12 @@ end;
 
 { TCest }
 
-function TCest.GetId: Int64;
+function TCest.GetId: Variant;
 begin
   Result := FId;
 end;
 
-procedure TCest.SetId(const AId: Int64);
+procedure TCest.SetId(const AId: Variant);
 begin
   FId := AId;
 end;
