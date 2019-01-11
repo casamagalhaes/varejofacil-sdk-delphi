@@ -353,7 +353,7 @@ type
 	FGrupoId: Variant;
 	FSecaoId: Integer;
 	FNaturezaDeImpostoFederalId: Variant;
-	FCest: Int64;
+	FCest: Variant;
 	FQuantidadeEtiqueta: Integer;
 	FDiasDeSeguranca: Integer;
 	FCodigoInterno: TString;
