@@ -33,6 +33,8 @@ type
     procedure SetAliquotaInterna(const AAliquotaInterna: Double);
     function GetFecop: Double;
     procedure SetFecop(const AFecop: Double);
+    function GetFecopST: Double;
+    procedure SetFecopST(const AFecopST: Double);
     function GetCstId: Integer;
     procedure SetCstId(const ACstId: Integer);
     function GetCstDocumentoFiscalId: Integer;
@@ -60,6 +62,7 @@ type
     property CargaLiquida: Double read GetCargaLiquida write SetCargaLiquida;
     property AliquotaInterna: Double read GetAliquotaInterna write SetAliquotaInterna;
     property Fecop: Double read GetFecop write SetFecop;
+    property FecopST: Double read GetFecopST write SetFecopST;
     property CstId: Integer read GetCstId write SetCstId;
     property CstDocumentoFiscalId: Integer read GetCstDocumentoFiscalId write SetCstDocumentoFiscalId;
     property CstCuponsFiscaisId: Integer read GetCstCuponsFiscaisId write SetCstCuponsFiscaisId;
@@ -132,6 +135,7 @@ type
 	FCargaLiquida: Double;
 	FAliquotaInterna: Double;
 	FFecop: Double;
+  FFecopST: Double;
 	FCstId: Integer;
 	FCstDocumentoFiscalId: Integer;
 	FCstCuponsFiscaisId: Integer;
@@ -164,6 +168,8 @@ type
     procedure SetAliquotaInterna(const AAliquotaInterna: Double);
     function GetFecop: Double;
     procedure SetFecop(const AFecop: Double);
+    function GetFecopST: Double;
+    procedure SetFecopST(const AFecopST: Double);
     function GetCstId: Integer;
     procedure SetCstId(const ACstId: Integer);
     function GetCstDocumentoFiscalId: Integer;
@@ -193,6 +199,7 @@ type
     property CargaLiquida: Double read GetCargaLiquida write SetCargaLiquida;
     property AliquotaInterna: Double read GetAliquotaInterna write SetAliquotaInterna;
     property Fecop: Double read GetFecop write SetFecop;
+    property FecopST: Double read GetFecopST write SetFecopST;
     property CstId: Integer read GetCstId write SetCstId;
     property CstDocumentoFiscalId: Integer read GetCstDocumentoFiscalId write SetCstDocumentoFiscalId;
     property CstCuponsFiscaisId: Integer read GetCstCuponsFiscaisId write SetCstCuponsFiscaisId;
@@ -407,6 +414,16 @@ end;
 procedure TItemTabelaTributaria.SetFecop(const AFecop: Double);
 begin
   FFecop := AFecop;
+end;
+
+function TItemTabelaTributaria.GetFecopST: Double;
+begin
+  Result := FFecopST;
+end;
+
+procedure TItemTabelaTributaria.SetFecopST(const AFecopST: Double);
+begin
+  FFecopST := AFecopST;
 end;
 
 function TItemTabelaTributaria.GetCstId: Integer;
