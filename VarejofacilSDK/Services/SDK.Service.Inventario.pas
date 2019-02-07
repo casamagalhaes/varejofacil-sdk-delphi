@@ -12,9 +12,9 @@ type
   public
     constructor Create(const AClient: IClient); reintroduce; overload;
     function GetAll(AStart: Integer = 0; ACount: Integer = 0;
-      const ASortParams: TStringArray = nil): TInventarioListRec;
+      const ASortParams: TStringArray = nil): TInventarioList;
     function Filter(const AQuery: TString; AStart: Integer = 0; ACount: Integer = 0;
-      const ASortParams: TStringArray = nil): TInventarioListRec;
+      const ASortParams: TStringArray = nil): TInventarioList;
     function Update(const AId: TString; const AModel: IModel): TServiceCommandResult; override;
   end;
 
@@ -28,13 +28,14 @@ begin
 end;
 
 function TInventarioService.Filter(const AQuery: TString; AStart,
-  ACount: Integer; const ASortParams: TStringArray): TInventarioListRec;
+  ACount: Integer; const ASortParams: TStringArray): TInventarioList;
 var
   Response: IResponse;
   Nodes: TCustomXMLNodeArray;
   NodeIdx: Integer;
   Document: IXMLDocument;
-  InventarioList, PaginationList: TInventarioList;
+  InventarioList,
+  PaginationList: TInventarioList;
   Inventario: IInventario;
   URL: TString;
   ResultNodes: TCustomXMLNodeArray;
@@ -75,11 +76,11 @@ begin
     end;
   end;
 
-  Result := TInventarioListRec.Create(InventarioList);
+  Result := InventarioList;
 end;
 
 function TInventarioService.GetAll(AStart, ACount: Integer;
-  const ASortParams: TStringArray): TInventarioListRec;
+  const ASortParams: TStringArray): TInventarioList;
 begin
   Result := Filter(EmptyStr, AStart, ACount, ASortParams);
 end;

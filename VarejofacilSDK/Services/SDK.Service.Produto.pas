@@ -11,10 +11,8 @@ type
   public
     constructor Create(const AClient: IClient); reintroduce; overload;
     function Get(const AId: TString): IProduto;
-    function GetAll(AStart: Integer = 0; ACount: Integer = 0;
-      const ASortParams: TStringArray = nil): TProdutoListRec;
-    function Filter(const AQuery: TString; AStart: Integer = 0; ACount: Integer = 0;
-      const ASortParams: TStringArray = nil): TProdutoListRec;
+    function GetAll(AStart: Integer = 0; ACount: Integer = 0; const ASortParams: TStringArray = nil): TProdutoList;
+    function Filter(const AQuery: TString; AStart: Integer = 0; ACount: Integer = 0; const ASortParams: TStringArray = nil): TProdutoList;
     function GetChanges(const ALojaId: TString; ADataAlteracao: TDateTime): TProdutoListChanges;
   end;
 
@@ -57,13 +55,12 @@ begin
   end;
 end;
 
-function TProdutoService.GetAll(AStart, ACount: Integer; const ASortParams: TStringArray): TProdutoListRec;
+function TProdutoService.GetAll(AStart, ACount: Integer; const ASortParams: TStringArray): TProdutoList;
 begin
   Result := Filter(EmptyStr, AStart, ACount, ASortParams);
 end;
 
-function TProdutoService.GetChanges(const ALojaId: TString;
- ADataAlteracao: TDateTime): TProdutoListChanges;
+function TProdutoService.GetChanges(const ALojaId: TString; ADataAlteracao: TDateTime): TProdutoListChanges;
 var
   Nodes: TCustomXMLNodeArray;
   Document: IXMLDocument;
@@ -100,18 +97,22 @@ begin
   Result := ProdutoListChange;
 end;
 
-function TProdutoService.Filter(const AQuery: TString; AStart: Integer;
-  ACount: Integer; const ASortParams: TStringArray): TProdutoListRec;
+function TProdutoService.Filter(const AQuery: TString; AStart: Integer; ACount: Integer; const ASortParams: TStringArray): TProdutoList;
 var
   Response: IResponse;
   Nodes: TCustomXMLNodeArray;
   NodeIdx: Integer;
   Document: IXMLDocument;
-  ProdutoList, PaginationList: TProdutoList;
+  ProdutoList,
+  PaginationList: TProdutoList;
   Produto: IProduto;
   URL: TString;
   ResultNodes: TCustomXMLNodeArray;
-  Start, Count, Total, TotalPack, Position: Integer;
+  Start,
+  Count,
+  Total,
+  TotalPack,
+  Position: Integer;
 begin
   Start := AStart;
   Count := ACount;
@@ -127,7 +128,6 @@ begin
   end;
 
   ResultNodes := TXMLHelper.XPathSelect(Document, '//ResultList');
-
   if Length(ResultNodes) > 0 then
   begin
     Start := ResultNodes[0].ChildValues['start'];
@@ -146,8 +146,8 @@ begin
         ProdutoList.Add(Produto);
     end;
   end;
-
-  Result := TProdutoListRec.Create(ProdutoList);
+  
+  Result := ProdutoList;
 end;
 
 end.
