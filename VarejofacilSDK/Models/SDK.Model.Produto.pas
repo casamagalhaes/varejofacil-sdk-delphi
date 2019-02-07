@@ -22,8 +22,8 @@ type
     procedure SetSecaoId(const ASecaoId: Integer);
     function GetNaturezaDeImpostoFederalId: Variant;
     procedure SetNaturezaDeImpostoFederalId(const ANaturezaDeImpostoFederalId: Variant);
-    function GetCest: Int64;
-    procedure SetCest(const ACest: Int64);
+    function GetCest: Variant;
+    procedure SetCest(const ACest: Variant);
     function GetQuantidadeEtiqueta: Integer;
     procedure SetQuantidadeEtiqueta(const AQuantidadeEtiqueta: Integer);
     function GetDiasDeSeguranca: Integer;
@@ -206,7 +206,7 @@ type
     property GrupoId: Variant read GetGrupoId write SetGrupoId;
     property SecaoId: Integer read GetSecaoId write SetSecaoId;
     property NaturezaDeImpostoFederalId: Variant read GetNaturezaDeImpostoFederalId write SetNaturezaDeImpostoFederalId;
-    property Cest: Int64 read GetCest write SetCest;
+    property Cest: Variant read GetCest write SetCest;
     property QuantidadeEtiqueta: Integer read GetQuantidadeEtiqueta write SetQuantidadeEtiqueta;
     property DiasDeSeguranca: Integer read GetDiasDeSeguranca write SetDiasDeSeguranca;
     property CodigoInterno: TString read GetCodigoInterno write SetCodigoInterno;
@@ -373,7 +373,7 @@ type
 	FGrupoId: Variant;
 	FSecaoId: Integer;
 	FNaturezaDeImpostoFederalId: Variant;
-	FCest: Int64;
+	FCest: Variant;
 	FQuantidadeEtiqueta: Integer;
 	FDiasDeSeguranca: Integer;
 	FCodigoInterno: TString;
@@ -474,8 +474,8 @@ type
     procedure SetSecaoId(const ASecaoId: Integer);
     function GetNaturezaDeImpostoFederalId: Variant;
     procedure SetNaturezaDeImpostoFederalId(const ANaturezaDeImpostoFederalId: Variant);
-    function GetCest: Int64;
-    procedure SetCest(const ACest: Int64);
+    function GetCest: Variant;
+    procedure SetCest(const ACest: Variant);
     function GetQuantidadeEtiqueta: Integer;
     procedure SetQuantidadeEtiqueta(const AQuantidadeEtiqueta: Integer);
     function GetDiasDeSeguranca: Integer;
@@ -659,7 +659,7 @@ type
     property GrupoId: Variant read GetGrupoId write SetGrupoId;
     property SecaoId: Integer read GetSecaoId write SetSecaoId;
     property NaturezaDeImpostoFederalId: Variant read GetNaturezaDeImpostoFederalId write SetNaturezaDeImpostoFederalId;
-    property Cest: Int64 read GetCest write SetCest;
+    property Cest: Variant read GetCest write SetCest;
     property QuantidadeEtiqueta: Integer read GetQuantidadeEtiqueta write SetQuantidadeEtiqueta;
     property DiasDeSeguranca: Integer read GetDiasDeSeguranca write SetDiasDeSeguranca;
     property CodigoInterno: TString read GetCodigoInterno write SetCodigoInterno;
@@ -896,12 +896,12 @@ begin
   FNaturezaDeImpostoFederalId := ANaturezaDeImpostoFederalId;
 end;
 
-function TProduto.GetCest: Int64;
+function TProduto.GetCest: Variant;
 begin
   Result := FCest;
 end;
 
-procedure TProduto.SetCest(const ACest: Int64);
+procedure TProduto.SetCest(const ACest: Variant);
 begin
   FCest := ACest;
 end;
@@ -1786,7 +1786,6 @@ procedure TProduto.SetEstoquesDoProduto(const AEstoquesDoProduto: TEstoqueDoProd
 begin
   FEstoquesDoProduto := AEstoquesDoProduto;
 end;
-
 
 { TProdutoListChanges }
 
