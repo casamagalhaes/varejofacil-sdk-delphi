@@ -13,12 +13,10 @@ type
   public
     constructor Create(const AClient: IClient); reintroduce; overload;
     function Get(const AId: TString): ICodigoAuxiliar;
-    function GetAll(const AProdutoId: Variant; AStart: Integer = 0; ACount: Integer = 0;
-      const ASortParams: TStringArray = nil): TCodigoAuxiliarListRec; overload;
-    function GetAll(AStart: Integer = 0; ACount: Integer = 0;
-      const ASortParams: TStringArray = nil): TCodigoAuxiliarListRec; overload;
+    function GetAll(const AProdutoId: Variant; AStart: Integer = 0; ACount: Integer = 0; const ASortParams: TStringArray = nil): TCodigoAuxiliarList; overload;
+    function GetAll(AStart: Integer = 0; ACount: Integer = 0; const ASortParams: TStringArray = nil): TCodigoAuxiliarList; overload;
     function Filter(const AProdutoId: Variant; const AQuery: TString; AStart: Integer = 0; ACount: Integer = 0;
-      const ASortParams: TStringArray = nil): TCodigoAuxiliarListRec;
+      const ASortParams: TStringArray = nil): TCodigoAuxiliarList;
     function Insert(const AIdProduto: Variant; ARequest: IBatchRequest): IBatchResponse;
     function Update(const AIdProduto, AId: TString; const AModel: IModel): TServiceCommandResult;
     function Delete(const AIdProduto, AId: Variant): Boolean; reintroduce;
@@ -53,7 +51,7 @@ begin
 end;
 
 function TCodigoAuxiliarService.GetAll(AStart, ACount: Integer;
-  const ASortParams: TStringArray): TCodigoAuxiliarListRec;
+  const ASortParams: TStringArray): TCodigoAuxiliarList;
 begin
   Result := Filter(null, EmptyStr, AStart, ACount, ASortParams);
 end;
@@ -96,7 +94,7 @@ begin
   Result := CodigoAuxiliarListChanges;
 end;
 
-function TCodigoAuxiliarService.GetAll(const AProdutoId: Variant; AStart, ACount: Integer; const ASortParams: TStringArray): TCodigoAuxiliarListRec;
+function TCodigoAuxiliarService.GetAll(const AProdutoId: Variant; AStart, ACount: Integer; const ASortParams: TStringArray): TCodigoAuxiliarList;
 begin
   Result := Filter(AProdutoId, EmptyStr, AStart, ACount, ASortParams);
 end;
@@ -118,13 +116,14 @@ begin
 end;
 
 function TCodigoAuxiliarService.Filter(const AProdutoId: Variant; const AQuery: TString; AStart: Integer;
-  ACount: Integer; const ASortParams: TStringArray): TCodigoAuxiliarListRec;
+  ACount: Integer; const ASortParams: TStringArray): TCodigoAuxiliarList;
 var
   Response: IResponse;
   Nodes: TCustomXMLNodeArray;
   NodeIdx: Integer;
   Document: IXMLDocument;
-  CodigoAuxiliarList, PaginationList: TCodigoAuxiliarList;
+  CodigoAuxiliarList,
+  PaginationList: TCodigoAuxiliarList;
   CodigoAuxiliar: ICodigoAuxiliar;
   URL: TString;
   ResultNodes: TCustomXMLNodeArray;
@@ -170,7 +169,7 @@ begin
         CodigoAuxiliarList.Add(CodigoAuxiliar);
     end;
   end;
-  Result := TCodigoAuxiliarListRec.Create(CodigoAuxiliarList);
+  Result := CodigoAuxiliarList;
 end;
 
 end.
