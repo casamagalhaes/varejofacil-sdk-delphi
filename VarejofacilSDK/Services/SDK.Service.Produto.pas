@@ -3,7 +3,7 @@
 interface
 
 uses
-  SDK.Types, SDK.Model.Produto, SDK.Service, SDK.Exceptions, SDK.XML, XMLIntf, SysUtils, Math;
+  SDK.Types, SDK.Model.Produto, SDK.Model.Preco, SDK.Service, SDK.Exceptions, SDK.XML, XMLIntf, SysUtils, Math;
 
 type
 

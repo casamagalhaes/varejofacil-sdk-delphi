@@ -54,17 +54,13 @@ uses
 const
   DOM_VENDOR = msxmldom.SMSXML;
 
-var
-  A: TClasse;
-
 { TXMLHelper }
 
 class function TXMLHelper.CreateDocument(const AXML: TString): IXMLDocument;
 var
   Document: TXMLDocument;
 begin
-  A := TClasse.Create(nil);
-  Document := TXMLDocument.Create(A);
+  Document :=  TXMLDocument.Create(nil);
   Document.Options := [doNodeAutoCreate, doNodeAutoIndent, doAttrNull,
                      doAutoPrefix, doNamespaceDecl];
   Document.DOMVendor := GetDOMVendor(DOM_VENDOR);

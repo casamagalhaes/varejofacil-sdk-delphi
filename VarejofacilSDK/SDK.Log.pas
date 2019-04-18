@@ -16,6 +16,12 @@ type
 
 implementation
 
+uses
+  System.SyncObjs;
+
+var
+  RegiaoCritica: TCriticalSection;
+
 { TLog }
 
 class procedure TLog.Debug(const AMessage: TString);
@@ -34,16 +40,27 @@ class procedure TLog.WriteToLogFile(const AFilename, AMessage: TString);
 var
   LogFile: TextFile;
 begin
-  AssignFile(LogFile, AFilename);
+  RegiaoCritica.Enter;
   try
-    if FileExists(AFilename) then
-      Append(LogFile)
-    else
-      Rewrite(LogFile);
-    WriteLn(LogFile, AMessage);
+    AssignFile(LogFile, AFilename);
+    try
+      if FileExists(AFilename) then
+        Append(LogFile)
+      else
+        Rewrite(LogFile);
+      WriteLn(LogFile, AMessage);
+    finally
+      CloseFile(LogFile);
+    end;
   finally
-    CloseFile(LogFile);
+    RegiaoCritica.Leave;
   end;
 end;
+
+initialization
+  RegiaoCritica := TCriticalSection.Create;
+
+finalization
+  FreeAndNil(RegiaoCritica);
 
 end.

@@ -13,7 +13,7 @@ type
   public
     constructor Create(const AClient: IClient); reintroduce; overload;
     function Get(const AId: TString): ICodigoAuxiliar;
-    function GetAll(const AProdutoId: Variant; AStart: Integer = 0; ACount: Integer = 0; const ASortParams: TStringArray = nil): TCodigoAuxiliarList; overload;
+    function GetAll(const AProdutoId: Variant; AQuery: TString; AStart: Integer = 0; ACount: Integer = 0; const ASortParams: TStringArray = nil): TCodigoAuxiliarList; overload;
     function GetAll(AStart: Integer = 0; ACount: Integer = 0; const ASortParams: TStringArray = nil): TCodigoAuxiliarList; overload;
     function Filter(const AProdutoId: Variant; const AQuery: TString; AStart: Integer = 0; ACount: Integer = 0;
       const ASortParams: TStringArray = nil): TCodigoAuxiliarList;
@@ -94,9 +94,9 @@ begin
   Result := CodigoAuxiliarListChanges;
 end;
 
-function TCodigoAuxiliarService.GetAll(const AProdutoId: Variant; AStart, ACount: Integer; const ASortParams: TStringArray): TCodigoAuxiliarList;
+function TCodigoAuxiliarService.GetAll(const AProdutoId: Variant; AQuery: TString; AStart, ACount: Integer; const ASortParams: TStringArray): TCodigoAuxiliarList;
 begin
-  Result := Filter(AProdutoId, EmptyStr, AStart, ACount, ASortParams);
+  Result := Filter(AProdutoId, AQuery, AStart, ACount, ASortParams);
 end;
 
 function TCodigoAuxiliarService.Insert(const AIdProduto: Variant; ARequest: IBatchRequest): IBatchResponse;

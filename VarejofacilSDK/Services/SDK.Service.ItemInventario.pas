@@ -11,7 +11,7 @@ type
   TItemInventarioService = class(TService)
   public
     constructor Create(const AClient: IClient); reintroduce; overload;
-    function GetAll(const AInventarioId: TString;  AStart: Integer = 0; ACount: Integer = 0;
+    function GetAll(const AInventarioId: TString; AStart: Integer = 0; ACount: Integer = 0;
       const ASortParams: TStringArray = nil): TItemInventarioList;
     function Filter(const AInventarioId: TString; const AQuery: TString; AStart: Integer = 0; ACount: Integer = 0;
       const ASortParams: TStringArray = nil): TItemInventarioList;
