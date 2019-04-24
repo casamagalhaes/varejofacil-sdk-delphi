@@ -13,7 +13,11 @@ const
 
 type
 
+  {$IFDEF UNICODE}
+  TString = String;
+  {$ELSE}
   TString = AnsiString;
+  {$ENDIF}
 
   PString = ^TString;
 
