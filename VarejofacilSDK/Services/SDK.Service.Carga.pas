@@ -6,12 +6,18 @@ uses
   SDK.Types, SDK.Service, XMLIntf, SDK.XML;
 
 type
+
   TCargaService = class
   const
-      FPath = '/api/v1/pessoa/lojas/%s/cargas';
+    FPath = '/api/v1/pessoa/lojas/%s/cargas';
   public
     class function GetChanges(const ALojaId: TString; ADataAlteracao: TDateTime;
-      AEntidade: TString; AClient: IClient): IXMLDocument;
+      AEntidades: array of String; AClient: IClient): IXMLDocument; overload;
+    class function GetChanges(const ALojaId: TString; ADataAlteracao: TDateTime;
+      AEntidade: String; AClient: IClient): IXMLDocument; overload;
+    class function GetChanges(const ALojaId: TString; AMarcador: Int64;
+      AEntidades: array of String; AClient: IClient): IXMLDocument; overload;
+
   end;
 
 
@@ -22,44 +28,84 @@ uses
 
 { TCargaService }
 
-
-{ TCargaService }
-
 class function TCargaService.GetChanges(const ALojaId: TString; ADataAlteracao: TDateTime;
-      AEntidade: TString; AClient: IClient): IXMLDocument;
-  function ContentType(const ADataAlteracao: TDateTime; const AEntidade: string): string;
+  AEntidades: array of String; AClient: IClient): IXMLDocument;
+
+  function ContentType(const ADataAlteracao: TDateTime; AEntidades: array of String): string;
+  var
+    I: Integer;
   begin
     Result :=
      '<ParamCarga>';
-     if ADataalteracao > 0 then     
+     if ADataAlteracao > 0 then
       Result := Result + '<dataUltimaAlteracao>'+DateTimeToISO8601(ADataAlteracao)+'</dataUltimaAlteracao>';
     Result := Result +
-       '<entidades>' +
-         '<values>'+AEntidade+'</values>' +
+       '<entidades>';
+    for I := 0 to Length(AEntidades) - 1 do
+      Result :=
+         '<values>' + UpperCase(AEntidades[I]) + '</values>';
+    Result := Result +
        '</entidades>' +
      '</ParamCarga>';
   end;
+
 var
   Response: IResponse;
 begin
   Result := nil;
-  Response := AClient.Post(format(FPath,[ALojaId]), ContentType(ADataAlteracao,
-     AnsiUpperCase(AEntidade)), nil);
-
+  Response := AClient.Post(Format(FPath, [ALojaId]),
+    ContentType(ADataAlteracao, AEntidades), nil);
   case Response.Status of
     200:
-    begin
       Result := Response.AsXML;
-    end;
     404:
-    begin
-      raise SDKNotFoundException.Create('Entidade  ' + AnsiLowerCase(AEntidade) + ' não encontrado');
-    end
+      raise SDKNotFoundException.Create('Carga não disponível');
     else
-    begin
       raise SDKUnknownException.Create(Format('Erro %d - %s', [Response.Status, Response.Content]));
-    end;
   end
+end;
+
+class function TCargaService.GetChanges(const ALojaId: TString;
+  AMarcador: Int64; AEntidades: array of String;
+  AClient: IClient): IXMLDocument;
+
+  function Body(AMarcador: Int64; AEntidades: array of String): string;
+  var
+    I: Integer;
+  begin
+    Result :=
+     '<ParamCarga>';
+     if AMarcador > 0 then
+      Result := Result + '<marcador>'+ IntToStr(AMarcador) + '</marcador>';
+    Result := Result +
+       '<entidades>';
+    for I := 0 to Length(AEntidades) - 1 do
+      Result := Result +
+         '<values>' + UpperCase(AEntidades[I]) + '</values>';
+    Result := Result +
+       '</entidades>' +
+     '</ParamCarga>';
+  end;
+
+var
+  Response: IResponse;
+begin
+  Result := nil;
+  Response := AClient.Post(Format(FPath, [ALojaId]), Body(AMarcador, AEntidades), nil);
+  case Response.Status of
+    200:
+      Result := Response.AsXML;
+    404:
+      raise SDKNotFoundException.Create('Carga não disponível');
+    else
+      raise SDKUnknownException.Create(Format('Erro %d - %s', [Response.Status, Response.Content]));
+  end
+end;
+
+class function TCargaService.GetChanges(const ALojaId: TString;
+  ADataAlteracao: TDateTime; AEntidade: String; AClient: IClient): IXMLDocument;
+begin
+  Result := GetChanges(ALojaId, ADataAlteracao, [AEntidade], AClient);
 end;
 
 end.

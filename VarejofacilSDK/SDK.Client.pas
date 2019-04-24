@@ -200,6 +200,7 @@ begin
     try
       HTTPIOHandler.SSLOptions.Method := sslvTLSv1;
       HTTPIOHandler.SSLOptions.Mode := sslmClient;
+      HTTPIOHandler.LargeStream := True;
       HTTPRequest := TIdHTTPRequest.Create(nil);
       try
         if StartsText(HTTPS_PROTOCOL, ARequest.URL) then
