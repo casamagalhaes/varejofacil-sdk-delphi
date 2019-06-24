@@ -12,7 +12,8 @@ type
   public
     constructor Create(const AClient: IClient); reintroduce; overload;
     function GetAll(AStart: Integer = 0; ACount: Integer = 0; const ASortParams: TStringArray = nil): TConferenciaList;
-    function Filter(const AQuery: TString; AStart: Integer = 0; ACount: Integer = 0; const ASortParams: TStringArray = nil): TConferenciaList;
+    function Filter(const AQuery: TString; AStart: Integer = 0; ACount: Integer = 0;
+      const ASortParams: TStringArray = nil): TConferenciaList;
   end;
 
 implementation
