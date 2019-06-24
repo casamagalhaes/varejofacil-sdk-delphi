@@ -86,9 +86,7 @@ begin
   for NodeIdx := 0 to Length(Nodes) - 1 do
   begin
     if Nodes[NodeIdx].NodeName = 'codigosAuxiliares' then
-    begin
       CodigoAuxiliarListChanges.ListIdRemovidos.Add(Nodes[NodeIdx].NodeValue);
-    end;
   end;
 
   Result := CodigoAuxiliarListChanges;
