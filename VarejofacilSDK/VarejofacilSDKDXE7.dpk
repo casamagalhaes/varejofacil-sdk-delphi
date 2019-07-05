@@ -191,7 +191,9 @@ contains
   SDK.Service.FiguraFiscal in 'Services\SDK.Service.FiguraFiscal.pas',
   SDK.Service.CodigoAuxiliar in 'Services\SDK.Service.CodigoAuxiliar.pas',
   SDK.Service.ProdutoFornecedor in 'Services\SDK.Service.ProdutoFornecedor.pas',
-  SDK.Model.ImpostoFederalGeral in 'Models\SDK.Model.ImpostoFederalGeral.pas';
+  SDK.Model.ImpostoFederalGeral in 'Models\SDK.Model.ImpostoFederalGeral.pas',
+  SDK.Service.Carga in 'Services\SDK.Service.Carga.pas';
 
 end.
+
 

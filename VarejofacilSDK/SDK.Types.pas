@@ -161,7 +161,7 @@ type
     class function NewInstance: TObject; override;
     function GetReference: TInterfacedModel;
     property RefCount: Integer read FRefCount;
-    procedure Assign(const APropName: string; const AValue: IInterface); virtual;
+    procedure Assign(const APropName: string; const AValue: IInterface); reintroduce; virtual;
   end;
 
   TInterfacedModelClass = class of TInterfacedModel;

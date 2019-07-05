@@ -14,12 +14,16 @@ type
     function GetAll(AStart: Integer = 0; ACount: Integer = 0; const ASortParams: TStringArray = nil): TProdutoList;
     function Filter(const AQuery: TString; AStart: Integer = 0; ACount: Integer = 0; const ASortParams: TStringArray = nil): TProdutoList;
     function GetChanges(const ALojaId: TString; ADataAlteracao: TDateTime): TProdutoListChanges;
+    function BatchUpdate(AProdutos: TProdutoList): IBatchResponse;
   end;
 
 implementation
 
 uses
   Classes, SDK.Service.Carga;
+
+const
+  NUMERO_MAXIMO_PRODUTOS_LOTE = 500;
 
 { TProdutoService }
 
@@ -45,13 +49,9 @@ begin
         TXMLHelper.Deserialize(Nodes[0], TProduto, FDeserializers).QueryInterface(IProduto, Result);
     end;
     404:
-    begin
       raise SDKNotFoundException.Create(Concat('Produto ', AId, ' não encontrado'));
-    end;
     else
-    begin
       raise SDKUnknownException.Create(Format('Erro %d - %s', [Response.Status, Response.Content]));
-    end;
   end;
 end;
 
@@ -77,24 +77,38 @@ begin
 
   Nodes := TXMLHelper.XPathSelect(Document, '//Carga/alterados/*');
   for NodeIdx := 0 to Length(Nodes) - 1 do
-  begin
     if Nodes[NodeIdx].NodeName = 'produtos' then
     begin
       TXMLHelper.Deserialize(Nodes[NodeIdx], TProduto, FDeserializers).QueryInterface(IProduto, Produto);
       ProdutoListChange.ListAlterados.Add(Produto);
     end;
-  end;
 
   Nodes := TXMLHelper.XPathSelect(Document, '//Carga/removidos/*');
   for NodeIdx := 0 to Length(Nodes) - 1 do
-  begin
     if Nodes[NodeIdx].NodeName = 'produtos' then
-    begin
       ProdutoListChange.ListIdRemovidos.Add(Nodes[NodeIdx].NodeValue);
-    end;
-  end;
 
   Result := ProdutoListChange;
+end;
+
+function TProdutoService.BatchUpdate(AProdutos: TProdutoList): IBatchResponse;
+var
+  Response: IResponse;
+  Request: TBatchRequest;
+  Produto: IProduto;
+begin
+  if AProdutos.Count = 0 then
+    raise Exception.Create('Nenhum produto para ser enviado em lote');
+  if AProdutos.Count > NUMERO_MAXIMO_PRODUTOS_LOTE then
+    raise Exception.CreateFmt('Não é possível enviar mais que %d produtos por lote', [NUMERO_MAXIMO_PRODUTOS_LOTE]);
+  Request := TBatchRequest.Create(TBatchRequestTransformV2.Create);
+  for Produto in AProdutos do
+    Request.Add(Produto);
+  Response := FClient.Post('/api/v1/batch', Request.AsString, nil);
+  if Assigned(Response) then
+    Result := TBatchResponse.Create(Response.Content, TBatchResponseTranslatorV1.Create)
+  else
+    raise Exception.Create('Não foi possível obter resposta para o envio do lote');
 end;
 
 function TProdutoService.Filter(const AQuery: TString; AStart: Integer; ACount: Integer; const ASortParams: TStringArray): TProdutoList;

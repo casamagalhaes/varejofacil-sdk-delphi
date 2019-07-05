@@ -78,7 +78,7 @@ end;
 function TPropertyTipoIncidenciaIPISerializer.IsCompatible(
   const AProperty: PPropInfo): Boolean;
 begin
-  Result := (AProperty^.PropType^.Kind = tkEnumeration) and SameText(AProperty^.Name, 'IncidenciaIPI')
+  Result := (AProperty^.PropType^.Kind = tkEnumeration) and SameText(TString(AProperty^.Name), 'IncidenciaIPI')
 end;
 
 end.

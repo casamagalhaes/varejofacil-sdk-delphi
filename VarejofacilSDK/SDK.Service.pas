@@ -24,18 +24,35 @@ type
     function AsString: TString;
   end;
 
+  IBatchResponseTranslator = interface
+    ['{69B5D1C5-240E-411D-B963-4A07FEA0E720}']
+    function GetSuccesses(const AContents: TString): TStrings;
+    function GetErrors(const AContents: TString): TStrings;
+  end;
+
+  TBatchResponseTranslator = class(TInterfacedObject, IBatchResponseTranslator)
+  public
+    function GetErrors(const AContents: TString): TStrings; virtual;
+    function GetSuccesses(const AContents: TString): TStrings; virtual;
+  end;
+
+  TBatchResponseTranslatorV1 = class(TBatchResponseTranslator)
+  public
+    function GetErrors(const AContents: TString): TStrings; override;
+    function GetSuccesses(const AContents: TString): TStrings; override;
+  end;
+
   TBatchResponse = class(TInterfacedObject, IBatchResponse)
   strict private
-    FSuccesses: TStrings;
-    FErrors: TStrings;
+    FResponseTranslator: IBatchResponseTranslator;
     FContents: TString;
-  public
     function GetSuccesses: TStrings;
     function GetErrors: TStrings;
+  public
+    constructor Create(const AContents: TString;
+      const AResponseTranslator: IBatchResponseTranslator);
     property Errors: TStrings read GetErrors;
     property Successes: TStrings read GetSuccesses;
-    constructor Create(const AContents: TString);
-    destructor Destroy; override;
   end;
 
   TBatchItem = class
@@ -46,13 +63,31 @@ type
     function AsString: TString;
   end;
 
+  IBatchRequestTransform = interface
+    ['{2FB31D93-E2F5-4F95-A3A4-6674F2D60980}']
+    function AsString(AItems: TStrings): TString;
+  end;
+
+  TBatchRequestTransformV1 = class(TInterfacedObject, IBatchRequestTransform)
+  public
+    function AsString(AItems: TStrings): string;
+  end;
+
+  TBatchRequestTransformV2 = class(TInterfacedObject, IBatchRequestTransform)
+  public
+    function AsString(AItems: TStrings): string;
+  end;
+
   TBatchRequest = class(TInterfacedObject, IBatchRequest)
   strict private
+    FTransform: IBatchRequestTransform;
     FItems: TStrings;
+  protected
+    property Items: TStrings read FItems;
   public
-    constructor Create;
+    constructor Create(const ABatchRequestTransform: IBatchRequestTransform); reintroduce;
     procedure Add(const AModel: IModel);
-    function AsString: TString;
+    function AsString: TString; virtual;
     destructor Destroy; override;
   end;
 
@@ -124,13 +159,21 @@ type
   end;
 
   TBatchService = class(TService)
+  protected
+    function CreateTransform: IBatchRequestTransform; virtual;
   public
     function CreateBatchRequest: TBatchRequest;
     function Insert(ARequest: IBatchRequest; const APath: string): IBatchResponse; reintroduce; overload;
     function Insert(ARequest: IBatchRequest): IBatchResponse; reintroduce; overload;
+    function Update(ARequest: IBatchRequest; const APath: string): IBatchResponse; reintroduce; overload;
+    function Update(ARequest: IBatchRequest): IBatchResponse; reintroduce; overload;
   end;
 
 implementation
+
+uses
+  StrUtils;
+
 
 { TService }
 
@@ -153,7 +196,7 @@ end;
 
 destructor TService.Destroy;
 begin
-  FMarshalling.Free;
+  FreeAndNil(FMarshalling);
   inherited Destroy;
 end;
 
@@ -175,7 +218,7 @@ begin
     try
       Result := TServiceCommandResult.Create(Response.Status = 201, FailReasons, InterpretLocation(Response.Headers.Values['Location']));
     finally
-      FailReasons.Free;
+      FreeAndNil(FailReasons);
     end;
   end;
 end;
@@ -214,7 +257,7 @@ begin
     Params.Values['sort'] := TSortParams.FromArrayToString(ASortParams);
     Result := Copy(Params.Text, 1, Length(Params.Text) - 1);
   finally
-    Params.Free;
+    FreeAndNil(Params);
   end;
 end;
 
@@ -228,7 +271,7 @@ begin
   try
     Result := TServiceCommandResult.Create(Response.Status = 200, FailReasons);
   finally
-    FailReasons.Free;
+    FreeAndNil(FailReasons);
   end;
 end;
 
@@ -248,40 +291,22 @@ begin
 end;
 
 function TBatchRequest.AsString: TString;
-var
-  Xml: TStrings;
-  Idx: Integer;
 begin
-  Xml := TStringList.Create;
-  try
-    Xml.LineBreak := EmptyStr;
-    Xml.Add('<paramlist>');
-    Xml.Add('<items>');
-    for Idx := 0 to FItems.Count - 1 do
-    begin
-      Xml.Add('<item>');
-      Xml.Add(Format('<locator>%s</locator>', [FItems[Idx]]));
-      Xml.Add('<entity>');
-      Xml.Add(TBatchItem(FItems.Objects[Idx]).AsString);
-      Xml.Add('</entity>');
-      Xml.Add('</item>');
-    end;
-    Xml.Add('</items>');
-    Xml.Add('</paramlist>');
-    Result := Xml.Text;
-  finally
-    Xml.Free;
-  end;
+  if Assigned(FTransform) then
+    Result := FTransform.AsString(Items)
+  else
+    raise Exception.Create('Transformador não definido');
 end;
 
-constructor TBatchRequest.Create;
+constructor TBatchRequest.Create(const ABatchRequestTransform: IBatchRequestTransform);
 begin
-  inherited;
+  inherited Create;
   {$IFDEF VER185}
   FItems := TStringList.Create;
   {$ELSE}
   FItems := TStringList.Create(True);
   {$ENDIF}
+  FTransform := ABatchRequestTransform;
 end;
 
 destructor TBatchRequest.Destroy;
@@ -300,7 +325,7 @@ begin
   try
     Result := TXMLHelper.Serialize(FModel, False, Marshalling.Serializers);
   finally
-    Marshalling.Free;
+    FreeAndNil(Marshalling);
   end;
 end;
 
@@ -312,100 +337,22 @@ end;
 
 { TBatchResponse }
 
-constructor TBatchResponse.Create(const AContents: TString);
+constructor TBatchResponse.Create(const AContents: TString;
+  const AResponseTranslator: IBatchResponseTranslator);
 begin
   inherited Create;
   FContents := AContents;
-end;
-
-destructor TBatchResponse.Destroy;
-begin
-  FreeAndNil(FSuccesses);
-  FreeAndNil(FErrors);
-  inherited;
+  FResponseTranslator := AResponseTranslator;
 end;
 
 function TBatchResponse.GetErrors: TStrings;
-
-  function GetReasons(Document: IXMLDocument): TStrings;
-  var
-    ReasonIdx: Integer;
-    ReasonNodes: TCustomXMLNodeArray;
-    ReasonNode: IXMLNode;
-  begin
-    Result := TStringList.Create;
-    ReasonNodes := TXMLHelper.XPathSelect(Document, '//reasons/*');
-    for ReasonIdx := Low(ReasonNodes) to High(ReasonNodes) do
-    begin
-      ReasonNode := ReasonNodes[ReasonIdx];
-      Result.Add(ReasonNode.Text);
-    end;
-  end;
-
-var
-  Document: IXMLDocument;
-  ErrorNodes, ErrorResponseNodes: TCustomXMLNodeArray;
-  ErrorNode, ErrorResponseNode: IXMLNode;
-  Reason: TStrings;
-  Idx: Integer;
 begin
-  Result := TStringList.Create;
-  Document := TXMLHelper.CreateDocument(FContents);
-  ErrorNodes := TXMLHelper.XPathSelect(Document, '//ResultParamList/errors/*');
-  for Idx := Low(ErrorNodes) to High(ErrorNodes) do
-  begin
-    ErrorNode := ErrorNodes[Idx];
-    if ErrorNode.HasChildNodes then
-    begin
-      Reason := GetReasons(Document);
-      try
-        Result.Values[ErrorNode.ChildNodes.FindNode('locator').Text] := Reason.Text;
-      finally
-        Reason.Free;
-      end;
-    end;
-  end;
-  if Result.Count = 0 then
-  begin
-    ErrorResponseNodes := TXMLHelper.XPathSelect(Document, '//ErrorResponse');
-    if Length(ErrorResponseNodes) > 0 then
-    begin
-      ErrorResponseNode := ErrorResponseNodes[0];
-      if ErrorResponseNode.HasChildNodes then
-      begin
-        Reason := GetReasons(Document);
-        try
-          Result.Text := Reason.Text;
-        finally
-          Reason.Free;
-        end;
-      end;
-    end;
-  end;
+  Result := FResponseTranslator.GetErrors(FContents);
 end;
 
 function TBatchResponse.GetSuccesses: TStrings;
-var
-  Document: IXMLDocument;
-  SuccessNodes: TCustomXMLNodeArray;
-  SuccessNode, LocationNode: IXMLNode;
-  Idx: Integer;
-  Locator, Location: string;
 begin
-  Result := TStringList.Create;
-  Document := TXMLHelper.CreateDocument(FContents);
-  SuccessNodes := TXMLHelper.XPathSelect(Document, '//ResultParamList/successes/*');
-  for Idx := Low(SuccessNodes) to High(SuccessNodes) do
-  begin
-    SuccessNode := SuccessNodes[Idx];
-    if SuccessNode.HasChildNodes then
-    begin
-      Locator := IntToStr(Idx);
-      LocationNode := SuccessNode.ChildNodes.FindNode('location');
-      Location := LocationNode.Text;
-      Result.Values[Locator] := Location;
-    end;
-  end;
+  Result := FResponseTranslator.GetSuccesses(FContents);
 end;
 
 { TServiceMarshalling }
@@ -485,7 +432,7 @@ end;
 
 destructor TServiceCommandResult.Destroy;
 begin
-  FFailReasons.Free;      
+  FreeAndNil(FFailReasons);
   inherited;
 end;
 
@@ -502,7 +449,7 @@ begin
     try
       Result.AddStrings(Reasons);
     finally
-      Reasons.Free;
+      FreeAndNil(Reasons);
     end;               
   end;
 end;
@@ -534,22 +481,41 @@ begin
     end;
   end
   else
-  if Length(MessageNodes) > 0 then
-  begin
-    Result.Add(MessageNodes[0].Text);
-  end;
+    if Length(MessageNodes) > 0 then
+      Result.Add(MessageNodes[0].Text);
 end;
 
 { TBatchService }
 
 function TBatchService.CreateBatchRequest: TBatchRequest;
 begin
-  Result := TBatchRequest.Create;
+  Result := TBatchRequest.Create(CreateTransform);
+end;
+
+function TBatchService.CreateTransform: IBatchRequestTransform;
+begin
+  Result := TBatchRequestTransformV1.Create;
 end;
 
 function TBatchService.Insert(ARequest: IBatchRequest): IBatchResponse;
 begin
   Result := Insert(ARequest, FPath);
+end;
+
+function TBatchService.Update(ARequest: IBatchRequest;
+  const APath: string): IBatchResponse;
+var
+  Response: IResponse;
+begin
+  Result := nil;
+  Response := FClient.Put(APath, ARequest.AsString, nil);
+  if Assigned(Response) then
+    Result := TBatchResponse.Create(Response.Content, TBatchResponseTranslator.Create);
+end;
+
+function TBatchService.Update(ARequest: IBatchRequest): IBatchResponse;
+begin
+  Result := Update(ARequest, FPath);
 end;
 
 function TBatchService.Insert(ARequest: IBatchRequest; const APath: string): IBatchResponse;
@@ -559,7 +525,241 @@ begin
   Result := nil;
   Response := FClient.Post(APath, ARequest.AsString, nil);
   if Assigned(Response) then
-    Result := TBatchResponse.Create(Response.Content);
+    Result := TBatchResponse.Create(Response.Content, TBatchResponseTranslator.Create);
+end;
+
+{ TBatchRequestTransformV1 }
+
+function TBatchRequestTransformV1.AsString(AItems: TStrings): string;
+var
+  Xml: TStrings;
+  Idx: Integer;
+begin
+  Xml := TStringList.Create;
+  try
+    Xml.LineBreak := EmptyStr;
+    Xml.Add('<paramlist>');
+    Xml.Add('<items>');
+    for Idx := 0 to AItems.Count - 1 do
+    begin
+      Xml.Add('<item>');
+      Xml.Add(Format('<locator>%s</locator>', [AItems[Idx]]));
+      Xml.Add('<entity>');
+      Xml.Add(TBatchItem(AItems.Objects[Idx]).AsString);
+      Xml.Add('</entity>');
+      Xml.Add('</item>');
+    end;
+    Xml.Add('</items>');
+    Xml.Add('</paramlist>');
+    Result := Xml.Text;
+  finally
+    FreeAndNil(Xml);
+  end;
+end;
+
+
+{ TBatchRequestTransformV2 }
+
+function TBatchRequestTransformV2.AsString(AItems: TStrings): string;
+var
+  Xml: TStrings;
+  Idx: Integer;
+begin
+  Xml := TStringList.Create;
+  try
+    Xml.LineBreak := EmptyStr;
+    Xml.Add('<Batch>');
+    Xml.Add('<operacao>PUT</operacao>');
+    Xml.Add('<produtos>');
+    for Idx := 0 to AItems.Count - 1 do
+    begin
+      Xml.Add('<itemBatch>');
+      Xml.Add(Format('<locator>%s</locator>', [AItems[Idx]]));
+      Xml.Add('<entity>');
+      Xml.Add(TBatchItem(AItems.Objects[Idx]).AsString);
+      Xml.Add('</entity>');
+      Xml.Add('</itemBatch>');
+    end;
+    Xml.Add('</produtos>');
+    Xml.Add('</Batch>');
+    Result := ReplaceText(Xml.Text, #10, '');
+    Result := ReplaceText(Result, #13, '');
+  finally
+    FreeAndNil(Xml);
+  end;
+end;
+
+{ TBatchResponseTranslator }
+
+function TBatchResponseTranslator.GetErrors(const AContents: TString): TStrings;
+
+  function GetReasons(Document: IXMLDocument): TStrings;
+  var
+    ReasonIdx: Integer;
+    ReasonNodes: TCustomXMLNodeArray;
+    ReasonNode: IXMLNode;
+  begin
+    Result := TStringList.Create;
+    ReasonNodes := TXMLHelper.XPathSelect(Document, '//reasons/*');
+    for ReasonIdx := Low(ReasonNodes) to High(ReasonNodes) do
+    begin
+      ReasonNode := ReasonNodes[ReasonIdx];
+      Result.Add(ReasonNode.Text);
+    end;
+  end;
+
+var
+  Document: IXMLDocument;
+  ErrorNodes, ErrorResponseNodes: TCustomXMLNodeArray;
+  ErrorNode, ErrorResponseNode: IXMLNode;
+  Reason: TStrings;
+  Idx: Integer;
+begin
+  Result := TStringList.Create;
+  Document := TXMLHelper.CreateDocument(AContents);
+  ErrorNodes := TXMLHelper.XPathSelect(Document, '//ResultParamList/errors/*');
+  for Idx := Low(ErrorNodes) to High(ErrorNodes) do
+  begin
+    ErrorNode := ErrorNodes[Idx];
+    if ErrorNode.HasChildNodes then
+    begin
+      Reason := GetReasons(Document);
+      try
+        Result.Values[ErrorNode.ChildNodes.FindNode('locator').Text] := Reason.Text;
+      finally
+        FreeAndNil(Reason);
+      end;
+    end;
+  end;
+  if Result.Count = 0 then
+  begin
+    ErrorResponseNodes := TXMLHelper.XPathSelect(Document, '//ErrorResponse');
+    if Length(ErrorResponseNodes) > 0 then
+    begin
+      ErrorResponseNode := ErrorResponseNodes[0];
+      if ErrorResponseNode.HasChildNodes then
+      begin
+        Reason := GetReasons(Document);
+        try
+          Result.Text := Reason.Text;
+        finally
+          FreeAndNil(Reason);
+        end;
+      end;
+    end;
+  end;
+end;
+
+function TBatchResponseTranslator.GetSuccesses(const AContents: TString): TStrings;
+var
+  Document: IXMLDocument;
+  SuccessNodes: TCustomXMLNodeArray;
+  SuccessNode, LocationNode: IXMLNode;
+  Idx: Integer;
+  Locator, Location: string;
+begin
+  Result := TStringList.Create;
+  Document := TXMLHelper.CreateDocument(AContents);
+  SuccessNodes := TXMLHelper.XPathSelect(Document, '//ResultParamList/successes/*');
+  for Idx := Low(SuccessNodes) to High(SuccessNodes) do
+  begin
+    SuccessNode := SuccessNodes[Idx];
+    if SuccessNode.HasChildNodes then
+    begin
+      Locator := IntToStr(Idx);
+      LocationNode := SuccessNode.ChildNodes.FindNode('location');
+      Location := LocationNode.Text;
+      Result.Values[Locator] := Location;
+    end;
+  end;
+end;
+
+{ TBatchResponseTranslatorV1 }
+
+function TBatchResponseTranslatorV1.GetErrors(
+  const AContents: TString): TStrings;
+
+  function GetReasons(Document: IXMLDocument): TStrings;
+  var
+    ReasonIdx: Integer;
+    ReasonNodes: TCustomXMLNodeArray;
+    ReasonNode: IXMLNode;
+  begin
+    Result := TStringList.Create;
+    ReasonNodes := TXMLHelper.XPathSelect(Document, '//reasons/*');
+    for ReasonIdx := Low(ReasonNodes) to High(ReasonNodes) do
+    begin
+      ReasonNode := ReasonNodes[ReasonIdx];
+      Result.Add(ReasonNode.Text);
+    end;
+  end;
+
+var
+  Document: IXMLDocument;
+  ErrorNodes, ErrorResponseNodes: TCustomXMLNodeArray;
+  ErrorNode, ErrorResponseNode: IXMLNode;
+  Reason: TStrings;
+  Idx: Integer;
+begin
+  Result := TStringList.Create;
+  Document := TXMLHelper.CreateDocument(AContents);
+  ErrorNodes := TXMLHelper.XPathSelect(Document, '//BatchResultParamList/*/errors/*');
+  for Idx := Low(ErrorNodes) to High(ErrorNodes) do
+  begin
+    ErrorNode := ErrorNodes[Idx];
+    if ErrorNode.HasChildNodes then
+    begin
+      Reason := GetReasons(Document);
+      try
+        Result.Values[ErrorNode.ChildNodes.FindNode('locator').Text] := Reason.Text;
+      finally
+        FreeAndNil(Reason);
+      end;
+    end;
+  end;
+  if Result.Count = 0 then
+  begin
+    ErrorResponseNodes := TXMLHelper.XPathSelect(Document, '//ErrorResponse');
+    if Length(ErrorResponseNodes) > 0 then
+    begin
+      ErrorResponseNode := ErrorResponseNodes[0];
+      if ErrorResponseNode.HasChildNodes then
+      begin
+        Reason := GetReasons(Document);
+        try
+          Result.Text := Reason.Text;
+        finally
+          FreeAndNil(Reason);
+        end;
+      end;
+    end;
+  end;
+end;
+
+function TBatchResponseTranslatorV1.GetSuccesses(
+  const AContents: TString): TStrings;
+var
+  Document: IXMLDocument;
+  SuccessNodes: TCustomXMLNodeArray;
+  SuccessNode, LocationNode: IXMLNode;
+  Idx: Integer;
+  Locator,
+  Location: string;
+begin
+  Result := TStringList.Create;
+  Document := TXMLHelper.CreateDocument(AContents);
+  SuccessNodes := TXMLHelper.XPathSelect(Document, '//BatchResultParamList/*/successes/*');
+  for Idx := Low(SuccessNodes) to High(SuccessNodes) do
+  begin
+    SuccessNode := SuccessNodes[Idx];
+    if SuccessNode.HasChildNodes then
+    begin
+      Locator := IntToStr(Idx);
+      LocationNode := SuccessNode.ChildNodes.FindNode('locator');
+      Location := LocationNode.Text;
+      Result.Values[Locator] := Location;
+    end;
+  end;
 end;
 
 end.

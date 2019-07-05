@@ -92,7 +92,7 @@ begin
       ModelInstance := TXMLHelper.Deserialize(ANode, ModelClass, ADeserializers);
       if not ModelInstance.GetInterface(IModel, Intf) then
         raise Exception.Create('Erro no GetInterface da instäncia do modelo.');
-      AInstance.GetReference.Assign(AProperty^.Name, Intf);
+      AInstance.GetReference.Assign(TString(AProperty^.Name), Intf);
     end;
   end;
 end;
@@ -122,7 +122,7 @@ end;
 
 function TModelListPropertyDeserializer.IsCompatible(const AProperty: PPropInfo): Boolean;
 begin
-  Result := (AProperty^.PropType^.Name[1] = 'T') and EndsStr('List', TString(AProperty^.PropType^.Name));
+  Result := CharInSet(AProperty^.PropType^.Name[1], ['T']) and EndsStr('List', TString(AProperty^.PropType^.Name));
 end;
 
 end.

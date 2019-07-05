@@ -8,79 +8,53 @@ uses
   System.SysUtils,
   SDK.Types,
   System.DateUtils,
+  SDK.Service,
   SDK.Enums,
   SDK.Client,
   SDK.SortParams,
   SDK.XML,
-  SDK.Model.NCM,
-  SDK.Service.NCM,
-  SDK.Service,
-  SDK.Model.Secao,
   SDK.Model.Produto,
-  SDK.Model.Preco,
-  SDK.Service.Secao,
   SDK.Service.Produto,
-  SDK.Service.Preco,
-  SDK.Service.ImpostoFederal,
-  SDK.Model.ItemImpostoFederal,
-  SDK.Model.EstoqueDoProduto,
-  SDK.Model.ImpostoFederal,
-  SDK.Model.ImpostoFederalGeral,
-  SDK.Model.Apuracao,
-  SDK.Service.Apuracao,
   ActiveX,
   Variants;
 
 var
   Client: IClient;
   ProdutoService: TProdutoService;
-  ApuracaoService: TApuracaoService;
-  ImpostosFederaisService: TImpostoFederalService;
   Produtos: TProdutoList;
-  Produto, ProdutoInserido: IProduto;
-  Res: TServiceCommandResult;
-  Impostos: TItemImpostoFederalList;
-  ItemImpostoFederal: TItemImpostoFederal;
-  Precos: TPrecoList;
-  PrecoService: TPrecoService;
-  Preco: IPreco;
-  Estoques: TEstoqueDoProdutoList;
-  EstoqueItem: TEstoqueDoProduto;
-  PISs: TImpostoFederalList;
-  ApuracaoList: TApuracaoList;
-  Apuracao: IApuracao;
-  PIS: IImpostoFederal;
-  IG: IImpostoFederalGeral;
-  TIG: TImpostoFederalGeral;
-  Query: string;
+  Produto: IProduto;
   I: Integer;
-
+  Response: IBatchResponse;
+  ProdutosAlterados: TProdutoList;
 begin
   CoInitialize(nil);
-  TRY
+  try
     ReportMemoryLeaksOnShutdown := False;
     try
-      Client := TClient.Create('https://mercado.varejofacil.com', '57a3cce4dece0974e96a460fb88a3390');
-      ApuracaoService := TApuracaoService.Create(Client);
-      ApuracaoList := ApuracaoService.Get(TImpostoApuracao.iapICMS, TOperacaoApuracao.tapCREDITO, ['1'], StartOfTheYear(Now), EndOfTheMonth(Now));
-      for I := 0 to ApuracaoList.Count - 1  do
-      begin
-        Apuracao := ApuracaoList[I];
-        WriteLn(Format('codigoLoja: %d, cfop: %d, cst: %s, aliquota: %s, baseCalculo: %s, valor: %s', [
-          Apuracao.CodigoLoja,
-          Apuracao.CFOP,
-          Apuracao.CST,
-          FloatToStr(Apuracao.Aliquota),
-          FloatToStr(Apuracao.BaseDeCalculo),
-          FloatToStr(Apuracao.Valor)
-        ]));
+      Client := TClient.Create('http://172.16.13.71:8080', '392d755ffde39e65597f73d759a4b3f2');
+      ProdutoService := TProdutoService.Create(Client);
+      Produtos := ProdutoService.GetAll(1, 300);
+      ProdutosAlterados := TProdutoList.Create;
+      try
+        for I := 0 to Produtos.Count - 1 do
+        begin
+          Produto := Produtos[I];
+          Writeln(Produto.Id + '-' + Produto.Descricao);
+          Produto.QtdMaximaVenda := 60;
+          ProdutosAlterados.Add(Produto);
+        end;
+        Response := ProdutoService.BatchUpdate(ProdutosAlterados);
+        Writeln('Sucesso: ' + IntToStr(Response.Successes.Count));
+        Writeln('Erros:' + IntToStr(Response.Errors.Count));
+      finally
+        FreeAndNil(ProdutosAlterados);
       end;
     except
       on E: Exception do
         Writeln(E.ClassName, ': ', E.Message);
     end;
     ReadLn;
-  FINALLY
+  finally
     CoUninitialize;
-  END;
+  end;
 end.
