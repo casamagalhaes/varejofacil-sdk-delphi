@@ -31,16 +31,19 @@ begin
   try
     ReportMemoryLeaksOnShutdown := False;
     try
-      Client := TClient.Create('http://172.16.13.71:8080', '392d755ffde39e65597f73d759a4b3f2');
+      Client := TClient.Create('http://172.16.13.147:8084', '7d0dcdfc58e0e45850385adcbcc5441d');
       ProdutoService := TProdutoService.Create(Client);
-      Produtos := ProdutoService.GetAll(1, 300);
+      Produtos := ProdutoService.GetAll(1, 2);
       ProdutosAlterados := TProdutoList.Create;
       try
         for I := 0 to Produtos.Count - 1 do
         begin
           Produto := Produtos[I];
           Writeln(Produto.Id + '-' + Produto.Descricao);
-          Produto.QtdMaximaVenda := 60;
+          if I = 0 then
+            Produto.QtdMaximaVenda := 15
+          else
+            Produto.Descricao := '';
           ProdutosAlterados.Add(Produto);
         end;
         Response := ProdutoService.BatchUpdate(ProdutosAlterados);

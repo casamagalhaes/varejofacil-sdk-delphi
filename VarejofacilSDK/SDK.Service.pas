@@ -569,7 +569,7 @@ begin
   try
     Xml.LineBreak := EmptyStr;
     Xml.Add('<Batch>');
-    Xml.Add('<operacao>PUT</operacao>');
+    Xml.Add('<put>');
     Xml.Add('<produtos>');
     for Idx := 0 to AItems.Count - 1 do
     begin
@@ -581,6 +581,7 @@ begin
       Xml.Add('</itemBatch>');
     end;
     Xml.Add('</produtos>');
+    Xml.Add('</put>');
     Xml.Add('</Batch>');
     Result := ReplaceText(Xml.Text, #10, '');
     Result := ReplaceText(Result, #13, '');
@@ -703,7 +704,7 @@ var
 begin
   Result := TStringList.Create;
   Document := TXMLHelper.CreateDocument(AContents);
-  ErrorNodes := TXMLHelper.XPathSelect(Document, '//BatchResultParamList/*/errors/*');
+  ErrorNodes := TXMLHelper.XPathSelect(Document, '//BatchResponse/*/*/errors/*');
   for Idx := Low(ErrorNodes) to High(ErrorNodes) do
   begin
     ErrorNode := ErrorNodes[Idx];
@@ -748,7 +749,7 @@ var
 begin
   Result := TStringList.Create;
   Document := TXMLHelper.CreateDocument(AContents);
-  SuccessNodes := TXMLHelper.XPathSelect(Document, '//BatchResultParamList/*/successes/*');
+  SuccessNodes := TXMLHelper.XPathSelect(Document, '//BatchResponse/*/*/successes/*');
   for Idx := Low(SuccessNodes) to High(SuccessNodes) do
   begin
     SuccessNode := SuccessNodes[Idx];
