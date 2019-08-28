@@ -272,16 +272,13 @@ begin
           begin
             if HTTP.ResponseCode = 500 then
               raise SDKServerInternalException.Create(E.Message)
-            else
-            if HTTP.ResponseCode = 400 then
+            else if HTTP.ResponseCode = 400 then
               raise SDKBadRequestException.Create(E.Message)
-            else
-            if HTTP.ResponseCode = 404 then
-            else
-            if HTTP.ResponseCode = 422 then
-            begin
-              ResponseContent := E.ErrorMessage;
-            end
+            else if HTTP.ResponseCode = 404 then
+            else if HTTP.ResponseCode = 429 then
+              raise SDKLimitExceededException.Create
+            else if HTTP.ResponseCode = 422 then
+              ResponseContent := E.ErrorMessage
             else
               raise SDKHTTPProtocolException.Create(E.Message);
           end;

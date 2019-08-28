@@ -152,6 +152,11 @@ type
 
   TImpostoApuracao = (iapICMS, iapPIS, iapCOFINS);
 
+  TStatusConferenciaCega = (sccAGUARDANDO_RECEPCAO, sccAGUARDANDO_RECONFERENCIA, sccAGUARDANDO_CONFERENCIA,
+    sccAGUARDANDO_RESULTADO, sccCONFERINDO, sccRECONFERINDO, sccFINALIZADO, sccCANCELADO,
+    sccAGUARDANDO_GERACAO_NOTAS_DEVOLUCAO);
+
+
 implementation
 
 { TAssociacao }
@@ -1472,6 +1477,34 @@ begin
   raise EnumException.CreateFmt('Valor %d incorreto para ImpostoApuracao.', [AValue]);
 end;
 
+function Converter_StatusConferenciaCega_EnumToStr(const AValue: Integer): TString; overload;
+begin
+  if Integer(sccAGUARDANDO_RECEPCAO) = AValue then Result := 'AGUARDANDO_RECEPCAO' else
+  if Integer(sccAGUARDANDO_RECONFERENCIA) = AValue then Result := 'AGUARDANDO_RECONFERENCIA' else
+  if Integer(sccAGUARDANDO_CONFERENCIA) = AValue then Result := 'AGUARDANDO_CONFERENCIA' else
+  if Integer(sccAGUARDANDO_RESULTADO) = AValue then Result := 'AGUARDANDO_RESULTADO' else
+  if Integer(sccCONFERINDO) = AValue then Result := 'CONFERINDO' else
+  if Integer(sccRECONFERINDO) = AValue then Result := 'AGUARDANDO_RECEPCAO' else
+  if Integer(sccFINALIZADO) = AValue then Result := 'FINALIZADO' else
+  if Integer(sccCANCELADO) = AValue then Result := 'CANCELADO' else
+  if Integer(sccAGUARDANDO_GERACAO_NOTAS_DEVOLUCAO) = AValue then Result := 'AGUARDANDO_GERACAO_NOTAS_DEVOLUCAO' else
+  raise EnumException.CreateFmt('Valor %d incorreto para StatusConferenciaCega.', [AValue]);
+end;
+
+function Converter_StatusConferenciaCega_StrToEmum(const AValue: TString): Integer; overload;
+begin
+  if SameText(AValue, 'AGUARDANDO_RECEPCAO') then Result := Integer(sccAGUARDANDO_RECEPCAO) else
+  if SameText(AValue, 'AGUARDANDO_RECONFERENCIA') then Result := Integer(sccAGUARDANDO_RECONFERENCIA) else
+  if SameText(AValue, 'AGUARDANDO_CONFERENCIA') then Result := Integer(sccAGUARDANDO_CONFERENCIA) else
+  if SameText(AValue, 'AGUARDANDO_RESULTADO') then Result := Integer(sccAGUARDANDO_RESULTADO) else
+  if SameText(AValue, 'CONFERINDO') then Result := Integer(sccCONFERINDO) else
+  if SameText(AValue, 'RECONFERINDO') then Result := Integer(sccAGUARDANDO_RECEPCAO) else
+  if SameText(AValue, 'FINALIZADO') then Result := Integer(sccFINALIZADO) else
+  if SameText(AValue, 'CANCELADO') then Result := Integer(sccCANCELADO) else
+  if SameText(AValue, 'AGUARDANDO_GERACAO_NOTAS_DEVOLUCAO') then Result := Integer(sccAGUARDANDO_GERACAO_NOTAS_DEVOLUCAO) else
+  raise EnumException.CreateFmt('Valor %d incorreto para StatusConferenciaCega.', [AValue]);
+end;
+
 { TEnumConversors }
 
 function TEnumConverters.Execute(const AEnumName, AValue: TString): Integer;
@@ -1570,6 +1603,7 @@ initialization
   EnumConverters.Register('TTipoResidencia', @Converter_TipoResidencia_StrToEnum, @Converter_TipoResidencia_EnumToStr);
   EnumConverters.Register('TOperacaoApuracao', @Converter_OperacaoApuracao_StrToEnum, @Converter_OperacaoApuracao_EnumToStr);
   EnumConverters.Register('TImpostoApuracao', @Converter_ImpostoApuracao_StrToEnum, @Converter_ImpostoApuracao_EnumToStr);
+  EnumConverters.Register('TStatusConferenciaCega', @Converter_StatusConferenciaCega_StrToEmum, @Converter_StatusConferenciaCega_EnumToStr);
 
 finalization
   FreeAndNil(EnumConverters);

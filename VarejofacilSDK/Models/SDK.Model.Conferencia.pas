@@ -12,14 +12,17 @@ type
     function GetPlaca: TString;
     function GetLojaId: Int64;
     function GetDataDaRecepcao: TDateTime;
+    function GetStatusDaConferencia: TStatusConferenciaCega;
     procedure SetId(const AId: Int64);
     procedure SetPlaca(const APlaca: TString);
     procedure SetLojaId(const ALojaId: Int64);
     procedure SetDataDaRecepcao(const AData: TDateTime);
+    procedure SetStatusDaConferencia(const StatusDaConferencia: TStatusConferenciaCega);
     property Id: Int64 read GetId write SetId;
     property Placa: TString read GetPlaca write SetPlaca;
     property LojaId: Int64 read GetLojaId write SetLojaId;
     property DataDaRecepcao: TDateTime read GetDataDaRecepcao write SetDataDaRecepcao;
+    property StatusDaConferencia: TStatusConferenciaCega read GetStatusDaConferencia write SetStatusDaConferencia;
   end;
   
   TConferenciaList = class;
@@ -76,19 +79,23 @@ type
     FPlaca: TString;
     FLojaId: Int64;
     FDataDaRecepcao: TDateTime;
+    FStatusDaConferencia: TStatusConferenciaCega;
     function GetId: Int64;
     function GetPlaca: TString;
     function GetLojaId: Int64;
     function GetDataDaRecepcao: TDateTime;
+    function GetStatusDaConferencia: TStatusConferenciaCega;
     procedure SetID(const AId: Int64);
     procedure SetPlaca(const APlaca: TString);
     procedure SetLojaId(const ALojaId: Int64);
     procedure SetDataDaRecepcao(const ADataDaRecepcao: TDateTime);
+    procedure SetStatusDaConferencia(const Value: TStatusConferenciaCega);
   published
     property Id: Int64 read GetId write SetID;
     property Placa: TString read GetPlaca write SetPlaca;
     property LojaId: Int64 read GetLojaId write SetLojaId;
     property DataDaRecepcao: TDateTime read GetDataDaRecepcao write SetDataDaRecepcao;
+    property StatusDaConferencia: TStatusConferenciaCega read GetStatusDaConferencia write SetStatusDaConferencia;
   end;
 
 { TConferencia }
@@ -114,6 +121,11 @@ begin
   Result := FPlaca;
 end;
 
+function TConferencia.GetStatusDaConferencia: TStatusConferenciaCega;
+begin
+  Result := FStatusDaConferencia;
+end;
+
 procedure TConferencia.SetDataDaRecepcao(const ADataDaRecepcao: TDateTime);
 begin
   FDataDaRecepcao := ADataDaRecepcao;
@@ -132,6 +144,11 @@ end;
 procedure TConferencia.SetPlaca(const APlaca: TString);
 begin
   FPlaca := APlaca;
+end;
+
+procedure TConferencia.SetStatusDaConferencia(const Value: TStatusConferenciaCega);
+begin
+  FStatusDaConferencia := Value;
 end;
 
 { TConferenciaListEnumerator }

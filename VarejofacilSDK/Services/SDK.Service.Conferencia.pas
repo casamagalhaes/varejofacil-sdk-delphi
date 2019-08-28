@@ -14,6 +14,7 @@ type
     function GetAll(AStart: Integer = 0; ACount: Integer = 0; const ASortParams: TStringArray = nil): TConferenciaList;
     function Filter(const AQuery: TString; AStart: Integer = 0; ACount: Integer = 0;
       const ASortParams: TStringArray = nil): TConferenciaList;
+    function EncerrarDigitacao(AId: Int64): Boolean;
   end;
 
 implementation
@@ -23,6 +24,15 @@ implementation
 constructor TConferenciaService.Create(const AClient: IClient);
 begin
   inherited Create('/api/v1/compra/conferencias', AClient);
+end;
+
+function TConferenciaService.EncerrarDigitacao(AId: Int64): Boolean;
+var
+  Response: IResponse;
+begin
+  Response := Client.Post(Format(FPath + '/%d/encerra-digitacao', [AId]),
+    Format('{"conferenciaId": %d}', [AId]), nil);
+  Result := Assigned(Response) and (Response.Status = 200);
 end;
 
 function TConferenciaService.Filter(const AQuery: TString; AStart,

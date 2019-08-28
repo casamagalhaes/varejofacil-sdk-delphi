@@ -23,6 +23,18 @@ type
 
   SDKUnknownException = class(Exception);
 
+  SDKLimitExceededException = class(Exception)
+  public
+    constructor Create; reintroduce;
+  end;
+
 implementation
+
+{ SDKLimitExceededException }
+
+constructor SDKLimitExceededException.Create;
+begin
+  inherited Create('Limite de consumo a API atingindo');
+end;
 
 end.
