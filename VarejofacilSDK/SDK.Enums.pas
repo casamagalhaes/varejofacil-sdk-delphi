@@ -156,6 +156,7 @@ type
     sccAGUARDANDO_RESULTADO, sccCONFERINDO, sccRECONFERINDO, sccFINALIZADO, sccCANCELADO,
     sccAGUARDANDO_GERACAO_NOTAS_DEVOLUCAO);
 
+  TMotivoDesoneracaoICMS = (mdiTAXI, mdiDEFICIENTE_FISICO, mdiPRODUTOR_AGROPECUARIO, mdiFROTISTA_OU_LOCADORA, mdiDIPLOMATICO_CONSULAR, mdiUTILITARIOS, mdiSUFRAMA, mdiVENDA_ORGAO_PUBLICO, mdiOUTROS, mdiDEFICIENTE_CONDUTOR, mdiDEFICIENTE_NAO_CONDUTOR, mdiFOMENTO_AGROPECUARIO);
 
 implementation
 
@@ -1505,6 +1506,40 @@ begin
   raise EnumException.CreateFmt('Valor %d incorreto para StatusConferenciaCega.', [AValue]);
 end;
 
+function Converter_MotivoDesoneracaoICMS_EnumToStr(const AValue: Integer): TString; overload;
+begin
+  if Integer(mdiTAXI) = AValue then Result := 'TAXI' else
+  if Integer(mdiDEFICIENTE_FISICO) = AValue then Result := 'DEFICIENTE_FISICO' else
+  if Integer(mdiPRODUTOR_AGROPECUARIO) = AValue then Result := 'PRODUTOR_AGROPECUARI' else
+  if Integer(mdiFROTISTA_OU_LOCADORA) = AValue then Result := 'FROTISTA_OU_LOCADORA' else
+  if Integer(mdiDIPLOMATICO_CONSULAR) = AValue then Result := 'DIPLOMATICO_CONSULAR' else
+  if Integer(mdiUTILITARIOS) = AValue then Result := 'UTILITARIOS' else
+  if Integer(mdiSUFRAMA) = AValue then Result := 'SUFRAMA' else
+  if Integer(mdiVENDA_ORGAO_PUBLICO) = AValue then Result := 'VENDA_ORGÃO_PUBLICO' else
+  if Integer(mdiOUTROS) = AValue then Result := 'OUTROS' else
+  if Integer(mdiDEFICIENTE_CONDUTOR) = AValue then Result := 'DEFICIENTE_CONDUTOR' else
+  if Integer(mdiDEFICIENTE_NAO_CONDUTOR) = AValue then Result := 'DEFICIENTE_NAO_COND' else
+  if Integer(mdiFOMENTO_AGROPECUARIO) = AValue then Result := 'FOMENTO_AGRO_PECU' else
+  raise EnumException.CreateFmt('Valor %d incorreto para MotivoDesoneracaoICMS.', [AValue]);
+end;
+
+function Converter_MotivoDesoneracaoICMS_StrToEmum(const AValue: TString): Integer; overload;
+begin
+  if SameText(AValue, 'TAXI') then Result := Integer(mdiTAXI) else
+  if SameText(AValue, 'DEFICIENTE_FISICO') then Result := Integer(mdiDEFICIENTE_FISICO) else
+  if SameText(AValue, 'PRODUTOR_AGROPECUARI') then Result := Integer(mdiPRODUTOR_AGROPECUARIO) else
+  if SameText(AValue, 'FROTISTA_OU_LOCADORA') then Result := Integer(mdiFROTISTA_OU_LOCADORA) else
+  if SameText(AValue, 'DIPLOMATICO_CONSULAR') then Result := Integer(mdiDIPLOMATICO_CONSULAR) else
+  if SameText(AValue, 'UTILITARIOS') then Result := Integer(mdiUTILITARIOS) else
+  if SameText(AValue, 'SUFRAMA') then Result := Integer(mdiSUFRAMA) else
+  if SameText(AValue, 'VENDA_ORGÃO_PUBLICO') then Result := Integer(mdiVENDA_ORGAO_PUBLICO) else
+  if SameText(AValue, 'OUTROS') then Result := Integer(mdiOUTROS) else
+  if SameText(AValue, 'DEFICIENTE_CONDUTOR') then Result := Integer(mdiDEFICIENTE_CONDUTOR) else
+  if SameText(AValue, 'DEFICIENTE_NAO_COND') then Result := Integer(mdiDEFICIENTE_NAO_CONDUTOR) else
+  if SameText(AValue, 'FOMENTO_AGRO_PECU') then Result := Integer(mdiFOMENTO_AGROPECUARIO) else
+  raise EnumException.CreateFmt('Valor %d incorreto para MotivoDesoneracaoICMS.', [AValue]);
+end;
+
 { TEnumConversors }
 
 function TEnumConverters.Execute(const AEnumName, AValue: TString): Integer;
@@ -1604,6 +1639,7 @@ initialization
   EnumConverters.Register('TOperacaoApuracao', @Converter_OperacaoApuracao_StrToEnum, @Converter_OperacaoApuracao_EnumToStr);
   EnumConverters.Register('TImpostoApuracao', @Converter_ImpostoApuracao_StrToEnum, @Converter_ImpostoApuracao_EnumToStr);
   EnumConverters.Register('TStatusConferenciaCega', @Converter_StatusConferenciaCega_StrToEmum, @Converter_StatusConferenciaCega_EnumToStr);
+  EnumConverters.Register('TMotivoDesoneracaoICMS', @Converter_MotivoDesoneracaoICMS_StrToEmum, @Converter_MotivoDesoneracaoICMS_EnumToStr);
 
 finalization
   FreeAndNil(EnumConverters);
