@@ -1,4 +1,4 @@
-﻿unit SDK.Model.ItemTabelaTributaria;
+﻿  unit SDK.Model.ItemTabelaTributaria;
 
 interface
 
@@ -51,6 +51,10 @@ type
     procedure SetCfopId(const ACfopId: Variant);
     function GetCfopCuponsFiscaisId: Variant;
     procedure SetCfopCuponsFiscaisId(const ACfopCuponsFiscaisId: Variant);
+    function GetCodigoBeneficioFiscal: TString;
+    procedure SetCodigoBeneficioFiscal(const ACodigoBeneficioFiscal: TString);
+    function GetMotivoDesoneracaoICMS: TMotivoDesoneracaoICMS;
+    procedure SetMotivoDesoneracaoICMS(const AMotivoDesoneracaoICMS: TMotivoDesoneracaoICMS);
     property Uf: TString read GetUf write SetUf;
     property ClassificacaoDePessoa: TClassificacaoDePessoa read GetClassificacaoDePessoa write SetClassificacaoDePessoa;
     property TributadoNF: Double read GetTributadoNF write SetTributadoNF;
@@ -71,6 +75,8 @@ type
     property Tributacao: TString read GetTributacao write SetTributacao;
     property CfopId: Variant read GetCfopId write SetCfopId;
     property CfopCuponsFiscaisId: Variant read GetCfopCuponsFiscaisId write SetCfopCuponsFiscaisId;
+    property CodigoBeneficioFiscal: TString read GetCodigoBeneficioFiscal write SetCodigoBeneficioFiscal;
+    property MotivoDesoneracaoICMS: TMotivoDesoneracaoICMS read GetMotivoDesoneracaoICMS write SetMotivoDesoneracaoICMS;
   end;
 
   TItemTabelaTributariaList = class;
@@ -123,27 +129,29 @@ type
 
   TItemTabelaTributaria = class(TInterfacedModel, IItemTabelaTributaria)
   private
-  FId: Variant;
-	FUf: TString;
-	FClassificacaoDePessoa: TClassificacaoDePessoa;
-	FTributadoNF: Double;
-	FIsentoNF: Double;
-	FOutrosNF: Double;
-	FAliquota: Double;
-	FAgregado: Double;
-	FTributadoICMS: Double;
-	FCargaLiquida: Double;
-	FAliquotaInterna: Double;
-	FFecop: Double;
-  FFecopST: Double;
-	FCstId: Integer;
-	FCstDocumentoFiscalId: Integer;
-	FCstCuponsFiscaisId: Integer;
-	FCsosn: TCSOSN;
-	FCsosnDocumentoFiscal: TCSOSN;
-	FTributacao: TString;
-	FCfopId: Variant;
-	FCfopCuponsFiscaisId: Variant;
+    FId: Variant;
+    FUf: TString;
+    FClassificacaoDePessoa: TClassificacaoDePessoa;
+    FTributadoNF: Double;
+    FIsentoNF: Double;
+    FOutrosNF: Double;
+    FAliquota: Double;
+    FAgregado: Double;
+    FTributadoICMS: Double;
+    FCargaLiquida: Double;
+    FAliquotaInterna: Double;
+    FFecop: Double;
+    FFecopST: Double;
+    FCstId: Integer;
+    FCstDocumentoFiscalId: Integer;
+    FCstCuponsFiscaisId: Integer;
+    FCsosn: TCSOSN;
+    FCsosnDocumentoFiscal: TCSOSN;
+    FTributacao: TString;
+    FCfopId: Variant;
+    FCfopCuponsFiscaisId: Variant;
+    FMotivoDesoneracaoICMS: TMotivoDesoneracaoICMS;
+    FCodigoBeneficioFiscal: TString;
     function GetId: Variant;
     procedure SetId(const AId: Variant);
     function GetUf: TString;
@@ -186,6 +194,10 @@ type
     procedure SetCfopId(const ACfopId: Variant);
     function GetCfopCuponsFiscaisId: Variant;
     procedure SetCfopCuponsFiscaisId(const ACfopCuponsFiscaisId: Variant);
+    function GetCodigoBeneficioFiscal: TString;
+    procedure SetCodigoBeneficioFiscal(const ACodigoBeneficioFiscal: TString);
+    function GetMotivoDesoneracaoICMS: TMotivoDesoneracaoICMS;
+    procedure SetMotivoDesoneracaoICMS(const AMotivoDesoneracaoICMS: TMotivoDesoneracaoICMS);
   published
     property Id: Variant read GetId write SetId;
     property Uf: TString read GetUf write SetUf;
@@ -208,6 +220,8 @@ type
     property Tributacao: TString read GetTributacao write SetTributacao;
     property CfopId: Variant read GetCfopId write SetCfopId;
     property CfopCuponsFiscaisId: Variant read GetCfopCuponsFiscaisId write SetCfopCuponsFiscaisId;
+    property CodigoBeneficioFiscal: TString read GetCodigoBeneficioFiscal write SetCodigoBeneficioFiscal;
+    property MotivoDesoneracaoICMS: TMotivoDesoneracaoICMS read GetMotivoDesoneracaoICMS write SetMotivoDesoneracaoICMS;
   end;
 
 implementation
@@ -311,9 +325,20 @@ begin
   Result := FClassificacaoDePessoa;
 end;
 
+function TItemTabelaTributaria.GetCodigoBeneficioFiscal: TString;
+begin
+  Result := FCodigoBeneficioFiscal;
+end;
+
 procedure TItemTabelaTributaria.SetClassificacaoDePessoa(const AClassificacaoDePessoa: TClassificacaoDePessoa);
 begin
   FClassificacaoDePessoa := AClassificacaoDePessoa;
+end;
+
+procedure TItemTabelaTributaria.SetCodigoBeneficioFiscal(
+  const ACodigoBeneficioFiscal: TString);
+begin
+  FCodigoBeneficioFiscal := FCodigoBeneficioFiscal;
 end;
 
 function TItemTabelaTributaria.GetTributadoNF: Double;
@@ -341,9 +366,20 @@ begin
   Result := FIsentoNF;
 end;
 
+function TItemTabelaTributaria.GetMotivoDesoneracaoICMS: TMotivoDesoneracaoICMS;
+begin
+  Result := FMotivoDesoneracaoICMS;
+end;
+
 procedure TItemTabelaTributaria.SetIsentoNF(const AIsentoNF: Double);
 begin
   FIsentoNF := AIsentoNF;
+end;
+
+procedure TItemTabelaTributaria.SetMotivoDesoneracaoICMS(
+  const AMotivoDesoneracaoICMS: TMotivoDesoneracaoICMS);
+begin
+  FMotivoDesoneracaoICMS := AMotivoDesoneracaoICMS;
 end;
 
 function TItemTabelaTributaria.GetOutrosNF: Double;

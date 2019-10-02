@@ -29,10 +29,6 @@ type
     procedure SetDecreto(const ADecreto: TString);
     function GetItens: TItemTabelaTributariaList;
     procedure SetItens(const AItens: TItemTabelaTributariaList);
-    function GetCodigoBeneficioFiscal: TString;
-    procedure SetCodigoBeneficioFiscal(const ACodigoBeneficioFiscal: TString);
-    function GetMotivoDesoneracaoICMS: TMotivoDesoneracaoICMS;
-    procedure SetMotivoDesoneracaoICMS(const AMotivoDesoneracaoICMS: TMotivoDesoneracaoICMS);
     property Id: Int64 read GetId write SetId;
     property RegimeEstadualId: Int64 read GetRegimeEstadualId write SetRegimeEstadualId;
     property SituacaoFiscalId: Integer read GetSituacaoFiscalId write SetSituacaoFiscalId;
@@ -43,8 +39,6 @@ type
     property TipoDeOperacao: TTipoOperacao read GetTipoDeOperacao write SetTipoDeOperacao;
     property Decreto: TString read GetDecreto write SetDecreto;
     property Itens: TItemTabelaTributariaList read GetItens write SetItens;
-    property CodigoBeneficioFiscal: TString read GetCodigoBeneficioFiscal write SetCodigoBeneficioFiscal;
-    property MotivoDesoneracaoICMS: TMotivoDesoneracaoICMS read GetMotivoDesoneracaoICMS write SetMotivoDesoneracaoICMS;
   end;
 
   TTabelaTributariaList = class;
@@ -97,18 +91,16 @@ type
 
   TTabelaTributaria = class(TInterfacedModel, ITabelaTributaria)
   private
-	FId: Int64;
-	FRegimeEstadualId: Int64;
-	FSituacaoFiscalId: Integer;
-	FFiguraFiscalId: Integer;
-	FUf: TString;
-	FInicioDaVigencia: TDateTime;
-	FFinalDaVigencia: TDateTime;
-	FTipoDeOperacao: TTipoOperacao;
-	FDecreto: TString;
-	FItens: TItemTabelaTributariaList;
-  FMotivoDesoneracaoICMS: TMotivoDesoneracaoICMS;
-  FCodigoBeneficioFiscal: TString;
+    FId: Int64;
+    FRegimeEstadualId: Int64;
+    FSituacaoFiscalId: Integer;
+    FFiguraFiscalId: Integer;
+    FUf: TString;
+    FInicioDaVigencia: TDateTime;
+    FFinalDaVigencia: TDateTime;
+    FTipoDeOperacao: TTipoOperacao;
+    FDecreto: TString;
+    FItens: TItemTabelaTributariaList;
     function GetId: Int64;
     procedure SetId(const AId: Int64);
     function GetRegimeEstadualId: Int64;
@@ -129,10 +121,6 @@ type
     procedure SetDecreto(const ADecreto: TString);
     function GetItens: TItemTabelaTributariaList;
     procedure SetItens(const AItens: TItemTabelaTributariaList);
-    function GetCodigoBeneficioFiscal: TString;
-    procedure SetCodigoBeneficioFiscal(const ACodigoBeneficioFiscal: TString);
-    function GetMotivoDesoneracaoICMS: TMotivoDesoneracaoICMS;
-    procedure SetMotivoDesoneracaoICMS(const AMotivoDesoneracaoICMS: TMotivoDesoneracaoICMS);
   published
     property Id: Int64 read GetId write SetId;
     property RegimeEstadualId: Int64 read GetRegimeEstadualId write SetRegimeEstadualId;
@@ -144,8 +132,6 @@ type
     property TipoDeOperacao: TTipoOperacao read GetTipoDeOperacao write SetTipoDeOperacao;
     property Decreto: TString read GetDecreto write SetDecreto;
     property Itens: TItemTabelaTributariaList read GetItens write SetItens;
-    property CodigoBeneficioFiscal: TString read GetCodigoBeneficioFiscal write SetCodigoBeneficioFiscal;
-    property MotivoDesoneracaoICMS: TMotivoDesoneracaoICMS read GetMotivoDesoneracaoICMS write SetMotivoDesoneracaoICMS;
   end;
 
 implementation
@@ -314,19 +300,9 @@ begin
   FTipoDeOperacao := ATipoDeOperacao;
 end;
 
-function TTabelaTributaria.GetCodigoBeneficioFiscal: TString;
-begin
-  Result := FCodigoBeneficioFiscal;
-end;
-
 function TTabelaTributaria.GetDecreto: TString;
 begin
   Result := FDecreto;
-end;
-
-procedure TTabelaTributaria.SetCodigoBeneficioFiscal(const ACodigoBeneficioFiscal: TString);
-begin
-  FCodigoBeneficioFiscal := ACodigoBeneficioFiscal;
 end;
 
 procedure TTabelaTributaria.SetDecreto(const ADecreto: TString);
@@ -339,19 +315,9 @@ begin
   Result := FItens;
 end;
 
-function TTabelaTributaria.GetMotivoDesoneracaoICMS: TMotivoDesoneracaoICMS;
-begin
-  Result := FMotivoDesoneracaoICMS;
-end;
-
 procedure TTabelaTributaria.SetItens(const AItens: TItemTabelaTributariaList);
 begin
   FItens := AItens;
-end;
-
-procedure TTabelaTributaria.SetMotivoDesoneracaoICMS(const AMotivoDesoneracaoICMS: TMotivoDesoneracaoICMS);
-begin
-  FMotivoDesoneracaoICMS := AMotivoDesoneracaoICMS;
 end;
 
 end.
