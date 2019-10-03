@@ -55,6 +55,10 @@ type
     procedure SetCodigoBeneficioFiscal(const ACodigoBeneficioFiscal: TString);
     function GetMotivoDesoneracaoICMS: TMotivoDesoneracaoICMS;
     procedure SetMotivoDesoneracaoICMS(const AMotivoDesoneracaoICMS: TMotivoDesoneracaoICMS);
+    function GetIcmsOrigem: Double;
+    procedure SetIcmsOrigem(const ASetIcmsOrigem: Double);
+    function GetIcmsDesonerado: Boolean;
+    procedure SetIcmsDesonerado(const AIcmsDesonerado: Boolean);
     property Uf: TString read GetUf write SetUf;
     property ClassificacaoDePessoa: TClassificacaoDePessoa read GetClassificacaoDePessoa write SetClassificacaoDePessoa;
     property TributadoNF: Double read GetTributadoNF write SetTributadoNF;
@@ -77,6 +81,8 @@ type
     property CfopCuponsFiscaisId: Variant read GetCfopCuponsFiscaisId write SetCfopCuponsFiscaisId;
     property CodigoBeneficioFiscal: TString read GetCodigoBeneficioFiscal write SetCodigoBeneficioFiscal;
     property MotivoDesoneracaoICMS: TMotivoDesoneracaoICMS read GetMotivoDesoneracaoICMS write SetMotivoDesoneracaoICMS;
+    property IcmsOrigem: Double read  GetIcmsOrigem write SetIcmsOrigem;
+    property IcmsDesonerado: Boolean read GetIcmsDesonerado write SetIcmsDesonerado;
   end;
 
   TItemTabelaTributariaList = class;
@@ -152,6 +158,8 @@ type
     FCfopCuponsFiscaisId: Variant;
     FMotivoDesoneracaoICMS: TMotivoDesoneracaoICMS;
     FCodigoBeneficioFiscal: TString;
+    FIcmsOrigem: Double;
+    FIcmsDesonerado: Boolean;
     function GetId: Variant;
     procedure SetId(const AId: Variant);
     function GetUf: TString;
@@ -198,6 +206,10 @@ type
     procedure SetCodigoBeneficioFiscal(const ACodigoBeneficioFiscal: TString);
     function GetMotivoDesoneracaoICMS: TMotivoDesoneracaoICMS;
     procedure SetMotivoDesoneracaoICMS(const AMotivoDesoneracaoICMS: TMotivoDesoneracaoICMS);
+    function GetIcmsDesonerado: Boolean;
+    procedure SetIcmsDesonerado(const AIcmsDesonerado: Boolean);
+    function GetIcmsOrigem: Double;
+    procedure SetIcmsOrigem(const AIcmsOrigem: Double);
   published
     property Id: Variant read GetId write SetId;
     property Uf: TString read GetUf write SetUf;
@@ -222,6 +234,8 @@ type
     property CfopCuponsFiscaisId: Variant read GetCfopCuponsFiscaisId write SetCfopCuponsFiscaisId;
     property CodigoBeneficioFiscal: TString read GetCodigoBeneficioFiscal write SetCodigoBeneficioFiscal;
     property MotivoDesoneracaoICMS: TMotivoDesoneracaoICMS read GetMotivoDesoneracaoICMS write SetMotivoDesoneracaoICMS;
+    property IcmsOrigem: Double read  GetIcmsOrigem write SetIcmsOrigem;
+    property IcmsDesonerado: Boolean read GetIcmsDesonerado write SetIcmsDesonerado;
   end;
 
 implementation
@@ -338,7 +352,7 @@ end;
 procedure TItemTabelaTributaria.SetCodigoBeneficioFiscal(
   const ACodigoBeneficioFiscal: TString);
 begin
-  FCodigoBeneficioFiscal := FCodigoBeneficioFiscal;
+  FCodigoBeneficioFiscal := ACodigoBeneficioFiscal;
 end;
 
 function TItemTabelaTributaria.GetTributadoNF: Double;
@@ -351,9 +365,29 @@ begin
   FTributadoNF := ATributadoNF;
 end;
 
+function TItemTabelaTributaria.GetIcmsDesonerado: Boolean;
+begin
+  Result := FIcmsDesonerado
+end;
+
+function TItemTabelaTributaria.GetIcmsOrigem: Double;
+begin
+  Result := FIcmsOrigem;
+end;
+
 function TItemTabelaTributaria.GetId: Variant;
 begin
   Result := FId;
+end;
+
+procedure TItemTabelaTributaria.SetIcmsDesonerado(const AIcmsDesonerado: Boolean);
+begin
+  FIcmsDesonerado := AIcmsDesonerado;
+end;
+
+procedure TItemTabelaTributaria.SetIcmsOrigem(const AIcmsOrigem: Double);
+begin
+  FIcmsOrigem := AIcmsOrigem;
 end;
 
 procedure TItemTabelaTributaria.SetId(const AId: Variant);
