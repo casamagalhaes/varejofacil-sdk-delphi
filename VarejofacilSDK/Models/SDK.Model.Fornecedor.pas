@@ -75,6 +75,8 @@ type
     procedure SetTipoDePessoa(const ATipoDePessoa: TTipoPessoa);
     function GetHoldingId: Integer;
     procedure SetHoldingId(const AHoldingId: Integer);
+    function GetTipoContribuinte: TTipoContribuinte;
+    procedure SetTipoContribuinte(const ATipoContribuinte: TTipoContribuinte);
     property Id: Variant read GetId write SetId;
     property Contato: TString read GetContato write SetContato;
     property Observacao: TString read GetObservacao write SetObservacao;
@@ -108,6 +110,7 @@ type
     property Endereco: IEndereco read GetEndereco write SetEndereco;
     property TipoDePessoa: TTipoPessoa read GetTipoDePessoa write SetTipoDePessoa;
     property HoldingId: Integer read GetHoldingId write SetHoldingId;
+    property TipoContribuinte: TTipoContribuinte read GetTipoContribuinte write SetTipoContribuinte;
   end;
 
   TFornecedorList = class;
@@ -160,39 +163,40 @@ type
 
   TFornecedor = class(TInterfacedModel, IFornecedor)
   private
-	FId: Variant;
-	FContato: TString;
-	FObservacao: TString;
-	FTabelaPrazo: TTabelaPrazo;
-	FPrazo: Integer;
-	FEhIsentoDePisCofins: Boolean;
-	FTipoDeFornecedor: TTipoFornecedor;
-	FPrazoDeEntrega: Integer;
-	FTipoDeFrete: TTipoFreteNota;
-	FTransportadora: Boolean;
-	FServico: Boolean;
-	FRegimeEstadualTributarioId: Variant;
-	FProdutorRural: Boolean;
-	FInscricaoEstadual: TString;
-	FNumeroDoDocumento: TString;
-	FNumeroDeIdentificacao: TString;
-	FOrgaoExpedidor: TString;
-	FCei: TString;
-	FInscricaoMunicipal: TString;
-	FNome: TString;
-	FFantasia: TString;
-	FTelefone1: TString;
-	FTelefone2: TString;
-	FFax: TString;
-	FEmail: TString;
-	FHomePage: TString;
-	FRedeSocial: TString;
-	FTwitter: TString;
-	FComunicadorDeMensagensInstantaneas: TString;
-	FSuframa: TString;
-	FEndereco: IEndereco;
-	FTipoDePessoa: TTipoPessoa;
-	FHoldingId: Integer;
+    FId: Variant;
+    FContato: TString;
+    FObservacao: TString;
+    FTabelaPrazo: TTabelaPrazo;
+    FPrazo: Integer;
+    FEhIsentoDePisCofins: Boolean;
+    FTipoDeFornecedor: TTipoFornecedor;
+    FPrazoDeEntrega: Integer;
+    FTipoDeFrete: TTipoFreteNota;
+    FTransportadora: Boolean;
+    FServico: Boolean;
+    FRegimeEstadualTributarioId: Variant;
+    FProdutorRural: Boolean;
+    FInscricaoEstadual: TString;
+    FNumeroDoDocumento: TString;
+    FNumeroDeIdentificacao: TString;
+    FOrgaoExpedidor: TString;
+    FCei: TString;
+    FInscricaoMunicipal: TString;
+    FNome: TString;
+    FFantasia: TString;
+    FTelefone1: TString;
+    FTelefone2: TString;
+    FFax: TString;
+    FEmail: TString;
+    FHomePage: TString;
+    FRedeSocial: TString;
+    FTwitter: TString;
+    FComunicadorDeMensagensInstantaneas: TString;
+    FSuframa: TString;
+    FEndereco: IEndereco;
+    FTipoDePessoa: TTipoPessoa;
+    FHoldingId: Integer;
+    FTipoContribuinte: TTipoContribuinte;
     function GetId: Variant;
     procedure SetId(const AId: Variant);
     function GetContato: TString;
@@ -259,6 +263,8 @@ type
     procedure SetTipoDePessoa(const ATipoDePessoa: TTipoPessoa);
     function GetHoldingId: Integer;
     procedure SetHoldingId(const AHoldingId: Integer);
+    function GetTipoContribuinte: TTipoContribuinte;
+    procedure SetTipoContribuinte(const Value: TTipoContribuinte);
   published
     property Id: Variant read GetId write SetId;
     property Contato: TString read GetContato write SetContato;
@@ -293,6 +299,7 @@ type
     property Endereco: IEndereco read GetEndereco write SetEndereco;
     property TipoDePessoa: TTipoPessoa read GetTipoDePessoa write SetTipoDePessoa;
     property HoldingId: Integer read GetHoldingId write SetHoldingId;
+    property TipoContribuinte: TTipoContribuinte read GetTipoContribuinte write SetTipoContribuinte;
   end;
 
 implementation
@@ -441,9 +448,19 @@ begin
   FEhIsentoDePisCofins := AEhIsentoDePisCofins;
 end;
 
+function TFornecedor.GetTipoContribuinte: TTipoContribuinte;
+begin
+  Result := FTipoContribuinte;
+end;
+
 function TFornecedor.GetTipoDeFornecedor: TTipoFornecedor;
 begin
   Result := FTipoDeFornecedor;
+end;
+
+procedure TFornecedor.SetTipoContribuinte(const Value: TTipoContribuinte);
+begin
+  FTipoContribuinte := Value;
 end;
 
 procedure TFornecedor.SetTipoDeFornecedor(const ATipoDeFornecedor: TTipoFornecedor);

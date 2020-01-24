@@ -158,7 +158,27 @@ type
 
   TMotivoDesoneracaoICMS = (mdiTAXI, mdiDEFICIENTE_FISICO, mdiPRODUTOR_AGROPECUARIO, mdiFROTISTA_OU_LOCADORA, mdiDIPLOMATICO_CONSULAR, mdiUTILITARIOS, mdiSUFRAMA, mdiVENDA_ORGAO_PUBLICO, mdiOUTROS, mdiDEFICIENTE_CONDUTOR, mdiDEFICIENTE_NAO_CONDUTOR, mdiFOMENTO_AGROPECUARIO);
 
+  TTipoContribuinte = (tcCONTRIBUINTE, tcNAO_CONTRIBUINTE, tcISENTO);
+
 implementation
+
+{ TTipoContribuinte }
+
+function Converter_TipoContribuinte_StrToEnum(const AValue: TString): Integer;
+begin
+  if SameText(AValue, 'CONTRIBUINTE') then Result := Integer(tcCONTRIBUINTE) else
+  if SameText(AValue, 'NAO_CONTRIBUINTE') then Result := Integer(tcNAO_CONTRIBUINTE) else
+  if SameText(AValue, 'ISENTO') then Result := Integer(tcISENTO) else
+  raise EnumException.CreateFmt('Valor %s incorreto para TipoContribuinte.', [AValue]);
+end;
+
+function Converter_TipoContribuinte_EnumToStr(const AValue: Integer): TString; overload;
+begin
+  if Integer(tcCONTRIBUINTE) = AValue then Result := 'CONTRIBUINTE' else
+  if Integer(tcNAO_CONTRIBUINTE) = AValue then Result := 'NAO_CONTRIBUINTE' else
+  if Integer(tcISENTO) = AValue then Result := 'ISENTO' else
+  raise EnumException.CreateFmt('Valor %d incorreto para TipoContribuinte.', [AValue]);
+end;
 
 { TAssociacao }
 
@@ -1640,6 +1660,7 @@ initialization
   EnumConverters.Register('TImpostoApuracao', @Converter_ImpostoApuracao_StrToEnum, @Converter_ImpostoApuracao_EnumToStr);
   EnumConverters.Register('TStatusConferenciaCega', @Converter_StatusConferenciaCega_StrToEmum, @Converter_StatusConferenciaCega_EnumToStr);
   EnumConverters.Register('TMotivoDesoneracaoICMS', @Converter_MotivoDesoneracaoICMS_StrToEmum, @Converter_MotivoDesoneracaoICMS_EnumToStr);
+  EnumConverters.Register('TTipoContribuinte', @Converter_TipoContribuinte_StrToEnum, @Converter_TipoContribuinte_EnumToStr);
 
 finalization
   FreeAndNil(EnumConverters);

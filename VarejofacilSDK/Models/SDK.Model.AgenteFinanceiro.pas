@@ -51,6 +51,8 @@ type
     procedure SetTipo(const ATipo: TTipoPessoa);
     function GetHoldingId: Integer;
     procedure SetHoldingId(const AHoldingId: Integer);
+    function GetTipoContribuinte: TTipoContribuinte;
+    procedure SetTipoContribuinte(const ATipoContribuinte: TTipoContribuinte);
     property Id: Int64 read GetId write SetId;
     property CodigoDoBanco: TString read GetCodigoDoBanco write SetCodigoDoBanco;
     property NumeroDoDocumento: TString read GetNumeroDoDocumento write SetNumeroDoDocumento;
@@ -72,6 +74,7 @@ type
     property Endereco: TEndereco read GetEndereco write SetEndereco;
     property Tipo: TTipoPessoa read GetTipo write SetTipo;
     property HoldingId: Integer read GetHoldingId write SetHoldingId;
+    property TipoContribuinte: TTipoContribuinte read GetTipoContribuinte write SetTipoContribuinte;
   end;
 
   TAgenteFinanceiroList = class;
@@ -124,27 +127,28 @@ type
 
   TAgenteFinanceiro = class(TInterfacedModel, IAgenteFinanceiro)
   private
-	FId: Int64;
-	FCodigoDoBanco: TString;
-	FNumeroDoDocumento: TString;
-	FNumeroDeIdentificacao: TString;
-	FOrgaoExpedidor: TString;
-	FCei: TString;
-	FInscricaoMunicipal: TString;
-	FNome: TString;
-	FFantasia: TString;
-	FTelefone1: TString;
-	FTelefone2: TString;
-	FFax: TString;
-	FEmail: TString;
-	FHomePage: TString;
-	FRedeSocial: TString;
-	FTwitter: TString;
-	FComunicadorDeMensagensInstantaneas: TString;
-	FSuframa: TString;
-	FEndereco: TEndereco;
-	FTipo: TTipoPessoa;
-	FHoldingId: Integer;
+    FId: Int64;
+    FCodigoDoBanco: TString;
+    FNumeroDoDocumento: TString;
+    FNumeroDeIdentificacao: TString;
+    FOrgaoExpedidor: TString;
+    FCei: TString;
+    FInscricaoMunicipal: TString;
+    FNome: TString;
+    FFantasia: TString;
+    FTelefone1: TString;
+    FTelefone2: TString;
+    FFax: TString;
+    FEmail: TString;
+    FHomePage: TString;
+    FRedeSocial: TString;
+    FTwitter: TString;
+    FComunicadorDeMensagensInstantaneas: TString;
+    FSuframa: TString;
+    FEndereco: TEndereco;
+    FTipo: TTipoPessoa;
+    FHoldingId: Integer;
+    FTipoContribuinte: TTipoContribuinte;
     function GetId: Int64;
     procedure SetId(const AId: Int64);
     function GetCodigoDoBanco: TString;
@@ -187,6 +191,8 @@ type
     procedure SetTipo(const ATipo: TTipoPessoa);
     function GetHoldingId: Integer;
     procedure SetHoldingId(const AHoldingId: Integer);
+    function GetTipoContribuinte: TTipoContribuinte;
+    procedure SetTipoContribuinte(const Value: TTipoContribuinte);
   published
     property Id: Int64 read GetId write SetId;
     property CodigoDoBanco: TString read GetCodigoDoBanco write SetCodigoDoBanco;
@@ -209,6 +215,7 @@ type
     property Endereco: TEndereco read GetEndereco write SetEndereco;
     property Tipo: TTipoPessoa read GetTipo write SetTipo;
     property HoldingId: Integer read GetHoldingId write SetHoldingId;
+    property TipoContribuinte: TTipoContribuinte read GetTipoContribuinte write SetTipoContribuinte;
   end;
 
 implementation
@@ -492,9 +499,19 @@ begin
   Result := FTipo;
 end;
 
+function TAgenteFinanceiro.GetTipoContribuinte: TTipoContribuinte;
+begin
+  Result := FTipoContribuinte;
+end;
+
 procedure TAgenteFinanceiro.SetTipo(const ATipo: TTipoPessoa);
 begin
   FTipo := ATipo;
+end;
+
+procedure TAgenteFinanceiro.SetTipoContribuinte(const Value: TTipoContribuinte);
+begin
+  FTipoContribuinte := Value;
 end;
 
 function TAgenteFinanceiro.GetHoldingId: Integer;

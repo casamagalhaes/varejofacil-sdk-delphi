@@ -111,6 +111,8 @@ type
     procedure SetStatusId(const AStatusId: Integer);
     function GetRamoId: Integer;
     procedure SetRamoId(const ARamoId: Integer);
+    function GetTipoContribuinte: TTipoContribuinte;
+    procedure SetTipoContribuinte(const ATipoContribuinte: TTipoContribuinte);
     property Id: Int64 read GetId write SetId;
     property Senha: TString read GetSenha write SetSenha;
     property OrigemDeAlteracao: TString read GetOrigemDeAlteracao write SetOrigemDeAlteracao;
@@ -162,6 +164,7 @@ type
     property DiaDeFechamento: TString read GetDiaDeFechamento write SetDiaDeFechamento;
     property StatusId: Integer read GetStatusId write SetStatusId;
     property RamoId: Integer read GetRamoId write SetRamoId;
+    property TipoContribuinte: TTipoContribuinte read GetTipoContribuinte write SetTipoContribuinte;
   end;
 
   TClienteList = class;
@@ -214,57 +217,58 @@ type
 
   TCliente = class(TInterfacedModel, ICliente)
   private
-	FId: Int64;
-	FSenha: TString;
-	FOrigemDeAlteracao: TString;
-	FChaveDaRetaguarda: Integer;
-	FVersaoDaRetaguarda: Integer;
-	FTipoDeCliente: TTipoCliente;
-	FVersao: Int64;
-	FNumeroDoDocumento: TString;
-	FNumeroDeIdentificacao: TString;
-	FOrgaoExpedidor: TString;
-	FCei: TString;
-	FInscricaoMunicipal: TString;
-	FNome: TString;
-	FFantasia: TString;
-	FTelefone1: TString;
-	FTelefone2: TString;
-	FFax: TString;
-	FEmail: TString;
-	FHomePage: TString;
-	FRedeSocial: TString;
-	FTwitter: TString;
-	FComunicadorDeMensagensInstantaneas: TString;
-	FSuframa: TString;
-	FTipoDePessoa: TTipoPessoa;
-	FHoldingId: Integer;
-	FDataDeNascimento: TDateTime;
-	FEstadoCivil: TEstadoCivil;
-	FSexo: TSexo;
-	FOrgaoPublico: TString;
-	FClienteRetemISS: TString;
-	FAtividade: TString;
-	FPessoaParaContato: TString;
-	FNaturalidade: TString;
-	FObservacao: TString;
-	FRenda: Double;
-	FOutraRenda: Double;
-	FTipoDeResidencia: TTipoResidencia;
-	FTempoDeResidencia: TString;
-	FTempoDeTrabalhoNaEmpresaAtual: TString;
-	FComprovanteDeRenda: TString;
-	FComprovanteDeResidencia: TString;
-	FSituacaoDaAprovacao: TSituacaoAprovacao;
-	FTabelaPrazo: TTabelaPrazo;
-	FPrazo: Integer;
-	FTipoDePreco: Integer;
-	FDataDeBloqueio: TDateTime;
-	FTipoDeBloqueio: TString;
-	FDescontoConcedidoAoCliente: Double;
-	FDiaDeFechamento: TString;
-	FStatusId: Integer;
-	FRamoId: Integer;
+    FId: Int64;
+    FSenha: TString;
+    FOrigemDeAlteracao: TString;
+    FChaveDaRetaguarda: Integer;
+    FVersaoDaRetaguarda: Integer;
+    FTipoDeCliente: TTipoCliente;
+    FVersao: Int64;
+    FNumeroDoDocumento: TString;
+    FNumeroDeIdentificacao: TString;
+    FOrgaoExpedidor: TString;
+    FCei: TString;
+    FInscricaoMunicipal: TString;
+    FNome: TString;
+    FFantasia: TString;
+    FTelefone1: TString;
+    FTelefone2: TString;
+    FFax: TString;
+    FEmail: TString;
+    FHomePage: TString;
+    FRedeSocial: TString;
+    FTwitter: TString;
+    FComunicadorDeMensagensInstantaneas: TString;
+    FSuframa: TString;
+    FTipoDePessoa: TTipoPessoa;
+    FHoldingId: Integer;
+    FDataDeNascimento: TDateTime;
+    FEstadoCivil: TEstadoCivil;
+    FSexo: TSexo;
+    FOrgaoPublico: TString;
+    FClienteRetemISS: TString;
+    FAtividade: TString;
+    FPessoaParaContato: TString;
+    FNaturalidade: TString;
+    FObservacao: TString;
+    FRenda: Double;
+    FOutraRenda: Double;
+    FTipoDeResidencia: TTipoResidencia;
+    FTempoDeResidencia: TString;
+    FTempoDeTrabalhoNaEmpresaAtual: TString;
+    FComprovanteDeRenda: TString;
+    FComprovanteDeResidencia: TString;
+    FSituacaoDaAprovacao: TSituacaoAprovacao;
+    FTabelaPrazo: TTabelaPrazo;
+    FPrazo: Integer;
+    FTipoDePreco: Integer;
+    FDataDeBloqueio: TDateTime;
+    FTipoDeBloqueio: TString;
+    FDescontoConcedidoAoCliente: Double;
+    FDiaDeFechamento: TString;
+    FStatusId: Integer;
+    FRamoId: Integer;
+    FTipoContribuinte: TTipoContribuinte;
     function GetId: Int64;
     procedure SetId(const AId: Int64);
     function GetSenha: TString;
@@ -367,6 +371,8 @@ type
     procedure SetStatusId(const AStatusId: Integer);
     function GetRamoId: Integer;
     procedure SetRamoId(const ARamoId: Integer);
+    function GetTipoContribuinte: TTipoContribuinte;
+    procedure SetTipoContribuinte(const Value: TTipoContribuinte);
   published
     property Id: Int64 read GetId write SetId;
     property Senha: TString read GetSenha write SetSenha;
@@ -419,6 +425,7 @@ type
     property DiaDeFechamento: TString read GetDiaDeFechamento write SetDiaDeFechamento;
     property StatusId: Integer read GetStatusId write SetStatusId;
     property RamoId: Integer read GetRamoId write SetRamoId;
+    property TipoContribuinte: TTipoContribuinte read GetTipoContribuinte write SetTipoContribuinte;
   end;
 
 implementation
@@ -967,9 +974,19 @@ begin
   FDataDeBloqueio := ADataDeBloqueio;
 end;
 
+function TCliente.GetTipoContribuinte: TTipoContribuinte;
+begin
+  Result := FTipoContribuinte;
+end;
+
 function TCliente.GetTipoDeBloqueio: TString;
 begin
   Result := FTipoDeBloqueio;
+end;
+
+procedure TCliente.SetTipoContribuinte(const Value: TTipoContribuinte);
+begin
+  FTipoContribuinte := Value;
 end;
 
 procedure TCliente.SetTipoDeBloqueio(const ATipoDeBloqueio: TString);
