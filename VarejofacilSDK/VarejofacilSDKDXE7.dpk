@@ -192,8 +192,9 @@ contains
   SDK.Service.CodigoAuxiliar in 'Services\SDK.Service.CodigoAuxiliar.pas',
   SDK.Service.ProdutoFornecedor in 'Services\SDK.Service.ProdutoFornecedor.pas',
   SDK.Model.ImpostoFederalGeral in 'Models\SDK.Model.ImpostoFederalGeral.pas',
-  SDK.Service.Carga in 'Services\SDK.Service.Carga.pas';
+  SDK.Service.Carga in 'Services\SDK.Service.Carga.pas',
+  SDK.Service.ImpressaoEtiqueta in 'Services\SDK.Service.ImpressaoEtiqueta.pas',
+  SDK.Model.ImpressaoEtiqueta in 'Models\SDK.Model.ImpressaoEtiqueta.pas';
 
 end.
-
 

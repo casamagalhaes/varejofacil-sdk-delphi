@@ -70,9 +70,9 @@ type
 
   TGenero = class(TInterfacedModel, IGenero)
   private
-	FId: Int64;
-	FDescricao: TString;
-	FDescricaoCompleta: TString;
+   	FId: Int64;
+  	FDescricao: TString;
+	  FDescricaoCompleta: TString;
     function GetId: Int64;
     procedure SetId(const AId: Int64);
     function GetDescricao: TString;

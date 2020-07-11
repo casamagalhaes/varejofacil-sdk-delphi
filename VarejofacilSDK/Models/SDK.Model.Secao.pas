@@ -67,8 +67,8 @@ type
 
   TSecao = class(TInterfacedModel, ISecao)
   private
-	FId: Integer;
-	FDescricao: TString;
+  	FId: Integer;
+	  FDescricao: TString;
     function GetId: Integer;
     procedure SetId(const AId: Integer);
     function GetDescricao: TString;
