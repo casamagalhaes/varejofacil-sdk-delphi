@@ -122,9 +122,7 @@ begin
       raise SDKLimitExceededException.Create;
     else
       raise SDKUnknownException.Create(Format('Erro %d - %s', [Response.Status, Response.Content]));
-  end
-  else
-    raise Exception.Create('Não foi possível obter o marcador atual de carga');
+  end;
 end;
 
 class function TCargaService.GetChanges(const ALojaId: TString;
