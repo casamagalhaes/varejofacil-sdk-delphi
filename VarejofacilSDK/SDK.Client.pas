@@ -276,7 +276,11 @@ begin
               raise SDKBadRequestException.Create(E.Message)
             else if HTTP.ResponseCode = 404 then
             else if HTTP.ResponseCode = 429 then
-              raise SDKLimitExceededException.Create
+            begin
+              Randomize;
+              Sleep(Random(1000 * 60 * 2));
+              Result := MakeRequest(ARequest);
+            end
             else if HTTP.ResponseCode = 422 then
               ResponseContent := E.ErrorMessage
             else

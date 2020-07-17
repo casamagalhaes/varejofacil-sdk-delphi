@@ -70,7 +70,7 @@ begin
 
     if Position < Min(TotalPack, Total) then
     begin
-      PaginationList := Filter(AConferenciaId, AQuery, Start, TotalPack - Position, ASortParams);
+      PaginationList := Filter(AConferenciaId, AQuery, Position, TotalPack - Position, ASortParams);
       for ItemConferencia in PaginationList do
         ItemConferenciaList.Add(ItemConferencia);
     end;

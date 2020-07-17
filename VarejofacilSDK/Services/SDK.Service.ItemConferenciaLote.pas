@@ -36,7 +36,7 @@ begin
   Response := nil;
   if AListItemConferencia.Count > 50 then
     raise Exception.Create('Ultrapassou o limite de 50 registros');
-  BatchRequest := TBatchRequest.Create;
+  BatchRequest := TBatchRequest.Create(TBatchRequestTransformV1.Create);
   for I := 0 to AListItemConferencia.Count -1 do
     BatchRequest.Add(AListItemConferencia.Items[I]);
   Response := FClient.Post(PathWithDependencies([AConferenciaID]), BatchRequest.AsString, nil);

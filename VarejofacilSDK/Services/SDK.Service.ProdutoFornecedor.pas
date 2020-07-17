@@ -114,7 +114,7 @@ begin
 
     if Position < Min(TotalPack, Total) then
     begin
-      PaginationList := Filter(AIdProduto, AQuery, Start, TotalPack - Position, ASortParams);
+      PaginationList := Filter(AIdProduto, AQuery, Position, TotalPack - Position, ASortParams);
       for Fornecedor in PaginationList do
         FornecedorList.Add(Fornecedor);
     end;

@@ -72,7 +72,7 @@ begin
 
     if Position < Min(TotalPack, Total) then
     begin
-      PaginationList := Filter(AInventarioId, AQuery, Start, TotalPack - Position, ASortParams);
+      PaginationList := Filter(AInventarioId, AQuery, Position, TotalPack - Position, ASortParams);
       for ItemInventario in PaginationList do
         ItemInventarioList.Add(ItemInventario);
     end;

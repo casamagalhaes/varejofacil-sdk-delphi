@@ -36,7 +36,7 @@ begin
   Response := nil;
   if AListItemInventario.Count > 50 then
     raise Exception.Create('Ultrapassou o limite de 50 registros');
-  BatchRequest := TBatchRequest.Create;
+  BatchRequest := TBatchRequest.Create(TBatchRequestTransformV1.Create);
   for I := 0 to AListItemInventario.Count -1 do
     BatchRequest.Add(AListItemInventario.Items[I]);
   Response := FClient.Post(PathWithDependencies([AInventarioID]), BatchRequest.AsString, nil);

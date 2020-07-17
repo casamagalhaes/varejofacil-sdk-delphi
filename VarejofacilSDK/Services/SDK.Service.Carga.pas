@@ -17,7 +17,7 @@ type
       AEntidade: String; AClient: IClient): IXMLDocument; overload;
     class function GetChanges(const ALojaId: TString; AMarcador: Int64;
       AEntidades: array of String; AClient: IClient): IXMLDocument; overload;
-
+    class function GetLastBookMark(const ALojaId: TString; AClient: IClient): IXMLDocument; overload;
   end;
 
 
@@ -60,9 +60,11 @@ begin
       Result := Response.AsXML;
     404:
       raise SDKNotFoundException.Create('Carga não disponível');
+    426:
+      raise SDKLimitExceededException.Create;
     else
       raise SDKUnknownException.Create(Format('Erro %d - %s', [Response.Status, Response.Content]));
-  end
+  end;
 end;
 
 class function TCargaService.GetChanges(const ALojaId: TString;
@@ -97,9 +99,32 @@ begin
       Result := Response.AsXML;
     404:
       raise SDKNotFoundException.Create('Carga não disponível');
+    426:
+      raise SDKLimitExceededException.Create;
     else
       raise SDKUnknownException.Create(Format('Erro %d - %s', [Response.Status, Response.Content]));
   end
+end;
+
+class function TCargaService.GetLastBookMark(const ALojaId: TString;
+  AClient: IClient): IXMLDocument;
+var
+  Response: IResponse;
+begin
+  Result := nil;
+  Response := AClient.Get(Format(FPath + '/ultimo-marcador', [ALojaId]), nil, nil);
+  case Response.Status of
+    200:
+      Result := Response.AsXML;
+    404:
+      raise SDKNotFoundException.Create('Marcador da carga não disponível');
+    426:
+      raise SDKLimitExceededException.Create;
+    else
+      raise SDKUnknownException.Create(Format('Erro %d - %s', [Response.Status, Response.Content]));
+  end
+  else
+    raise Exception.Create('Não foi possível obter o marcador atual de carga');
 end;
 
 class function TCargaService.GetChanges(const ALojaId: TString;

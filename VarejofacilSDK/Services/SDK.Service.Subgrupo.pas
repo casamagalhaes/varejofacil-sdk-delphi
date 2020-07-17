@@ -110,7 +110,7 @@ begin
 
     if Position < Min(TotalPack, Total) then
     begin
-      PaginationList := Filter(AIdSecao, AIdGrupo, AQuery, Start, TotalPack - Position, ASortParams);
+      PaginationList := Filter(AIdSecao, AIdGrupo, AQuery, Position, TotalPack - Position, ASortParams);
       for SubGrupo in PaginationList do
         SubGrupoList.Add(SubGrupo);
     end;

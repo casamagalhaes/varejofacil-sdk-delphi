@@ -139,9 +139,7 @@ begin
   for NodeIdx := 0 to Length(Nodes) - 1 do
   begin
     if Nodes[NodeIdx].NodeName = 'funcionarios' then
-    begin
       FuncionarioListChange.ListIdRemovidos.Add(Nodes[NodeIdx].NodeValue);
-    end;
   end;
 
   Result := FuncionarioListChange;
