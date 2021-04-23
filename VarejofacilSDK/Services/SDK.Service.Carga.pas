@@ -118,7 +118,7 @@ begin
       Result := Response.AsXML;
     404:
       raise SDKNotFoundException.Create('Marcador da carga não disponível');
-    426:
+    429:
       raise SDKLimitExceededException.Create;
     else
       raise SDKUnknownException.Create(Format('Erro %d - %s', [Response.Status, Response.Content]));
