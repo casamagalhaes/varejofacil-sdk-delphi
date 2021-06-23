@@ -194,7 +194,13 @@ contains
   SDK.Model.ImpostoFederalGeral in 'Models\SDK.Model.ImpostoFederalGeral.pas',
   SDK.Service.Carga in 'Services\SDK.Service.Carga.pas',
   SDK.Service.ImpressaoEtiqueta in 'Services\SDK.Service.ImpressaoEtiqueta.pas',
-  SDK.Model.ImpressaoEtiqueta in 'Models\SDK.Model.ImpressaoEtiqueta.pas';
+  SDK.Model.ImpressaoEtiqueta in 'Models\SDK.Model.ImpressaoEtiqueta.pas',
+  SDK.Model.AjusteEstoque in 'Models\SDK.Model.AjusteEstoque.pas',
+  SDK.Model.TipoAjuste in 'Models\SDK.Model.TipoAjuste.pas',
+  SDK.Model.ItemAjusteEstoque in 'Models\SDK.Model.ItemAjusteEstoque.pas',
+  SDK.Service.AjusteEstoque in 'Services\SDK.Service.AjusteEstoque.pas',
+  SDK.Service.TipoAjuste in 'Services\SDK.Service.TipoAjuste.pas',
+  SDK.Service.Cliente in 'Services\SDK.Service.Cliente.pas';
 
 end.
 
