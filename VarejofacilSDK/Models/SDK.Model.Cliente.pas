@@ -3,7 +3,7 @@
 interface
 
 uses
-  SysUtils, Classes, SDK.Types, SDK.Enums;
+  SysUtils, Classes, SDK.Types, SDK.Enums, SDK.Model.Endereco;
 
 type
 
@@ -113,6 +113,8 @@ type
     procedure SetRamoId(const ARamoId: Integer);
     function GetTipoContribuinte: TTipoContribuinte;
     procedure SetTipoContribuinte(const ATipoContribuinte: TTipoContribuinte);
+    function GetEnderecos: TEnderecoList;
+    procedure SetEnderecos(const AEnderecos: TEnderecoList);
     property Id: Int64 read GetId write SetId;
     property Senha: TString read GetSenha write SetSenha;
     property OrigemDeAlteracao: TString read GetOrigemDeAlteracao write SetOrigemDeAlteracao;
@@ -165,6 +167,7 @@ type
     property StatusId: Integer read GetStatusId write SetStatusId;
     property RamoId: Integer read GetRamoId write SetRamoId;
     property TipoContribuinte: TTipoContribuinte read GetTipoContribuinte write SetTipoContribuinte;
+    property Enderecos: TEnderecoList read GetEnderecos write SetEnderecos;
   end;
 
   TClienteList = class;
@@ -269,6 +272,7 @@ type
     FStatusId: Integer;
     FRamoId: Integer;
     FTipoContribuinte: TTipoContribuinte;
+    FEnderecos: TEnderecoList;
     function GetId: Int64;
     procedure SetId(const AId: Int64);
     function GetSenha: TString;
@@ -373,6 +377,8 @@ type
     procedure SetRamoId(const ARamoId: Integer);
     function GetTipoContribuinte: TTipoContribuinte;
     procedure SetTipoContribuinte(const Value: TTipoContribuinte);
+    function GetEnderecos: TEnderecoList;
+    procedure SetEnderecos(const Value: TEnderecoList);
   published
     property Id: Int64 read GetId write SetId;
     property Senha: TString read GetSenha write SetSenha;
@@ -426,6 +432,7 @@ type
     property StatusId: Integer read GetStatusId write SetStatusId;
     property RamoId: Integer read GetRamoId write SetRamoId;
     property TipoContribuinte: TTipoContribuinte read GetTipoContribuinte write SetTipoContribuinte;
+    property Endereco: TEnderecoList read GetEnderecos write SetEnderecos;
   end;
 
 implementation
@@ -689,9 +696,19 @@ begin
   Result := FEmail;
 end;
 
+function TCliente.GetEnderecos: TEnderecoList;
+begin
+  Result := FEnderecos;
+end;
+
 procedure TCliente.SetEmail(const AEmail: TString);
 begin
   FEmail := AEmail;
+end;
+
+procedure TCliente.SetEnderecos(const Value: TEnderecoList);
+begin
+  FEnderecos := Value;
 end;
 
 function TCliente.GetHomePage: TString;
