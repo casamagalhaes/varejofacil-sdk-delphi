@@ -432,7 +432,7 @@ type
     property StatusId: Integer read GetStatusId write SetStatusId;
     property RamoId: Integer read GetRamoId write SetRamoId;
     property TipoContribuinte: TTipoContribuinte read GetTipoContribuinte write SetTipoContribuinte;
-    property Endereco: TEnderecoList read GetEnderecos write SetEnderecos;
+    property Enderecos: TEnderecoList read GetEnderecos write SetEnderecos;
   end;
 
 implementation
