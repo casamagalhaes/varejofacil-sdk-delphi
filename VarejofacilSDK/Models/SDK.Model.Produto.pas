@@ -202,6 +202,8 @@ type
     procedure SetComponentes(const AComponentes: TComponenteList);
     function GetMixId: Variant;
     procedure SetMixId(const AMixId: Variant);
+    function GetFamiliaId: Variant;
+    procedure SetFamiliaId(const AFamiliaId: Variant);
     property Id: Variant read GetId write SetId;
     property ProdutoDestinoId: Variant read GetProdutoDestinoId write SetProdutoDestinoId;
     property SubgrupoId: Variant read GetSubgrupoId write SetSubgrupoId;
@@ -298,6 +300,7 @@ type
     property EstoquesDoProduto: TEstoqueDoProdutoList read GetEstoquesDoProduto write SetEstoquesDoProduto;
     property CodigosAuxiliares: TCodigoAuxiliarList read GetCodigosAuxiliares write SetCodigosAuxiliares;
     property Componentes: TComponenteList read GetComponentes write SetComponentes;
+    property FamiliaId: Variant read GetFamiliaId write SetFamiliaId;
   end;
 
   TProdutoList = class;
@@ -466,6 +469,7 @@ type
     FEstoquesDoProduto: TEstoqueDoProdutoList;
     FCodigosAuxiliares: TCodigoAuxiliarList;
     FComponentes: TComponenteList;
+    FFamiliaId: Variant;
     function GetId: Variant;
     procedure SetId(const AId: Variant);
     function GetProdutoDestinoId: Variant;
@@ -658,6 +662,8 @@ type
     procedure SetComponentes(const AComponentes: TComponenteList);
     function GetMixId: Variant;
     procedure SetMixId(const AMixId: Variant);
+    function GetFamiliaId: Variant;
+    procedure SetFamiliaId(const AFamiliaId: Variant);
   published
     property Id: Variant read GetId write SetId;
     property ProdutoDestinoId: Variant read GetProdutoDestinoId write SetProdutoDestinoId;
@@ -755,6 +761,7 @@ type
     property EstoquesDoProduto: TEstoqueDoProdutoList read GetEstoquesDoProduto write SetEstoquesDoProduto;
     property CodigosAuxiliares: TCodigoAuxiliarList read GetCodigosAuxiliares write SetCodigosAuxiliares;
     property Componentes: TComponenteList read GetComponentes write SetComponentes;
+    property FamiliaId: Variant read GetFamiliaId write SetFamiliaId;
   end;
 
 implementation
@@ -1463,9 +1470,19 @@ begin
   FPesoLiquido := APesoLiquido;
 end;
 
+function TProduto.GetFamiliaId: Variant;
+begin
+  Result := FFamiliaId;
+end;
+
 function TProduto.GetFatorBonificacao: Double;
 begin
   Result := FFatorBonificacao;
+end;
+
+procedure TProduto.SetFamiliaId(const AFamiliaId: Variant);
+begin
+  FFamiliaId := AFamiliaId;
 end;
 
 procedure TProduto.SetFatorBonificacao(const AFatorBonificacao: Double);
